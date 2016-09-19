@@ -5,3 +5,6 @@
 
 ## Backlog
 https://trello.com/b/HYvo81A2/scrum-infinity-rum
+
+### Sprint velocity
+60
