@@ -2,6 +2,7 @@ package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.teamturtle.infinityrun.screens.GameScreen;
 
 public class InfinityRun extends Game {
 
@@ -10,6 +11,8 @@ public class InfinityRun extends Game {
 	@Override
 	public void create () {
 		mSpriteBatch = new SpriteBatch();
+
+		setScreen(new GameScreen(mSpriteBatch));
 	}
 
 	@Override

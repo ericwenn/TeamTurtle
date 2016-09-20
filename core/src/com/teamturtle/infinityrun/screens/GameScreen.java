@@ -1,12 +1,17 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * Created by ericwenn on 9/20/16.
  */
 public class GameScreen implements Screen {
+    private SpriteBatch mSpriteBatch;
 
+    public GameScreen( SpriteBatch mSpriteBatch ) {
+        this.mSpriteBatch = mSpriteBatch;
+    }
 
     @Override
     public void show() {
