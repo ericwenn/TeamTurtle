@@ -59,6 +59,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        mSpriteBatch.dispose();
+        bg.dispose();
+        
     }
 }
