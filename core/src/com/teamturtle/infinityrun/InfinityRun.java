@@ -3,7 +3,7 @@ package com.teamturtle.infinityrun;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.screens.GameScreen;
-
+//kommentar
 public class InfinityRun extends Game {
 
 	public static final int WIDTH = 800;
