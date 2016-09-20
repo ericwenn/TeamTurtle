@@ -30,7 +30,9 @@ public class GameScreen implements Screen {
         this.cam.position.set(mFillViewport.getWorldWidth() / 2, mFillViewport.getWorldHeight() / 2, 0);
         this.bg = new Texture("bg.jpg");
 
-        this.mPlayer = new Player( new Texture("badlogic.jpg"));
+
+        Texture dalaHorse = new Texture("dalahorse_32.png");
+        this.mPlayer = new Player(dalaHorse);
     }
 
 

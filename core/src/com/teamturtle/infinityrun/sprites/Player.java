@@ -11,7 +11,7 @@ import com.teamturtle.infinityrun.screens.GameScreen;
 public class Player extends Sprite {
 
     public Player(Texture t) {
-        super( t, 16, 16);
+        super( t );
         setPosition(100, InfinityRun.HEIGHT / 2);
     }
 
