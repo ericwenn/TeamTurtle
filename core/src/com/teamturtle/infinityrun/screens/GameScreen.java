@@ -16,7 +16,6 @@ public class GameScreen implements Screen {
     private Texture bg;
 
     public GameScreen( SpriteBatch mSpriteBatch ) {
-
         this.mSpriteBatch = mSpriteBatch;
         this.cam = new OrthographicCamera();
         this.bg = new Texture("bg.jpg");
