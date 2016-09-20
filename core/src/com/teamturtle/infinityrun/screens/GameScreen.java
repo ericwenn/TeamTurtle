@@ -11,15 +11,20 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.sprites.Player;
 
 /**
  * Created by ericwenn on 9/20/16.
  */
 public class GameScreen implements Screen {
+    public static final int GAME_SPEED = 50;
+
     private OrthographicCamera cam;
     private SpriteBatch mSpriteBatch;
     private Texture bg;
+    private int bg1, bg2;
     private FillViewport mFillViewport;
+    private Player mPlayer;
 
     private TmxMapLoader tmxMapLoader;
     private TiledMap tiledMap;
@@ -32,7 +37,11 @@ public class GameScreen implements Screen {
         this.cam.position.set(mFillViewport.getWorldWidth() / 2, mFillViewport.getWorldHeight() / 2, 0);
 
         this.bg = new Texture("bg.jpg");
+        bg1 = 0;
+        bg2 = InfinityRun.WIDTH;
 
+        Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
+        this.mPlayer = new Player(dalaHorse);
         tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load("tilemap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 2);
@@ -44,17 +53,27 @@ public class GameScreen implements Screen {
 
     }
 
+
     @Override
     public void render(float delta) {
 
-        this.cam.position.add(1, 0, 0);
+        mPlayer.update(delta);
+        this.cam.position.add( GAME_SPEED * delta, 0, 0);
         cam.update();
         tiledMapRenderer.setView(cam);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         mSpriteBatch.setProjectionMatrix(cam.combined);
         mSpriteBatch.begin();
-        mSpriteBatch.draw(bg, 0, 0, 800, 480);
+
+        if(bg1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth/2)
+            bg1 += InfinityRun.WIDTH * 2;
+        if(bg2 + InfinityRun.WIDTH< cam.position.x - cam.viewportWidth/2)
+            bg2 += InfinityRun.WIDTH * 2;
+        mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
+        mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
+
+        mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY());
         mSpriteBatch.end();
         tiledMapRenderer.render();
     }
