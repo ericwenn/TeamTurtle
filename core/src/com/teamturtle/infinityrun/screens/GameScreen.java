@@ -22,6 +22,7 @@ public class GameScreen implements Screen {
     private OrthographicCamera cam;
     private SpriteBatch mSpriteBatch;
     private Texture bg;
+    private int bg1, bg2;
     private FillViewport mFillViewport;
     private Player mPlayer;
 
@@ -36,7 +37,8 @@ public class GameScreen implements Screen {
         this.cam.position.set(mFillViewport.getWorldWidth() / 2, mFillViewport.getWorldHeight() / 2, 0);
 
         this.bg = new Texture("bg.jpg");
-
+        bg1 = 0;
+        bg2 = InfinityRun.WIDTH;
 
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
         this.mPlayer = new Player(dalaHorse);
@@ -63,7 +65,14 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         mSpriteBatch.setProjectionMatrix(cam.combined);
         mSpriteBatch.begin();
-        mSpriteBatch.draw(bg, 0, 0, 800, 480);
+
+        if(bg1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth/2)
+            bg1 += InfinityRun.WIDTH * 2;
+        if(bg2 + InfinityRun.WIDTH< cam.position.x - cam.viewportWidth/2)
+            bg2 += InfinityRun.WIDTH * 2;
+        mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
+        mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
+
         mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY());
         mSpriteBatch.end();
         tiledMapRenderer.render();
