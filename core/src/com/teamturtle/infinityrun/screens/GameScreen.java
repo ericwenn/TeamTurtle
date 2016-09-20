@@ -3,6 +3,7 @@ package com.teamturtle.infinityrun.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -10,12 +11,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * Created by ericwenn on 9/20/16.
  */
 public class GameScreen implements Screen {
+    private OrthographicCamera cam;
     private SpriteBatch mSpriteBatch;
     private Texture bg;
 
     public GameScreen( SpriteBatch mSpriteBatch ) {
 
         this.mSpriteBatch = mSpriteBatch;
+        this.cam = new OrthographicCamera();
         this.bg = new Texture("bg.jpg");
     }
 
