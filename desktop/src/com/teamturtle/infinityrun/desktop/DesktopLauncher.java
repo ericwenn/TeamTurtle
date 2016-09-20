@@ -7,6 +7,8 @@ import com.teamturtle.infinityrun.InfinityRun;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.width = InfinityRun.WIDTH;
+		config.height = InfinityRun.HEIGHT;
 		new LwjglApplication(new InfinityRun(), config);
 	}
 }
