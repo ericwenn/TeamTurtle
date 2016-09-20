@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="30" tilewidth="16" tileheight="16" nextobjectid="11">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="16" tileheight="16" nextobjectid="16">
  <tileset firstgid="1" name="tileset_mario" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="696" columns="29">
   <image source="tileset.png" trans="ff00ff" width="528" height="448"/>
  </tileset>
- <layer name="background" width="200" height="30">
+ <layer name="background" width="200" height="15">
   <data encoding="base64" compression="zlib">
-   eJztwQENAAAAwqD3T+3sARQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADddwAAB
+   eJzt0zENADAMwLBq/EHv7Y4gmC0FQmYAAAAAAACAX5wV8PIHNH9A8wc0f0DzB7QLuB8AJQ==
   </data>
  </layer>
- <layer name="graphics" width="200" height="30">
+ <layer name="graphics" width="200" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt00ENACAAxDD8m8EiLrg92mQSdg4AAAAAAAAAAAAAAAAAAAAAAAD8c2NByfoHf1C2/sEflK1/8Adl6x/8Qdn6B39Q9gBXmZOp
+   eJztw0EJAAAIBLDrH9YMZrifyAZLAAAAAAAAfpkDAQAAAADoLch5Hq8=
   </data>
  </layer>
  <objectgroup name="ground">
-  <object id="9" x="0" y="384" width="576" height="96"/>
+  <object id="13" x="0" y="128" width="528" height="16"/>
  </objectgroup>
  <objectgroup name="coins"/>
  <objectgroup name="pipes"/>

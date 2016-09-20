@@ -35,7 +35,7 @@ public class GameScreen implements Screen {
 
         tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load("tilemap.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 2);
     }
 
 
