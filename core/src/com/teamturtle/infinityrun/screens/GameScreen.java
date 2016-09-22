@@ -18,7 +18,7 @@ import com.teamturtle.infinityrun.sprites.Player;
  * Created by ericwenn on 9/20/16.
  */
 public class GameScreen implements Screen {
-    public static final int GAME_SPEED = 50;
+    public static final int GAME_SPEED = 100;
 
     private OrthographicCamera cam;
     private SpriteBatch mSpriteBatch;
