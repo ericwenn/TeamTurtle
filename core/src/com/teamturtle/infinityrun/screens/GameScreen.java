@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.sprites.Emoji;
 import com.teamturtle.infinityrun.sprites.Player;
 
 /**
@@ -25,6 +26,7 @@ public class GameScreen implements Screen {
     private int bg1, bg2;
     private FillViewport mFillViewport;
     private Player mPlayer;
+    private Emoji emoji;
 
     private TmxMapLoader tmxMapLoader;
     private TiledMap tiledMap;
@@ -42,6 +44,7 @@ public class GameScreen implements Screen {
 
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
         this.mPlayer = new Player(dalaHorse);
+        emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"),mSpriteBatch);
         tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load("tilemap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 2);
@@ -58,8 +61,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
 
         mPlayer.update(delta);
-        this.cam.position.add( GAME_SPEED * delta, 0, 0);
-        cam.update();
+
         tiledMapRenderer.setView(cam);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -75,7 +77,17 @@ public class GameScreen implements Screen {
 
         mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY());
         mSpriteBatch.end();
+        this.cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, mPlayer.getY(), 0);
+        cam.update();
         tiledMapRenderer.render();
+        handleInput();
+        emoji.render();
+    }
+
+    private void handleInput() {
+        if (Gdx.input.isTouched()) {
+            emoji.show();
+        }
     }
 
     @Override
