@@ -5,17 +5,15 @@
  </tileset>
  <layer name="background" width="200" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt07EJADAMA0Hj/YdOGQgorV3cgXo1XwUAAAAAO/X0AVhMH5DpA7J+Blz6gEwf8KcPyPQBmT4gO6weADE=
+   eJztwTEBAAAAwqD1T20MH6AAAAAAAAAAAAAAAOBvLuAAAQ==
   </data>
  </layer>
  <layer name="graphics" width="200" height="15">
   <data encoding="base64" compression="zlib">
-   eJztw0EJAAAIBLDrH9YMZrifyAZLAAAAAAAAfpkDAQAAAADoLch5Hq8=
+   eJzt0sEJACAMBMHD/puzo1QQRPyZGdhn7pUEAAAAAAAAAAAAkt30cnuzwV9OPyFNbklqK0dTsEc=
   </data>
  </layer>
- <objectgroup name="ground">
-  <object id="13" x="0" y="128" width="528" height="16"/>
- </objectgroup>
+ <objectgroup name="ground"/>
  <objectgroup name="coins"/>
  <objectgroup name="pipes"/>
  <objectgroup name="bricks"/>
