@@ -6,9 +6,19 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.sprites.Emoji;
@@ -18,7 +28,7 @@ import com.teamturtle.infinityrun.sprites.Player;
  * Created by ericwenn on 9/20/16.
  */
 public class GameScreen implements Screen {
-    public static final int GAME_SPEED = 100;
+    public static final int GAME_SPEED = 100, GRAVITY = -100;
 
     private OrthographicCamera cam;
     private SpriteBatch mSpriteBatch;
@@ -32,6 +42,9 @@ public class GameScreen implements Screen {
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
+    private World world;
+    private Box2DDebugRenderer b2dr;
+
     public GameScreen( SpriteBatch mSpriteBatch ) {
         this.mSpriteBatch = mSpriteBatch;
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
@@ -42,12 +55,33 @@ public class GameScreen implements Screen {
         bg1 = 0;
         bg2 = InfinityRun.WIDTH;
 
+        world = new World(new Vector2(0, GRAVITY), true);
+        b2dr = new Box2DDebugRenderer();
+
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
-        this.mPlayer = new Player(dalaHorse);
+        this.mPlayer = new Player(world, dalaHorse);
         emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"),mSpriteBatch);
         tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load("tilemap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 2);
+
+        //This chunk of code should be refactorized into some other class.
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fdef = new FixtureDef();
+        Body body;
+        for(MapObject object : tiledMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect =((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
+            body = world.createBody(bdef);
+
+            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
     }
 
 
@@ -59,7 +93,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
+        world.step(1/60f, 6, 2);
         mPlayer.update(delta);
 
         tiledMapRenderer.setView(cam);
@@ -81,6 +115,7 @@ public class GameScreen implements Screen {
         cam.update();
         tiledMapRenderer.render();
         handleInput();
+        b2dr.render(world, cam.combined);
         emoji.render();
     }
 

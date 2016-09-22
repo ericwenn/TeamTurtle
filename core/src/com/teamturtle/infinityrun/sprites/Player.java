@@ -2,7 +2,13 @@ package com.teamturtle.infinityrun.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.screens.GameScreen;
 
@@ -11,29 +17,41 @@ import com.teamturtle.infinityrun.screens.GameScreen;
  */
 public class Player extends Sprite {
 
-    private Vector2 velo;
+    private World world;
+    private Body b2body;
+    private TextureRegion playerStand;
+    private static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32,
+            COLLISION_RADIUS = PLAYER_WIDTH / 2;
 
-    public Player(Texture t) {
+    public Player(World world, Texture t) {
         super( t );
-        velo = new Vector2( GameScreen.GAME_SPEED, -80);
-
+        this.world = world;
         setPosition(100, InfinityRun.HEIGHT / 2);
+        definePlayer();
+        //Temporary velocity source, should be changed because the velocity decreases due to gravity
+        b2body.setLinearVelocity(GameScreen.GAME_SPEED, 0);
+
+        playerStand = new TextureRegion(getTexture(), 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
+        setBounds(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
+        setRegion(playerStand);
     }
 
-
-
-
     public void update(float dt) {
-        // Update x
-        setPosition( getX() + velo.x * dt, getY() );
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+    }
 
-        // Update y
-        float y;
-        if( getY() > 64 ) {
-            y = getY() + velo.y * dt;
-        } else {
-            y = getY();
-        }
-        setPosition( getX(), y );
+    public void definePlayer(){
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(100, 300);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        b2body = world.createBody(bdef);
+
+        FixtureDef fdef = new FixtureDef();
+        fdef.friction = 0;
+        CircleShape shape = new CircleShape();
+        shape.setRadius(COLLISION_RADIUS);
+        fdef.shape = shape;
+
+        b2body.createFixture(fdef);
     }
 }
