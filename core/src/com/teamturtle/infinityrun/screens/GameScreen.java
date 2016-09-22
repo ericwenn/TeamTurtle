@@ -77,7 +77,7 @@ public class GameScreen implements Screen {
 
         mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY());
         mSpriteBatch.end();
-        this.cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, mPlayer.getY(), 0);
+        this.cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, mFillViewport.getWorldHeight() / 2, 0);
         cam.update();
         tiledMapRenderer.render();
         handleInput();
