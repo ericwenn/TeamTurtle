@@ -25,10 +25,15 @@ public class Player extends Sprite {
 
     public void update(float dt) {
         // Update x
-        setPosition( getX() + velo.x, getY() );
+        setPosition( getX() + velo.x * dt, getY() );
 
         // Update y
-        float y = 
-        setPosition( getX(), getY() + velo.y * dt);
+        float y;
+        if( getY() > 64 ) {
+            y = getY() + velo.y * dt;
+        } else {
+            y = getY();
+        }
+        setPosition( getX(), y );
     }
 }
