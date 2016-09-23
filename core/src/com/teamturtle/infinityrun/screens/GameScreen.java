@@ -63,7 +63,7 @@ public class GameScreen implements Screen {
         emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"),mSpriteBatch);
         tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load("tilemap.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 2);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
 
         //This chunk of code should be refactorized into some other class.
         BodyDef bdef = new BodyDef();
