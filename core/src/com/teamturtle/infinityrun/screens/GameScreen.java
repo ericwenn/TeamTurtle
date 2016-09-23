@@ -19,10 +19,12 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.sprites.Emoji;
+import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.sprites.Player;
+import com.teamturtle.infinityrun.sprites.emoji.EmojiFactory;
 
 /**
  * Created by ericwenn on 9/20/16.
@@ -45,6 +47,8 @@ public class GameScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
+    private Array<Body> emojiBodies;
+
     public GameScreen( SpriteBatch mSpriteBatch ) {
         this.mSpriteBatch = mSpriteBatch;
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
@@ -60,7 +64,6 @@ public class GameScreen implements Screen {
 
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
         this.mPlayer = new Player(world, dalaHorse);
-        emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"),mSpriteBatch);
         tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load("tilemap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
@@ -82,6 +85,12 @@ public class GameScreen implements Screen {
             body.createFixture(fdef);
         }
 
+
+
+        EmojiFactory emojiFactory = new EmojiFactory(world, tiledMap, mSpriteBatch, 6);
+        emojiFactory.create();
+
+        emojiBodies = emojiFactory.getBodies();
     }
 
 
@@ -96,6 +105,7 @@ public class GameScreen implements Screen {
         world.step(1/60f, 6, 2);
         mPlayer.update(delta);
 
+
         tiledMapRenderer.setView(cam);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -109,6 +119,8 @@ public class GameScreen implements Screen {
         mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
         mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
 
+
+
         mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY());
         mSpriteBatch.end();
         this.cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, mFillViewport.getWorldHeight() / 2, 0);
@@ -116,7 +128,12 @@ public class GameScreen implements Screen {
         tiledMapRenderer.render();
         handleInput();
         b2dr.render(world, cam.combined);
-        emoji.render();
+
+        for (Body body : emojiBodies) {
+            Emoji emoji = (Emoji) body.getUserData();
+            emoji.setPosition( body.getPosition().x, body.getPosition().y );
+            emoji.render();
+        }
     }
 
     private void handleInput() {

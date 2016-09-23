@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="16" tileheight="16" nextobjectid="16">
- <tileset firstgid="1" name="tileset_mario" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="696" columns="29">
+<map version="1.0" orientation="orthogonal" width="200" height="15" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tileset_mario" tilewidth="16" tileheight="16" spacing="2" margin="1">
   <image source="tileset.png" trans="ff00ff" width="528" height="448"/>
  </tileset>
  <layer name="background" width="200" height="15">
@@ -13,10 +13,13 @@
    eJztw0EJAAAIBLDrH9YMZrifyAZLAAAAAAAAfpkDAQAAAADoLch5Hq8=
   </data>
  </layer>
- <objectgroup name="ground">
-  <object id="13" x="0" y="128" width="528" height="16"/>
+ <objectgroup name="ground" width="0" height="0">
+  <object x="0" y="128" width="528" height="16"/>
  </objectgroup>
- <objectgroup name="coins"/>
- <objectgroup name="pipes"/>
- <objectgroup name="bricks"/>
+ <objectgroup name="coins" width="0" height="0"/>
+ <objectgroup name="pipes" width="0" height="0"/>
+ <objectgroup name="bricks" width="0" height="0"/>
+ <objectgroup name="emoji_placeholders" width="200" height="15">
+  <object x="482" y="108" width="16" height="16"/>
+ </objectgroup>
 </map>
