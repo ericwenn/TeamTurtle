@@ -29,29 +29,33 @@ public class Player extends Sprite {
         setPosition(100, InfinityRun.HEIGHT / 2);
         definePlayer();
         //Temporary velocity source, should be changed because the velocity decreases due to gravity
-        b2body.setLinearVelocity(GameScreen.GAME_SPEED, 0);
+        b2body.setLinearVelocity(GameScreen.GAME_SPEED * 5, 0);
 
         playerStand = new TextureRegion(getTexture(), 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
-        setBounds(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
+        setBounds(0, 0, PLAYER_WIDTH / InfinityRun.PPM, PLAYER_HEIGHT / InfinityRun.PPM);
         setRegion(playerStand);
     }
 
     public void update(float dt) {
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        setPosition(b2body.getPosition().x - PLAYER_WIDTH / 2 / InfinityRun.PPM,
+                b2body.getPosition().y - PLAYER_HEIGHT / 2 / InfinityRun.PPM);
     }
 
-    public void definePlayer(){
+    private void definePlayer(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(100, 300);
+        bdef.position.set(100 / InfinityRun.PPM, 300 / InfinityRun.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         fdef.friction = 0;
         CircleShape shape = new CircleShape();
-        shape.setRadius(COLLISION_RADIUS);
+        shape.setRadius(COLLISION_RADIUS / InfinityRun.PPM);
         fdef.shape = shape;
 
         b2body.createFixture(fdef);
+    }
+    public Body getPlayerBody(){
+        return b2body;
     }
 }

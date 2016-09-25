@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -28,7 +29,7 @@ import com.teamturtle.infinityrun.sprites.Player;
  * Created by ericwenn on 9/20/16.
  */
 public class GameScreen implements Screen {
-    public static final int GAME_SPEED = 100, GRAVITY = -100;
+    public static final float GAME_SPEED = 0.1f, GRAVITY = -10, JUMP_IMPULSE = 5f;
 
     private OrthographicCamera cam;
     private SpriteBatch mSpriteBatch;
@@ -47,9 +48,10 @@ public class GameScreen implements Screen {
 
     public GameScreen( SpriteBatch mSpriteBatch ) {
         this.mSpriteBatch = mSpriteBatch;
-        this.mFillViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
+        this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM,
+                InfinityRun.HEIGHT / InfinityRun.PPM);
         this.cam = new OrthographicCamera( mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
-        this.cam.position.set(mFillViewport.getWorldWidth() / 2, mFillViewport.getWorldHeight() / 2, 0);
+        this.cam.position.set(mFillViewport.getWorldWidth() / 2 , mFillViewport.getWorldHeight() / 2, 0);
 
         this.bg = new Texture("bg.jpg");
         bg1 = 0;
@@ -63,7 +65,7 @@ public class GameScreen implements Screen {
         emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"),mSpriteBatch);
         tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load("tilemap.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 2);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / InfinityRun.PPM);
 
         //This chunk of code should be refactorized into some other class.
         BodyDef bdef = new BodyDef();
@@ -74,10 +76,12 @@ public class GameScreen implements Screen {
             Rectangle rect =((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
+            bdef.position.set(((rect.getX() + rect.getWidth() / 2) / InfinityRun.PPM),
+                    ((rect.getY() + rect.getHeight() / 2)) / InfinityRun.PPM);
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            shape.setAsBox(rect.getWidth() / 2 / InfinityRun.PPM,
+                    rect.getHeight() / 2 / InfinityRun.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
@@ -109,9 +113,10 @@ public class GameScreen implements Screen {
         mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
         mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
 
-        mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY());
+        mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY(), 32 / InfinityRun.PPM,
+                32 / InfinityRun.PPM);
         mSpriteBatch.end();
-        this.cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, mFillViewport.getWorldHeight() / 2, 0);
+        this.cam.position.set(mPlayer.getX(), mFillViewport.getWorldHeight() / 2, 0);
         cam.update();
         tiledMapRenderer.render();
         handleInput();
@@ -123,6 +128,10 @@ public class GameScreen implements Screen {
         if (Gdx.input.isTouched()) {
             emoji.show();
         }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) &&
+                mPlayer.getPlayerBody().getLinearVelocity().y == 0)
+            mPlayer.getPlayerBody().applyLinearImpulse(new Vector2(0, JUMP_IMPULSE),
+                    mPlayer.getPlayerBody().getWorldCenter(), true);
     }
 
     @Override
