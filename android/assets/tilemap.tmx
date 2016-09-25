@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="16" tileheight="16" nextobjectid="16">
- <tileset firstgid="1" name="tileset_mario" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="696" columns="29">
-  <image source="tileset.png" trans="ff00ff" width="528" height="448"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="16" tileheight="16" nextobjectid="70">
+ <tileset firstgid="1" name="tileset_mario" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="832" columns="32">
+  <image source="tileset.png" trans="ff00ff" width="576" height="480"/>
  </tileset>
- <layer name="background" width="200" height="15">
-  <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20MH6AAAAAAAAAAAAAAAOBvLuAAAQ==
-  </data>
- </layer>
+ <tileset firstgid="833" name="tileset" tilewidth="16" tileheight="16" tilecount="1080" columns="36">
+  <image source="tileset.png" width="576" height="480"/>
+ </tileset>
  <layer name="graphics" width="200" height="15">
   <data encoding="base64" compression="zlib">
-   eJztwzENAAAIA7AF/+ZwhIJ9nG3SBAAAAAAAAAAAAODXqvWo9QF4H6TZ
+   eJzt10EKgCAURVEhcvXtJmghraixQejgg5rnwJ0b9EBTAgCA+Ry5HgApnXtboxn9fDAz9yYAIFLrm6N2t7+2sp5nivgeiPLeRsRG4A++tmEjrK62DRuhh9b/cpXuXNb7PJI0ag/FJWEM
   </data>
  </layer>
- <objectgroup name="ground"/>
- <objectgroup name="coins"/>
- <objectgroup name="pipes"/>
- <objectgroup name="bricks"/>
+ <objectgroup name="platforms">
+  <object id="35" x="0" y="208" width="1088" height="32"/>
+  <object id="38" x="1152" y="208" width="1424" height="32"/>
+  <object id="40" x="2576" y="208" width="656" height="32"/>
+  <object id="41" x="592" y="144" width="64" height="64"/>
+  <object id="42" x="656" y="176" width="16" height="32"/>
+  <object id="43" x="672" y="176" width="16" height="32"/>
+  <object id="45" x="688" y="192" width="16" height="16"/>
+  <object id="46" x="656" y="160" width="16" height="16"/>
+  <object id="47" x="576" y="160" width="16" height="48"/>
+  <object id="48" x="544" y="192" width="32" height="16"/>
+  <object id="50" x="560" y="176" width="16" height="16"/>
+  <object id="54" x="896" y="144" width="192" height="16"/>
+  <object id="55" x="1152" y="144" width="176" height="16"/>
+  <object id="56" x="1088" y="80" width="64" height="16"/>
+  <object id="57" x="352" y="80" width="160" height="16"/>
+  <object id="58" x="304" y="144" width="192" height="16"/>
+  <object id="68" x="1440" y="48" width="144" height="16"/>
+  <object id="69" x="1344" y="96" width="80" height="16"/>
+ </objectgroup>
+ <objectgroup name="obstacles">
+  <object id="52" x="1088" y="208" width="64" height="16"/>
+ </objectgroup>
+ <objectgroup name="emojis"/>
 </map>
