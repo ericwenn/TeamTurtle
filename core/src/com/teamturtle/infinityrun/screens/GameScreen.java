@@ -21,6 +21,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.ObstacleListener;
 import com.teamturtle.infinityrun.sprites.Emoji;
 import com.teamturtle.infinityrun.sprites.Player;
 
@@ -45,10 +46,10 @@ public class GameScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
-    public GameScreen( SpriteBatch mSpriteBatch ) {
+    public GameScreen(SpriteBatch mSpriteBatch) {
         this.mSpriteBatch = mSpriteBatch;
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
-        this.cam = new OrthographicCamera( mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
+        this.cam = new OrthographicCamera(mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
         this.cam.position.set(mFillViewport.getWorldWidth() / 2, mFillViewport.getWorldHeight() / 2, 0);
 
         this.bg = new Texture("bg.jpg");
@@ -60,18 +61,19 @@ public class GameScreen implements Screen {
 
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
         this.mPlayer = new Player(world, dalaHorse);
-        emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"),mSpriteBatch);
+        emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"), mSpriteBatch);
         tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load("tilemap.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 2);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         //This chunk of code should be refactorized into some other class.
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
-        for(MapObject object : tiledMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect =((RectangleMapObject) object).getRectangle();
+//        Creating ground objects
+        for (MapObject object : tiledMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
@@ -81,19 +83,31 @@ public class GameScreen implements Screen {
             fdef.shape = shape;
             body.createFixture(fdef);
         }
+//        Creating obstacles
+        for (MapObject object : tiledMap.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
+            body = world.createBody(bdef);
+
+            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            body.createFixture(fdef).setUserData("obstacle");
+        }
 
     }
 
-
     @Override
     public void show() {
-
+        world.setContactListener(new ObstacleListener());
     }
 
 
     @Override
     public void render(float delta) {
-        world.step(1/60f, 6, 2);
+        world.step(1 / 60f, 6, 2);
         mPlayer.update(delta);
 
         tiledMapRenderer.setView(cam);
@@ -102,14 +116,14 @@ public class GameScreen implements Screen {
         mSpriteBatch.setProjectionMatrix(cam.combined);
         mSpriteBatch.begin();
 
-        if(bg1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth/2)
+        if (bg1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
             bg1 += InfinityRun.WIDTH * 2;
-        if(bg2 + InfinityRun.WIDTH< cam.position.x - cam.viewportWidth/2)
+        if (bg2 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
             bg2 += InfinityRun.WIDTH * 2;
         mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
         mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
 
-        mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY());
+        mSpriteBatch.draw(mPlayer, mPlayer.getX(), mPlayer.getY());
         mSpriteBatch.end();
         this.cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, mFillViewport.getWorldHeight() / 2, 0);
         cam.update();
