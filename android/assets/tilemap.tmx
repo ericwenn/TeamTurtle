@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="16" tileheight="16" nextobjectid="78">
- <tileset firstgid="1" name="tileset_mario" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="832" columns="32">
-  <image source="tileset.png" trans="ff00ff" width="576" height="480"/>
- </tileset>
- <tileset firstgid="833" name="tileset" tilewidth="16" tileheight="16" tilecount="1080" columns="36">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="16" tileheight="16" nextobjectid="81">
+ <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="1080" columns="36">
   <image source="tileset.png" width="576" height="480"/>
  </tileset>
- <tileset firstgid="1913" name="appletile" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+ <tileset firstgid="1081" name="appletile" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="appletile.png" width="32" height="32"/>
  </tileset>
  <layer name="graphics" width="200" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt10EKgCAQBVAhqjN3h24TdJBO1NoglBKc6D34C3cj+GFMCQAAvmedygEgpW2sSzTR54MvszcBAC3V/jlKu/0+5Ok5U4v7wFPLnJ+v3WjRkbczQQR33ejREYik1A0doYfad/mXHFOe3vOIiETNCZv4Ygw=
+   eJzt10EKgCAQBVCpLtUduk3QQTpxa4NQSnCk9+Av3I3ghzElAAAYzzaXA0BK+1SXaKLPByOzNwEALdX+OUq7/XFLz5la3AfeWpf8fO9Gi458nQkieOpGj45AJKVu6Ag91L7Lv+Sc8/SeR0Qkai764uD2
   </data>
  </layer>
  <objectgroup name="obstacles">
@@ -37,5 +34,8 @@
   <object id="68" x="1440" y="48" width="144" height="16"/>
   <object id="69" x="1344" y="96" width="80" height="16"/>
  </objectgroup>
- <objectgroup name="emojis"/>
+ <objectgroup name="emojis">
+  <object id="79" x="512" y="144" width="32" height="32"/>
+  <object id="80" x="1104" y="144" width="32" height="32"/>
+ </objectgroup>
 </map>
