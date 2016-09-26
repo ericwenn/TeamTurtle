@@ -21,5 +21,6 @@
  <objectgroup name="bricks" width="0" height="0"/>
  <objectgroup name="emoji_placeholders" width="200" height="15">
   <object x="482" y="108" width="16" height="16"/>
+  <object x="480" y="45" width="17" height="17"/>
  </objectgroup>
 </map>

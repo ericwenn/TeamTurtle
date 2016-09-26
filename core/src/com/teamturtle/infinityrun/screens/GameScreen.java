@@ -148,12 +148,13 @@ public class GameScreen implements Screen {
 
         for (Body body : emojiBodies) {
             Emoji emoji = (Emoji) body.getUserData();
-            emoji.setPosition( body.getPosition().x, body.getPosition().y );
+            emoji.setPosition( body.getPosition().x - Emoji.EMOJI_SIZE / 2, body.getPosition().y - Emoji.EMOJI_SIZE / 2 );
             emoji.render();
         }
     }
 
     private void handleInput() {
+
     }
 
     @Override
