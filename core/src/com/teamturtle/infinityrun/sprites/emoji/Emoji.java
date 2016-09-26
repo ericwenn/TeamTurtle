@@ -16,14 +16,17 @@ public class Emoji extends Sprite{
 
     private static final int SHOW_TIME = 10;
     private static final float TEXT_OFFSET = 150f;
+    private static final float EXPLOSION_SCALE = 1.3f;
+    private static final float EMOJI_SIZE = 32;
+
 
     private String emojiName;
     private Sound emojiSound;
     private BitmapFont font;
     private SpriteBatch sb;
     private Texture texture;
-    private boolean show;
-    private int time = 0;
+
+    private boolean isExploded = false;
 
     public Emoji(String emojiName, String soundURL, Texture texture, SpriteBatch sb){
         super(texture);
@@ -38,30 +41,21 @@ public class Emoji extends Sprite{
         setPosition(400, InfinityRun.HEIGHT - 100);
     }
 
-    public void show(){
-        show = true;
-    }
 
     public void render() {
         sb.begin();
-        sb.draw( texture, getX(), getY());
-        sb.end();
-        /*
-        if (show && time == 0) {
-            emojiSound.stop();
-            emojiSound.play();
-            time++;
-        }else if(show && time < SHOW_TIME) {
-            sb.begin();
-            sb.draw(texture, getX(), getY() - TEXT_OFFSET);
-            font.draw(sb, emojiName, getX(), getY());
-            sb.end();
-            time++;
-        }else{
-            time = 0;
-            show = false;
+        if( isExploded ) {
+            sb.draw( texture, getX(), getY(), EMOJI_SIZE*EXPLOSION_SCALE, EMOJI_SIZE*EXPLOSION_SCALE);
+        } else {
+            sb.draw( texture, getX(), getY(), EMOJI_SIZE, EMOJI_SIZE);
         }
-        */
+        sb.end();
+    }
+
+
+
+    public void triggerExplode() {
+        isExploded = true;
     }
 
 }

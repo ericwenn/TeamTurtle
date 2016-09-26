@@ -3,10 +3,10 @@ package com.teamturtle.infinityrun.sprites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.teamturtle.infinityrun.InfinityRun;
@@ -52,6 +52,7 @@ public class Player extends Sprite {
         shape.setRadius(COLLISION_RADIUS);
         fdef.shape = shape;
 
-        b2body.createFixture(fdef);
+        Fixture fixture = b2body.createFixture(fdef);
+        fixture.setUserData(this);
     }
 }

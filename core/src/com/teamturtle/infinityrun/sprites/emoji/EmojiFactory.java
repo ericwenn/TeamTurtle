@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -22,6 +23,7 @@ public class EmojiFactory {
 
     private EmojiRandomizer emojiRandomizer;
     private Array<Body> bodies;
+    private Array<Fixture> fixtures;
 
     public EmojiFactory(World world, TiledMap tiledMap, SpriteBatch spriteBatch, int emojiLayer) {
         this.world = world;
@@ -49,9 +51,12 @@ public class EmojiFactory {
 
             shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
             fdef.shape = shape;
-            body.createFixture(fdef);
+            Fixture fixture = body.createFixture(fdef);
+            fixture.setSensor(true);
+            Emoji emoji = emojiRandomizer.getNext();
 
-            body.setUserData( emojiRandomizer.getNext() );
+            fixture.setUserData(emoji);
+            body.setUserData(emoji);
             bodies.add(body);
 
         }
@@ -62,4 +67,5 @@ public class EmojiFactory {
     public Array<Body> getBodies() {
         return bodies;
     }
+
 }
