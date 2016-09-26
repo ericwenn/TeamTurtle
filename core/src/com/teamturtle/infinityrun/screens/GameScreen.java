@@ -21,7 +21,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.ObstacleListener;
+import com.teamturtle.infinityrun.collisions.CollisionHandler;
+import com.teamturtle.infinityrun.collisions.ICollisionHandler;
 import com.teamturtle.infinityrun.sprites.Emoji;
 import com.teamturtle.infinityrun.sprites.Player;
 
@@ -58,6 +59,15 @@ public class GameScreen implements Screen {
 
         world = new World(new Vector2(0, GRAVITY), true);
         b2dr = new Box2DDebugRenderer();
+
+        CollisionHandler collisionHandler = new CollisionHandler();
+        collisionHandler.onCollisionWithObstable(new ICollisionHandler.ObstacleCollisionListener() {
+            @Override
+            public void onCollision(Player p) {
+                Gdx.app.log("Collision", "Game over");
+            }
+        });
+        world.setContactListener(collisionHandler);
 
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
         this.mPlayer = new Player(world, dalaHorse);
@@ -101,7 +111,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        world.setContactListener(new ObstacleListener());
+
     }
 
 

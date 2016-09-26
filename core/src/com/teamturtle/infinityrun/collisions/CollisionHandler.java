@@ -4,8 +4,8 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.teamturtle.infinityrun.sprites.Emoji;
 import com.teamturtle.infinityrun.sprites.Player;
-import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 /**
  * Created by ericwenn on 9/25/16.
@@ -39,6 +39,10 @@ public class CollisionHandler implements ICollisionHandler, ContactListener {
         if (obj1 == null || obj2 == null) {
             return;
         }
+        if (obj1 == "obstacle" && obj2 instanceof Player)
+            mObstacleCollisionListener.onCollision((Player) obj2);
+        if (obj2 == "obstacle" && obj1 instanceof Player)
+            mObstacleCollisionListener.onCollision((Player) obj1);
 
         if (obj1 instanceof Player && obj2 instanceof Emoji) {
             mEmojiCollisionListener.onCollision((Player) obj1, (Emoji) obj2);
