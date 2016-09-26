@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="16" tileheight="16" nextobjectid="70">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="16" tileheight="16" nextobjectid="78">
  <tileset firstgid="1" name="tileset_mario" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="832" columns="32">
   <image source="tileset.png" trans="ff00ff" width="576" height="480"/>
  </tileset>
  <tileset firstgid="833" name="tileset" tilewidth="16" tileheight="16" tilecount="1080" columns="36">
   <image source="tileset.png" width="576" height="480"/>
  </tileset>
+ <tileset firstgid="1913" name="appletile" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="appletile.png" width="32" height="32"/>
+ </tileset>
  <layer name="graphics" width="200" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt10EKgCAURVEhcvXtJmghraixQejgg5rnwJ0b9EBTAgCA+Ry5HgApnXtboxn9fDAz9yYAIFLrm6N2t7+2sp5nivgeiPLeRsRG4A++tmEjrK62DRuhh9b/cpXuXNb7PJI0ag/FJWEM
+   eJzt10EKgCAQBVAhqjN3h24TdJBO1NoglBKc6D34C3cj+GFMCQAAvmedygEgpW2sSzTR54MvszcBAC3V/jlKu/0+5Ok5U4v7wFPLnJ+v3WjRkbczQQR33ejREYik1A0doYfad/mXHFOe3vOIiETNCZv4Ygw=
   </data>
  </layer>
  <objectgroup name="obstacles">
