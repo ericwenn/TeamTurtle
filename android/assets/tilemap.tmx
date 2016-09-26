@@ -11,6 +11,9 @@
    eJzt10EKgCAURVEhcvXtJmghraixQejgg5rnwJ0b9EBTAgCA+Ry5HgApnXtboxn9fDAz9yYAIFLrm6N2t7+2sp5nivgeiPLeRsRG4A++tmEjrK62DRuhh9b/cpXuXNb7PJI0ag/FJWEM
   </data>
  </layer>
+ <objectgroup name="obstacles">
+  <object id="52" x="1088" y="208" width="64" height="16"/>
+ </objectgroup>
  <objectgroup name="platforms">
   <object id="35" x="0" y="208" width="1088" height="32"/>
   <object id="38" x="1152" y="208" width="1424" height="32"/>
@@ -30,9 +33,6 @@
   <object id="58" x="304" y="144" width="192" height="16"/>
   <object id="68" x="1440" y="48" width="144" height="16"/>
   <object id="69" x="1344" y="96" width="80" height="16"/>
- </objectgroup>
- <objectgroup name="obstacles">
-  <object id="52" x="1088" y="208" width="64" height="16"/>
  </objectgroup>
  <objectgroup name="emojis"/>
 </map>
