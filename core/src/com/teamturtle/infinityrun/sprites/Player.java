@@ -22,6 +22,7 @@ public class Player extends Sprite {
     private TextureRegion playerStand;
     private static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32,
             COLLISION_RADIUS = PLAYER_WIDTH / 2;
+    private static final float JUMP_IMPULSE = 5f;
 
     public Player(World world, Texture t) {
         super( t );
@@ -55,6 +56,11 @@ public class Player extends Sprite {
 
         b2body.createFixture(fdef);
     }
+
+    public void jump(){
+        b2body.applyLinearImpulse(new Vector2(0, JUMP_IMPULSE), b2body.getWorldCenter(), true);
+    }
+
     public Body getPlayerBody(){
         return b2body;
     }

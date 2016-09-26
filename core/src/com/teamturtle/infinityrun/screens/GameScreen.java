@@ -29,12 +29,12 @@ import com.teamturtle.infinityrun.sprites.Player;
  * Created by ericwenn on 9/20/16.
  */
 public class GameScreen implements Screen {
-    public static final float GAME_SPEED = 0.1f, GRAVITY = -10, JUMP_IMPULSE = 5f;
+    public static final float GAME_SPEED = 0.1f, GRAVITY = -10;
 
     private OrthographicCamera cam;
     private SpriteBatch mSpriteBatch;
     private Texture bg;
-    private int bg1, bg2;
+    private float bg1, bg2;
     private FillViewport mFillViewport;
     private Player mPlayer;
     private Emoji emoji;
@@ -55,7 +55,7 @@ public class GameScreen implements Screen {
 
         this.bg = new Texture("bg.jpg");
         bg1 = 0;
-        bg2 = InfinityRun.WIDTH;
+        bg2 = InfinityRun.WIDTH / InfinityRun.PPM;
 
         world = new World(new Vector2(0, GRAVITY), true);
         b2dr = new Box2DDebugRenderer();
@@ -105,16 +105,20 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         mSpriteBatch.setProjectionMatrix(cam.combined);
         mSpriteBatch.begin();
+        System.out.println(mPlayer.getX() > bg1);
 
-        if(bg1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth/2)
-            bg1 += InfinityRun.WIDTH * 2;
-        if(bg2 + InfinityRun.WIDTH< cam.position.x - cam.viewportWidth/2)
-            bg2 += InfinityRun.WIDTH * 2;
-        mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
-        mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
+        if(bg1 + InfinityRun.WIDTH / InfinityRun.PPM< cam.position.x - cam.viewportWidth/2)
+            bg1 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
+        if(bg2 + InfinityRun.WIDTH / InfinityRun.PPM < cam.position.x - cam.viewportWidth/2)
+            bg2 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
 
+        mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH / InfinityRun.PPM,
+                InfinityRun.HEIGHT / InfinityRun.PPM);
+        mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
+                InfinityRun.HEIGHT / InfinityRun.PPM);
         mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY(), 32 / InfinityRun.PPM,
                 32 / InfinityRun.PPM);
+
         mSpriteBatch.end();
         this.cam.position.set(mPlayer.getX(), mFillViewport.getWorldHeight() / 2, 0);
         cam.update();
@@ -128,10 +132,8 @@ public class GameScreen implements Screen {
         if (Gdx.input.isTouched()) {
             emoji.show();
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP) &&
-                mPlayer.getPlayerBody().getLinearVelocity().y == 0)
-            mPlayer.getPlayerBody().applyLinearImpulse(new Vector2(0, JUMP_IMPULSE),
-                    mPlayer.getPlayerBody().getWorldCenter(), true);
+        if(Gdx.input.isTouched() && mPlayer.getPlayerBody().getLinearVelocity().y == 0)
+            mPlayer.jump();
     }
 
     @Override
