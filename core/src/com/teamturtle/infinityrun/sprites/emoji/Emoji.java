@@ -28,18 +28,16 @@ public class Emoji extends Sprite implements Entity{
     private BitmapFont font;
     private GlyphLayout glyphLayout;
 
-    private SpriteBatch sb;
     private Texture texture;
 
 
     private boolean isExploded = false;
     private Body mBody;
 
-    public Emoji(String emojiName, String soundURL, Texture texture, SpriteBatch sb){
+    public Emoji(String emojiName, String soundURL, Texture texture){
         super(texture);
         this.emojiName = emojiName;
         this.texture = texture;
-        this.sb = sb;
 
 
         font = new BitmapFont();
