@@ -7,6 +7,5 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public interface Entity {
     void update(float dt);
-
     void render(SpriteBatch spriteBatch);
 }

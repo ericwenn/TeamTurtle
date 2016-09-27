@@ -6,19 +6,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.sprites.Entity;
+import com.teamturtle.infinityrun.sprites.AbstractEntity;
 
 /**
  * Created by Henrik on 2016-09-21.
  */
-public class Emoji extends Sprite implements Entity{
+public class Emoji extends AbstractEntity {
 
-    private static final int SHOW_TIME = 10;
-    private static final float TEXT_OFFSET = 150f;
     private static final float EXPLOSION_SCALE = 1.3f;
     public static final float EMOJI_SIZE = 32;
 
@@ -35,7 +32,6 @@ public class Emoji extends Sprite implements Entity{
     private Body mBody;
 
     public Emoji(String emojiName, String soundURL, Texture texture){
-        super(texture);
         this.emojiName = emojiName;
         this.texture = texture;
 

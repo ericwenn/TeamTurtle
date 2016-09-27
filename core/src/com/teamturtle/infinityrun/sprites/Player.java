@@ -1,7 +1,7 @@
 package com.teamturtle.infinityrun.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,29 +15,35 @@ import com.teamturtle.infinityrun.screens.GameScreen;
 /**
  * Created by ericwenn on 9/20/16.
  */
-public class Player extends Sprite {
+public class Player extends AbstractEntity {
 
     private World world;
+    private Texture mTexture;
     private Body b2body;
     private TextureRegion playerStand;
     private static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32,
             COLLISION_RADIUS = PLAYER_WIDTH / 2;
 
     public Player(World world, Texture t) {
-        super( t );
         this.world = world;
+        this.mTexture = t;
+
         setPosition(100, InfinityRun.HEIGHT / 2);
         definePlayer();
+
         //Temporary velocity source, should be changed because the velocity decreases due to gravity
         b2body.setLinearVelocity(GameScreen.GAME_SPEED, 0);
 
-        playerStand = new TextureRegion(getTexture(), 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
-        setBounds(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
-        setRegion(playerStand);
+        playerStand = new TextureRegion(mTexture, 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
     }
 
     public void update(float dt) {
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        setPosition(b2body.getPosition().x - PLAYER_WIDTH / 2, b2body.getPosition().y - PLAYER_HEIGHT / 2);
+    }
+
+    @Override
+    public void render(SpriteBatch spriteBatch) {
+        spriteBatch.draw(playerStand, getX(), getY());
     }
 
     public void definePlayer(){
