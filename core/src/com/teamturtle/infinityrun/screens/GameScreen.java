@@ -80,16 +80,13 @@ public class GameScreen implements Screen {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
 
 
-        // This chunk of code should be refactorized into some other class.
         MapParser groundParser = new GroundParser(world, tiledMap, "ground");
         groundParser.parse();
 
-        //
         MapParser emojiParser = new EmojiParser(world, tiledMap,  "emoji_placeholders");
         emojiParser.parse();
         emojiSprites = emojiParser.getEntities();
 
-        // Creating obstacles
         MapParser obstacleParser = new ObstacleParser(world, tiledMap, "obstacles");
         obstacleParser.parse();
 
