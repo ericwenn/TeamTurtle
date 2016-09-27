@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" nextobjectid="87">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" nextobjectid="144">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="1080" columns="36">
   <image source="tileset.png" width="576" height="480"/>
  </tileset>
@@ -11,16 +11,22 @@
  </tileset>
  <layer name="graphics" width="200" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt10EKwjAQBdAsAj1T1cO471EFwRu5cdEGJEFDM4H34EN3mUL+0KYEAADz2XI9ALTty4g7M/p8MLMZdgAAMI/Wf47ad8clHzNyph7vA79ai3tVdqNHR/6dCSL41o0RHYFIat3QEUa45vhp7U6PPJeUHp+8lnPPlngZfff3ue2e7/n8boiUeQMQX4ZE
+   eJztl91ugjAYhjkA2S05PfIydrSrmQmXMpMdOONNLIFsJM6LWZa14ftih9YWoaXF90nelN/Yr/C0kiQAAAAAAADExyo3BwAAgN18GeKcGXr/AIiZUOeAp5k5AIBz4Ae4JxZpE1v6+lFnSfKa3X7/vWD7zWH63/GY/s+YfRqiHp+wG7782GSNHxU5snc4Dj9pE93+FJm36mu7MYQjffsUC6obXfz4zZt05YucYDfkfuFoHWEXLvkxdUcYnRtjOBITbS+6+nELBfmwITf6rCFbcf27yE5zn+qBzo+pO2Jy45oj8nm4XNfHguvS1abzwrUf0oV1dvru4JadqTuuIQdR37fI8UKd/O4fLPxw4YhpjEOIrTtDpBTP6IPymbv5DcZnXYOND7kg2xdKRW2tHK9oWx4LefyWD9fPj/3uq1kq28+pfzd8JWY/2IE3atmNUvGhVM7F7scf/6fQig==
   </data>
  </layer>
+ <objectgroup name="finish">
+  <object id="143" x="6144" y="-32" width="32" height="448"/>
+ </objectgroup>
  <objectgroup name="obstacles">
   <object id="86" x="2176" y="416" width="128" height="32"/>
+  <object id="88" x="1568" y="384" width="64" height="32"/>
+  <object id="90" x="3296" y="384" width="96" height="32"/>
+  <object id="103" x="4128" y="320" width="64" height="32"/>
+  <object id="119" x="4768" y="352" width="32" height="32"/>
+  <object id="120" x="4736" y="288" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="platforms">
   <object id="35" x="1" y="417.604" width="2173.31" height="63.9208"/>
-  <object id="38" x="2302.15" y="417.604" width="2844.48" height="63.9208"/>
-  <object id="40" x="5146.62" y="417.604" width="1310.38" height="63.9208"/>
   <object id="41" x="1183.53" y="289.762" width="127.842" height="127.842"/>
   <object id="42" x="1311.38" y="353.683" width="31.9604" height="63.9208"/>
   <object id="43" x="1343.34" y="353.683" width="31.9604" height="63.9208"/>
@@ -36,9 +42,43 @@
   <object id="58" x="608.248" y="289.762" width="383.525" height="31.9604"/>
   <object id="68" x="2877.44" y="98" width="287.644" height="31.9604"/>
   <object id="69" x="2685.67" y="193.881" width="159.802" height="31.9604"/>
+  <object id="92" x="3552" y="384" width="256" height="32"/>
+  <object id="93" x="3744" y="256" width="64" height="128"/>
+  <object id="94" x="3712" y="288" width="32" height="96"/>
+  <object id="95" x="3680" y="320" height="64"/>
+  <object id="97" x="3616" y="352" width="64" height="32"/>
+  <object id="99" x="3904" y="192" width="288" height="32"/>
+  <object id="100" x="4128" y="224" width="64" height="96"/>
+  <object id="110" x="2304" y="416" width="672" height="64"/>
+  <object id="112" x="4512" y="384" width="288" height="32"/>
+  <object id="113" x="4544" y="352" width="224" height="32"/>
+  <object id="115" x="4576" y="320" width="192" height="32"/>
+  <object id="116" x="4608" y="288" width="128" height="32"/>
+  <object id="117" x="4640" y="256" width="64" height="32"/>
+  <object id="123" x="5166" y="372" width="85" height="39">
+   <ellipse/>
+  </object>
+  <object id="124" x="5154" y="396" width="63" height="19">
+   <ellipse/>
+  </object>
+  <object id="125" x="3040" y="416" width="2496" height="64"/>
+  <object id="126" x="5472" y="288" width="64" height="128"/>
+  <object id="127" x="5440" y="320" height="96"/>
+  <object id="128" x="5408" y="352" width="32" height="64"/>
+  <object id="129" x="5376" y="384" width="32" height="32"/>
+  <object id="135" x="5600" y="288" width="64" height="192"/>
+  <object id="136" x="5664" y="320" width="32" height="160"/>
+  <object id="137" x="5696" y="352" width="32" height="128"/>
+  <object id="138" x="5728" y="384" width="32" height="32"/>
+  <object id="140" x="5728" y="416" width="672" height="64"/>
  </objectgroup>
  <objectgroup name="emojis">
   <object id="82" x="1024" y="320" width="32" height="32"/>
   <object id="83" x="2208" y="320" width="32" height="32"/>
+  <object id="91" x="3744" y="160" width="32" height="32"/>
+  <object id="104" x="4160" y="96" width="32" height="32"/>
+  <object id="106" x="4128" y="352" width="32" height="32"/>
+  <object id="121" x="4768" y="192" width="32" height="32"/>
+  <object id="142" x="5568" y="192" width="32" height="32"/>
  </objectgroup>
 </map>
