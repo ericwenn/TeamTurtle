@@ -32,7 +32,7 @@ public class CollisionHandler implements ICollisionHandler, ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-
+        System.out.println("Begin contact");
         Object obj1 = contact.getFixtureA().getUserData();
         Object obj2 = contact.getFixtureB().getUserData();
 
