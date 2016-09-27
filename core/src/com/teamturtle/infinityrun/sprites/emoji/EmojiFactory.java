@@ -19,16 +19,16 @@ import com.badlogic.gdx.utils.Array;
 public class EmojiFactory {
     private final World world;
     private final TiledMap tiledMap;
-    private int emojiLayer;
+    private String emojiPlaceholderName;
 
     private EmojiRandomizer emojiRandomizer;
     private Array<Body> bodies;
     private Array<Fixture> fixtures;
 
-    public EmojiFactory(World world, TiledMap tiledMap, SpriteBatch spriteBatch, int emojiLayer) {
+    public EmojiFactory(World world, TiledMap tiledMap, SpriteBatch spriteBatch, String emojiPlaceholderName) {
         this.world = world;
         this.tiledMap = tiledMap;
-        this.emojiLayer = emojiLayer;
+        this.emojiPlaceholderName = emojiPlaceholderName;
         this.bodies = new Array<Body>();
         this.emojiRandomizer = new EmojiRandomizer(spriteBatch);
     }
@@ -41,7 +41,7 @@ public class EmojiFactory {
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
-        for(MapObject object : tiledMap.getLayers().get(emojiLayer).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : tiledMap.getLayers().get(emojiPlaceholderName).getObjects().getByType(RectangleMapObject.class)){
 
             Rectangle rect =((RectangleMapObject) object).getRectangle();
 
