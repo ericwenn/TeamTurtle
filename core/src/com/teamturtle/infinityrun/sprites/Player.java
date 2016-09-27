@@ -21,15 +21,13 @@ public class Player extends Sprite {
     private Body b2body;
     private TextureRegion playerStand;
     private static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32,
-            COLLISION_RADIUS = PLAYER_WIDTH / 2;
+            COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 100, START_Y = 300;
     private static final float JUMP_IMPULSE = 5f;
 
     public Player(World world, Texture t) {
         super( t );
         this.world = world;
-        setPosition(100, InfinityRun.HEIGHT / 2);
         definePlayer();
-        //Temporary velocity source, should be changed because the velocity decreases due to gravity
         b2body.setLinearVelocity(GameScreen.GAME_SPEED * 5, 0);
 
         playerStand = new TextureRegion(getTexture(), 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -44,7 +42,7 @@ public class Player extends Sprite {
 
     private void definePlayer(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(100 / InfinityRun.PPM, 300 / InfinityRun.PPM);
+        bdef.position.set(START_X / InfinityRun.PPM, START_Y / InfinityRun.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 

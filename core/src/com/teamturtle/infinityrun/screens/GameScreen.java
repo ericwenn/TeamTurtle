@@ -105,17 +105,8 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         mSpriteBatch.setProjectionMatrix(cam.combined);
         mSpriteBatch.begin();
-        System.out.println(mPlayer.getX() > bg1);
 
-        if(bg1 + InfinityRun.WIDTH / InfinityRun.PPM< cam.position.x - cam.viewportWidth/2)
-            bg1 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
-        if(bg2 + InfinityRun.WIDTH / InfinityRun.PPM < cam.position.x - cam.viewportWidth/2)
-            bg2 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
-
-        mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH / InfinityRun.PPM,
-                InfinityRun.HEIGHT / InfinityRun.PPM);
-        mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
-                InfinityRun.HEIGHT / InfinityRun.PPM);
+        drawBackground();
         mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY(), 32 / InfinityRun.PPM,
                 32 / InfinityRun.PPM);
 
@@ -161,5 +152,17 @@ public class GameScreen implements Screen {
         mSpriteBatch.dispose();
         bg.dispose();
 
+    }
+
+    public void drawBackground(){
+        if(bg1 + InfinityRun.WIDTH / InfinityRun.PPM< cam.position.x - cam.viewportWidth/2)
+            bg1 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
+        if(bg2 + InfinityRun.WIDTH / InfinityRun.PPM < cam.position.x - cam.viewportWidth/2)
+            bg2 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
+
+        mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH / InfinityRun.PPM,
+                InfinityRun.HEIGHT / InfinityRun.PPM);
+        mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
+                InfinityRun.HEIGHT / InfinityRun.PPM);
     }
 }
