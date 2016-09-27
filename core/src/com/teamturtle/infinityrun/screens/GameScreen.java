@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
     private FillViewport mFillViewport;
     private Player mPlayer;
 
-    private ICollisionHandler mCollisionHandler;
+    private CollisionHandler mCollisionHandler;
 
     private TmxMapLoader tmxMapLoader;
     private TiledMap tiledMap;
