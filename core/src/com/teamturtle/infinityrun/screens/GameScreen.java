@@ -41,6 +41,8 @@ public class GameScreen implements Screen {
     private FillViewport mFillViewport;
     private Player mPlayer;
 
+    private CollisionHandler mCollisionHandler;
+
     private TmxMapLoader tmxMapLoader;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
@@ -63,24 +65,8 @@ public class GameScreen implements Screen {
         world = new World(new Vector2(0, GRAVITY), true);
         b2dr = new Box2DDebugRenderer();
 
+        setupContactHandler();
 
-        CollisionHandler collisionHandler = new CollisionHandler();
-        collisionHandler.onCollisionWithObstable(new ICollisionHandler.ObstacleCollisionListener() {
-            @Override
-            public void onCollision(Player p) {
-                Gdx.app.log("Collision", "Game over");
-            }
-        });
-
-        collisionHandler.onCollisionWithEmoji(new ICollisionHandler.EmojiCollisionListener() {
-            @Override
-            public void onCollision(Player p, Emoji e) {
-                System.out.println("Emoji collision");
-                e.triggerExplode();
-            }
-
-        });
-        world.setContactListener(collisionHandler);
 
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
         this.mPlayer = new Player(world, dalaHorse);
@@ -131,7 +117,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
+        world.setContactListener(mCollisionHandler);
     }
 
 
@@ -191,7 +177,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
-
     }
 
     @Override
@@ -200,4 +185,31 @@ public class GameScreen implements Screen {
         bg.dispose();
 
     }
+
+
+
+
+
+    private void setupContactHandler() {
+
+        CollisionHandler collisionHandler = new CollisionHandler();
+        collisionHandler.onCollisionWithObstable(new ICollisionHandler.ObstacleCollisionListener() {
+            @Override
+            public void onCollision(Player p) {
+                Gdx.app.log("Collision", "Game over");
+            }
+        });
+
+        collisionHandler.onCollisionWithEmoji(new ICollisionHandler.EmojiCollisionListener() {
+            @Override
+            public void onCollision(Player p, Emoji e) {
+                System.out.println("Emoji collision");
+                e.triggerExplode();
+            }
+
+        });
+
+        mCollisionHandler = collisionHandler;
+    }
+
 }
