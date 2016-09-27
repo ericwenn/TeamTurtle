@@ -21,9 +21,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.sprites.Emoji;
+import com.teamturtle.infinityrun.InfinityRun;;
 import com.teamturtle.infinityrun.sprites.Player;
+import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 /**
  * Created by ericwenn on 9/20/16.
@@ -120,9 +120,6 @@ public class GameScreen implements Screen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isTouched()) {
-            emoji.show();
-        }
         if(Gdx.input.isTouched() && mPlayer.getPlayerBody().getLinearVelocity().y == 0)
             mPlayer.jump();
     }
