@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.sprites.Entity;
 
 import java.util.List;
@@ -37,12 +38,13 @@ public class ObstacleParser implements MapParser {
 
         for (MapObject object : tiledMap.getLayers().get(obstacleLayerName).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
+            bdef.position.set(((rect.getX() + rect.getWidth() / 2) / InfinityRun.PPM)
+                    , ((rect.getY() + rect.getHeight() / 2) / InfinityRun.PPM));
             Body body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            shape.setAsBox((rect.getWidth() / 2) / InfinityRun.PPM
+                    , (rect.getHeight() / 2) / InfinityRun.PPM);
             fdef.shape = shape;
             fdef.isSensor = true;
             body.createFixture(fdef).setUserData("obstacle");

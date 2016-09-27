@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -30,17 +31,29 @@ import java.util.List;
  * Created by ericwenn on 9/20/16.
  */
 public class GameScreen implements Screen {
-    public static final int GAME_SPEED = 100, GRAVITY = -100;
+
+    public enum Level {
+        LEVEL_1("level1.tmx"), LEVEL_2("level2.tmx"), LEVEL_3("level3.tmx");
+
+        private final String tmx;
+
+        Level(String tmx) {
+            this.tmx = tmx;
+        }
+    }
+
+    public static final float GRAVITY = -10;
 
     private OrthographicCamera cam;
     private SpriteBatch mSpriteBatch;
     private Texture bg;
-    private int bgPosition1, bgPosition2;
+    private float bgPosition1, bgPosition2;
     private FillViewport mFillViewport;
     private Player mPlayer;
 
     private CollisionHandler mCollisionHandler;
 
+    private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
     private World world;
@@ -48,11 +61,20 @@ public class GameScreen implements Screen {
 
     private List<? extends Entity> emojiSprites;
 
-    public GameScreen(SpriteBatch mSpriteBatch) {
+    public GameScreen(SpriteBatch mSpriteBatch, Level level) {
         this.mSpriteBatch = mSpriteBatch;
 
+        //Load tilemap
+        TmxMapLoader tmxMapLoader = new TmxMapLoader();
+        tiledMap = tmxMapLoader.load(level.tmx);
+    }
+
+    @Override
+    public void show() {
+
         // FillViewport "letterboxing"
-        this.mFillViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
+        this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
+                , InfinityRun.HEIGHT / InfinityRun.PPM);
 
         // Setup camera and set it to center of the world
         this.cam = new OrthographicCamera(mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
@@ -60,42 +82,21 @@ public class GameScreen implements Screen {
 
         // Init background from file and setup starting positions to have continous background.
         this.bg = new Texture("bg.jpg");
-        bgPosition1 = 0;
-        bgPosition2 = InfinityRun.WIDTH;
 
-        // Setup world with regular gravity, and sleeping bodies
-        world = new World(new Vector2(0, GRAVITY), true);
+        bgPosition1 = 0;
+        bgPosition2 = InfinityRun.WIDTH / InfinityRun.PPM;
 
         // TODO Remove this before production
         b2dr = new Box2DDebugRenderer();
 
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / InfinityRun.PPM);
+
+        //Creates box2d world and enteties
+        setUpWorld();
+
         // Create CollisionHandler with actions. Still not connected to the world.
         setupContactHandler();
 
-
-        Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
-        this.mPlayer = new Player(world, dalaHorse);
-        TmxMapLoader tmxMapLoader = new TmxMapLoader();
-        TiledMap tiledMap = tmxMapLoader.load("tilemap.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
-
-
-        MapParser groundParser = new GroundParser(world, tiledMap, "ground");
-        groundParser.parse();
-
-        MapParser emojiParser = new EmojiParser(world, tiledMap,  "emoji_placeholders");
-        emojiParser.parse();
-        emojiSprites = emojiParser.getEntities();
-
-        MapParser obstacleParser = new ObstacleParser(world, tiledMap, "obstacles");
-        obstacleParser.parse();
-
-
-
-    }
-
-    @Override
-    public void show() {
         world.setContactListener(mCollisionHandler);
     }
 
@@ -108,7 +109,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
         gameUpdate(delta);
 
         tiledMapRenderer.setView(cam);
@@ -117,18 +117,7 @@ public class GameScreen implements Screen {
         mSpriteBatch.setProjectionMatrix(cam.combined);
         mSpriteBatch.begin();
 
-
-        // TODO Probably refactor this
-        if (bgPosition1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
-            bgPosition1 += InfinityRun.WIDTH * 2;
-        if (bgPosition2 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
-            bgPosition2 += InfinityRun.WIDTH * 2;
-        mSpriteBatch.draw(bg, bgPosition1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
-        mSpriteBatch.draw(bg, bgPosition2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
-
-
-
-
+        renderBg();
 
         mPlayer.render(mSpriteBatch);
         for (Entity emoji: emojiSprites) {
@@ -136,19 +125,17 @@ public class GameScreen implements Screen {
             emoji.render(mSpriteBatch);
         }
 
-
-
         mSpriteBatch.end();
-        this.cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, mFillViewport.getWorldHeight() / 2, 0);
+        this.cam.position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
+                , mFillViewport.getWorldHeight() / 2, 0);
         cam.update();
         tiledMapRenderer.render();
         b2dr.render(world, cam.combined);
-
-
     }
 
     private void handleInput() {
-
+        if((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)))
+            mPlayer.jump();
     }
 
     @Override
@@ -173,7 +160,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        System.out.println("disposing");
+        Gdx.app.log("Dispose", "disposing");
         for( Entity ent : emojiSprites) {
             ent.dispose();
         }
@@ -183,9 +170,33 @@ public class GameScreen implements Screen {
 
     }
 
+    private void renderBg() {
+        if(bgPosition1 + InfinityRun.WIDTH / InfinityRun.PPM< cam.position.x - cam.viewportWidth/2)
+            bgPosition1 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
+        if(bgPosition2 + InfinityRun.WIDTH / InfinityRun.PPM < cam.position.x - cam.viewportWidth/2)
+            bgPosition2 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
+        mSpriteBatch.draw(bg, bgPosition1, 0, InfinityRun.WIDTH / InfinityRun.PPM,
+                InfinityRun.HEIGHT / InfinityRun.PPM);
+        mSpriteBatch.draw(bg, bgPosition2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
+                InfinityRun.HEIGHT / InfinityRun.PPM);
+    }
 
+    private void setUpWorld() {
+        // Setup world with regular gravity, and sleeping bodies
+        world = new World(new Vector2(0, GRAVITY), true);
 
+        mPlayer = new Player(world);
 
+        MapParser groundParser = new GroundParser(world, tiledMap, "ground");
+        groundParser.parse();
+
+        MapParser emojiParser = new EmojiParser(world, tiledMap,  "emoji_placeholders");
+        emojiParser.parse();
+        emojiSprites = emojiParser.getEntities();
+
+        MapParser obstacleParser = new ObstacleParser(world, tiledMap, "obstacles");
+        obstacleParser.parse();
+    }
 
     private void setupContactHandler() {
 
@@ -200,7 +211,7 @@ public class GameScreen implements Screen {
         collisionHandler.onCollisionWithEmoji(new ICollisionHandler.EmojiCollisionListener() {
             @Override
             public void onCollision(Player p, Emoji e) {
-                System.out.println("Emoji collision");
+                Gdx.app.log("Collision", "Emoji collision");
                 e.triggerExplode();
             }
 
