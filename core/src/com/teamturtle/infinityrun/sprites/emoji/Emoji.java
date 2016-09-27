@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.sprites.Entity;
 
 /**
  * Created by Henrik on 2016-09-21.
  */
-public class Emoji extends Sprite{
+public class Emoji extends Sprite implements Entity{
 
     private static final int SHOW_TIME = 10;
     private static final float TEXT_OFFSET = 150f;
@@ -31,6 +33,7 @@ public class Emoji extends Sprite{
 
 
     private boolean isExploded = false;
+    private Body mBody;
 
     public Emoji(String emojiName, String soundURL, Texture texture, SpriteBatch sb){
         super(texture);
@@ -52,15 +55,10 @@ public class Emoji extends Sprite{
     }
 
 
-    public void render() {
-        sb.begin();
-        if( isExploded ) {
-            sb.draw( texture, getX(), getY(), EMOJI_SIZE*EXPLOSION_SCALE, EMOJI_SIZE*EXPLOSION_SCALE);
-            font.draw( sb, glyphLayout, getX() + (EMOJI_SIZE - glyphLayout.width) / 2, getY() + EMOJI_SIZE + 50);
-        } else {
-            sb.draw( texture, getX(), getY(), EMOJI_SIZE, EMOJI_SIZE);
-        }
-        sb.end();
+
+
+    public void setBody(Body body) {
+        mBody = body;
     }
 
 
@@ -68,6 +66,21 @@ public class Emoji extends Sprite{
     public void triggerExplode() {
         isExploded = true;
         emojiSound.play();
+    }
+
+    @Override
+    public void update(float dt) {
+        setPosition(mBody.getPosition().x - Emoji.EMOJI_SIZE / 2, mBody.getPosition().y - Emoji.EMOJI_SIZE / 2);
+    }
+
+    @Override
+    public void render(SpriteBatch sb) {
+        if( isExploded ) {
+            sb.draw( texture, getX(), getY(), EMOJI_SIZE*EXPLOSION_SCALE, EMOJI_SIZE*EXPLOSION_SCALE);
+            font.draw( sb, glyphLayout, getX() + (EMOJI_SIZE - glyphLayout.width) / 2, getY() + EMOJI_SIZE + 50);
+        } else {
+            sb.draw( texture, getX(), getY(), EMOJI_SIZE, EMOJI_SIZE);
+        }
     }
 
 }

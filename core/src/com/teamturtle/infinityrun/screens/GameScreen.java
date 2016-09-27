@@ -19,14 +19,17 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.collisions.CollisionHandler;
 import com.teamturtle.infinityrun.collisions.ICollisionHandler;
-import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.map_parsing.EmojiParser;
+import com.teamturtle.infinityrun.map_parsing.MapParser;
+import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
-import com.teamturtle.infinityrun.sprites.emoji.EmojiFactory;
+import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+
+import java.util.List;
 
 /**
  * Created by ericwenn on 9/20/16.
@@ -48,7 +51,7 @@ public class GameScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
-    private Array<Body> emojiBodies;
+    private List<? extends Entity> emojiSprites;
 
     public GameScreen(SpriteBatch mSpriteBatch) {
         this.mSpriteBatch = mSpriteBatch;
@@ -101,10 +104,9 @@ public class GameScreen implements Screen {
         }
 
 
-        EmojiFactory emojiFactory = new EmojiFactory(world, tiledMap, mSpriteBatch, "emoji_placeholders");
-        emojiFactory.create();
-
-        emojiBodies = emojiFactory.getBodies();
+        MapParser emojiParser = new EmojiParser(world, tiledMap, mSpriteBatch, "emoji_placeholders");
+        emojiParser.parse();
+        emojiSprites = emojiParser.getEntities();
 
 //        Creating obstacles
         for (MapObject object : tiledMap.getLayers().get("obstacles").getObjects().getByType(RectangleMapObject.class)) {
@@ -153,17 +155,21 @@ public class GameScreen implements Screen {
 
 
         mSpriteBatch.draw(mPlayer, mPlayer.getX(), mPlayer.getY());
+
+        for (Entity emoji: emojiSprites) {
+            emoji.update(delta);
+            emoji.render(mSpriteBatch);
+        }
+
+
+
         mSpriteBatch.end();
         this.cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, mFillViewport.getWorldHeight() / 2, 0);
         cam.update();
         tiledMapRenderer.render();
         b2dr.render(world, cam.combined);
 
-        for (Body body : emojiBodies) {
-            Emoji emoji = (Emoji) body.getUserData();
-            emoji.setPosition(body.getPosition().x - Emoji.EMOJI_SIZE / 2, body.getPosition().y - Emoji.EMOJI_SIZE / 2);
-            emoji.render();
-        }
+
     }
 
     private void handleInput() {
