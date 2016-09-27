@@ -37,7 +37,7 @@ public class GameScreen implements Screen {
     private OrthographicCamera cam;
     private SpriteBatch mSpriteBatch;
     private Texture bg;
-    private int bg1, bg2;
+    private int bgPosition1, bgPosition2;
     private FillViewport mFillViewport;
     private Player mPlayer;
 
@@ -57,12 +57,11 @@ public class GameScreen implements Screen {
         this.cam.position.set(mFillViewport.getWorldWidth() / 2, mFillViewport.getWorldHeight() / 2, 0);
 
         this.bg = new Texture("bg.jpg");
-        bg1 = 0;
-        bg2 = InfinityRun.WIDTH;
+        bgPosition1 = 0;
+        bgPosition2 = InfinityRun.WIDTH;
 
         world = new World(new Vector2(0, GRAVITY), true);
         b2dr = new Box2DDebugRenderer();
-
 
 
         CollisionHandler collisionHandler = new CollisionHandler();
@@ -81,7 +80,7 @@ public class GameScreen implements Screen {
             }
 
         });
-        world.setContactListener( collisionHandler );
+        world.setContactListener(collisionHandler);
 
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
         this.mPlayer = new Player(world, dalaHorse);
@@ -108,11 +107,11 @@ public class GameScreen implements Screen {
             body.createFixture(fdef);
         }
 
-        
-            EmojiFactory emojiFactory = new EmojiFactory(world, tiledMap, mSpriteBatch, 3);
-            emojiFactory.create();
 
-            emojiBodies = emojiFactory.getBodies();
+        EmojiFactory emojiFactory = new EmojiFactory(world, tiledMap, mSpriteBatch, 3);
+        emojiFactory.create();
+
+        emojiBodies = emojiFactory.getBodies();
 
 //        Creating obstacles
         for (MapObject object : tiledMap.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
@@ -148,12 +147,12 @@ public class GameScreen implements Screen {
         mSpriteBatch.setProjectionMatrix(cam.combined);
         mSpriteBatch.begin();
 
-        if (bg1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
-            bg1 += InfinityRun.WIDTH * 2;
-        if (bg2 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
-            bg2 += InfinityRun.WIDTH * 2;
-        mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
-        mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
+        if (bgPosition1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
+            bgPosition1 += InfinityRun.WIDTH * 2;
+        if (bgPosition2 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
+            bgPosition2 += InfinityRun.WIDTH * 2;
+        mSpriteBatch.draw(bg, bgPosition1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
+        mSpriteBatch.draw(bg, bgPosition2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
 
 
         mSpriteBatch.draw(mPlayer, mPlayer.getX(), mPlayer.getY());
@@ -166,7 +165,7 @@ public class GameScreen implements Screen {
 
         for (Body body : emojiBodies) {
             Emoji emoji = (Emoji) body.getUserData();
-            emoji.setPosition( body.getPosition().x - Emoji.EMOJI_SIZE / 2, body.getPosition().y - Emoji.EMOJI_SIZE / 2 );
+            emoji.setPosition(body.getPosition().x - Emoji.EMOJI_SIZE / 2, body.getPosition().y - Emoji.EMOJI_SIZE / 2);
             emoji.render();
         }
     }
