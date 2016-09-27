@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.sprites.Emoji;
@@ -17,7 +18,7 @@ import com.teamturtle.infinityrun.sprites.Player;
 /**
  * Created by ericwenn on 9/20/16.
  */
-public class GameScreen implements Screen {
+public class GameScreen extends AbstractScreen {
     public static final int GAME_SPEED = 50;
 
     private OrthographicCamera cam;
