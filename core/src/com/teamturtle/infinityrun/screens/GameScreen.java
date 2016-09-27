@@ -21,11 +21,8 @@ import com.teamturtle.infinityrun.sprites.Player;
 public class GameScreen extends AbstractScreen {
     public static final int GAME_SPEED = 50;
 
-    private OrthographicCamera cam;
-    private SpriteBatch mSpriteBatch;
     private Texture bg;
     private int bg1, bg2;
-    private FillViewport mFillViewport;
     private Player mPlayer;
     private Emoji emoji;
 
@@ -34,10 +31,7 @@ public class GameScreen extends AbstractScreen {
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
     public GameScreen( SpriteBatch mSpriteBatch ) {
-        this.mSpriteBatch = mSpriteBatch;
-        this.mFillViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
-        this.cam = new OrthographicCamera( mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
-        this.cam.position.set(mFillViewport.getWorldWidth() / 2, mFillViewport.getWorldHeight() / 2, 0);
+        super(mSpriteBatch);
 
         this.bg = new Texture("bg.jpg");
         bg1 = 0;
@@ -45,7 +39,7 @@ public class GameScreen extends AbstractScreen {
 
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
         this.mPlayer = new Player(dalaHorse);
-        emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"),mSpriteBatch);
+        emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"), getSpriteBatch());
         tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load("tilemap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 2);
@@ -59,13 +53,21 @@ public class GameScreen extends AbstractScreen {
 
 
     @Override
+    public void buildStage() {
+
+    }
+
+    @Override
     public void render(float delta) {
+
+        super.render(delta);
+
+        OrthographicCamera cam = (OrthographicCamera) getCamera();
+        SpriteBatch mSpriteBatch = getSpriteBatch();
 
         mPlayer.update(delta);
 
         tiledMapRenderer.setView(cam);
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         mSpriteBatch.setProjectionMatrix(cam.combined);
         mSpriteBatch.begin();
 
@@ -78,7 +80,7 @@ public class GameScreen extends AbstractScreen {
 
         mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY());
         mSpriteBatch.end();
-        this.cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, mFillViewport.getWorldHeight() / 2, 0);
+        cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, getViewport().getWorldHeight() / 2, 0);
         cam.update();
         tiledMapRenderer.render();
         handleInput();
@@ -113,8 +115,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        mSpriteBatch.dispose();
+        super.dispose();
         bg.dispose();
-
     }
 }

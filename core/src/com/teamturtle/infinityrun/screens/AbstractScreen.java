@@ -3,10 +3,13 @@ package com.teamturtle.infinityrun.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.teamturtle.infinityrun.InfinityRun;
 
 /**
@@ -15,8 +18,27 @@ import com.teamturtle.infinityrun.InfinityRun;
 
 public abstract class AbstractScreen extends Stage implements Screen {
 
-    protected AbstractScreen() {
-        super( new FitViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT, new OrthographicCamera()) );
+    protected AbstractScreen(SpriteBatch spriteBatch) {
+
+        /*Viewport mFillViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
+        this.cam = new OrthographicCamera( mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
+        this.cam.position.set(mFillViewport.getWorldWidth() / 2, mFillViewport.getWorldHeight() / 2, 0);*/
+
+        super( new FitViewport(
+                InfinityRun.WIDTH,
+                InfinityRun.HEIGHT,
+                new OrthographicCamera(InfinityRun.WIDTH, InfinityRun.HEIGHT)
+                ),
+                spriteBatch );
+
+        this.getCamera().position.set(
+                getViewport().getWorldWidth() / 2,
+                getViewport().getWorldHeight() / 2,
+                0);
+    }
+
+    public SpriteBatch getSpriteBatch(){
+        return (SpriteBatch) getBatch();
     }
 
     // Subclasses must load actors in this method
@@ -56,5 +78,12 @@ public abstract class AbstractScreen extends Stage implements Screen {
     @Override
     public void hide() {
 
+    }
+
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        getSpriteBatch().dispose();
     }
 }
