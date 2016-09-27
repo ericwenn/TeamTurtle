@@ -93,7 +93,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        world.step(1/60f, 6, 2);
+        world.step(1/100f, 6, 2);
         mPlayer.update(delta);
 
         tiledMapRenderer.setView(cam);
