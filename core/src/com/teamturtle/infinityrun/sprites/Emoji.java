@@ -1,17 +1,13 @@
 package com.teamturtle.infinityrun.sprites;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.InfinityRun;
-
-import java.awt.Font;
 
 /**
  * Created by Henrik on 2016-09-21.
