@@ -77,4 +77,12 @@ public class Emoji extends AbstractEntity {
         }
     }
 
+    @Override
+    public void dispose() {
+        font.dispose();
+        texture.dispose();
+        mBody.getWorld().destroyBody(mBody);
+        emojiSound.dispose();
+    }
+
 }

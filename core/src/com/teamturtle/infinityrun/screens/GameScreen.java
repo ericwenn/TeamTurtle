@@ -111,20 +111,27 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
         gameUpdate(delta);
 
         tiledMapRenderer.setView(cam);
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+        Gdx.gl.glClearColor(1f, 1f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         mSpriteBatch.setProjectionMatrix(cam.combined);
         mSpriteBatch.begin();
 
+
+        // TODO Probably refactor this
         if (bgPosition1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
             bgPosition1 += InfinityRun.WIDTH * 2;
         if (bgPosition2 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
             bgPosition2 += InfinityRun.WIDTH * 2;
         mSpriteBatch.draw(bg, bgPosition1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
         mSpriteBatch.draw(bg, bgPosition2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
+
+
+
+
 
         mPlayer.render(mSpriteBatch);
         for (Entity emoji: emojiSprites) {
@@ -169,6 +176,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        System.out.println("disposing");
+        for( Entity ent : emojiSprites) {
+            ent.dispose();
+        }
+        mPlayer.dispose();
         mSpriteBatch.dispose();
         bg.dispose();
 

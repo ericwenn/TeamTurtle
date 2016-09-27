@@ -46,6 +46,14 @@ public class Player extends AbstractEntity {
         spriteBatch.draw(playerStand, getX(), getY());
     }
 
+    @Override
+    public void dispose() {
+        mTexture.dispose();
+        playerStand = null;
+
+        world.destroyBody(b2body);
+    }
+
     public void definePlayer(){
         BodyDef bdef = new BodyDef();
         bdef.position.set(100, 300);
