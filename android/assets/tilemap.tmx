@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <map version="1.0" orientation="orthogonal" width="200" height="15" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="tileset_mario" tilewidth="16" tileheight="16" spacing="2" margin="1">
+=======
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="16" tileheight="16" nextobjectid="17">
+ <tileset firstgid="1" name="tileset_mario" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="696" columns="29">
+>>>>>>> develop
   <image source="tileset.png" trans="ff00ff" width="528" height="448"/>
  </tileset>
  <layer name="background" width="200" height="15">
@@ -10,7 +15,7 @@
  </layer>
  <layer name="graphics" width="200" height="15">
   <data encoding="base64" compression="zlib">
-   eJztw0EJAAAIBLDrH9YMZrifyAZLAAAAAAAAfpkDAQAAAADoLch5Hq8=
+   eJztzjENACAMAEH8awMhMKCBCiAkTO1wl/z+rQEAAAAANz0a2RNQ1IxW9gQ87AIBAAAAAPDvAKikIhs=
   </data>
  </layer>
  <objectgroup name="ground" width="0" height="0">
@@ -23,4 +28,13 @@
   <object x="482" y="108" width="16" height="16"/>
   <object x="480" y="45" width="17" height="17"/>
  </objectgroup>
+<<<<<<< HEAD
+=======
+ <objectgroup name="coins"/>
+ <objectgroup name="pipes"/>
+ <objectgroup name="bricks"/>
+ <objectgroup name="obstacles">
+  <object id="16" x="496" y="96" width="32" height="32"/>
+ </objectgroup>
+>>>>>>> develop
 </map>

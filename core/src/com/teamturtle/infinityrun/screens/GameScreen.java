@@ -40,7 +40,6 @@ public class GameScreen implements Screen {
     private int bg1, bg2;
     private FillViewport mFillViewport;
     private Player mPlayer;
-    private Emoji emoji;
 
     private TmxMapLoader tmxMapLoader;
     private TiledMap tiledMap;
@@ -51,10 +50,10 @@ public class GameScreen implements Screen {
 
     private Array<Body> emojiBodies;
 
-    public GameScreen( SpriteBatch mSpriteBatch ) {
+    public GameScreen(SpriteBatch mSpriteBatch) {
         this.mSpriteBatch = mSpriteBatch;
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
-        this.cam = new OrthographicCamera( mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
+        this.cam = new OrthographicCamera(mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
         this.cam.position.set(mFillViewport.getWorldWidth() / 2, mFillViewport.getWorldHeight() / 2, 0);
 
         this.bg = new Texture("bg.jpg");
@@ -67,12 +66,20 @@ public class GameScreen implements Screen {
 
 
         CollisionHandler collisionHandler = new CollisionHandler();
+        collisionHandler.onCollisionWithObstable(new ICollisionHandler.ObstacleCollisionListener() {
+            @Override
+            public void onCollision(Player p) {
+                Gdx.app.log("Collision", "Game over");
+            }
+        });
+
         collisionHandler.onCollisionWithEmoji(new ICollisionHandler.EmojiCollisionListener() {
             @Override
             public void onCollision(Player p, Emoji e) {
                 System.out.println("Emoji collision");
                 e.triggerExplode();
             }
+
         });
         world.setContactListener( collisionHandler );
 
@@ -85,13 +92,15 @@ public class GameScreen implements Screen {
         tiledMap = tmxMapLoader.load("tilemap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
 
+
         //This chunk of code should be refactorized into some other class.
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
-        for(MapObject object : tiledMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect =((RectangleMapObject) object).getRectangle();
+//        Creating ground objects
+        for (MapObject object : tiledMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
@@ -102,14 +111,26 @@ public class GameScreen implements Screen {
             body.createFixture(fdef);
         }
 
+            EmojiFactory emojiFactory = new EmojiFactory(world, tiledMap, mSpriteBatch, 6);
+            emojiFactory.create();
 
+            emojiBodies = emojiFactory.getBodies();
 
-        EmojiFactory emojiFactory = new EmojiFactory(world, tiledMap, mSpriteBatch, 6);
-        emojiFactory.create();
+//        Creating obstacles
+        for (MapObject object : tiledMap.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-        emojiBodies = emojiFactory.getBodies();
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
+            body = world.createBody(bdef);
+
+            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            fdef.shape = shape;
+            fdef.isSensor = true;
+            body.createFixture(fdef).setUserData("obstacle");
+        }
+
     }
-
 
     @Override
     public void show() {
@@ -119,7 +140,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        world.step(1/60f, 6, 2);
+        world.step(1 / 60f, 6, 2);
         mPlayer.update(delta);
 
 
@@ -129,16 +150,15 @@ public class GameScreen implements Screen {
         mSpriteBatch.setProjectionMatrix(cam.combined);
         mSpriteBatch.begin();
 
-        if(bg1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth/2)
+        if (bg1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
             bg1 += InfinityRun.WIDTH * 2;
-        if(bg2 + InfinityRun.WIDTH< cam.position.x - cam.viewportWidth/2)
+        if (bg2 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth / 2)
             bg2 += InfinityRun.WIDTH * 2;
         mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
         mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
 
 
-
-        mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY());
+        mSpriteBatch.draw(mPlayer, mPlayer.getX(), mPlayer.getY());
         mSpriteBatch.end();
         this.cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, mFillViewport.getWorldHeight() / 2, 0);
         cam.update();
