@@ -122,12 +122,16 @@ public class GameScreen implements Screen {
         world.setContactListener(mCollisionHandler);
     }
 
+    private void gameUpdate(float delta) {
+        handleInput();
+        world.step(1 / 60f, 6, 2);
+        mPlayer.update(delta);
+    }
+
 
     @Override
     public void render(float delta) {
-        world.step(1 / 60f, 6, 2);
-        mPlayer.update(delta);
-
+        gameUpdate(delta);
 
         tiledMapRenderer.setView(cam);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
@@ -148,7 +152,6 @@ public class GameScreen implements Screen {
         this.cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, mFillViewport.getWorldHeight() / 2, 0);
         cam.update();
         tiledMapRenderer.render();
-        handleInput();
         b2dr.render(world, cam.combined);
 
         for (Body body : emojiBodies) {
