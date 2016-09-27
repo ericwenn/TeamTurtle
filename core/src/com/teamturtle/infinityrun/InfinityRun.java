@@ -8,13 +8,14 @@ public class InfinityRun extends Game {
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 480;
+	public static final float PPM = 100;
 
 	private SpriteBatch mSpriteBatch;
 
 	@Override
 	public void create () {
 		mSpriteBatch = new SpriteBatch();
-		setScreen(new GameScreen(mSpriteBatch));
+		setScreen(new GameScreen(mSpriteBatch, GameScreen.Level.LEVEL_1));
 	}
 
 	@Override

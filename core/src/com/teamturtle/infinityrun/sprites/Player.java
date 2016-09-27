@@ -3,6 +3,7 @@ package com.teamturtle.infinityrun.sprites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -22,28 +23,33 @@ public class Player extends AbstractEntity {
     private Body b2body;
     private TextureRegion playerStand;
     private static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32,
-            COLLISION_RADIUS = PLAYER_WIDTH / 2;
+            COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 100, START_Y = 300;
+    private static final float JUMP_IMPULSE = 5f;
+    private static final float IMPULSE_X = 0.1f;
+    private static final float SPEED_X = 3.0f;
+    private static final String TEXTURE_URL = "dalahorse_32_flipped.png";
 
-    public Player(World world, Texture t) {
+    public Player(World world) {
         this.world = world;
-        this.mTexture = t;
 
-        setPosition(100, InfinityRun.HEIGHT / 2);
+        setPosition(0, InfinityRun.HEIGHT / 2);
         definePlayer();
 
-        //Temporary velocity source, should be changed because the velocity decreases due to gravity
-        b2body.setLinearVelocity(GameScreen.GAME_SPEED, 0);
-
-        playerStand = new TextureRegion(mTexture, 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
+        playerStand = new TextureRegion(new Texture(TEXTURE_URL), 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
     }
 
     public void update(float dt) {
-        setPosition(b2body.getPosition().x - PLAYER_WIDTH / 2, b2body.getPosition().y - PLAYER_HEIGHT / 2);
+        if (b2body.getLinearVelocity().x <= SPEED_X) {
+            b2body.applyLinearImpulse(new Vector2(IMPULSE_X, 0), b2body.getWorldCenter(), true);
+        }
+
+        setPosition(b2body.getPosition().x - PLAYER_WIDTH / 2 / InfinityRun.PPM
+                , b2body.getPosition().y - PLAYER_HEIGHT / 2 / InfinityRun.PPM);
     }
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        spriteBatch.draw(playerStand, getX(), getY());
+        spriteBatch.draw(playerStand, getX(), getY(), 32 / InfinityRun.PPM, 32 / InfinityRun.PPM);
     }
 
     @Override
@@ -54,19 +60,29 @@ public class Player extends AbstractEntity {
         world.destroyBody(b2body);
     }
 
-    public void definePlayer(){
+    private void definePlayer(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(100, 300);
+        bdef.position.set(START_X / InfinityRun.PPM, START_Y / InfinityRun.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         fdef.friction = 0;
         CircleShape shape = new CircleShape();
-        shape.setRadius(COLLISION_RADIUS);
+        shape.setRadius(COLLISION_RADIUS / InfinityRun.PPM);
         fdef.shape = shape;
 
         Fixture fixture = b2body.createFixture(fdef);
         fixture.setUserData(this);
+    }
+
+    public void jump(){
+        if (b2body.getLinearVelocity().y == 0) {
+            b2body.applyLinearImpulse(new Vector2(0, JUMP_IMPULSE), b2body.getWorldCenter(), true);
+        }
+    }
+
+    public Body getPlayerBody(){
+        return b2body;
     }
 }
