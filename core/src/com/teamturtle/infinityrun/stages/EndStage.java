@@ -88,7 +88,7 @@ public class EndStage extends Stage {
                     handler.onNextLevelButtonClick();
                 }
             });
-        }else{
+        }else if(type == EndStageType.LOST_LEVEL){
             levelStatusLabel = new Label(LEVEL_LOST_SV, skin);
             rightButton = new TextButton(TRY_AGAIN_SV, skin);
             rightButton.addListener(new ChangeListener() {
