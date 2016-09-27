@@ -83,9 +83,6 @@ public class GameScreen implements Screen {
         });
         world.setContactListener( collisionHandler );
 
-
-
-
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
         this.mPlayer = new Player(world, dalaHorse);
         tmxMapLoader = new TmxMapLoader();
@@ -111,6 +108,7 @@ public class GameScreen implements Screen {
             body.createFixture(fdef);
         }
 
+        
             EmojiFactory emojiFactory = new EmojiFactory(world, tiledMap, mSpriteBatch, 3);
             emojiFactory.create();
 
