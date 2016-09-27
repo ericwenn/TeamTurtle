@@ -8,6 +8,7 @@ public class InfinityRun extends Game {
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 480;
+	public static final float PPM = 100;
 
 	private SpriteBatch mSpriteBatch;
 
