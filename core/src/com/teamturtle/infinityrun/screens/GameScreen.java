@@ -95,7 +95,7 @@ public class GameScreen implements Screen {
         FixtureDef fdef = new FixtureDef();
         Body body;
 //        Creating ground objects
-        for (MapObject object : tiledMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : tiledMap.getLayers().get("ground").getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -108,13 +108,13 @@ public class GameScreen implements Screen {
         }
 
 
-        EmojiFactory emojiFactory = new EmojiFactory(world, tiledMap, mSpriteBatch, 3);
+        EmojiFactory emojiFactory = new EmojiFactory(world, tiledMap, mSpriteBatch, "emoji_placeholders");
         emojiFactory.create();
 
         emojiBodies = emojiFactory.getBodies();
 
 //        Creating obstacles
-        for (MapObject object : tiledMap.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : tiledMap.getLayers().get("obstacles").getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
