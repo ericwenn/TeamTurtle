@@ -70,10 +70,13 @@ public class Emoji extends AbstractEntity {
     @Override
     public void render(SpriteBatch sb) {
         if( isExploded ) {
-            sb.draw( texture, getX(), getY(), EMOJI_SIZE*EXPLOSION_SCALE, EMOJI_SIZE*EXPLOSION_SCALE);
+            sb.draw( texture, getX() / InfinityRun.PPM, getY() / InfinityRun.PPM
+                    , EMOJI_SIZE*EXPLOSION_SCALE / InfinityRun.PPM
+                    , EMOJI_SIZE*EXPLOSION_SCALE / InfinityRun.PPM);
             font.draw( sb, glyphLayout, getX() + (EMOJI_SIZE - glyphLayout.width) / 2, getY() + EMOJI_SIZE + 50);
         } else {
-            sb.draw( texture, getX(), getY(), EMOJI_SIZE, EMOJI_SIZE);
+            sb.draw( texture, getX() / InfinityRun.PPM, getY() / InfinityRun.PPM
+                    , EMOJI_SIZE / InfinityRun.PPM, EMOJI_SIZE / InfinityRun.PPM);
         }
     }
 
