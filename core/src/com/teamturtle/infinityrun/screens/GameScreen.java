@@ -99,6 +99,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         world.step(1/60f, 6, 2);
         mPlayer.update(delta);
+        handleInput();
 
         tiledMapRenderer.setView(cam);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
@@ -114,13 +115,12 @@ public class GameScreen implements Screen {
         this.cam.position.set(mPlayer.getX(), mFillViewport.getWorldHeight() / 2, 0);
         cam.update();
         tiledMapRenderer.render();
-        handleInput();
         b2dr.render(world, cam.combined);
         emoji.render();
     }
 
     private void handleInput() {
-        if(Gdx.input.isTouched() && mPlayer.getPlayerBody().getLinearVelocity().y == 0)
+        if((Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) && mPlayer.getPlayerBody().getLinearVelocity().y == 0)
             mPlayer.jump();
     }
 
