@@ -54,6 +54,8 @@ public class GameScreen implements Screen {
 
     public GameScreen(SpriteBatch mSpriteBatch) {
         this.mSpriteBatch = mSpriteBatch;
+
+        // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
         this.cam = new OrthographicCamera(mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
         this.cam.position.set(mFillViewport.getWorldWidth() / 2, mFillViewport.getWorldHeight() / 2, 0);
