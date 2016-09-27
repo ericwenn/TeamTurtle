@@ -43,8 +43,6 @@ public class GameScreen implements Screen {
 
     private CollisionHandler mCollisionHandler;
 
-    private TmxMapLoader tmxMapLoader;
-    private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
     private World world;
@@ -57,23 +55,30 @@ public class GameScreen implements Screen {
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
+
+        // Setup camera and set it to center of the world
         this.cam = new OrthographicCamera(mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
         this.cam.position.set(mFillViewport.getWorldWidth() / 2, mFillViewport.getWorldHeight() / 2, 0);
 
+        // Init background from file and setup starting positions to have continous background.
         this.bg = new Texture("bg.jpg");
         bgPosition1 = 0;
         bgPosition2 = InfinityRun.WIDTH;
 
+        // Setup world with regular gravity, and sleeping bodies
         world = new World(new Vector2(0, GRAVITY), true);
+
+        // TODO Remove this before production
         b2dr = new Box2DDebugRenderer();
 
+        // Create CollisionHandler with actions. Still not connected to the world.
         setupContactHandler();
 
 
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
         this.mPlayer = new Player(world, dalaHorse);
-        tmxMapLoader = new TmxMapLoader();
-        tiledMap = tmxMapLoader.load("tilemap.tmx");
+        TmxMapLoader tmxMapLoader = new TmxMapLoader();
+        TiledMap tiledMap = tmxMapLoader.load("tilemap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1);
 
 
