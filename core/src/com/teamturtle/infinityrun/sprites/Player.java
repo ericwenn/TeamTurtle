@@ -19,14 +19,13 @@ import com.teamturtle.infinityrun.screens.GameScreen;
 public class Player extends AbstractEntity {
 
     private World world;
-    private Texture mTexture;
     private Body b2body;
     private TextureRegion playerStand;
     private static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32,
             COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 100, START_Y = 300;
-    private static final float JUMP_IMPULSE = 5f;
+    private static final float JUMP_IMPULSE = 4f;
     private static final float IMPULSE_X = 0.1f;
-    private static final float SPEED_X = 3.0f;
+    private static final float SPEED_X = 1.5f;
     private static final String TEXTURE_URL = "dalahorse_32_flipped.png";
 
     public Player(World world) {
@@ -54,9 +53,7 @@ public class Player extends AbstractEntity {
 
     @Override
     public void dispose() {
-        mTexture.dispose();
         playerStand = null;
-
         world.destroyBody(b2body);
     }
 
