@@ -21,11 +21,10 @@ public class InfinityRun extends Game implements IScreenObserver{
 		setSpriteBatch(new SpriteBatch());
 
 		try{
-			setScreen(ScreenID.MAIN_MENU);
+			changeScreen(ScreenID.MAIN_MENU);
 		}catch (Exception e){
 			// This cannot fail...yet
 		}
-
 	}
 
 	private void setSpriteBatch(SpriteBatch sb){
@@ -47,7 +46,7 @@ public class InfinityRun extends Game implements IScreenObserver{
 	}
 
 	@Override
-	public void setScreen(ScreenID screen) throws Exception {
+	public void changeScreen(ScreenID screen) throws Exception {
 		AbstractScreen newScreen;
 
 		switch (screen){
@@ -56,7 +55,7 @@ public class InfinityRun extends Game implements IScreenObserver{
 				break;
 
 			case GAME:
-				newScreen = new GameScreen(getSpriteBatch(), this);
+				newScreen = new GameScreen(getSpriteBatch(),GameScreen.Level.LEVEL_1,this);
 				break;
 
 			default:

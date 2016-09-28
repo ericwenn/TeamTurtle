@@ -7,6 +7,6 @@ import com.teamturtle.infinityrun.InfinityRun;
  */
 public interface IScreenObserver {
 
-    void setScreen(InfinityRun.ScreenID id) throws Exception;
+    void changeScreen(InfinityRun.ScreenID id) throws Exception;
 
 }

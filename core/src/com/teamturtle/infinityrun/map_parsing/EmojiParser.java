@@ -1,6 +1,5 @@
-package com.teamturtle.infinityrun.sprites.emoji;
+package com.teamturtle.infinityrun.map_parsing;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -11,61 +10,68 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
+import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.sprites.Entity;
+import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.sprites.emoji.EmojiRandomizer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ericwenn on 9/23/16.
  */
-public class EmojiFactory {
+public class EmojiParser implements MapParser {
     private final World world;
     private final TiledMap tiledMap;
-    private int emojiLayer;
-
+    private String emojiPlaceholderName;
     private EmojiRandomizer emojiRandomizer;
-    private Array<Body> bodies;
-    private Array<Fixture> fixtures;
 
-    public EmojiFactory(World world, TiledMap tiledMap, SpriteBatch spriteBatch, int emojiLayer) {
+    private List<Emoji> emojis = new ArrayList<Emoji>();
+
+
+    public EmojiParser(World world, TiledMap tiledMap, String emojiPlaceholderName) {
         this.world = world;
         this.tiledMap = tiledMap;
-        this.emojiLayer = emojiLayer;
-        this.bodies = new Array<Body>();
-        this.emojiRandomizer = new EmojiRandomizer(spriteBatch);
+        this.emojiPlaceholderName = emojiPlaceholderName;
+        this.emojiRandomizer = new EmojiRandomizer();
     }
 
 
     /**
      * Creates a randomly generated {@link Emoji} in each rectangle defined in tilemap.
      */
-    public void create() {
+    public void parse() {
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
-        for(MapObject object : tiledMap.getLayers().get(emojiLayer).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : tiledMap.getLayers().get(emojiPlaceholderName).getObjects().getByType(RectangleMapObject.class)){
 
             Rectangle rect =((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / InfinityRun.PPM
+                    , (rect.getY() + rect.getHeight() / 2) / InfinityRun.PPM);
             Body body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+            shape.setAsBox((rect.getWidth() / 2) / InfinityRun.PPM
+                    , (rect.getHeight() / 2) / InfinityRun.PPM);
             fdef.shape = shape;
             Fixture fixture = body.createFixture(fdef);
             fixture.setSensor(true);
             Emoji emoji = emojiRandomizer.getNext();
 
+            emoji.setBody( body );
             fixture.setUserData(emoji);
-            body.setUserData(emoji);
-            bodies.add(body);
+            emojis.add(emoji);
 
         }
 
     }
 
 
-    public Array<Body> getBodies() {
-        return bodies;
+    @Override
+    public List<? extends Entity> getEntities() {
+        return emojis;
     }
-
 }
