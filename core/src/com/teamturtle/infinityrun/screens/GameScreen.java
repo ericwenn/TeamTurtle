@@ -1,5 +1,6 @@
 package com.teamturtle.infinityrun.screens;
 
+import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -22,20 +23,19 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;;
+import com.teamturtle.infinityrun.screens.IScreenObserver;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 /**
  * Created by ericwenn on 9/20/16.
  */
-public class GameScreen implements Screen {
+public class GameScreen extends AbstractScreen {
     public static final float GAME_SPEED = 0.1f, GRAVITY = -10;
 
-    private OrthographicCamera cam;
     private SpriteBatch mSpriteBatch;
     private Texture bg;
     private float bg1, bg2;
-    private FillViewport mFillViewport;
     private Player mPlayer;
     private Emoji emoji;
 
@@ -46,12 +46,12 @@ public class GameScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
-    public GameScreen( SpriteBatch mSpriteBatch ) {
-        this.mSpriteBatch = mSpriteBatch;
-        this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM,
-                InfinityRun.HEIGHT / InfinityRun.PPM);
-        this.cam = new OrthographicCamera( mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
-        this.cam.position.set(mFillViewport.getWorldWidth() / 2 , mFillViewport.getWorldHeight() / 2, 0);
+    private IScreenObserver observer;
+
+    public GameScreen( SpriteBatch mSpriteBatch, IScreenObserver observer ) {
+        super(mSpriteBatch);
+
+        this.observer = observer;
 
         this.bg = new Texture("bg.jpg");
         bg1 = 0;
@@ -62,7 +62,7 @@ public class GameScreen implements Screen {
 
         Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
         this.mPlayer = new Player(world, dalaHorse);
-        emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"),mSpriteBatch);
+        emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"), mSpriteBatch);
         tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load("tilemap.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / InfinityRun.PPM);
@@ -85,7 +85,6 @@ public class GameScreen implements Screen {
             fdef.shape = shape;
             body.createFixture(fdef);
         }
-
     }
 
 
@@ -101,21 +100,21 @@ public class GameScreen implements Screen {
         mPlayer.update(delta);
         handleInput();
 
-        tiledMapRenderer.setView(cam);
+        tiledMapRenderer.setView(getOrthoCam());
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        mSpriteBatch.setProjectionMatrix(cam.combined);
-        mSpriteBatch.begin();
+        getSpriteBatch().setProjectionMatrix(getCamera().combined);
+        getSpriteBatch().begin();
 
         drawBackground();
-        mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY(), 32 / InfinityRun.PPM,
+        getSpriteBatch().draw( mPlayer, mPlayer.getX(), mPlayer.getY(), 32 / InfinityRun.PPM,
                 32 / InfinityRun.PPM);
 
-        mSpriteBatch.end();
-        this.cam.position.set(mPlayer.getX(), mFillViewport.getWorldHeight() / 2, 0);
-        cam.update();
+        getSpriteBatch().end();
+        getOrthoCam().position.set(mPlayer.getX(), getViewport().getWorldHeight() / 2, 0);
+        getOrthoCam().update();
         tiledMapRenderer.render();
-        b2dr.render(world, cam.combined);
+        b2dr.render(world, getOrthoCam().combined);
         emoji.render();
     }
 
@@ -145,21 +144,133 @@ public class GameScreen implements Screen {
     }
 
     @Override
+    public void buildStage() {
+
+    }
+
+    @Override
     public void dispose() {
-        mSpriteBatch.dispose();
+        getSpriteBatch().dispose();
         bg.dispose();
 
     }
 
     public void drawBackground(){
-        if(bg1 + InfinityRun.WIDTH / InfinityRun.PPM< cam.position.x - cam.viewportWidth/2)
+        if(bg1 + InfinityRun.WIDTH / InfinityRun.PPM< getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
             bg1 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
-        if(bg2 + InfinityRun.WIDTH / InfinityRun.PPM < cam.position.x - cam.viewportWidth/2)
+        if(bg2 + InfinityRun.WIDTH / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
             bg2 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
 
-        mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH / InfinityRun.PPM,
+        getSpriteBatch().draw(bg, bg1, 0, InfinityRun.WIDTH / InfinityRun.PPM,
                 InfinityRun.HEIGHT / InfinityRun.PPM);
-        mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
+        getSpriteBatch().draw(bg, bg2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
                 InfinityRun.HEIGHT / InfinityRun.PPM);
     }
 }
+/*=======
+package com.teamturtle.infinityrun.screens;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.sprites.Emoji;
+import com.teamturtle.infinityrun.sprites.Player;*/
+
+/**
+ * Created by ericwenn on 9/20/16.
+ */
+/*public class GameScreen extends AbstractScreen {
+    public static final int GAME_SPEED = 50;
+
+    private Texture bg;
+    private int bg1, bg2;
+    private Player mPlayer;
+    private Emoji emoji;
+
+    private TmxMapLoader tmxMapLoader;
+    private TiledMap tiledMap;
+    private OrthogonalTiledMapRenderer tiledMapRenderer;
+
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void render(float delta) {
+
+        super.render(delta);
+
+        OrthographicCamera cam = (OrthographicCamera) getCamera();
+        SpriteBatch mSpriteBatch = getSpriteBatch();
+
+        mPlayer.update(delta);
+
+        tiledMapRenderer.setView(cam);
+        mSpriteBatch.setProjectionMatrix(cam.combined);
+        mSpriteBatch.begin();
+
+        if(bg1 + InfinityRun.WIDTH < cam.position.x - cam.viewportWidth/2)
+            bg1 += InfinityRun.WIDTH * 2;
+        if(bg2 + InfinityRun.WIDTH< cam.position.x - cam.viewportWidth/2)
+            bg2 += InfinityRun.WIDTH * 2;
+        mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
+        mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
+
+        mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY());
+        mSpriteBatch.end();
+        cam.position.set(mPlayer.getX() + InfinityRun.WIDTH / 3, getViewport().getWorldHeight() / 2, 0);
+        cam.update();
+        tiledMapRenderer.render();
+        handleInput();
+        emoji.render();
+    }
+
+    private void handleInput() {
+        if (Gdx.input.justTouched()) {
+            emoji.show();
+            try {
+                observer.setScreen(InfinityRun.ScreenID.MAIN_MENU);
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        bg.dispose();
+    }
+}
+>>>>>>> feature--startscreen*/
