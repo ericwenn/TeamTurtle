@@ -29,7 +29,7 @@ public class Player extends Sprite {
         super( t );
         this.world = world;
         definePlayer();
-        b2body.setLinearVelocity(GameScreen.GAME_SPEED * 5, 0);
+        //b2body.setLinearVelocity(GameScreen.GAME_SPEED * 5, 0);
 
         playerStand = new TextureRegion(getTexture(), 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
         setBounds(0, 0, PLAYER_WIDTH / InfinityRun.PPM, PLAYER_HEIGHT / InfinityRun.PPM);
@@ -39,6 +39,9 @@ public class Player extends Sprite {
     public void update(float dt) {
         setPosition(b2body.getPosition().x - PLAYER_WIDTH / 2 / InfinityRun.PPM,
                 b2body.getPosition().y - PLAYER_HEIGHT / 2 / InfinityRun.PPM);
+        if (b2body.getLinearVelocity().x <= 2.0f) {
+            b2body.applyLinearImpulse(new Vector2(0.1f, 0f), b2body.getWorldCenter(),true);
+        }
     }
 
     private void definePlayer(){

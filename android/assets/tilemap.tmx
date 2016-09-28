@@ -10,7 +10,8 @@
   <image source="tileset32.png" width="1152" height="960"/>
  </tileset>
  <layer name="graphics" width="200" height="15">
-  <data encoding="base64" compression="zlib">   eJztl91ugjAYhjkA2S05PfIydrSrmQmXMpMdOONNLIFsJM6LWZa14ftih9YWoaXF90nelN/Yr/C0kiQAAAAAAADExyo3BwAAgN18GeKcGXr/AIiZUOeAp5k5AIBz4Ae4JxZpE1v6+lFnSfKa3X7/vWD7zWH63/GY/s+YfRqiHp+wG7782GSNHxU5snc4Dj9pE93+FJm36mu7MYQjffsUC6obXfz4zZt05YucYDfkfuFoHWEXLvkxdUcYnRtjOBITbS+6+nELBfmwITf6rCFbcf27yE5zn+qBzo+pO2Jy45oj8nm4XNfHguvS1abzwrUf0oV1dvru4JadqTuuIQdR37fI8UKd/O4fLPxw4YhpjEOIrTtDpBTP6IPymbv5DcZnXYOND7kg2xdKRW2tHK9oWx4LefyWD9fPj/3uq1kq28+pfzd8JWY/2IE3atmNUvGhVM7F7scf/6fQig==
+  <data encoding="base64" compression="zlib">
+   eJztl91ugjAYhjkA2S05PfIydrSrmQmXMpMdOONNLIFsJM6LWZa14ftih9YWoaXF90nelN/Yr/C0kiQAAAAAAADExyo3BwAAgN18GeKcGXr/AIiZUOeAp5k5AIBz4Ae4JxZpE1v6+lFnSfKa3X7/vWD7zWH63/GY/s+YfRqiHp+wG7782GSNHxU5snc4Dj9pE93+FJm36mu7MYQjffsUC6obXfz4zZt05YucYDfkfuFoHWEXLvkxdUcYnRtjOBITbS+6+nELBfmwITf6rCFbcf27yE5zn+qBzo+pO2Jy45oj8nm4XNfHguvS1abzwrUf0oV1dvru4JadqTuuIQdR37fI8UKd/O4fLPxw4YhpjEOIrTtDpBTP6IPymbv5DcZnXYOND7kg2xdKRW2tHK9oWx4LefyWD9fPj/3uq1kq28+pfzd8JWY/2IE3atmNUvGhVM7F7scf/6fQig==
   </data>
  </layer>
  <objectgroup name="obstacles">
