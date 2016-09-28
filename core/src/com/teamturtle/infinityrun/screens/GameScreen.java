@@ -94,11 +94,11 @@ public class GameScreen extends AbstractScreen {
     private void handleInput() {
         if (Gdx.input.justTouched()) {
             emoji.show();
-            try {
+            /*try {
                 observer.setScreen(InfinityRun.ScreenID.MAIN_MENU);
             } catch (Exception e) {
 
-            }
+            }*/
         }
     }
 

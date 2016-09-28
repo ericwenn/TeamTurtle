@@ -20,7 +20,7 @@ public class InfinityRun extends Game implements IScreenObserver{
 		setSpriteBatch(new SpriteBatch());
 
 		try{
-			setScreen(ScreenID.GAME);
+			setScreen(ScreenID.MAIN_MENU);
 		}catch (Exception e){
 			// This cannot fail...yet
 		}
