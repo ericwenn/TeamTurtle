@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.screens.GameScreen;
 
 /**
  * Created by ericwenn on 9/20/16.
@@ -77,9 +76,5 @@ public class Player extends AbstractEntity {
         if (b2body.getLinearVelocity().y == 0) {
             b2body.applyLinearImpulse(new Vector2(0, JUMP_IMPULSE), b2body.getWorldCenter(), true);
         }
-    }
-
-    public Body getPlayerBody(){
-        return b2body;
     }
 }
