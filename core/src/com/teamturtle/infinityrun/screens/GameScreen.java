@@ -71,6 +71,8 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        //Change input focus to this stage
+        Gdx.input.setInputProcessor(this);
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
@@ -111,8 +113,8 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         getSpriteBatch().setProjectionMatrix(getCamera().combined);
-        getSpriteBatch().begin();
 
+        getSpriteBatch().begin();
         drawBackground();
 
         mPlayer.render(getSpriteBatch());
@@ -120,7 +122,6 @@ public class GameScreen extends AbstractScreen {
             emoji.update(delta);
             emoji.render(getSpriteBatch());
         }
-
         getSpriteBatch().end();
 
         getCamera().position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
