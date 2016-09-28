@@ -1,8 +1,9 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.SynchronousAssetLoader;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -57,6 +58,8 @@ public class StartScreen extends AbstractScreen {
         textButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("play_button.png")));
         textButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("play_button_pressed.png")));
         //textButtonStyle.font = font;
+        //temp font
+        textButtonStyle.font = new BitmapFont();
         TextButton button = new TextButton("", textButtonStyle);
         button.setPosition(getViewport().getScreenWidth() / 2, getViewport().getScreenHeight() / 2, Align.center);
 
