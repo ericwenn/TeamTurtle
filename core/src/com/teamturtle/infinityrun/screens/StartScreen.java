@@ -12,11 +12,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.teamturtle.infinityrun.InfinityRun;
@@ -30,8 +32,12 @@ public class StartScreen extends AbstractScreen {
     private Texture bg;
     private Stage stage;
 
-    public StartScreen(SpriteBatch sb){
+    private IScreenObserver observer;
+
+    public StartScreen(SpriteBatch sb, IScreenObserver observer){
         super(sb);
+
+        this.observer = observer;
 
         this.bg = new Texture("bg.jpg");
         this.stage = new Stage();
@@ -62,6 +68,17 @@ public class StartScreen extends AbstractScreen {
         textButtonStyle.font = new BitmapFont();
         TextButton button = new TextButton("", textButtonStyle);
         button.setPosition(getViewport().getScreenWidth() / 2, getViewport().getScreenHeight() / 2, Align.center);
+
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                try {
+                    observer.setScreen(InfinityRun.ScreenID.GAME);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         /*button.addAction(new Action() {
             @Override

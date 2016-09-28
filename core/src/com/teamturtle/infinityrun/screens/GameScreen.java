@@ -30,8 +30,12 @@ public class GameScreen extends AbstractScreen {
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
-    public GameScreen( SpriteBatch mSpriteBatch ) {
+    private IScreenObserver observer;
+
+    public GameScreen( SpriteBatch mSpriteBatch, IScreenObserver observer ) {
         super(mSpriteBatch);
+
+        this.observer = observer;
 
         this.bg = new Texture("bg.jpg");
         bg1 = 0;
@@ -88,8 +92,13 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.justTouched()) {
             emoji.show();
+            try {
+                observer.setScreen(InfinityRun.ScreenID.MAIN_MENU);
+            } catch (Exception e) {
+
+            }
         }
     }
 

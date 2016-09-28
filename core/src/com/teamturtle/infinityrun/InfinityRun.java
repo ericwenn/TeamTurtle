@@ -5,9 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
+import com.teamturtle.infinityrun.screens.IScreenObserver;
 import com.teamturtle.infinityrun.screens.StartScreen;
 
-public class InfinityRun extends Game {
+public class InfinityRun extends Game implements IScreenObserver{
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 480;
@@ -19,7 +20,7 @@ public class InfinityRun extends Game {
 		setSpriteBatch(new SpriteBatch());
 
 		try{
-			showScreen(ScreenID.MAIN_MENU);
+			setScreen(ScreenID.GAME);
 		}catch (Exception e){
 			// This cannot fail...yet
 		}
@@ -44,18 +45,17 @@ public class InfinityRun extends Game {
 		getSpriteBatch().dispose();
 	}
 
-
-	public void showScreen(ScreenID screen) throws Exception{
-
+	@Override
+	public void setScreen(ScreenID screen) throws Exception {
 		AbstractScreen newScreen;
 
 		switch (screen){
 			case MAIN_MENU:
-				newScreen = new StartScreen(getSpriteBatch());
+				newScreen = new StartScreen(getSpriteBatch(), this);
 				break;
 
 			case GAME:
-				newScreen = new GameScreen(getSpriteBatch());
+				newScreen = new GameScreen(getSpriteBatch(), this);
 				break;
 
 			default:
@@ -70,6 +70,7 @@ public class InfinityRun extends Game {
 
 		// Dispose the old one
 		oldScreen.dispose();
+
 
 	}
 
