@@ -2,9 +2,16 @@ package com.teamturtle.infinityrun.sprites.emoji;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.sprites.AbstractEntity;
 
@@ -15,16 +22,19 @@ public class Emoji extends AbstractEntity {
 
     private static final float EXPLOSION_SCALE = 1.3f;
     public static final float EMOJI_SIZE = 32;
-
+    private static final int TEXT_OFFSET = 135;
 
     private String emojiName;
     private Sound emojiSound;
 
     private Texture texture;
 
-
     private boolean isExploded = false;
     private Body mBody;
+
+    private Stage stage;
+    private Viewport viewport;
+    private Label textLabel;
 
     public Emoji(String emojiName, String soundURL, Texture texture){
         this.emojiName = emojiName;
@@ -43,9 +53,17 @@ public class Emoji extends AbstractEntity {
 
 
 
-    public void triggerExplode() {
+    public void triggerExplode(SpriteBatch sb) {
         isExploded = true;
         emojiSound.play();
+
+        //Create stage for text
+        viewport = new FitViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT, new OrthographicCamera());
+        stage = new Stage(viewport, sb);
+        textLabel = new Label(emojiName, new Label.LabelStyle(new BitmapFont(), Color.RED));
+
+        //Adds the text to the stage
+        stage.addActor(textLabel);
     }
 
     @Override
@@ -72,11 +90,19 @@ public class Emoji extends AbstractEntity {
         texture.dispose();
         mBody.getWorld().destroyBody(mBody);
         emojiSound.dispose();
+        stage.dispose();
     }
     public boolean getIsExploded(){
         return isExploded;
     }
-    public String getEmojiName(){
-        return emojiName;
+    public void drawText(float playerX){
+        //Calculates where the text should be drawn on the screen.
+        int x = (int)((getX() - playerX) * InfinityRun.PPM + TEXT_OFFSET);
+        //+40 is just a temporary variable to make up for the about 40 pixels void(black box) in the beginning.
+        //Should be removed when the black box is fixed.
+        int y = (int)((getY() * InfinityRun.PPM) + 40);
+        textLabel.setPosition(x, y);
+        stage.draw();
     }
+
 }

@@ -19,7 +19,6 @@ import com.teamturtle.infinityrun.map_parsing.EmojiParser;
 import com.teamturtle.infinityrun.map_parsing.GroundParser;
 import com.teamturtle.infinityrun.map_parsing.MapParser;
 import com.teamturtle.infinityrun.map_parsing.ObstacleParser;
-import com.teamturtle.infinityrun.sprites.DrawableText;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
@@ -129,12 +128,8 @@ public class GameScreen extends AbstractScreen {
         //can´t be called inside getSpriteBatch().begin and getSpriteBatch.end()
         for(Entity entity : emojiSprites){
             Emoji emoji = (Emoji) entity;
-            if(emoji.getIsExploded()) {
-                //Creates a DrawableText object and takes the stage of it and draw.
-                //The parameter for x is emoji.getX() - mPlayer.getX() so the text will move.
-                new DrawableText(emoji.getEmojiName(), getSpriteBatch(),
-                        emoji.getX() - mPlayer.getX(), emoji.getY()).getStage().draw();
-            }
+            if(emoji.getIsExploded())
+                emoji.drawText(mPlayer.getX());
         }
 
         getCamera().position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
@@ -227,7 +222,7 @@ public class GameScreen extends AbstractScreen {
             @Override
             public void onCollision(Player p, Emoji e) {
                 Gdx.app.log("Collision", "Emoji collision");
-                e.triggerExplode();
+                e.triggerExplode(getSpriteBatch());
             }
 
         });
