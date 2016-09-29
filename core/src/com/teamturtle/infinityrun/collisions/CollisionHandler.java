@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.teamturtle.infinityrun.map_parsing.SensorParser;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.sprites.Player;
 
@@ -13,15 +14,15 @@ import com.teamturtle.infinityrun.sprites.Player;
 public class CollisionHandler implements ICollisionHandler, ContactListener {
 
 
-    private ObstacleCollisionListener mObstacleCollisionListener;
+    private SensorCollisionListener mSensorCollisionListener;
     private EmojiCollisionListener mEmojiCollisionListener;
 
     public CollisionHandler() {
     }
 
     @Override
-    public void onCollisionWithObstable(ObstacleCollisionListener l) {
-        mObstacleCollisionListener = l;
+    public void onCollisionWithSensor(SensorCollisionListener l) {
+        mSensorCollisionListener = l;
     }
 
     @Override
@@ -39,10 +40,15 @@ public class CollisionHandler implements ICollisionHandler, ContactListener {
         if (obj1 == null || obj2 == null) {
             return;
         }
-        if (obj1 == "obstacle" && obj2 instanceof Player)
-            mObstacleCollisionListener.onCollision((Player) obj2);
-        if (obj2 == "obstacle" && obj1 instanceof Player)
-            mObstacleCollisionListener.onCollision((Player) obj1);
+
+        for (SensorParser.Type sensorType : SensorParser.Type.values()) {
+            if (obj1 == sensorType.getName() && obj2 instanceof Player) {
+                mSensorCollisionListener.onCollision((Player) obj2, sensorType);
+            }
+            if (obj2 == sensorType.getName() && obj1 instanceof Player) {
+                mSensorCollisionListener.onCollision((Player) obj1, sensorType);
+            }
+        }
 
         if (obj1 instanceof Player && obj2 instanceof Emoji) {
             mEmojiCollisionListener.onCollision((Player) obj1, (Emoji) obj2);

@@ -1,5 +1,6 @@
 package com.teamturtle.infinityrun.collisions;
 
+import com.teamturtle.infinityrun.map_parsing.SensorParser;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.sprites.Player;
 
@@ -8,12 +9,12 @@ import com.teamturtle.infinityrun.sprites.Player;
  */
 public interface ICollisionHandler {
 
-    void onCollisionWithObstable(ObstacleCollisionListener l);
+    void onCollisionWithSensor(SensorCollisionListener l);
     void onCollisionWithEmoji( EmojiCollisionListener l);
 
 
-    interface ObstacleCollisionListener {
-        void onCollision(Player p);
+    interface SensorCollisionListener {
+        void onCollision(Player p, SensorParser.Type type);
     }
 
     interface EmojiCollisionListener {

@@ -18,18 +18,20 @@ import com.teamturtle.infinityrun.collisions.ICollisionHandler;
 import com.teamturtle.infinityrun.map_parsing.EmojiParser;
 import com.teamturtle.infinityrun.map_parsing.GroundParser;
 import com.teamturtle.infinityrun.map_parsing.MapParser;
-import com.teamturtle.infinityrun.map_parsing.ObstacleParser;
+import com.teamturtle.infinityrun.map_parsing.SensorParser;
 import com.teamturtle.infinityrun.sprites.DrawableText;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.stages.EndStage;
+import com.teamturtle.infinityrun.stages.IEndStageListener;
 
 import java.util.List;
 
 /**
  * Created by ericwenn on 9/20/16.
  */
-public class GameScreen extends AbstractScreen {
+public class GameScreen extends AbstractScreen implements IEndStageListener{
 
     public enum Level {
         LEVEL_1("level1.tmx"), LEVEL_2("level2.tmx"), LEVEL_3("level3.tmx");
@@ -39,6 +41,10 @@ public class GameScreen extends AbstractScreen {
         Level(String tmx) {
             this.tmx = tmx;
         }
+    }
+
+    private enum State {
+        RUN, STOP;
     }
 
     public static final float GRAVITY = -10;
@@ -55,15 +61,25 @@ public class GameScreen extends AbstractScreen {
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
+    private EndStage endStage;
+
     private World world;
     private Box2DDebugRenderer b2dr;
 
     private List<? extends Entity> emojiSprites;
-    private IScreenObserver observer;
+    private IScreenObserver screenObserver;
 
-    public GameScreen( SpriteBatch mSpriteBatch, Level level,IScreenObserver observer ) {
+    private IEndStageListener endStageListener;
+
+    private State state;
+
+    public GameScreen( SpriteBatch mSpriteBatch, Level level,IScreenObserver screenObserver) {
         super(mSpriteBatch);
-        this.observer = observer;
+        this.screenObserver = screenObserver;
+        endStageListener = this;
+
+        //Set state
+        state = State.RUN;
 
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
@@ -80,7 +96,7 @@ public class GameScreen extends AbstractScreen {
                 , InfinityRun.HEIGHT / InfinityRun.PPM);
 
         // Init background from file and setup starting positions to have continous background.
-        this.bg = new Texture("bg.jpg");
+        this.bg = new Texture("bg2.png");
 
         bg1 = 0;
         bg2 = InfinityRun.WIDTH / InfinityRun.PPM;
@@ -108,6 +124,17 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
+        switch (state) {
+            case RUN:
+                renderWorld(delta);
+                break;
+            case STOP:
+                endStage.draw();
+                break;
+        }
+    }
+
+    private void renderWorld(float delta) {
         gameUpdate(delta);
 
         tiledMapRenderer.setView(getOrthoCam());
@@ -141,7 +168,8 @@ public class GameScreen extends AbstractScreen {
                 , mFillViewport.getWorldHeight() / 2, 0);
         getCamera().update();
         tiledMapRenderer.render();
-        b2dr.render(world, getOrthoCam().combined);
+        //Use to show collision rectangles
+        //b2dr.render(world, getOrthoCam().combined);
     }
 
     private void handleInput() {
@@ -156,7 +184,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void pause() {
-
+        state = State.STOP;
     }
 
     @Override
@@ -180,8 +208,10 @@ public class GameScreen extends AbstractScreen {
             ent.dispose();
         }
         mPlayer.dispose();
-        getSpriteBatch().dispose();
         bg.dispose();
+        if (endStage != null) {
+            endStage.dispose();
+        }
     }
 
     public void drawBackground(){
@@ -209,17 +239,31 @@ public class GameScreen extends AbstractScreen {
         emojiParser.parse();
         emojiSprites = emojiParser.getEntities();
 
-        MapParser obstacleParser = new ObstacleParser(world, tiledMap, "obstacles");
+        MapParser obstacleParser = new SensorParser(world, tiledMap, SensorParser.Type.OBSTACLE);
         obstacleParser.parse();
+
+        MapParser goalParser = new SensorParser(world, tiledMap, SensorParser.Type.GOAL);
+        goalParser.parse();
+
+        MapParser questParser= new SensorParser(world, tiledMap, SensorParser.Type.QUEST);
+        questParser.parse();
     }
 
     private void setupContactHandler() {
 
         CollisionHandler collisionHandler = new CollisionHandler();
-        collisionHandler.onCollisionWithObstable(new ICollisionHandler.ObstacleCollisionListener() {
+        collisionHandler.onCollisionWithSensor(new ICollisionHandler.SensorCollisionListener() {
             @Override
-            public void onCollision(Player p) {
-                Gdx.app.log("Collision", "Game over");
+            public void onCollision(Player p, SensorParser.Type type) {
+                if (type == SensorParser.Type.OBSTACLE) {
+                    pause();
+                    endStage = new EndStage(endStageListener, EndStage.EndStageType.LOST_LEVEL);
+                } else if (type == SensorParser.Type.QUEST) {
+                    //TODO Add quest
+                } else if (type == SensorParser.Type.GOAL) {
+                    pause();
+                    endStage = new EndStage(endStageListener, EndStage.EndStageType.COMPLETED_LEVEL);
+                }
             }
         });
 
@@ -234,5 +278,29 @@ public class GameScreen extends AbstractScreen {
 
         mCollisionHandler = collisionHandler;
     }
+
+    @Override
+    public void onMainMenuButtonClick() {
+        try {
+            screenObserver.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onTryAgainButtonClick() {
+        try {
+            screenObserver.changeScreen(InfinityRun.ScreenID.GAME);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onNextLevelButtonClick() {
+
+    }
+
 
 }
