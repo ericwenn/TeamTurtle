@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" nextobjectid="145">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="15" tilewidth="32" tileheight="32" nextobjectid="161">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="1080" columns="36">
   <image source="tileset.png" width="576" height="480"/>
  </tileset>
@@ -11,7 +11,7 @@
  </tileset>
  <layer name="graphics" width="200" height="15">
   <data encoding="base64" compression="zlib">
-   eJztl91ugjAYhjkA2S05PfIydrSrmQmXMpMdOONNLIFsJM6LWZa14ftih9YWoaXF90nelN/Yr/C0kiQAAAAAAADExyo3BwAAgN18GeKcGXr/AIiZUOeAp5k5AIBz4Ae4JxZpE1v6+lFnSfKa3X7/vWD7zWH63/GY/s+YfRqiHp+wG7782GSNHxU5snc4Dj9pE93+FJm36mu7MYQjffsUC6obXfz4zZt05YucYDfkfuFoHWEXLvkxdUcYnRtjOBITbS+6+nELBfmwITf6rCFbcf27yE5zn+qBzo+pO2Jy45oj8nm4XNfHguvS1abzwrUf0oV1dvru4JadqTuuIQdR37fI8UKd/O4fLPxw4YhpjEOIrTtDpBTP6IPymbv5DcZnXYOND7kg2xdKRW2tHK9oWx4LefyWD9fPj/3uq1kq28+pfzd8JWY/2IE3atmNUvGhVM7F7scf/6fQig==
+   eJztl0tugzAURRlA6JqSjLqMjrqaVspSipRBUnUTlUAtEs1ioiq2eE9x0hjsgI2p75GuzM8Kz3DskCQAAAAAAADMj8e8PwAAAMzmyxDnzNDvD4A5E+oc8LToDwDgL/ADxMQqbWPKUD/qLEnesvv7x4Dp94bJ/45lehmf9zWkfwiwG778KLLWj4oc+XA4Dse0jW4/Bq7dGMORWFDdsPHjN29jyzc5wW7I/Y2jdYRduOVHLI7o3IAj3Vx7YevHPWzIh4LcGLKG7MT1e5F3TT/VA50f/92RPje6HJHPw+W6PhVcl642nReu/ZAuvGbn7w5u2Znacg1pRH0/IocbdfK73xj44cKRvjEOIabujJFSPKNPylfu5jcYn3WNNj7kgmxfKBW1tXK8om15LOTxWz90n5/63VezVrafU/9u+Mqc/WAHttSyG6XiQ6mcm7sfJzHV0Fk=
   </data>
  </layer>
  <objectgroup name="obstacles">
@@ -36,7 +36,7 @@
   <object id="55" x="2302.15" y="289.762" width="351.564" height="31.9604"/>
   <object id="56" x="2174.31" y="161.921" width="127.842" height="31.9604"/>
   <object id="57" x="704.129" y="161.921" width="319.604" height="31.9604"/>
-  <object id="58" x="608.248" y="289.762" width="383.525" height="31.9604"/>
+  <object id="58" x="576.248" y="289.762" width="415.525" height="31.9604"/>
   <object id="68" x="2877.44" y="98" width="287.644" height="31.9604"/>
   <object id="69" x="2685.67" y="193.881" width="159.802" height="31.9604"/>
   <object id="92" x="3552" y="384" width="256" height="32"/>
@@ -59,15 +59,17 @@
    <ellipse/>
   </object>
   <object id="125" x="3040" y="416" width="2496" height="64"/>
-  <object id="126" x="5472" y="288" width="64" height="128"/>
-  <object id="127" x="5440" y="320" height="96"/>
-  <object id="128" x="5408" y="352" width="32" height="64"/>
-  <object id="129" x="5376" y="384" width="32" height="32"/>
-  <object id="135" x="5600" y="288" width="64" height="192"/>
-  <object id="136" x="5664" y="320" width="32" height="160"/>
-  <object id="137" x="5696" y="352" width="32" height="128"/>
-  <object id="138" x="5728" y="384" width="32" height="32"/>
   <object id="140" x="5728" y="416" width="672" height="64"/>
+  <object id="145" x="3680" y="320" width="32" height="64"/>
+  <object id="149" x="2176" y="448" width="128" height="32"/>
+  <object id="153" x="5600" y="352" width="128" height="128"/>
+  <object id="154" x="5728" y="384" width="32" height="32"/>
+  <object id="155" x="5600" y="320" width="96" height="32"/>
+  <object id="156" x="5600" y="288" width="64" height="32"/>
+  <object id="157" x="5472" y="288" width="64" height="32"/>
+  <object id="158" x="5440" y="320" width="96" height="96"/>
+  <object id="159" x="5408" y="352" width="32" height="64"/>
+  <object id="160" x="5376" y="384" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="emojis">
   <object id="82" x="1024" y="320" width="32" height="32"/>
@@ -76,7 +78,8 @@
   <object id="104" x="4160" y="96" width="32" height="32"/>
   <object id="106" x="4128" y="352" width="32" height="32"/>
   <object id="121" x="4768" y="192" width="32" height="32"/>
-  <object id="142" x="5568" y="192" width="32" height="32"/>
+  <object id="147" x="3136" y="32" width="32" height="32"/>
+  <object id="148" x="992" y="64" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="finish">
   <object id="143" x="6144" y="-32" width="32" height="448"/>
