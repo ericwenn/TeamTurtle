@@ -21,7 +21,7 @@ public class Player extends AbstractEntity {
     private Body b2body;
     private TextureRegion playerStand;
     private static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32,
-            COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 100, START_Y = 300;
+            COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 400, START_Y = 300;
     private static final float JUMP_IMPULSE = 4f;
     private static final float IMPULSE_X = 0.1f;
     private static final float SPEED_X = 1.5f;
