@@ -43,7 +43,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
     }
 
     private enum State {
-        RUN, STOP;
+        PLAY, PAUSE, GAME_WON, GAME_LOST;
     }
 
     public static final float GRAVITY = -10;
@@ -60,7 +60,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
-    private EndStage endStage;
+    private EndStage gameWonStage, gameLostStage;
 
     private World world;
     private Box2DDebugRenderer b2dr;
@@ -78,7 +78,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
         endStageListener = this;
 
         //Set state
-        state = State.RUN;
+        state = State.PLAY;
 
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
@@ -89,6 +89,9 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
     public void show() {
         //Change input focus to this stage
         Gdx.input.setInputProcessor(this);
+
+        gameLostStage = new EndStage(this, EndStage.EndStageType.LOST_LEVEL);
+        gameWonStage = new EndStage(this, EndStage.EndStageType.COMPLETED_LEVEL);
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
@@ -124,11 +127,18 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
     @Override
     public void render(float delta) {
         switch (state) {
-            case RUN:
+            case PLAY:
                 renderWorld(delta);
                 break;
-            case STOP:
-                endStage.draw();
+            case GAME_LOST:
+                drawStaticBackground();
+                gameLostStage.draw();
+                break;
+            case GAME_WON:
+                drawStaticBackground();
+                gameWonStage.draw();
+                break;
+            case PAUSE:
                 break;
         }
     }
@@ -179,7 +189,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
 
     @Override
     public void pause() {
-        state = State.STOP;
+
     }
 
     @Override
@@ -204,9 +214,8 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
         }
         mPlayer.dispose();
         bg.dispose();
-        if (endStage != null) {
-            endStage.dispose();
-        }
+        gameLostStage.dispose();
+        gameWonStage.dispose();
     }
 
     public void drawBackground(){
@@ -219,6 +228,13 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
                 InfinityRun.HEIGHT / InfinityRun.PPM);
         getSpriteBatch().draw(bg, bg2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
                 InfinityRun.HEIGHT / InfinityRun.PPM);
+    }
+
+    private void drawStaticBackground() {
+        getSpriteBatch().setProjectionMatrix(getCamera().combined);
+        getSpriteBatch().begin();
+        drawBackground();
+        getSpriteBatch().end();
     }
 
     private void setUpWorld() {
@@ -262,16 +278,14 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
             @Override
             public void onCollision(Player p) {
                 Gdx.app.log("Collision", "Obstacle collision");
-                pause();
-                endStage = new EndStage(endStageListener, EndStage.EndStageType.LOST_LEVEL);
+                state = State.GAME_LOST;
             }
         });
 
         eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
             @Override
             public void onLevelFinished() {
-                pause();
-                endStage = new EndStage(endStageListener, EndStage.EndStageType.COMPLETED_LEVEL);
+                state = State.GAME_WON;
             }
         });
 

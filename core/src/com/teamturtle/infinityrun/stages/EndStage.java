@@ -153,4 +153,10 @@ public class EndStage extends Stage {
         buttonTable.padTop(ROW_PADDING);
         parentTable.add(buttonTable).bottom();
     }
+
+    @Override
+    public void draw() {
+        Gdx.input.setInputProcessor(this);
+        super.draw();
+    }
 }
