@@ -13,8 +13,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.collisions.CollisionHandler;
-import com.teamturtle.infinityrun.collisions.ICollisionHandler;
+import com.teamturtle.infinityrun.collisions.EventHandler;
+import com.teamturtle.infinityrun.collisions.IEventHandler;
 import com.teamturtle.infinityrun.map_parsing.EmojiParser;
 import com.teamturtle.infinityrun.map_parsing.GroundParser;
 import com.teamturtle.infinityrun.map_parsing.MapParser;
@@ -56,7 +56,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
 
     private Player mPlayer;
 
-    private CollisionHandler mCollisionHandler;
+    private EventHandler mEventHandler;
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
@@ -109,10 +109,10 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
         //Creates box2d world and enteties
         setUpWorld();
 
-        // Create CollisionHandler with actions. Still not connected to the world.
-        setupContactHandler();
+        // Create EventHandler with actions. Still not connected to the world.
+        setupEventHandler();
 
-        world.setContactListener(mCollisionHandler);
+        world.setContactListener(mEventHandler);
     }
 
     private void gameUpdate(float delta) {
@@ -249,25 +249,11 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
         questParser.parse();
     }
 
-    private void setupContactHandler() {
+    private void setupEventHandler() {
 
-        CollisionHandler collisionHandler = new CollisionHandler();
-        collisionHandler.onCollisionWithSensor(new ICollisionHandler.SensorCollisionListener() {
-            @Override
-            public void onCollision(Player p, SensorParser.Type type) {
-                if (type == SensorParser.Type.OBSTACLE) {
-                    pause();
-                    endStage = new EndStage(endStageListener, EndStage.EndStageType.LOST_LEVEL);
-                } else if (type == SensorParser.Type.QUEST) {
-                    //TODO Add quest
-                } else if (type == SensorParser.Type.GOAL) {
-                    pause();
-                    endStage = new EndStage(endStageListener, EndStage.EndStageType.COMPLETED_LEVEL);
-                }
-            }
-        });
+        EventHandler eventHandler = new EventHandler();
 
-        collisionHandler.onCollisionWithEmoji(new ICollisionHandler.EmojiCollisionListener() {
+        eventHandler.onCollisionWithEmoji(new IEventHandler.EmojiCollisionListener() {
             @Override
             public void onCollision(Player p, Emoji e) {
                 Gdx.app.log("Collision", "Emoji collision");
@@ -276,7 +262,28 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
 
         });
 
-        mCollisionHandler = collisionHandler;
+
+        eventHandler.onCollisionWithObstacle(new IEventHandler.ObstacleCollisionListener() {
+            @Override
+            public void onCollision(Player p) {
+                Gdx.app.log("Collision", "Obstacle collision");
+                pause();
+                endStage = new EndStage(endStageListener, EndStage.EndStageType.LOST_LEVEL);
+            }
+        });
+
+        eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
+            @Override
+            public void onLevelFinished() {
+                pause();
+                endStage = new EndStage(endStageListener, EndStage.EndStageType.COMPLETED_LEVEL);
+            }
+        });
+
+        // TODO Implement quest listener
+
+
+        this.mEventHandler = eventHandler;
     }
 
     @Override
