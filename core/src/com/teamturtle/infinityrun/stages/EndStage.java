@@ -28,7 +28,7 @@ public class EndStage extends Stage {
     private static final String LEVEL_LOST_SV = "Nivå förlorad :(";
     private static final String LEVEL_COMPLETED_SV = "Nivå klarad :D";
     private static final String POINTS_SV = "Poäng: ";
-    private static final String WORD_COLLECTED_SV = "Ord sammlade: ";
+    private static final String WORD_COLLECTED_SV = "Ord samlade: ";
     private static final String MAIN_MENU_SV = "Huvudmeny";
     private static final String TRY_AGAIN_SV = "Försök igen";
     private static final String NEXT_SV = "Nästa";
