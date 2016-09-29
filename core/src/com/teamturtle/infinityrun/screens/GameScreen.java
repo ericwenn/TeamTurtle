@@ -2,125 +2,150 @@ package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.teamturtle.infinityrun.InfinityRun;;
+import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.collisions.CollisionHandler;
+import com.teamturtle.infinityrun.collisions.ICollisionHandler;
+import com.teamturtle.infinityrun.map_parsing.EmojiParser;
+import com.teamturtle.infinityrun.map_parsing.GroundParser;
+import com.teamturtle.infinityrun.map_parsing.MapParser;
+import com.teamturtle.infinityrun.map_parsing.ObstacleParser;
+import com.teamturtle.infinityrun.sprites.DrawableText;
+import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+
+import java.util.List;
 
 /**
  * Created by ericwenn on 9/20/16.
  */
-public class GameScreen implements Screen {
-    public static final float GAME_SPEED = 0.1f, GRAVITY = -10;
+public class GameScreen extends AbstractScreen {
 
-    private OrthographicCamera cam;
-    private SpriteBatch mSpriteBatch;
+    public enum Level {
+        LEVEL_1("level1.tmx"), LEVEL_2("level2.tmx"), LEVEL_3("level3.tmx");
+
+        private final String tmx;
+
+        Level(String tmx) {
+            this.tmx = tmx;
+        }
+    }
+
+    public static final float GRAVITY = -10;
+
     private Texture bg;
+
     private float bg1, bg2;
     private FillViewport mFillViewport;
-    private Player mPlayer;
-    private Emoji emoji;
 
-    private TmxMapLoader tmxMapLoader;
+    private Player mPlayer;
+
+    private CollisionHandler mCollisionHandler;
+
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
     private World world;
     private Box2DDebugRenderer b2dr;
 
-    public GameScreen( SpriteBatch mSpriteBatch ) {
-        this.mSpriteBatch = mSpriteBatch;
-        this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM,
-                InfinityRun.HEIGHT / InfinityRun.PPM);
-        this.cam = new OrthographicCamera( mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
-        this.cam.position.set(mFillViewport.getWorldWidth() / 2 , mFillViewport.getWorldHeight() / 2, 0);
+    private List<? extends Entity> emojiSprites;
+    private IScreenObserver observer;
 
-        this.bg = new Texture("bg.jpg");
-        bg1 = 0;
-        bg2 = InfinityRun.WIDTH / InfinityRun.PPM;
+    public GameScreen( SpriteBatch mSpriteBatch, Level level,IScreenObserver observer ) {
+        super(mSpriteBatch);
+        this.observer = observer;
 
-        world = new World(new Vector2(0, GRAVITY), true);
-        b2dr = new Box2DDebugRenderer();
-
-        Texture dalaHorse = new Texture("dalahorse_32_flipped.png");
-        this.mPlayer = new Player(world, dalaHorse);
-        emoji = new Emoji("Äpple", "audio/apple.wav", new Texture("emoji/1f34e.png"),mSpriteBatch);
-        tmxMapLoader = new TmxMapLoader();
-        tiledMap = tmxMapLoader.load("tilemap.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / InfinityRun.PPM);
-
-        //This chunk of code should be refactorized into some other class.
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-        for(MapObject object : tiledMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect =((RectangleMapObject) object).getRectangle();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(((rect.getX() + rect.getWidth() / 2) / InfinityRun.PPM),
-                    ((rect.getY() + rect.getHeight() / 2)) / InfinityRun.PPM);
-            body = world.createBody(bdef);
-
-            shape.setAsBox(rect.getWidth() / 2 / InfinityRun.PPM,
-                    rect.getHeight() / 2 / InfinityRun.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
+        //Load tilemap
+        TmxMapLoader tmxMapLoader = new TmxMapLoader();
+        tiledMap = tmxMapLoader.load(level.tmx);
     }
-
 
     @Override
     public void show() {
+        //Change input focus to this stage
+        Gdx.input.setInputProcessor(this);
 
+        // FillViewport "letterboxing"
+        this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
+                , InfinityRun.HEIGHT / InfinityRun.PPM);
+
+        // Init background from file and setup starting positions to have continous background.
+        this.bg = new Texture("bg.jpg");
+
+        bg1 = 0;
+        bg2 = InfinityRun.WIDTH / InfinityRun.PPM;
+
+        // TODO Remove this before production
+        b2dr = new Box2DDebugRenderer();
+
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / InfinityRun.PPM);
+
+        //Creates box2d world and enteties
+        setUpWorld();
+
+        // Create CollisionHandler with actions. Still not connected to the world.
+        setupContactHandler();
+
+        world.setContactListener(mCollisionHandler);
+    }
+
+    private void gameUpdate(float delta) {
+        handleInput();
+        world.step(1 / 60f, 6, 2);
+        mPlayer.update(delta);
     }
 
 
     @Override
     public void render(float delta) {
-        world.step(1/100f, 6, 2);
-        mPlayer.update(delta);
-        handleInput();
+        gameUpdate(delta);
 
-        tiledMapRenderer.setView(cam);
+        tiledMapRenderer.setView(getOrthoCam());
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        mSpriteBatch.setProjectionMatrix(cam.combined);
-        mSpriteBatch.begin();
+        getSpriteBatch().setProjectionMatrix(getCamera().combined);
 
+        getSpriteBatch().begin();
         drawBackground();
-        mSpriteBatch.draw( mPlayer, mPlayer.getX(), mPlayer.getY(), 32 / InfinityRun.PPM,
-                32 / InfinityRun.PPM);
 
-        mSpriteBatch.end();
-        this.cam.position.set(mPlayer.getX(), mFillViewport.getWorldHeight() / 2, 0);
-        cam.update();
+        mPlayer.render(getSpriteBatch());
+        for (Entity emoji : emojiSprites) {
+            emoji.update(delta);
+            emoji.render(getSpriteBatch());
+        }
+        getSpriteBatch().end();
+
+        //This cant be done within the other emojiSprites for loop, because the method called
+        //can´t be called inside getSpriteBatch().begin and getSpriteBatch.end()
+        for(Entity entity : emojiSprites){
+            Emoji emoji = (Emoji) entity;
+            if(emoji.getIsExploded()) {
+                //Creates a DrawableText object and takes the stage of it and draw.
+                //The parameter for x is emoji.getX() - mPlayer.getX() so the text will move.
+                new DrawableText(emoji.getEmojiName(), getSpriteBatch(),
+                        emoji.getX() - mPlayer.getX(), emoji.getY()).getStage().draw();
+            }
+        }
+
+        getCamera().position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
+                , mFillViewport.getWorldHeight() / 2, 0);
+        getCamera().update();
         tiledMapRenderer.render();
-        b2dr.render(world, cam.combined);
-        emoji.render();
+        b2dr.render(world, getOrthoCam().combined);
     }
 
     private void handleInput() {
-        if((Gdx.input.isTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) && mPlayer.getPlayerBody().getLinearVelocity().y == 0)
+        if((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)))
             mPlayer.jump();
     }
 
@@ -141,25 +166,73 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
+        world.setContactListener(null);
+    }
+
+    @Override
+    public void buildStage() {
 
     }
 
     @Override
     public void dispose() {
-        mSpriteBatch.dispose();
+        for( Entity ent : emojiSprites) {
+            ent.dispose();
+        }
+        mPlayer.dispose();
+        getSpriteBatch().dispose();
         bg.dispose();
-
     }
 
     public void drawBackground(){
-        if(bg1 + InfinityRun.WIDTH / InfinityRun.PPM< cam.position.x - cam.viewportWidth/2)
+        if(bg1 + InfinityRun.WIDTH / InfinityRun.PPM< getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
             bg1 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
-        if(bg2 + InfinityRun.WIDTH / InfinityRun.PPM < cam.position.x - cam.viewportWidth/2)
+        if(bg2 + InfinityRun.WIDTH / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
             bg2 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
 
-        mSpriteBatch.draw(bg, bg1, 0, InfinityRun.WIDTH / InfinityRun.PPM,
+        getSpriteBatch().draw(bg, bg1, 0, InfinityRun.WIDTH / InfinityRun.PPM,
                 InfinityRun.HEIGHT / InfinityRun.PPM);
-        mSpriteBatch.draw(bg, bg2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
+        getSpriteBatch().draw(bg, bg2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
                 InfinityRun.HEIGHT / InfinityRun.PPM);
     }
+
+    private void setUpWorld() {
+        // Setup world with regular gravity, and sleeping bodies
+        world = new World(new Vector2(0, GRAVITY), true);
+
+        mPlayer = new Player(world);
+
+        MapParser groundParser = new GroundParser(world, tiledMap, "ground");
+        groundParser.parse();
+
+        MapParser emojiParser = new EmojiParser(world, tiledMap,  "emoji_placeholders");
+        emojiParser.parse();
+        emojiSprites = emojiParser.getEntities();
+
+        MapParser obstacleParser = new ObstacleParser(world, tiledMap, "obstacles");
+        obstacleParser.parse();
+    }
+
+    private void setupContactHandler() {
+
+        CollisionHandler collisionHandler = new CollisionHandler();
+        collisionHandler.onCollisionWithObstable(new ICollisionHandler.ObstacleCollisionListener() {
+            @Override
+            public void onCollision(Player p) {
+                Gdx.app.log("Collision", "Game over");
+            }
+        });
+
+        collisionHandler.onCollisionWithEmoji(new ICollisionHandler.EmojiCollisionListener() {
+            @Override
+            public void onCollision(Player p, Emoji e) {
+                Gdx.app.log("Collision", "Emoji collision");
+                e.triggerExplode();
+            }
+
+        });
+
+        mCollisionHandler = collisionHandler;
+    }
+
 }
