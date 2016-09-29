@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="215" height="15" tilewidth="32" tileheight="32" nextobjectid="167">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="169">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="1080" columns="36">
   <image source="tileset.png" width="576" height="480"/>
  </tileset>
@@ -9,9 +9,9 @@
  <tileset firstgid="1082" name="tileset32" tilewidth="32" tileheight="32" tilecount="1080" columns="36">
   <image source="tileset32.png" width="1152" height="960"/>
  </tileset>
- <layer name="graphics" width="215" height="15">
+ <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJztl91ugjAYhjmAsWtyHnkZHnk1W+KlaLKDzXgTJhAlcV6MMWvD92WdoX9CS4nvk7ypgA394WkhywAAAAAAAACpsyjtAQAAMB4u63SKa3Xq7QPgWUl1/Vi+2AMAGBa4BYAbb3kbV/q61RRZtikerw/MuH5fubwrzfL/idmuPvVTgL2K5da2aN2qya99wHG45m10x8DMvVdD+PUsqF75uHUr2/hyIp/YK3m8DrR/sUddbsEvOzqv4JeZe6d83XqENbm0Ja/67F1f4v/fIjtNPdUhnVvwS4/NK5Nfci5DvouMBfdL1zedU6Hdkh59FH/fWVyyb43n3nUW/fsRuXT0k705O7gVwq+ucZ17xjZPY8bVuyFSifk9UI5lmHswMfs12PiQR7J8p9RUNsr5mn7LcymP3/zVfF33TE7NK7Utqzy+V7EyZbfYn08q2atKcalSrk3drV/ictfR
+   eJztl91qgzAYhj3QumvaPOpl9GhXs0EvpcIOutKbKCib0O1ixmiC38dSMZpoEtP1feAl9Sc1iT6JJgkAAAAAAAAA9LPOxwMAAOD/YDLvxzj3x94+AMAwsc4zm9V4AADLAAcBcMtT2saUuQ42WZLssun1gRtMv/9M3tEe0+uEbNec+jHA/oVysMxaB2vy8OhxHH7SNrpt4Iaufy48vBdU/2wc/M3b2PJJ3rF/cnvraT1k3/ochIfu0PkHD4fpumfr4BS25FxJ/s1ZC/fi/HeRg6ae6prOQXg4nzH/hjyU99znO9BScL90fdO559tB6dtr9vcdyCV72ViuhWfRvy+R755+sl9nAweX9LBv/AvLjN3PJWPqp4tU4jk4UT5yP9dgQvbL2fiQb7J8odRUNsr+mn7LfTGPX/Hg5n90z+6t+ae25TkN71+o3LKD7NkblexfpThXKcfuxcELXc/cqQ==
   </data>
  </layer>
  <objectgroup name="obstacles">
@@ -58,7 +58,7 @@
    <ellipse/>
   </object>
   <object id="125" x="3520" y="416" width="2496" height="64"/>
-  <object id="140" x="6208" y="416" width="672" height="64"/>
+  <object id="140" x="6208" y="416" width="990.182" height="64"/>
   <object id="145" x="4160" y="320" width="32" height="64"/>
   <object id="149" x="2656" y="448" width="128" height="32"/>
   <object id="153" x="6080" y="352" width="128" height="128"/>
