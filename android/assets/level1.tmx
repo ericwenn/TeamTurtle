@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="32" tileheight="32" nextobjectid="39">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="32" tileheight="32" nextobjectid="41">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" spacing="2" margin="1" tilecount="195" columns="15">
   <image source="tileset.png" trans="ff00ff" width="528" height="448"/>
  </tileset>
- <tileset firstgid="196" name="tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
-  <image source="C:/Users/Henrik/Pictures/tda550/tileset.png" width="128" height="128"/>
+ <tileset firstgid="196" name="tileset2" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="tileset2.png" width="128" height="128"/>
  </tileset>
  <layer name="graphics" width="100" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt1bEJACAMBdHsP1cE3crKQhtNEf3CPUgrgYNolsuT30cMPbTQQws9tNBDCz20tNcLYFJeL4AJPe44vUP0yFE3M6yd+D9inJEaAPhFBxZ3XNw=
+   eJzt1bEJACAMBdHsP5dC3MrKQhtNEf3CPUgrgYNolsuT30cMPbTQQws9tNBDCz20tNcLYFJfL4AJPe44vUP0yOGbGdZO/B8xhZEaAPhFB+JGXPQ=
   </data>
  </layer>
  <objectgroup name="ground">
