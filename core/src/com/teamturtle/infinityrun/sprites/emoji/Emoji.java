@@ -2,13 +2,13 @@ package com.teamturtle.infinityrun.sprites.emoji;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.sprites.AbstractEntity;
 
@@ -18,8 +18,9 @@ import com.teamturtle.infinityrun.sprites.AbstractEntity;
 public class Emoji extends AbstractEntity {
 
     private static final float EXPLOSION_SCALE = 1.3f;
-    public static final float EMOJI_SIZE = 32;
-    private static final int TEXT_OFFSET_X = 135, TEXT_OFFSET_Y = 50;
+    private static final float EMOJI_SIZE = 32;
+    private static final int FONT_SIZE = 25;
+    private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf";
 
     private String emojiName;
     private Sound emojiSound;
@@ -29,27 +30,30 @@ public class Emoji extends AbstractEntity {
     private boolean isExploded = false;
     private Body mBody;
 
-    private FillViewport textViewPort;
-    private OrthographicCamera textCam;
+    private Matrix4 noneScaleProjection;
 
     private BitmapFont font;
-    private float fontX, fontY;
+    private float textX, textY;
+    private float textLength;
 
     public Emoji(String emojiName, String soundURL, Texture texture){
         this.emojiName = emojiName;
         this.texture = texture;
 
-        //Create new camera without scaling to draw text
-        textViewPort = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
-        textCam = new OrthographicCamera(textViewPort.getWorldWidth(), textViewPort.getWorldHeight());
-        textCam.setToOrtho(false);
-        textCam.update();
+        noneScaleProjection = new Matrix4().setToOrtho2D(0, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
 
-        font = new BitmapFont();
-        font.setColor(Color.GREEN);
+        //Create font
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_URL));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter
+                = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = FONT_SIZE;
+        font = generator.generateFont(parameter);
+        generator.dispose();
+
+        GlyphLayout layout = new GlyphLayout(font, emojiName);
+        textLength = layout.width;
 
         emojiSound = Gdx.audio.newSound(Gdx.files.internal(soundURL));
-        setPosition(400, InfinityRun.HEIGHT - 100);
     }
 
     public void setBody(Body body) {
@@ -62,8 +66,9 @@ public class Emoji extends AbstractEntity {
     }
 
     public void update(float dt, float playerX) {
-        fontX = (getX() - playerX) * InfinityRun.PPM + TEXT_OFFSET_X;
-        fontY = (getY() * InfinityRun.PPM) + TEXT_OFFSET_Y;
+        textX = ((getX() - playerX) * InfinityRun.PPM) + EMOJI_SIZE * 5 - textLength / 2;
+        textY = (getY() * InfinityRun.PPM) + EMOJI_SIZE * 2;
+
         update(dt);
     }
 
@@ -81,10 +86,10 @@ public class Emoji extends AbstractEntity {
             float dx = ((EMOJI_SIZE * EXPLOSION_SCALE) - (EMOJI_SIZE)) / ( 2 * InfinityRun.PPM);
             sb.draw( texture, getX() - dx, getY(), EMOJI_SIZE*EXPLOSION_SCALE / InfinityRun.PPM
                     , EMOJI_SIZE*EXPLOSION_SCALE / InfinityRun.PPM);
-            //Change camera to avoid text scaling
-            sb.setProjectionMatrix(textCam.combined);
-            //Draw font
-            font.draw(sb, emojiName, fontX, fontY);
+
+            //Change projection matrix(camera) to avoid text scaling
+            sb.setProjectionMatrix(noneScaleProjection);
+            font.draw(sb, emojiName, textX, textY);
         } else {
             sb.draw( texture, getX(), getY(), EMOJI_SIZE / InfinityRun.PPM, EMOJI_SIZE / InfinityRun.PPM);
         }

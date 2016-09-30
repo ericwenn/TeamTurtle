@@ -1,7 +1,10 @@
 package com.teamturtle.infinityrun.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -48,12 +51,16 @@ public class EndStage extends Stage {
     private ArrayList<String> emojiURLs;
     private IEndStageListener handler;
     private EndStageType type;
+    private Matrix4 noneScaleProjection;
 
     public EndStage(final IEndStageListener handler, EndStageType type) {
         super(new FitViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
 
         this.handler = handler;
         this.type = type;
+
+        //Create none scale matrix
+        noneScaleProjection = new Matrix4().setToOrtho2D(0, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
 
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         //TODO get points from file
