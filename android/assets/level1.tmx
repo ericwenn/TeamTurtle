@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="32" tileheight="32" nextobjectid="79">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" spacing="2" margin="1" tilecount="195" columns="15">
+  <image source="tileset.png" trans="ff00ff" width="528" height="448"/>
+ </tileset>
+ <tileset firstgid="196" name="tileset2" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="tileset2.png" width="128" height="128"/>
+ </tileset>
+ <layer name="graphics" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt1bEJACAMBdHsP5dC3MrKQhtNEf3CPUgrgYNolsuT30cMPbTQQws9tNBDCz20tNcLYFJfL4AJPe44vUP0yOGbGdZO/B8xhZEaAPhFB+JGXPQ=
+  </data>
+ </layer>
+ <objectgroup name="ground">
+  <object id="2" x="0" y="352" width="3197.33" height="32"/>
+  <object id="23" x="320" y="320.082" width="256" height="32"/>
+ </objectgroup>
+ <objectgroup name="emoji_placeholders">
+  <object id="37" x="640" y="256" width="32" height="32"/>
+  <object id="38" x="320" y="288.5" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="obstacle">
+  <object id="24" x="448.152" y="288.091" width="31.8182" height="31.7273"/>
+  <object id="36" x="639.818" y="320.182" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="goal">
+  <object id="33" x="767.75" y="223.75" width="32" height="96"/>
+ </objectgroup>
+ <objectgroup name="quest"/>
+</map>
