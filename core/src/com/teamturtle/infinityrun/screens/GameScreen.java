@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -52,6 +54,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
 
     private float bg1, bg2;
     private FillViewport mFillViewport;
+    private Matrix4 noneScaleProjection;
 
     private Player mPlayer;
 
@@ -155,19 +158,14 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
         drawBackground();
 
         mPlayer.render(getSpriteBatch());
-        for (Entity emoji : emojiSprites) {
-            emoji.update(delta);
+        for (Entity entity : emojiSprites) {
+            Emoji emoji = (Emoji) entity;
+            emoji.update(delta, mPlayer.getX());
             emoji.render(getSpriteBatch());
+            //Resets projectionmatrix since emoji might use a non scaled matrix
+            getSpriteBatch().setProjectionMatrix(getCamera().combined);
         }
         getSpriteBatch().end();
-
-        //This cant be done within the other emojiSprites for loop, because the method called
-        //can´t be called inside getSpriteBatch().begin and getSpriteBatch.end()
-        for(Entity entity : emojiSprites){
-            Emoji emoji = (Emoji) entity;
-            if(emoji.getIsExploded())
-                emoji.drawText(mPlayer.getX());
-        }
 
         getCamera().position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
                 , mFillViewport.getWorldHeight() / 2, 0);
@@ -268,7 +266,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
             @Override
             public void onCollision(Player p, Emoji e) {
                 Gdx.app.log("Collision", "Emoji collision");
-                e.triggerExplode(getSpriteBatch());
+                e.triggerExplode();
             }
 
         });

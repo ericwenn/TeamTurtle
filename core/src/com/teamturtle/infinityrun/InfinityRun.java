@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
@@ -12,12 +13,13 @@ public class InfinityRun extends Game implements IScreenObserver{
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 480;
-	public static final float PPM = 16*5;
+	public static final float PPM = 75;
 
 	private SpriteBatch mSpriteBatch;
 
 	@Override
 	public void create () {
+
 		setSpriteBatch(new SpriteBatch());
 
 		try{
