@@ -90,7 +90,7 @@ public class Emoji extends AbstractEntity {
         texture.dispose();
         mBody.getWorld().destroyBody(mBody);
         emojiSound.dispose();
-        stage.dispose();
+        //stage.dispose();
     }
     public boolean getIsExploded(){
         return isExploded;
@@ -98,7 +98,7 @@ public class Emoji extends AbstractEntity {
     public void drawText(float playerX){
         //Calculates where the text should be drawn on the screen.
         int x = (int)((getX() - playerX) * InfinityRun.PPM + TEXT_OFFSET);
-        //+40 is just a temporary variable to make up for the about 40 pixels void(black box) in the beginning.
+        //+40 is just a temporary variable to make up for the about 40 pixels voisd(black box) in the beginning.
         //Should be removed when the black box is fixed.
         int y = (int)((getY() * InfinityRun.PPM) + 40);
         textLabel.setPosition(x, y);
