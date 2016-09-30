@@ -155,8 +155,9 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
         drawBackground();
 
         mPlayer.render(getSpriteBatch());
-        for (Entity emoji : emojiSprites) {
-            emoji.update(delta);
+        for (Entity entity : emojiSprites) {
+            Emoji emoji = (Emoji) entity;
+            emoji.update(delta, mPlayer.getX());
             emoji.render(getSpriteBatch());
         }
         getSpriteBatch().end();
@@ -165,8 +166,8 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
         //can´t be called inside getSpriteBatch().begin and getSpriteBatch.end()
         for(Entity entity : emojiSprites){
             Emoji emoji = (Emoji) entity;
-            if(emoji.getIsExploded())
-                emoji.drawText(mPlayer.getX());
+            //if(emoji.getIsExploded())
+                //emoji.drawText(mPlayer.getX());
         }
 
         getCamera().position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
@@ -268,7 +269,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
             @Override
             public void onCollision(Player p, Emoji e) {
                 Gdx.app.log("Collision", "Emoji collision");
-                e.triggerExplode(getSpriteBatch());
+                e.triggerExplode();
             }
 
         });
