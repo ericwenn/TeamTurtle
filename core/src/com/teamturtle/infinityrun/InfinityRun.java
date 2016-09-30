@@ -12,7 +12,7 @@ public class InfinityRun extends Game implements IScreenObserver{
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 480;
-	public static final float PPM = 100;
+	public static final float PPM = 16*5;
 
 	private SpriteBatch mSpriteBatch;
 

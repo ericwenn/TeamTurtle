@@ -17,16 +17,31 @@ import java.util.List;
 /**
  * Created by ericwenn on 9/27/16.
  */
-public class ObstacleParser implements MapParser {
+
+public class SensorParser implements MapParser {
+
+    public enum Type {
+        OBSTACLE("obstacle"), GOAL("goal"), QUEST("quest");
+
+        private String layerName;
+
+        Type(String layerName) {
+            this.layerName = layerName;
+        }
+
+        public String getName() {
+            return layerName;
+        }
+    }
 
     private final World world;
     private final TiledMap tiledMap;
-    private final String obstacleLayerName;
+    private final String layerName;
 
-    public ObstacleParser(World world, TiledMap tiledMap, String obstacleLayerName) {
+    public SensorParser(World world, TiledMap tiledMap, Type type) {
         this.world = world;
         this.tiledMap = tiledMap;
-        this.obstacleLayerName = obstacleLayerName;
+        this.layerName = type.layerName;
     }
 
     @Override
@@ -36,7 +51,7 @@ public class ObstacleParser implements MapParser {
         FixtureDef fdef = new FixtureDef();
 
 
-        for (MapObject object : tiledMap.getLayers().get(obstacleLayerName).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : tiledMap.getLayers().get(layerName).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
             bdef.position.set(((rect.getX() + rect.getWidth() / 2) / InfinityRun.PPM)
@@ -47,7 +62,7 @@ public class ObstacleParser implements MapParser {
                     , (rect.getHeight() / 2) / InfinityRun.PPM);
             fdef.shape = shape;
             fdef.isSensor = true;
-            body.createFixture(fdef).setUserData("obstacle");
+            body.createFixture(fdef).setUserData(layerName);
         }
     }
 

@@ -25,10 +25,10 @@ public class EndStage extends Stage {
         LOST_LEVEL, COMPLETED_LEVEL;
     }
 
-    private static final String LEVEL_LOST_SV = "Nivå förlorad";
-    private static final String LEVEL_COMPLETED_SV = "Nivå klarad";
+    private static final String LEVEL_LOST_SV = "Nivå förlorad :(";
+    private static final String LEVEL_COMPLETED_SV = "Nivå klarad :D";
     private static final String POINTS_SV = "Poäng: ";
-    private static final String WORD_COLLECTED_SV = "Ord sammlade: ";
+    private static final String WORD_COLLECTED_SV = "Ord samlade: ";
     private static final String MAIN_MENU_SV = "Huvudmeny";
     private static final String TRY_AGAIN_SV = "Försök igen";
     private static final String NEXT_SV = "Nästa";
@@ -46,10 +46,10 @@ public class EndStage extends Stage {
     private Label levelStatusLabel, pointsLabel, wordCollectedLabel;
     private TextButton mainMenuButton, rightButton;
     private ArrayList<String> emojiURLs;
-    private IEndStageHandler handler;
+    private IEndStageListener handler;
     private EndStageType type;
 
-    public EndStage(final IEndStageHandler handler, EndStageType type) {
+    public EndStage(final IEndStageListener handler, EndStageType type) {
         super(new FitViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
 
         this.handler = handler;
@@ -152,5 +152,11 @@ public class EndStage extends Stage {
                 (rightButton.getWidth() + mainMenuButton.getWidth()));
         buttonTable.padTop(ROW_PADDING);
         parentTable.add(buttonTable).bottom();
+    }
+
+    @Override
+    public void draw() {
+        Gdx.input.setInputProcessor(this);
+        super.draw();
     }
 }

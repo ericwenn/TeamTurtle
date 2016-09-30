@@ -29,7 +29,7 @@ public class StartScreen extends AbstractScreen {
 
         this.observer = observer;
 
-        this.bg = new Texture("bg.jpg");
+        this.bg = new Texture("bg2.png");
         this.stage = new Stage();
     }
 
@@ -87,7 +87,7 @@ public class StartScreen extends AbstractScreen {
 
         getSpriteBatch().begin();
 
-        getSpriteBatch().draw(bg, 0, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
+        getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
 
         getSpriteBatch().end();
 
