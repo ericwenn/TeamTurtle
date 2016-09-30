@@ -133,10 +133,8 @@ public class EndStage extends Stage {
         Table emojiTable = new Table();
         emojiURLs = new ArrayList<String>();
         //TODO get emojis url from a file, this is temp
-        for(int i = 0; i < 10; i++) {
-            emojiURLs.add("emoji/1f40b.png");
-            emojiURLs.add("emoji/1f43f.png");
-            emojiURLs.add("emoji/1f48e.png");
+        for(int i = 0; i < 2; i++) {
+            emojiURLs.add("emoji/1f34e.png");
         }
         int emojiCount = 0;
         for (String emojiURL : emojiURLs) {
