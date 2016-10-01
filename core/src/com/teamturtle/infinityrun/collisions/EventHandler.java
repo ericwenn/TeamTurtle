@@ -83,20 +83,18 @@ public class EventHandler implements IEventHandler, ContactListener {
 
 
 
+        if (mQuestChangedListener != null) {
+            // Check quest
+            if (obj1 == SensorParser.Type.QUEST.getName() && obj2 instanceof Player) {
+                mQuestChangedListener.onQuestChanged();
+                return;
+            }
+            if (obj2 == SensorParser.Type.QUEST.getName() && obj1 instanceof Player) {
+                mQuestChangedListener.onQuestChanged();
+                return;
+            }
 
-        // Check quest
-        if (obj1 == SensorParser.Type.QUEST.getName() && obj2 instanceof Player) {
-            mQuestChangedListener.onQuestChanged();
-            return;
         }
-        if (obj2 == SensorParser.Type.QUEST.getName() && obj1 instanceof Player) {
-            mQuestChangedListener.onQuestChanged();
-            return;
-        }
-
-
-
-
 
 
 
