@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -35,7 +34,7 @@ import java.util.List;
 public class GameScreen extends AbstractScreen implements IEndStageListener{
 
     public enum Level {
-        LEVEL_1("level1.tmx"), LEVEL_2("level2.tmx"), LEVEL_3("level3.tmx");
+        LEVEL_1("mission_level.tmx"), LEVEL_2("level2.tmx"), LEVEL_3("level3.tmx");
 
         private final String tmx;
 
@@ -159,6 +158,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
 
         mPlayer.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
+
             Emoji emoji = (Emoji) entity;
             emoji.update(delta, mPlayer.getX());
             emoji.render(getSpriteBatch());
