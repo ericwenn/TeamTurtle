@@ -25,6 +25,7 @@ import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.EndStage;
 import com.teamturtle.infinityrun.stages.IEndStageListener;
+import com.teamturtle.infinityrun.stages.MissionStage;
 
 import java.util.List;
 
@@ -72,6 +73,9 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
 
     private IEndStageListener endStageListener;
 
+
+    private MissionStage mMissionStage;
+
     private State state;
 
     public GameScreen( SpriteBatch mSpriteBatch, Level level,IScreenObserver screenObserver) {
@@ -87,6 +91,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
         tiledMap = tmxMapLoader.load(level.tmx);
     }
 
+
     @Override
     public void show() {
         //Change input focus to this stage
@@ -94,6 +99,8 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
 
         gameLostStage = new EndStage(this, EndStage.EndStageType.LOST_LEVEL);
         gameWonStage = new EndStage(this, EndStage.EndStageType.COMPLETED_LEVEL);
+
+        mMissionStage = new MissionStage();
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
@@ -131,6 +138,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
         switch (state) {
             case PLAY:
                 renderWorld(delta);
+                mMissionStage.draw();
                 break;
             case GAME_LOST:
                 drawStaticBackground();
