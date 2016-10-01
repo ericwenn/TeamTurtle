@@ -30,17 +30,12 @@ public class Emoji extends AbstractEntity {
     private boolean isExploded = false;
     private Body mBody;
 
-    private Matrix4 noneScaleProjection;
-
     private BitmapFont font;
-    private float textX, textY;
     private float textLength;
 
     public Emoji(String emojiName, String soundURL, Texture texture){
         this.emojiName = emojiName;
         this.texture = texture;
-
-        noneScaleProjection = new Matrix4().setToOrtho2D(0, 0, InfinityRun.WIDTH, InfinityRun.HEIGHT);
 
         //Create font
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_URL));
@@ -65,13 +60,6 @@ public class Emoji extends AbstractEntity {
         emojiSound.play();
     }
 
-    public void update(float dt, float playerX) {
-        textX = ((getX() - playerX) * InfinityRun.PPM) + EMOJI_SIZE * 5 - textLength / 2;
-        textY = (getY() * InfinityRun.PPM) + EMOJI_SIZE * 2;
-
-        update(dt);
-    }
-
     @Override
     public void update(float dt) {
         setPosition(mBody.getPosition().x - ((Emoji.EMOJI_SIZE / 2) / InfinityRun.PPM)
@@ -87,9 +75,20 @@ public class Emoji extends AbstractEntity {
             sb.draw( texture, getX() - dx, getY(), EMOJI_SIZE*EXPLOSION_SCALE / InfinityRun.PPM
                     , EMOJI_SIZE*EXPLOSION_SCALE / InfinityRun.PPM);
 
-            //Change projection matrix(camera) to avoid text scaling
-            sb.setProjectionMatrix(noneScaleProjection);
-            font.draw(sb, emojiName, textX, textY);
+            //A scaled projection is created to draw font
+            Matrix4 scaledProjection = sb.getProjectionMatrix()
+                    .scale(1 / (InfinityRun.PPM), 1 / (InfinityRun.PPM), 0);
+            sb.setProjectionMatrix(scaledProjection);
+
+            //Draws font above emoji
+            float y = (getY() * InfinityRun.PPM) + EMOJI_SIZE * 2;
+            float x = (getX() * InfinityRun.PPM) + (EMOJI_SIZE / 2) - textLength / 2;
+            font.draw(sb, emojiName, x, y);
+
+            //Reset the projection
+            Matrix4 normalProjection = sb.getProjectionMatrix()
+                    .scale(InfinityRun.PPM, InfinityRun.PPM, 0);
+            sb.setProjectionMatrix(normalProjection);
         } else {
             sb.draw( texture, getX(), getY(), EMOJI_SIZE / InfinityRun.PPM, EMOJI_SIZE / InfinityRun.PPM);
         }

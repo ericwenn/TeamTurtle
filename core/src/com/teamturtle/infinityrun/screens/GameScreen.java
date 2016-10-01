@@ -159,11 +159,8 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
 
         mPlayer.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
-            Emoji emoji = (Emoji) entity;
-            emoji.update(delta, mPlayer.getX());
-            emoji.render(getSpriteBatch());
-            //Resets projectionmatrix since emoji might use a non scaled matrix
-            getSpriteBatch().setProjectionMatrix(getCamera().combined);
+            entity.update(delta);
+            entity.render(getSpriteBatch());
         }
         getSpriteBatch().end();
 
