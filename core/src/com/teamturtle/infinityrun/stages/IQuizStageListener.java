@@ -8,4 +8,5 @@ package com.teamturtle.infinityrun.stages;
  */
 
 public interface IQuizStageListener {
+    void onGuessClick(boolean isChoiceRight);
 }

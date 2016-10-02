@@ -1,12 +1,12 @@
 package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
+import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
 
 public class InfinityRun extends Game implements IScreenObserver{
@@ -60,6 +60,10 @@ public class InfinityRun extends Game implements IScreenObserver{
 				newScreen = new GameScreen(getSpriteBatch(),GameScreen.Level.LEVEL_1,this);
 				break;
 
+			case QUIZ:
+				newScreen = new QuizScreen(getSpriteBatch(), this);
+				break;
+
 			default:
 				throw new Exception("Unknown screen enum");
 		}
@@ -77,6 +81,6 @@ public class InfinityRun extends Game implements IScreenObserver{
 	}
 
 	public enum ScreenID{
-		MAIN_MENU, GAME
+		MAIN_MENU, GAME, QUIZ
 	}
 }

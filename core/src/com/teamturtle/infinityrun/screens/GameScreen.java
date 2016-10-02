@@ -138,7 +138,12 @@ public class GameScreen extends AbstractScreen implements IEndStageListener, IQu
                 break;
             case GAME_LOST:
                 drawStaticBackground();
-                gameLostStage.draw();
+                try {
+                    screenObserver.changeScreen(InfinityRun.ScreenID.QUIZ);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+//                gameLostStage.draw();
                 break;
             case GAME_WON:
                 drawStaticBackground();
@@ -316,5 +321,11 @@ public class GameScreen extends AbstractScreen implements IEndStageListener, IQu
 
     }
 
+    @Override
+    public void onGuessClick(boolean isChoiceRight) {
+        Gdx.app.log("Correct guess", isChoiceRight + "");
+        quizStage.hide();
+        gameLostStage.draw();
+    }
 
 }
