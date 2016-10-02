@@ -1,15 +1,16 @@
 package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
 import com.teamturtle.infinityrun.screens.StartScreen;
+import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
+import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
 
-public class InfinityRun extends Game implements IScreenObserver{
+public class InfinityRun extends Game implements IScreenObserver {
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 480;
@@ -60,6 +61,18 @@ public class InfinityRun extends Game implements IScreenObserver{
 				newScreen = new GameScreen(getSpriteBatch(),GameScreen.Level.LEVEL_1,this);
 				break;
 
+			case WON_GAME:
+				newScreen = new WonLevelScreen(getSpriteBatch(), this);
+				break;
+
+            case LOST_GAME:
+                newScreen = new LostLevelScreen(getSpriteBatch(), this);
+                break;
+
+            case LEVELS_MENU:
+                //TODO create levels menu
+                newScreen = null;
+                break;
 			default:
 				throw new Exception("Unknown screen enum");
 		}
@@ -67,7 +80,7 @@ public class InfinityRun extends Game implements IScreenObserver{
 		Screen oldScreen = getScreen();
 
 		// Set the new screen
-		newScreen.buildStage();
+        newScreen.buildStage();
 		setScreen(newScreen);
 
 		// Dispose the old one
@@ -77,6 +90,6 @@ public class InfinityRun extends Game implements IScreenObserver{
 	}
 
 	public enum ScreenID{
-		MAIN_MENU, GAME
+		MAIN_MENU, GAME, WON_GAME, LOST_GAME, LEVELS_MENU
 	}
 }
