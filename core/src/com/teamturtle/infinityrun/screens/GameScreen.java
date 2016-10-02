@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -26,13 +25,15 @@ import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.EndStage;
 import com.teamturtle.infinityrun.stages.IEndStageListener;
+import com.teamturtle.infinityrun.stages.IQuizStageListener;
+import com.teamturtle.infinityrun.stages.QuizStage;
 
 import java.util.List;
 
 /**
  * Created by ericwenn on 9/20/16.
  */
-public class GameScreen extends AbstractScreen implements IEndStageListener{
+public class GameScreen extends AbstractScreen implements IEndStageListener, IQuizStageListener{
 
     public enum Level {
         LEVEL_1("level1.tmx"), LEVEL_2("level2.tmx"), LEVEL_3("level3.tmx");
@@ -64,6 +65,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
     private EndStage gameWonStage, gameLostStage;
+    private QuizStage quizStage;
 
     private World world;
     private Box2DDebugRenderer b2dr;
@@ -95,6 +97,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
 
         gameLostStage = new EndStage(this, EndStage.EndStageType.LOST_LEVEL);
         gameWonStage = new EndStage(this, EndStage.EndStageType.COMPLETED_LEVEL);
+        quizStage = new QuizStage(this);
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
