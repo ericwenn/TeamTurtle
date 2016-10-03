@@ -8,6 +8,8 @@ import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
 import com.teamturtle.infinityrun.screens.StartScreen;
+import com.teamturtle.infinityrun.screens.WordScreen;
+import com.teamturtle.infinityrun.sprites.emoji.EmojiRandomizer;
 
 public class InfinityRun extends Game implements IScreenObserver{
 
@@ -23,7 +25,7 @@ public class InfinityRun extends Game implements IScreenObserver{
 		setSpriteBatch(new SpriteBatch());
 
 		try{
-			changeScreen(ScreenID.MAIN_MENU);
+			changeScreen(ScreenID.WORD);
 		}catch (Exception e){
 			// This cannot fail...yet
 		}
@@ -59,6 +61,9 @@ public class InfinityRun extends Game implements IScreenObserver{
 			case GAME:
 				newScreen = new GameScreen(getSpriteBatch(),GameScreen.Level.LEVEL_1,this);
 				break;
+			case WORD:
+				newScreen = new WordScreen(getSpriteBatch(), this, new EmojiRandomizer().getNext());
+				break;
 
 			default:
 				throw new Exception("Unknown screen enum");
@@ -77,6 +82,6 @@ public class InfinityRun extends Game implements IScreenObserver{
 	}
 
 	public enum ScreenID{
-		MAIN_MENU, GAME
+		MAIN_MENU, GAME, WORD
 	}
 }

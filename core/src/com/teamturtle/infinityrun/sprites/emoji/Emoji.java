@@ -93,6 +93,12 @@ public class Emoji extends AbstractEntity {
             sb.draw( texture, getX(), getY(), EMOJI_SIZE / InfinityRun.PPM, EMOJI_SIZE / InfinityRun.PPM);
         }
     }
+    public Texture getImage(){
+        return texture;
+    }
+    public void playSound(){
+        emojiSound.play();
+    }
 
     @Override
     public void dispose() {
