@@ -11,7 +11,7 @@ public interface Mission {
 
     Word getCorrectWord();
 
-    int getStartPosition();
+    float getStartPosition();
 
-    int getEndPosition();
+    float getEndPosition();
 }

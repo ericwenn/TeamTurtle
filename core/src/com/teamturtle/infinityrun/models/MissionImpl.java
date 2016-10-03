@@ -14,10 +14,10 @@ public class MissionImpl implements Mission {
 
     private Random mRandomizer = new Random();
 
-    private int startX;
-    private int endX;
+    private float startX;
+    private float endX;
 
-    public MissionImpl(int startX, int endX) {
+    public MissionImpl(float startX, float endX) {
         this.startX = startX;
         this.endX = endX;
     }
@@ -41,12 +41,12 @@ public class MissionImpl implements Mission {
     }
 
     @Override
-    public int getStartPosition() {
+    public float getStartPosition() {
         return startX;
     }
 
     @Override
-    public int getEndPosition() {
+    public float getEndPosition() {
         return endX;
     }
 

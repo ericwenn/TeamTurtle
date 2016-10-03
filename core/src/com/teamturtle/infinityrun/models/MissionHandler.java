@@ -3,14 +3,15 @@ package com.teamturtle.infinityrun.models;
 import java.util.LinkedList;
 
 /**
- * Created by ericwenn on 10/3/16.
+ * MissionHandler holds all missions on a map.
+ * {@link MissionHandler#getNextMission()} will return the next mission, and throw {@link IndexOutOfBoundsException} if there are no more missions on the map.
  */
 public class MissionHandler {
 
     private LinkedList<Mission> mMissions = new LinkedList<Mission>();
-    private int currIndex = 0;
+    private int iteratorIndex = 0;
 
-    void addMission(int startX, int endX) {
+    public void addMission(float startX, float endX) {
         mMissions.add( new MissionImpl(startX, endX));
     }
 
@@ -25,9 +26,9 @@ public class MissionHandler {
     }
 
 
-    public Mission getNextMission() {
-        Mission nextMission = mMissions.get(currIndex);
-        currIndex++;
+    public Mission getNextMission() throws IndexOutOfBoundsException {
+        Mission nextMission = mMissions.get(iteratorIndex);
+        iteratorIndex++;
         return nextMission;
     }
 

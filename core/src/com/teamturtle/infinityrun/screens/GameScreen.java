@@ -247,7 +247,7 @@ public class GameScreen extends AbstractScreen {
         MapParser goalParser = new SensorParser(world, tiledMap, SensorParser.Type.GOAL);
         goalParser.parse();
 
-        MapParser questParser= new SensorParser(world, tiledMap, SensorParser.Type.QUEST);
+        MapParser questParser = new SensorParser(world, tiledMap, SensorParser.Type.QUEST);
         questParser.parse();
     }
 
