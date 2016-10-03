@@ -3,6 +3,7 @@ package com.teamturtle.infinityrun.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.collisions.EventHandler;
 import com.teamturtle.infinityrun.collisions.IEventHandler;
 import com.teamturtle.infinityrun.map_parsing.EmojiParser;
@@ -49,8 +51,8 @@ public class GameScreen extends AbstractScreen {
     public static final float GRAVITY = -10;
 
     private Texture bg;
+    private float bg1;
 
-    private float bg1, bg2;
     private FillViewport mFillViewport;
 
     private Player mPlayer;
@@ -69,6 +71,8 @@ public class GameScreen extends AbstractScreen {
     private IScreenObserver screenObserver;
 
     private State state;
+
+    private OrthographicCamera mFixedCamera;
 
     public GameScreen( SpriteBatch mSpriteBatch, Level level, IScreenObserver screenObserver) {
         super(mSpriteBatch);
@@ -92,11 +96,13 @@ public class GameScreen extends AbstractScreen {
                 , InfinityRun.HEIGHT / InfinityRun.PPM);
 
         // Init background from file and setup starting positions to have continous background.
-        this.bg = new Texture("bg2.png");
-
+        this.bg = new Texture(PathConstants.BACKGROUND_PATH);
         bg1 = 0;
-        bg2 = InfinityRun.WIDTH / InfinityRun.PPM;
 
+        mFixedCamera = new OrthographicCamera(mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
+        mFixedCamera.position.set(mFillViewport.getWorldWidth() / 2,
+                mFillViewport.getWorldHeight() / 2,
+                0);
         // TODO Remove this before production
         b2dr = new Box2DDebugRenderer();
 
@@ -148,8 +154,18 @@ public class GameScreen extends AbstractScreen {
         tiledMapRenderer.setView(getOrthoCam());
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        getSpriteBatch().setProjectionMatrix(getCamera().combined);
 
+//        Draw static background
+        getSpriteBatch().setProjectionMatrix(mFixedCamera.combined);
+        getSpriteBatch().begin();
+        getSpriteBatch().draw(bg, -getViewport().getWorldWidth() / 2,
+                -getViewport().getWorldHeight() / 2,
+                InfinityRun.WIDTH / InfinityRun.PPM,
+                InfinityRun.HEIGHT / InfinityRun.PPM);
+        getSpriteBatch().end();
+
+//        Draw dynamic content
+        getSpriteBatch().setProjectionMatrix(getCamera().combined);
         getSpriteBatch().begin();
         drawBackground();
 
@@ -208,15 +224,12 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void drawBackground(){
-        if(bg1 + InfinityRun.WIDTH / InfinityRun.PPM< getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
-            bg1 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
-        if(bg2 + InfinityRun.WIDTH / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
-            bg2 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
+//        if(bg1 + InfinityRun.WIDTH / InfinityRun.PPM< getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
+            bg1 += 0.01f;
+//        if(bg2 + InfinityRun.WIDTH / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
+//            bg2 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
 
-        getSpriteBatch().draw(bg, bg1, 0, InfinityRun.WIDTH / InfinityRun.PPM,
-                InfinityRun.HEIGHT / InfinityRun.PPM);
-        getSpriteBatch().draw(bg, bg2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
-                InfinityRun.HEIGHT / InfinityRun.PPM);
+
     }
 
     private void setUpWorld() {

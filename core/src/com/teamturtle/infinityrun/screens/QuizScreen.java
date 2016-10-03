@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.stages.IQuizStageListener;
 import com.teamturtle.infinityrun.stages.QuizStage;
 
@@ -22,7 +23,7 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
 
     public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer) {
         super(spriteBatch);
-        this.bg = new Texture("bg2.png");
+        this.bg = new Texture(PathConstants.BACKGROUND_PATH);
         this.stage = new QuizStage(this);
         this.observer = observer;
     }
