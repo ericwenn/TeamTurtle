@@ -53,6 +53,8 @@ public class GameScreen extends AbstractScreen {
     private Texture bg, mountains, trees;
     private float mountainsPos1, mountainsPos2;
     private float treePos1, treePos2;
+    private float oldCamX;
+    private final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
 
     private FillViewport mFillViewport;
 
@@ -101,11 +103,15 @@ public class GameScreen extends AbstractScreen {
         mountains = new Texture(PathConstants.MOUNTAINS_PATH);
         trees = new Texture(PathConstants.TREE_PATH);
 
+//        Creates position of mountain and tree texture
         mountainsPos1 = 0;
         mountainsPos2 = mountains.getWidth() / InfinityRun.PPM;
         treePos1 = 0;
         treePos2 = trees.getWidth() / InfinityRun.PPM;
 
+        oldCamX = getOrthoCam().position.x;
+
+//        Creates a new camera for our static background
         mFixedCamera = new OrthographicCamera(mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
         mFixedCamera.position.set(mFillViewport.getWorldWidth() / 2,
                 mFillViewport.getWorldHeight() / 2,
@@ -232,6 +238,17 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void drawParallaxContent() {
+//        Gets how much screen scrolled since last render()
+        float deltaPosX = getOrthoCam().position.x - oldCamX;
+
+//        Updates mountains and trees position, based on a parallax factor
+        mountainsPos1 += (deltaPosX / MOUNTAINS_PARALLAX_FACTOR);
+        mountainsPos2 += (deltaPosX / MOUNTAINS_PARALLAX_FACTOR);
+
+        treePos1 += (deltaPosX / TREE_PARALLAX_FACTOR);
+        treePos2 += (deltaPosX / TREE_PARALLAX_FACTOR);
+
+//        Makes sure mountains and trees never stops scrolling
         if (mountainsPos1 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
             mountainsPos1 += (mountains.getWidth() * 2) / InfinityRun.PPM;
         if (mountainsPos2 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
@@ -242,9 +259,14 @@ public class GameScreen extends AbstractScreen {
         if (treePos2 + trees.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
             treePos2 += (trees.getWidth() * 2) / InfinityRun.PPM;
 
+//        Renders mountains and trees
+        getSpriteBatch().draw(mountains, mountainsPos1, 0, trees.getWidth() / InfinityRun.PPM, trees.getHeight() / InfinityRun.PPM);
+        getSpriteBatch().draw(mountains, mountainsPos2, 0, trees.getWidth() / InfinityRun.PPM, trees.getHeight() / InfinityRun.PPM);
+
         getSpriteBatch().draw(trees, treePos1, 0, trees.getWidth() / InfinityRun.PPM, trees.getHeight() / InfinityRun.PPM);
         getSpriteBatch().draw(trees, treePos2, 0, trees.getWidth() / InfinityRun.PPM, trees.getHeight() / InfinityRun.PPM);
 
+        oldCamX = getOrthoCam().position.x;
     }
 
     private void setUpWorld() {
