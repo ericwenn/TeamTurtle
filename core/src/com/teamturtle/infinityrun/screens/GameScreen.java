@@ -22,12 +22,14 @@ import com.teamturtle.infinityrun.map_parsing.SensorParser;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.stages.QuizStage;
 
 import java.util.List;
 
 /**
  * Created by ericwenn on 9/20/16.
  */
+
 public class GameScreen extends AbstractScreen {
 
     public enum Level {
@@ -57,6 +59,8 @@ public class GameScreen extends AbstractScreen {
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
+
+    private QuizStage quizStage;
 
     private World world;
     private Box2DDebugRenderer b2dr;
