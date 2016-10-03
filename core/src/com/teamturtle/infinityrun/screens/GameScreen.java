@@ -50,8 +50,9 @@ public class GameScreen extends AbstractScreen {
 
     public static final float GRAVITY = -10;
 
-    private Texture bg;
-    private float bg1;
+    private Texture bg, mountains, trees;
+    private float mountainsPos1, mountainsPos2;
+    private float treePos1, treePos2;
 
     private FillViewport mFillViewport;
 
@@ -74,7 +75,7 @@ public class GameScreen extends AbstractScreen {
 
     private OrthographicCamera mFixedCamera;
 
-    public GameScreen( SpriteBatch mSpriteBatch, Level level, IScreenObserver screenObserver) {
+    public GameScreen(SpriteBatch mSpriteBatch, Level level, IScreenObserver screenObserver) {
         super(mSpriteBatch);
         this.screenObserver = screenObserver;
 
@@ -96,13 +97,20 @@ public class GameScreen extends AbstractScreen {
                 , InfinityRun.HEIGHT / InfinityRun.PPM);
 
         // Init background from file and setup starting positions to have continous background.
-        this.bg = new Texture(PathConstants.BACKGROUND_PATH);
-        bg1 = 0;
+        bg = new Texture(PathConstants.BACKGROUND_PATH);
+        mountains = new Texture(PathConstants.MOUNTAINS_PATH);
+        trees = new Texture(PathConstants.TREE_PATH);
+
+        mountainsPos1 = 0;
+        mountainsPos2 = mountains.getWidth() / InfinityRun.PPM;
+        treePos1 = 0;
+        treePos2 = trees.getWidth() / InfinityRun.PPM;
 
         mFixedCamera = new OrthographicCamera(mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
         mFixedCamera.position.set(mFillViewport.getWorldWidth() / 2,
                 mFillViewport.getWorldHeight() / 2,
                 0);
+
         // TODO Remove this before production
         b2dr = new Box2DDebugRenderer();
 
@@ -167,7 +175,7 @@ public class GameScreen extends AbstractScreen {
 //        Draw dynamic content
         getSpriteBatch().setProjectionMatrix(getCamera().combined);
         getSpriteBatch().begin();
-        drawBackground();
+        drawParallaxContent();
 
         mPlayer.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
@@ -185,7 +193,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void handleInput() {
-        if((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)))
+        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)))
             mPlayer.jump();
     }
 
@@ -216,19 +224,26 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        for( Entity ent : emojiSprites) {
+        for (Entity ent : emojiSprites) {
             ent.dispose();
         }
         mPlayer.dispose();
         bg.dispose();
     }
 
-    public void drawBackground(){
-//        if(bg1 + InfinityRun.WIDTH / InfinityRun.PPM< getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
-            bg1 += 0.01f;
-//        if(bg2 + InfinityRun.WIDTH / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
-//            bg2 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
+    public void drawParallaxContent() {
+        if (mountainsPos1 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
+            mountainsPos1 += (mountains.getWidth() * 2) / InfinityRun.PPM;
+        if (mountainsPos2 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
+            mountainsPos2 += (mountains.getWidth() * 2) / InfinityRun.PPM;
 
+        if (treePos1 + trees.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
+            treePos1 += (trees.getWidth() * 2) / InfinityRun.PPM;
+        if (treePos2 + trees.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
+            treePos2 += (trees.getWidth() * 2) / InfinityRun.PPM;
+
+        getSpriteBatch().draw(trees, treePos1, 0, trees.getWidth() / InfinityRun.PPM, trees.getHeight() / InfinityRun.PPM);
+        getSpriteBatch().draw(trees, treePos2, 0, trees.getWidth() / InfinityRun.PPM, trees.getHeight() / InfinityRun.PPM);
 
     }
 
@@ -241,7 +256,7 @@ public class GameScreen extends AbstractScreen {
         MapParser groundParser = new GroundParser(world, tiledMap, "ground");
         groundParser.parse();
 
-        MapParser emojiParser = new EmojiParser(world, tiledMap,  "emoji_placeholders");
+        MapParser emojiParser = new EmojiParser(world, tiledMap, "emoji_placeholders");
         emojiParser.parse();
         emojiSprites = emojiParser.getEntities();
 
@@ -251,7 +266,7 @@ public class GameScreen extends AbstractScreen {
         MapParser goalParser = new SensorParser(world, tiledMap, SensorParser.Type.GOAL);
         goalParser.parse();
 
-        MapParser questParser= new SensorParser(world, tiledMap, SensorParser.Type.QUEST);
+        MapParser questParser = new SensorParser(world, tiledMap, SensorParser.Type.QUEST);
         questParser.parse();
     }
 
