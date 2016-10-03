@@ -6,13 +6,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
+import com.teamturtle.infinityrun.screens.LevelSelectScreen;
 import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.EndLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
-
-import static com.teamturtle.infinityrun.InfinityRun.ScreenID.QUIZ;
 
 public class InfinityRun extends Game implements IScreenObserver {
 
@@ -74,8 +73,7 @@ public class InfinityRun extends Game implements IScreenObserver {
                 break;
 
             case LEVELS_MENU:
-                //TODO create levels menu
-                newScreen = null;
+                newScreen = new LevelSelectScreen(getSpriteBatch(), this);
                 break;
             case QUIZ:
                 newScreen = new QuizScreen(getSpriteBatch(), this);
