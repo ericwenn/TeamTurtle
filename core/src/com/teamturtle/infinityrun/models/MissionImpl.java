@@ -36,6 +36,11 @@ public class MissionImpl implements Mission {
     }
 
     @Override
+    public Word getCorrectWord() {
+        return mCorrectWord;
+    }
+
+    @Override
     public int getStartPosition() {
         return startX;
     }

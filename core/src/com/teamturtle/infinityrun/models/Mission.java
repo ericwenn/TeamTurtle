@@ -7,8 +7,9 @@ package com.teamturtle.infinityrun.models;
  */
 public interface Mission {
 
-
     boolean isCorrectWord(Word word);
+
+    Word getCorrectWord();
 
     int getStartPosition();
 
