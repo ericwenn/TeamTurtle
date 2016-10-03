@@ -12,9 +12,8 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.EmojiModel;
 
-/**
- * Created by ericwenn on 10/1/16.
- */
+
+
 public class MissionStage extends Stage {
 
     private static final int TABLE_WIDTH = 200,
