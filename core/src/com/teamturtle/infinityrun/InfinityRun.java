@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
+import com.teamturtle.infinityrun.screens.LevelSelectScreen;
+import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
-import com.teamturtle.infinityrun.screens.WordScreen;
-import com.teamturtle.infinityrun.sprites.emoji.EmojiRandomizer;
 
 public class InfinityRun extends Game implements IScreenObserver{
 
@@ -25,7 +25,7 @@ public class InfinityRun extends Game implements IScreenObserver{
 		setSpriteBatch(new SpriteBatch());
 
 		try{
-			changeScreen(ScreenID.WORD);
+			changeScreen(ScreenID.MAIN_MENU);
 		}catch (Exception e){
 			// This cannot fail...yet
 		}
@@ -61,9 +61,6 @@ public class InfinityRun extends Game implements IScreenObserver{
 			case GAME:
 				newScreen = new GameScreen(getSpriteBatch(),GameScreen.Level.LEVEL_1,this);
 				break;
-			case WORD:
-				newScreen = new WordScreen(getSpriteBatch(), this, new EmojiRandomizer().getNext());
-				break;
 
 			default:
 				throw new Exception("Unknown screen enum");
@@ -81,7 +78,7 @@ public class InfinityRun extends Game implements IScreenObserver{
 
 	}
 
-	public enum ScreenID{
-		MAIN_MENU, GAME, WORD
-	}
+    public enum ScreenID {
+        MAIN_MENU, GAME, WON_GAME, LOST_GAME, LEVELS_MENU, QUIZ
+    }
 }

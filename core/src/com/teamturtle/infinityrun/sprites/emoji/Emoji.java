@@ -108,4 +108,11 @@ public class Emoji extends AbstractEntity {
         font.dispose();
     }
 
+    public String getName() {
+        return emojiName;
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
 }

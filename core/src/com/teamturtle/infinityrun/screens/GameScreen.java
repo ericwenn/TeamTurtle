@@ -4,12 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -24,15 +22,15 @@ import com.teamturtle.infinityrun.map_parsing.SensorParser;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
-import com.teamturtle.infinityrun.stages.EndStage;
-import com.teamturtle.infinityrun.stages.IEndStageListener;
+import com.teamturtle.infinityrun.stages.QuizStage;
 
 import java.util.List;
 
 /**
  * Created by ericwenn on 9/20/16.
  */
-public class GameScreen extends AbstractScreen implements IEndStageListener{
+
+public class GameScreen extends AbstractScreen {
 
     public enum Level {
         LEVEL_1("level1.tmx"), LEVEL_2("level2.tmx"), LEVEL_3("level3.tmx");
@@ -45,7 +43,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
     }
 
     private enum State {
-        PLAY, PAUSE, GAME_WON, GAME_LOST;
+        PLAY, PAUSE, LOST_GAME, WON_GAME
     }
 
     public static final float GRAVITY = -10;
@@ -54,7 +52,6 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
 
     private float bg1, bg2;
     private FillViewport mFillViewport;
-    private Matrix4 noneScaleProjection;
 
     private Player mPlayer;
 
@@ -63,7 +60,7 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
-    private EndStage gameWonStage, gameLostStage;
+    private QuizStage quizStage;
 
     private World world;
     private Box2DDebugRenderer b2dr;
@@ -71,14 +68,11 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
     private List<? extends Entity> emojiSprites;
     private IScreenObserver screenObserver;
 
-    private IEndStageListener endStageListener;
-
     private State state;
 
-    public GameScreen( SpriteBatch mSpriteBatch, Level level,IScreenObserver screenObserver) {
+    public GameScreen( SpriteBatch mSpriteBatch, Level level, IScreenObserver screenObserver) {
         super(mSpriteBatch);
         this.screenObserver = screenObserver;
-        endStageListener = this;
 
         //Set state
         state = State.PLAY;
@@ -92,9 +86,6 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
     public void show() {
         //Change input focus to this stage
         Gdx.input.setInputProcessor(this);
-
-        gameLostStage = new EndStage(this, EndStage.EndStageType.LOST_LEVEL);
-        gameWonStage = new EndStage(this, EndStage.EndStageType.COMPLETED_LEVEL);
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
@@ -133,14 +124,19 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
             case PLAY:
                 renderWorld(delta);
                 break;
-            case GAME_LOST:
-                drawStaticBackground();
-                gameLostStage.draw();
+            case LOST_GAME:
+                try {
+                    screenObserver.changeScreen(InfinityRun.ScreenID.LOST_GAME);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
-            case GAME_WON:
-                drawStaticBackground();
-                gameWonStage.draw();
-                break;
+            case WON_GAME:
+                try {
+                    screenObserver.changeScreen(InfinityRun.ScreenID.WON_GAME);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             case PAUSE:
                 break;
         }
@@ -209,8 +205,6 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
         }
         mPlayer.dispose();
         bg.dispose();
-        gameLostStage.dispose();
-        gameWonStage.dispose();
     }
 
     public void drawBackground(){
@@ -223,13 +217,6 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
                 InfinityRun.HEIGHT / InfinityRun.PPM);
         getSpriteBatch().draw(bg, bg2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
                 InfinityRun.HEIGHT / InfinityRun.PPM);
-    }
-
-    private void drawStaticBackground() {
-        getSpriteBatch().setProjectionMatrix(getCamera().combined);
-        getSpriteBatch().begin();
-        drawBackground();
-        getSpriteBatch().end();
     }
 
     private void setUpWorld() {
@@ -273,14 +260,14 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
             @Override
             public void onCollision(Player p) {
                 Gdx.app.log("Collision", "Obstacle collision");
-                state = State.GAME_LOST;
+                state = State.LOST_GAME;
             }
         });
 
         eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
             @Override
             public void onLevelFinished() {
-                state = State.GAME_WON;
+                state = State.WON_GAME;
             }
         });
 
@@ -289,29 +276,4 @@ public class GameScreen extends AbstractScreen implements IEndStageListener{
 
         this.mEventHandler = eventHandler;
     }
-
-    @Override
-    public void onMainMenuButtonClick() {
-        try {
-            screenObserver.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onTryAgainButtonClick() {
-        try {
-            screenObserver.changeScreen(InfinityRun.ScreenID.GAME);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onNextLevelButtonClick() {
-
-    }
-
-
 }
