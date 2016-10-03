@@ -26,7 +26,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 		setSpriteBatch(new SpriteBatch());
 
 		try{
-			changeScreen(ScreenID.LEVELS_MENU);
+			changeScreen(ScreenID.MAIN_MENU);
 		}catch (Exception e){
 			// This cannot fail...yet
 		}
@@ -72,7 +72,7 @@ public class InfinityRun extends Game implements IScreenObserver {
                 break;
 
             case LEVELS_MENU:
-                newScreen = new LevelSelectScreen(getSpriteBatch());
+                newScreen = new LevelSelectScreen(getSpriteBatch(), this);
                 break;
 			default:
 				throw new Exception("Unknown screen enum");

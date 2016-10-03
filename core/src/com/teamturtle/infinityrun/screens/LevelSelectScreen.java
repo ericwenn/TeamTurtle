@@ -23,24 +23,25 @@ public class LevelSelectScreen extends AbstractScreen{
 
     private static final int LEVEL_AMOUNT = 15, STAR_AMOUNT = 3;
     private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 370.0f;
-    private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 60.0f;
+    private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 50.0f;
+    private static final float STAR_PAD = -20f, RETURN_BUTTON_PAD = 10f;
 
     private Stage stage;
     private Skin skin;
     private Table rootTable;
-    private TextButton levelButton;
-    private TextButton backButton;
+    private ImageButton backButton;
     private Texture bg;
-    private Texture uiBg;
 
-    public LevelSelectScreen(SpriteBatch spriteBatch) {
+    private IScreenObserver observer;
+
+    public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer) {
         super(spriteBatch);
+        this.observer = observer;
     }
 
     @Override
     public void buildStage() {
         bg = new Texture("bg2.png");
-        uiBg = new Texture("ui/ui_bg_big.png");
 
         skin = new Skin();
 
@@ -57,7 +58,11 @@ public class LevelSelectScreen extends AbstractScreen{
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
-                        Gdx.app.log("button", "click");
+                        try {
+                            observer.changeScreen(InfinityRun.ScreenID.GAME);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             levelButtonTable.add(button);
@@ -70,16 +75,26 @@ public class LevelSelectScreen extends AbstractScreen{
                     starTabel.add(new Image(new Texture("ui/small_no_star.png")));
                 }
             }
-            levelButtonTable.add(starTabel).pad(-20f);
-            rootTable.add(levelButtonTable).pad(10f);
+            levelButtonTable.add(starTabel).pad(STAR_PAD);
+            rootTable.add(levelButtonTable).pad(RETURN_BUTTON_PAD);
 
             if (i % 5 == 0){
                 rootTable.row();
             }
         }
-        backButton = new TextButton("Back", skin, "level_text_button");
+        backButton = new ImageButton(skin, "back_button");
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                try {
+                    observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         rootTable.row();
-        rootTable.add(backButton).padBottom(-10);
+        rootTable.add(backButton).colspan(5).left().padTop(17);
         stage.addActor(rootTable);
         Gdx.input.setInputProcessor(stage);
     }
@@ -89,7 +104,6 @@ public class LevelSelectScreen extends AbstractScreen{
         super.render(dt);
         getSpriteBatch().begin();
         getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
-        getSpriteBatch().draw(uiBg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
         getSpriteBatch().end();
         stage.draw();
     }

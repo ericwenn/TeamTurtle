@@ -42,7 +42,8 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: { imageUp: paint_brush, up: default-round, down: default-round-down },
 	levels_button: { imageUp: level_up, imageDown: level_down},
 	retry_button: { imageUp: try_again_up, imageDown: try_again_down },
-	next_button: { imageUp: next_up, imageDown: next_down }
+	next_button: { imageUp: next_up, imageDown: next_down },
+	back_button: { imageUp: back_button_up, imageDown: back_button_down}
 },
 com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 	default-vertical: { handle: default-splitpane-vertical },
