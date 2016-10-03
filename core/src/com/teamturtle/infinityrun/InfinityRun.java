@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
+import com.teamturtle.infinityrun.screens.DictionaryScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
 import com.teamturtle.infinityrun.screens.LevelSelectScreen;
@@ -75,8 +76,13 @@ public class InfinityRun extends Game implements IScreenObserver {
             case LEVELS_MENU:
                 newScreen = new LevelSelectScreen(getSpriteBatch(), this);
                 break;
+
             case QUIZ:
                 newScreen = new QuizScreen(getSpriteBatch(), this);
+                break;
+            case DICTIONARY:
+
+                newScreen = new DictionaryScreen(getSpriteBatch(), this);
                 break;
 
             default:
@@ -96,6 +102,6 @@ public class InfinityRun extends Game implements IScreenObserver {
     }
 
     public enum ScreenID {
-        MAIN_MENU, GAME, WON_GAME, LOST_GAME, LEVELS_MENU, QUIZ
+        MAIN_MENU, GAME, WON_GAME, LOST_GAME, LEVELS_MENU, QUIZ, DICTIONARY
     }
 }
