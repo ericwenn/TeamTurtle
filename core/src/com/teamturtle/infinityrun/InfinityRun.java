@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
+import com.teamturtle.infinityrun.screens.LevelSelectScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.EndLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
@@ -25,7 +26,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 		setSpriteBatch(new SpriteBatch());
 
 		try{
-			changeScreen(ScreenID.MAIN_MENU);
+			changeScreen(ScreenID.LEVELS_MENU);
 		}catch (Exception e){
 			// This cannot fail...yet
 		}
@@ -71,8 +72,7 @@ public class InfinityRun extends Game implements IScreenObserver {
                 break;
 
             case LEVELS_MENU:
-                //TODO create levels menu
-                newScreen = null;
+                newScreen = new LevelSelectScreen(getSpriteBatch());
                 break;
 			default:
 				throw new Exception("Unknown screen enum");
