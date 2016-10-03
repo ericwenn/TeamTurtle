@@ -7,6 +7,7 @@ import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
 import com.teamturtle.infinityrun.screens.StartScreen;
+import com.teamturtle.infinityrun.screens.level_end_screens.EndLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
 
@@ -62,7 +63,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 				break;
 
 			case WON_GAME:
-				newScreen = new WonLevelScreen(getSpriteBatch(), this);
+				newScreen = new WonLevelScreen(getSpriteBatch(), this, EndLevelScreen.Rating.TWO);
 				break;
 
             case LOST_GAME:

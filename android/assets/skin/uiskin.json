@@ -8,7 +8,8 @@ com.badlogic.gdx.graphics.Color: {
 	grey: { r: 0.7, g: 0.7, b: 0.7, a: 1 }
 },
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	default-font: { file: boogaloo-regular.fnt }
+	default-font: { file: boogaloo-regular.fnt },
+	large-font: {file: boogaloo-regular-large.fnt}
 },
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	dialogDim: {
@@ -98,8 +99,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		fontColor: { a: 1, r: 1 }
 	},
 	title: {
-		font: default-font,
-		fontColor: { a: 1, b: 0.8, g: 0.8, r: 0.8 }
+		font: large-font
 	}
 },
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {

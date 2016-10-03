@@ -1,5 +1,6 @@
 package com.teamturtle.infinityrun.screens.level_end_screens;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -17,8 +18,8 @@ public class WonLevelScreen extends EndLevelScreen{
 
     private ImageButton nextButton;
 
-    public WonLevelScreen(SpriteBatch sb, final IScreenObserver observer) {
-        super(sb, observer, LB_LEVEL_LOST);
+    public WonLevelScreen(SpriteBatch sb, final IScreenObserver observer, Rating rating) {
+        super(sb, observer, new Texture("ui/ui_bg_big.png"), LB_LEVEL_LOST, rating);
         Skin skin = super.getSkin();
         nextButton = new ImageButton(skin, "next_button");
         nextButton.addListener(new ChangeListener() {
