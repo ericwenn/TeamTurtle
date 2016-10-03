@@ -6,5 +6,11 @@ package com.teamturtle.infinityrun.models;
  * One of these words is the correct one, that the user should try to catch.
  */
 public interface Mission {
+
+
     boolean isCorrectWord(Word word);
+
+    int getStartPosition();
+
+    int getEndPosition();
 }

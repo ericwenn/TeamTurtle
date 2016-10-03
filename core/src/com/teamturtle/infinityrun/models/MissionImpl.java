@@ -14,6 +14,14 @@ public class MissionImpl implements Mission {
 
     private Random mRandomizer = new Random();
 
+    private int startX;
+    private int endX;
+
+    public MissionImpl(int startX, int endX) {
+        this.startX = startX;
+        this.endX = endX;
+    }
+
     public boolean haveWord(Word word) {
         return mWords.contains(word);
     }
@@ -25,6 +33,16 @@ public class MissionImpl implements Mission {
     @Override
     public boolean isCorrectWord(Word word) {
         return mCorrectWord != null && mCorrectWord.equals(word);
+    }
+
+    @Override
+    public int getStartPosition() {
+        return startX;
+    }
+
+    @Override
+    public int getEndPosition() {
+        return endX;
     }
 
     public Word decideCorrectWord() {
