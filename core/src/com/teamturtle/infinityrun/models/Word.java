@@ -1,7 +1,8 @@
 package com.teamturtle.infinityrun.models;
 
 /**
- * Created by ericwenn on 10/3/16.
+ * A word consists of a textual representation, along with an icon describing the word and a pronounciation.
+ * {@link Word#getSoundUrl()} and {@link Word#getIconUrl()} represents file paths to the files on the device.
  */
 public interface Word {
 

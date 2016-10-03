@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.models.EmojiModel;
+import com.teamturtle.infinityrun.models.WordImpl;
 
 
 
@@ -35,7 +35,7 @@ public class MissionStage extends Stage {
 
 
         // TODO get emojimodel from mission
-        EmojiModel emojiModel = new EmojiModel("Äpple", "audio/apple.wav", "emoji/1f34e.png");
+        WordImpl emojiModel = new WordImpl("Äpple", "audio/apple.wav", "emoji/1f34e.png");
         changeEmoji(emojiModel);
 
         this.addActor(mMissionTable);
@@ -43,7 +43,7 @@ public class MissionStage extends Stage {
     }
 
 
-    private void changeEmoji(EmojiModel emojiModel) {
+    private void changeEmoji(WordImpl emojiModel) {
 
         mMissionTable.clearChildren();
 
