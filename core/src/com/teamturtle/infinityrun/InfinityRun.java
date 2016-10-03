@@ -6,75 +6,96 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
+import com.teamturtle.infinityrun.screens.LevelSelectScreen;
+import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
+import com.teamturtle.infinityrun.screens.level_end_screens.EndLevelScreen;
+import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
+import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
 
-public class InfinityRun extends Game implements IScreenObserver{
+public class InfinityRun extends Game implements IScreenObserver {
 
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 480;
-	public static final float PPM = 100;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 480;
+    public static final float PPM = 75;
 
-	private SpriteBatch mSpriteBatch;
+    private SpriteBatch mSpriteBatch;
 
-	@Override
-	public void create () {
-		setSpriteBatch(new SpriteBatch());
+    @Override
+    public void create() {
 
-		try{
-			changeScreen(ScreenID.MAIN_MENU);
-		}catch (Exception e){
-			// This cannot fail...yet
-		}
-	}
+        setSpriteBatch(new SpriteBatch());
 
-	private void setSpriteBatch(SpriteBatch sb){
-		this.mSpriteBatch = sb;
-	}
+        try {
+            changeScreen(ScreenID.MAIN_MENU);
+        } catch (Exception e) {
+            // This cannot fail...yet
+        }
+    }
 
-	private SpriteBatch getSpriteBatch(){
-		return this.mSpriteBatch;
-	}
+    private void setSpriteBatch(SpriteBatch sb) {
+        this.mSpriteBatch = sb;
+    }
+
+    private SpriteBatch getSpriteBatch() {
+        return this.mSpriteBatch;
+    }
 
 	/*@Override
-	public void render () {
+    public void render () {
 		super.render();
 	}*/
-	
-	@Override
-	public void dispose () {
-		getSpriteBatch().dispose();
-	}
 
-	@Override
-	public void changeScreen(ScreenID screen) throws Exception {
-		AbstractScreen newScreen;
+    @Override
+    public void dispose() {
+        getSpriteBatch().dispose();
+    }
 
-		switch (screen){
-			case MAIN_MENU:
-				newScreen = new StartScreen(getSpriteBatch(), this);
-				break;
+    @Override
+    public void changeScreen(ScreenID screen) throws Exception {
+        AbstractScreen newScreen;
 
-			case GAME:
-				newScreen = new GameScreen(getSpriteBatch(),GameScreen.Level.LEVEL_1,this);
-				break;
+        switch (screen) {
+            case MAIN_MENU:
+                newScreen = new StartScreen(getSpriteBatch(), this);
+                break;
 
-			default:
-				throw new Exception("Unknown screen enum");
-		}
+            case GAME:
+                newScreen = new GameScreen(getSpriteBatch(), GameScreen.Level.LEVEL_1, this);
+                break;
 
-		Screen oldScreen = getScreen();
+            case WON_GAME:
+                newScreen = new WonLevelScreen(getSpriteBatch(), this, EndLevelScreen.Rating.TWO);
+                break;
 
-		// Set the new screen
-		newScreen.buildStage();
-		setScreen(newScreen);
+            case LOST_GAME:
+                newScreen = new LostLevelScreen(getSpriteBatch(), this);
+                break;
 
-		// Dispose the old one
-		oldScreen.dispose();
+            case LEVELS_MENU:
+                newScreen = new LevelSelectScreen(getSpriteBatch(), this);
+                break;
+            case QUIZ:
+                newScreen = new QuizScreen(getSpriteBatch(), this);
+                break;
+
+            default:
+                throw new Exception("Unknown screen enum");
+        }
+
+        Screen oldScreen = getScreen();
+
+        // Set the new screen
+        newScreen.buildStage();
+        setScreen(newScreen);
+
+        // Dispose the old one
+        oldScreen.dispose();
 
 
-	}
+    }
 
-	public enum ScreenID{
-		MAIN_MENU, GAME
-	}
+    public enum ScreenID {
+        MAIN_MENU, GAME, WON_GAME, LOST_GAME, LEVELS_MENU, QUIZ
+    }
 }

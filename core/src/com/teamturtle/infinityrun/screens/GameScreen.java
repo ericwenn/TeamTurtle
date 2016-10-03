@@ -13,22 +13,23 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.collisions.CollisionHandler;
-import com.teamturtle.infinityrun.collisions.ICollisionHandler;
+import com.teamturtle.infinityrun.collisions.EventHandler;
+import com.teamturtle.infinityrun.collisions.IEventHandler;
 import com.teamturtle.infinityrun.map_parsing.EmojiParser;
 import com.teamturtle.infinityrun.map_parsing.GroundParser;
 import com.teamturtle.infinityrun.map_parsing.MapParser;
-import com.teamturtle.infinityrun.map_parsing.ObstacleParser;
-import com.teamturtle.infinityrun.sprites.DrawableText;
+import com.teamturtle.infinityrun.map_parsing.SensorParser;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.stages.QuizStage;
 
 import java.util.List;
 
 /**
  * Created by ericwenn on 9/20/16.
  */
+
 public class GameScreen extends AbstractScreen {
 
     public enum Level {
@@ -41,6 +42,10 @@ public class GameScreen extends AbstractScreen {
         }
     }
 
+    private enum State {
+        PLAY, PAUSE, LOST_GAME, WON_GAME
+    }
+
     public static final float GRAVITY = -10;
 
     private Texture bg;
@@ -50,20 +55,27 @@ public class GameScreen extends AbstractScreen {
 
     private Player mPlayer;
 
-    private CollisionHandler mCollisionHandler;
+    private EventHandler mEventHandler;
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
+
+    private QuizStage quizStage;
 
     private World world;
     private Box2DDebugRenderer b2dr;
 
     private List<? extends Entity> emojiSprites;
-    private IScreenObserver observer;
+    private IScreenObserver screenObserver;
 
-    public GameScreen( SpriteBatch mSpriteBatch, Level level,IScreenObserver observer ) {
+    private State state;
+
+    public GameScreen( SpriteBatch mSpriteBatch, Level level, IScreenObserver screenObserver) {
         super(mSpriteBatch);
-        this.observer = observer;
+        this.screenObserver = screenObserver;
+
+        //Set state
+        state = State.PLAY;
 
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
@@ -80,7 +92,7 @@ public class GameScreen extends AbstractScreen {
                 , InfinityRun.HEIGHT / InfinityRun.PPM);
 
         // Init background from file and setup starting positions to have continous background.
-        this.bg = new Texture("bg.jpg");
+        this.bg = new Texture("bg2.png");
 
         bg1 = 0;
         bg2 = InfinityRun.WIDTH / InfinityRun.PPM;
@@ -93,10 +105,10 @@ public class GameScreen extends AbstractScreen {
         //Creates box2d world and enteties
         setUpWorld();
 
-        // Create CollisionHandler with actions. Still not connected to the world.
-        setupContactHandler();
+        // Create EventHandler with actions. Still not connected to the world.
+        setupEventHandler();
 
-        world.setContactListener(mCollisionHandler);
+        world.setContactListener(mEventHandler);
     }
 
     private void gameUpdate(float delta) {
@@ -108,6 +120,29 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
+        switch (state) {
+            case PLAY:
+                renderWorld(delta);
+                break;
+            case LOST_GAME:
+                try {
+                    screenObserver.changeScreen(InfinityRun.ScreenID.LOST_GAME);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case WON_GAME:
+                try {
+                    screenObserver.changeScreen(InfinityRun.ScreenID.WON_GAME);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            case PAUSE:
+                break;
+        }
+    }
+
+    private void renderWorld(float delta) {
         gameUpdate(delta);
 
         tiledMapRenderer.setView(getOrthoCam());
@@ -119,29 +154,18 @@ public class GameScreen extends AbstractScreen {
         drawBackground();
 
         mPlayer.render(getSpriteBatch());
-        for (Entity emoji : emojiSprites) {
-            emoji.update(delta);
-            emoji.render(getSpriteBatch());
+        for (Entity entity : emojiSprites) {
+            entity.update(delta);
+            entity.render(getSpriteBatch());
         }
         getSpriteBatch().end();
-
-        //This cant be done within the other emojiSprites for loop, because the method called
-        //can´t be called inside getSpriteBatch().begin and getSpriteBatch.end()
-        for(Entity entity : emojiSprites){
-            Emoji emoji = (Emoji) entity;
-            if(emoji.getIsExploded()) {
-                //Creates a DrawableText object and takes the stage of it and draw.
-                //The parameter for x is emoji.getX() - mPlayer.getX() so the text will move.
-                new DrawableText(emoji.getEmojiName(), getSpriteBatch(),
-                        emoji.getX() - mPlayer.getX(), emoji.getY()).getStage().draw();
-            }
-        }
 
         getCamera().position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
                 , mFillViewport.getWorldHeight() / 2, 0);
         getCamera().update();
         tiledMapRenderer.render();
-        b2dr.render(world, getOrthoCam().combined);
+        //Use to show collision rectangles
+        //b2dr.render(world, getOrthoCam().combined);
     }
 
     private void handleInput() {
@@ -180,7 +204,6 @@ public class GameScreen extends AbstractScreen {
             ent.dispose();
         }
         mPlayer.dispose();
-        getSpriteBatch().dispose();
         bg.dispose();
     }
 
@@ -209,21 +232,21 @@ public class GameScreen extends AbstractScreen {
         emojiParser.parse();
         emojiSprites = emojiParser.getEntities();
 
-        MapParser obstacleParser = new ObstacleParser(world, tiledMap, "obstacles");
+        MapParser obstacleParser = new SensorParser(world, tiledMap, SensorParser.Type.OBSTACLE);
         obstacleParser.parse();
+
+        MapParser goalParser = new SensorParser(world, tiledMap, SensorParser.Type.GOAL);
+        goalParser.parse();
+
+        MapParser questParser= new SensorParser(world, tiledMap, SensorParser.Type.QUEST);
+        questParser.parse();
     }
 
-    private void setupContactHandler() {
+    private void setupEventHandler() {
 
-        CollisionHandler collisionHandler = new CollisionHandler();
-        collisionHandler.onCollisionWithObstable(new ICollisionHandler.ObstacleCollisionListener() {
-            @Override
-            public void onCollision(Player p) {
-                Gdx.app.log("Collision", "Game over");
-            }
-        });
+        EventHandler eventHandler = new EventHandler();
 
-        collisionHandler.onCollisionWithEmoji(new ICollisionHandler.EmojiCollisionListener() {
+        eventHandler.onCollisionWithEmoji(new IEventHandler.EmojiCollisionListener() {
             @Override
             public void onCollision(Player p, Emoji e) {
                 Gdx.app.log("Collision", "Emoji collision");
@@ -232,7 +255,25 @@ public class GameScreen extends AbstractScreen {
 
         });
 
-        mCollisionHandler = collisionHandler;
-    }
 
+        eventHandler.onCollisionWithObstacle(new IEventHandler.ObstacleCollisionListener() {
+            @Override
+            public void onCollision(Player p) {
+                Gdx.app.log("Collision", "Obstacle collision");
+                state = State.LOST_GAME;
+            }
+        });
+
+        eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
+            @Override
+            public void onLevelFinished() {
+                state = State.WON_GAME;
+            }
+        });
+
+        // TODO Implement quest listener
+
+
+        this.mEventHandler = eventHandler;
+    }
 }
