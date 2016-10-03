@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
-import com.teamturtle.infinityrun.sprites.emoji.EmojiRandomizer;
+import com.teamturtle.infinityrun.models.WordRandomizer;
 
 /**
  * Text om klassen
@@ -49,7 +49,7 @@ public class QuizStage extends Stage {
         guess1 = "Banan";
         guess2 = "Äpple";
         guess3 = "Päron";
-        EmojiRandomizer emojiRandomizer = new EmojiRandomizer();
+        WordRandomizer emojiRandomizer = new WordRandomizer();
         emoji = emojiRandomizer.getNext();
         /*
         *   In near future guess-strings should be changed to emojis.

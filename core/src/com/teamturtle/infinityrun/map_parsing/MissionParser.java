@@ -54,7 +54,7 @@ public class MissionParser {
     public MissionHandler getMissionHandler() {
         parse();
         sort();
-        
+
         MissionHandler missionHandler = new MissionHandler();
         for( int i = 0; i<mMissionRectangles.size(); i++) {
             float startX = i == 0 ? 0 : mMissionRectangles.get(i - 1).getX();

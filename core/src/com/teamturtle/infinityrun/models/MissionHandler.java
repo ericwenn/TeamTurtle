@@ -15,7 +15,7 @@ public class MissionHandler {
         mMissions.add( new MissionImpl(startX, endX));
     }
 
-    public Mission getMissionAtPosition(int posX) {
+    public Mission getMissionAtPosition(float posX) {
         for (Mission m : mMissions) {
             if (m.getStartPosition() < posX && posX < m.getEndPosition()) {
                 return m;

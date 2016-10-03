@@ -18,7 +18,9 @@ import com.teamturtle.infinityrun.collisions.IEventHandler;
 import com.teamturtle.infinityrun.map_parsing.EmojiParser;
 import com.teamturtle.infinityrun.map_parsing.GroundParser;
 import com.teamturtle.infinityrun.map_parsing.MapParser;
+import com.teamturtle.infinityrun.map_parsing.MissionParser;
 import com.teamturtle.infinityrun.map_parsing.SensorParser;
+import com.teamturtle.infinityrun.models.MissionHandler;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
@@ -69,7 +71,7 @@ public class GameScreen extends AbstractScreen {
     private List<? extends Entity> emojiSprites;
     private IScreenObserver screenObserver;
 
-
+    private MissionHandler mMissionHandler;
     private MissionStage mMissionStage;
 
     private State state;
@@ -236,6 +238,10 @@ public class GameScreen extends AbstractScreen {
 
         MapParser groundParser = new GroundParser(world, tiledMap, "ground");
         groundParser.parse();
+
+
+        MissionParser missionParser = new MissionParser(world, tiledMap, "quest");
+        MissionHandler missionHandler = missionParser.getMissionHandler();
 
         MapParser emojiParser = new EmojiParser(world, tiledMap,  "emoji_placeholders");
         emojiParser.parse();

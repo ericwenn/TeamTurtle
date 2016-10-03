@@ -14,4 +14,8 @@ public interface Mission {
     float getStartPosition();
 
     float getEndPosition();
+
+    boolean haveWord(Word word);
+
+    void addWord(Word word);
 }
