@@ -103,7 +103,8 @@ public class InfinityRun extends Game implements IScreenObserver {
                 break;
 
             case LEVELS_MENU:
-                newScreen = new LevelSelectScreen(getSpriteBatch(), this, mPlayerData);
+                List<Level> levels = levelHandler.getLevels();
+                newScreen = new LevelSelectScreen(getSpriteBatch(), this, levels, mPlayerData);
                 break;
 
             case DICTIONARY:

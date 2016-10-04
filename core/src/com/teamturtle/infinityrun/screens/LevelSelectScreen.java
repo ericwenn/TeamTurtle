@@ -19,12 +19,14 @@ import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
+import java.util.List;
+
 /**
  * Created by Henrik on 2016-10-03.
  */
 public class LevelSelectScreen extends AbstractScreen{
 
-    private static final int LEVEL_AMOUNT = 15, STAR_AMOUNT = 3;
+    private static final int STAR_AMOUNT = 3;
     private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 370.0f;
     private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 50.0f;
     private static final float STAR_PAD = -20f, RETURN_BUTTON_PAD = 10f;
@@ -38,11 +40,13 @@ public class LevelSelectScreen extends AbstractScreen{
     LevelDataHandler handler;
 
     private IScreenObserver observer;
+    private final List<Level> levels;
     private PlayerData mPlayerData;
 
-    public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer, PlayerData playerData) {
+    public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer, List<Level> levels, PlayerData playerData) {
         super(spriteBatch);
         this.observer = observer;
+        this.levels = levels;
         this.mPlayerData = playerData;
         handler = new LevelDataHandler();
     }
@@ -61,9 +65,8 @@ public class LevelSelectScreen extends AbstractScreen{
         rootTable.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
         rootTable.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
 
-
-        for(int i = 1; i <= LEVEL_AMOUNT; i++) {
-            final Level level = handler.getLevel(i);
+        int i = 1;
+        for(final Level level: levels) {
             Table levelButtonTable = new Table();
             TextButton button = new TextButton(i+ "", skin, "level_text_button");
                 button.addListener(new ChangeListener() {
@@ -89,6 +92,7 @@ public class LevelSelectScreen extends AbstractScreen{
             if (i % 5 == 0){
                 rootTable.row();
             }
+            i++;
         }
         backButton = new ImageButton(skin, "back_button");
         backButton.addListener(new ChangeListener() {
