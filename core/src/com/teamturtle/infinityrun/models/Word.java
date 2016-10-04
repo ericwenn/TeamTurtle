@@ -12,4 +12,5 @@ public interface Word {
 
     String getIconUrl();
 
+    Integer getId();
 }
