@@ -74,6 +74,7 @@ public class EmojiParser implements MapParser {
             } while (mission.haveWord(word));
 
             mission.addWord(word);
+            mission.decideCorrectWord();
 
             Emoji emoji = new Emoji(word);
             emoji.setBody( body );

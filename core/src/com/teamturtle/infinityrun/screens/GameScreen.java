@@ -22,6 +22,7 @@ import com.teamturtle.infinityrun.map_parsing.GroundParser;
 import com.teamturtle.infinityrun.map_parsing.MapParser;
 import com.teamturtle.infinityrun.map_parsing.MissionParser;
 import com.teamturtle.infinityrun.map_parsing.SensorParser;
+import com.teamturtle.infinityrun.models.Mission;
 import com.teamturtle.infinityrun.models.MissionHandler;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
@@ -139,6 +140,9 @@ public class GameScreen extends AbstractScreen {
         setupEventHandler();
 
         world.setContactListener(mEventHandler);
+
+        Mission nextMission = mMissionHandler.getNextMission();
+        mMissionStage.setMission( nextMission );
     }
 
     private void gameUpdate(float delta) {
@@ -291,9 +295,9 @@ public class GameScreen extends AbstractScreen {
 
 
         MissionParser missionParser = new MissionParser(world, tiledMap, "quest");
-        MissionHandler missionHandler = missionParser.getMissionHandler();
+        mMissionHandler = missionParser.getMissionHandler();
 
-        MapParser emojiParser = new EmojiParser(world, tiledMap,  "emoji_placeholders", missionHandler);
+        MapParser emojiParser = new EmojiParser(world, tiledMap,  "emoji_placeholders", mMissionHandler);
         emojiParser.parse();
         emojiSprites = emojiParser.getEntities();
 
@@ -337,7 +341,13 @@ public class GameScreen extends AbstractScreen {
         });
 
         // TODO Implement quest listener
-
+        eventHandler.onQuestChanged(new IEventHandler.QuestChangedListener() {
+            @Override
+            public void onQuestChanged() {
+                Mission nextMission = mMissionHandler.getNextMission();
+                mMissionStage.setMission(nextMission);
+            }
+        });
 
         this.mEventHandler = eventHandler;
     }
