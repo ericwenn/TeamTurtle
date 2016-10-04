@@ -3,7 +3,7 @@ package com.teamturtle.infinityrun.storage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
-import com.teamturtle.infinityrun.models.Word;
+import com.teamturtle.infinityrun.models.words.Word;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class PlayerData {
 
     public PlayerData() {
 
-        mWordsCollectedFile = Gdx.files.local(STORAGE_DIR + PATH_SEPARATOR + WORDS_COLLECTED_FILE);
+        mWordsCollectedFile = Gdx.files.external(STORAGE_DIR + PATH_SEPARATOR + WORDS_COLLECTED_FILE);
         mWordsCollected = readWordsCollectedFromFile(mWordsCollectedFile);
 
     }
@@ -37,13 +37,21 @@ public class PlayerData {
         }
     }
 
+    private void writeWordsCollectedToFile(FileHandle fileHandle, List<Integer> wordsCollected) {
+        Json json = new Json();
+        json.toJson(wordsCollected, List.class, Integer.class, fileHandle);
+    }
+
 
 
     public boolean playerHasCollectedWord(Word word) {
-
+        return mWordsCollected.contains( word.getId() );
     }
     public void playerCollectedWord(Word word) {
-
+        if (!playerHasCollectedWord(word)) {
+            mWordsCollected.add(word.getId());
+            writeWordsCollectedToFile(mWordsCollectedFile, mWordsCollected);
+        }
     }
 
 

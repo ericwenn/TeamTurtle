@@ -1,10 +1,11 @@
 package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.teamturtle.infinityrun.map_parsing.EmojiParser;
+import com.teamturtle.infinityrun.models.words.WordImpl;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.DictionaryScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
@@ -16,8 +17,8 @@ import com.teamturtle.infinityrun.screens.WordScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.EndLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
-import com.teamturtle.infinityrun.storage.PlayerData;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.storage.PlayerData;
 
 public class InfinityRun extends Game implements IScreenObserver {
 
@@ -33,6 +34,14 @@ public class InfinityRun extends Game implements IScreenObserver {
     public void create() {
 
         mPlayerData = new PlayerData();
+
+        WordImpl tmpWord = new WordImpl();
+        tmpWord.id = "1";
+
+        Gdx.app.log("InfinyRun", mPlayerData.playerHasCollectedWord( tmpWord ) ? "Word is collected" : "Word is not collected");
+
+        mPlayerData.playerCollectedWord(tmpWord);
+        Gdx.app.log("InfinyRun", mPlayerData.playerHasCollectedWord( tmpWord ) ? "Word is collected" : "Word is not collected");
 
         setSpriteBatch(new SpriteBatch());
 
