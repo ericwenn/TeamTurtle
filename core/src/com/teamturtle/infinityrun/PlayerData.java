@@ -17,6 +17,10 @@ public class PlayerData {
     public PlayerData() {
         mWordsCollectedFile = Gdx.files.local( STORAGE_DIR + PATH_SEPARATOR + WORDS_COLLECTED_FILE);
         Gdx.app.log("PlayerData", mWordsCollectedFile.toString());
+
+        if (mWordsCollectedFile.exists()) {
+            
+        }
     }
 
 
