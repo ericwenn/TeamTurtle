@@ -20,7 +20,7 @@ public class Emoji extends AbstractEntity {
 
     private static final float EXPLOSION_SCALE = 1.3f;
     private static final float EMOJI_SIZE = 32;
-    private static final int FONT_SIZE = 25;
+    private  static final int FONT_SIZE = 25;
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf";
 
     private String emojiName;
@@ -97,6 +97,12 @@ public class Emoji extends AbstractEntity {
         } else {
             sb.draw( texture, getX(), getY(), EMOJI_SIZE / InfinityRun.PPM, EMOJI_SIZE / InfinityRun.PPM);
         }
+    }
+    public Texture getImage(){
+        return texture;
+    }
+    public void playSound(){
+        emojiSound.play();
     }
 
     @Override
