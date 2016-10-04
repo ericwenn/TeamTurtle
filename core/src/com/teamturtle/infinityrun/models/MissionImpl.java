@@ -1,5 +1,7 @@
 package com.teamturtle.infinityrun.models;
 
+import com.teamturtle.infinityrun.models.words.Word;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

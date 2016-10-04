@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.models.Word;
+import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.sprites.AbstractEntity;
 
 /**
@@ -20,7 +20,7 @@ public class Emoji extends AbstractEntity {
 
     private static final float EXPLOSION_SCALE = 1.3f;
     private static final float EMOJI_SIZE = 32;
-    private static final int FONT_SIZE = 25;
+    private  static final int FONT_SIZE = 25;
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf";
 
     private String emojiName;
@@ -97,6 +97,12 @@ public class Emoji extends AbstractEntity {
         } else {
             sb.draw( texture, getX(), getY(), EMOJI_SIZE / InfinityRun.PPM, EMOJI_SIZE / InfinityRun.PPM);
         }
+    }
+    public Texture getImage(){
+        return texture;
+    }
+    public void playSound(){
+        emojiSound.play();
     }
 
     @Override

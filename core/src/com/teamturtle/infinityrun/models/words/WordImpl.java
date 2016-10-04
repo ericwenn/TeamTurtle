@@ -1,33 +1,41 @@
-package com.teamturtle.infinityrun.models;
+package com.teamturtle.infinityrun.models.words;
 
 /**
  * Created by ericwenn on 10/2/16.
  */
 public class WordImpl implements Word {
-    private String emojiName;
-    private String soundUrl;
-    private String iconUrl;
+    public String id;
+    public String word;
+    public String category;
+    public String filename;
 
-    public WordImpl(String emojiName, String soundUrl, String iconUrl) {
-        this.emojiName = emojiName;
-        this.soundUrl = soundUrl;
-        this.iconUrl = iconUrl;
+    public WordImpl() {
     }
-
 
     @Override
     public String getText() {
-        return emojiName;
+        return word;
     }
 
     @Override
     public String getSoundUrl() {
-        return soundUrl;
+//        SUPER DUMB
+        return "audio/apple.wav";
     }
 
     @Override
     public String getIconUrl() {
-        return iconUrl;
+        return "emoji/" + filename + ".png";
+    }
+
+    @Override
+    public int getCategory() {
+        return Integer.parseInt(category);
+    }
+
+    @Override
+    public int getId() {
+        return Integer.parseInt(id);
     }
 
     @Override
