@@ -20,10 +20,16 @@ import com.teamturtle.infinityrun.collisions.IEventHandler;
 import com.teamturtle.infinityrun.map_parsing.EmojiParser;
 import com.teamturtle.infinityrun.map_parsing.GroundParser;
 import com.teamturtle.infinityrun.map_parsing.MapParser;
+import com.teamturtle.infinityrun.map_parsing.MissionParser;
 import com.teamturtle.infinityrun.map_parsing.SensorParser;
+import com.teamturtle.infinityrun.models.Mission;
+import com.teamturtle.infinityrun.models.MissionHandler;
+import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.stages.MissionStage;
 import com.teamturtle.infinityrun.stages.QuizStage;
 
 import java.util.List;
@@ -35,7 +41,7 @@ import java.util.List;
 public class GameScreen extends AbstractScreen {
 
     public enum Level {
-        LEVEL_1("level1.tmx"), LEVEL_2("level2.tmx"), LEVEL_3("level3.tmx");
+        LEVEL_1("mission_level.tmx"), LEVEL_2("level2.tmx"), LEVEL_3("level3.tmx");
 
         private final String tmx;
 
@@ -73,9 +79,14 @@ public class GameScreen extends AbstractScreen {
     private List<? extends Entity> emojiSprites;
     private IScreenObserver screenObserver;
 
+    private MissionHandler mMissionHandler;
+    private MissionStage mMissionStage;
+
     private State state;
 
     private OrthographicCamera mFixedCamera;
+    private List<Word> possibleWords;
+    private WordLoader wordLoader;
 
     public GameScreen(SpriteBatch mSpriteBatch, Level level, IScreenObserver screenObserver) {
         super(mSpriteBatch);
@@ -87,12 +98,20 @@ public class GameScreen extends AbstractScreen {
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load(level.tmx);
+
+//        TODO: Move WordLoader to Level
+        wordLoader = new WordLoader();
+        possibleWords = wordLoader.getWordsFromCategory(1);
     }
+
 
     @Override
     public void show() {
         //Change input focus to this stage
         Gdx.input.setInputProcessor(this);
+
+
+        mMissionStage = new MissionStage();
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
@@ -129,6 +148,9 @@ public class GameScreen extends AbstractScreen {
         setupEventHandler();
 
         world.setContactListener(mEventHandler);
+
+        Mission nextMission = mMissionHandler.getNextMission();
+        mMissionStage.setMission( nextMission );
     }
 
     private void gameUpdate(float delta) {
@@ -143,6 +165,7 @@ public class GameScreen extends AbstractScreen {
         switch (state) {
             case PLAY:
                 renderWorld(delta);
+                mMissionStage.draw();
                 break;
             case LOST_GAME:
                 try {
@@ -278,7 +301,11 @@ public class GameScreen extends AbstractScreen {
         MapParser groundParser = new GroundParser(world, tiledMap, "ground");
         groundParser.parse();
 
-        MapParser emojiParser = new EmojiParser(world, tiledMap, "emoji_placeholders");
+
+        MissionParser missionParser = new MissionParser(world, tiledMap, "quest");
+        mMissionHandler = missionParser.getMissionHandler();
+
+        MapParser emojiParser = new EmojiParser(world, tiledMap, "emoji_placeholders", mMissionHandler, possibleWords);
         emojiParser.parse();
         emojiSprites = emojiParser.getEntities();
 
@@ -322,7 +349,13 @@ public class GameScreen extends AbstractScreen {
         });
 
         // TODO Implement quest listener
-
+        eventHandler.onQuestChanged(new IEventHandler.QuestChangedListener() {
+            @Override
+            public void onQuestChanged() {
+                Mission nextMission = mMissionHandler.getNextMission();
+                mMissionStage.setMission(nextMission);
+            }
+        });
 
         this.mEventHandler = eventHandler;
     }
