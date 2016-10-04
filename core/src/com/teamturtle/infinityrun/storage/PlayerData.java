@@ -6,7 +6,9 @@ import com.badlogic.gdx.utils.Json;
 import com.teamturtle.infinityrun.models.words.Word;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PlayerData {
 
@@ -29,11 +31,11 @@ public class PlayerData {
 
     @SuppressWarnings("unchecked")
     private List<Integer> readWordsCollectedFromFile(FileHandle fileHandle) {
-        if (!mWordsCollectedFile.exists()) {
+        if (!fileHandle.exists()) {
             return new ArrayList<Integer>();
         } else {
             Json json = new Json();
-            return json.fromJson(List.class, Integer.class, mWordsCollectedFile);
+            return json.fromJson(List.class, Integer.class, fileHandle);
         }
     }
 
@@ -55,8 +57,13 @@ public class PlayerData {
     }
 
 
-    private Map<> readLevelProgressFromFile(FileHandle fileHandle) {
-
+    private Map<Integer, Integer> readLevelProgressFromFile(FileHandle fileHandle) {
+        if( !fileHandle.exists()) {
+            return new HashMap<Integer, Integer>();
+        } else {
+            Json json = new Json();
+            return json.fromJson(Map.class, Integer.class)
+        }
     }
 
 
