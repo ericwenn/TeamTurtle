@@ -34,12 +34,12 @@ public class EmojiParser implements MapParser {
     private List<Emoji> emojis = new ArrayList<Emoji>();
 
 
-    public EmojiParser(World world, TiledMap tiledMap, String emojiPlaceholderName, MissionHandler missionHandler) {
+    public EmojiParser(World world, TiledMap tiledMap, String emojiPlaceholderName, MissionHandler missionHandler, List<Word> possibleWords) {
         this.world = world;
         this.tiledMap = tiledMap;
         this.emojiPlaceholderName = emojiPlaceholderName;
         this.missionHandler = missionHandler;
-        this.wordRandomizer = new WordRandomizer();
+        this.wordRandomizer = new WordRandomizer(possibleWords);
     }
 
 

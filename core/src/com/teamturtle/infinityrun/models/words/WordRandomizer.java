@@ -10,11 +10,6 @@ public class WordRandomizer {
 
     private List<Word> possibleWords;
     private Random mRandomizer = new Random();
-    private WordLoader mWordLoader = new WordLoader();
-
-    public WordRandomizer() {
-        possibleWords = mWordLoader.getWordsFromCategory(6);
-    }
 
     public WordRandomizer(List<Word> possibleWords) {
         this.possibleWords = possibleWords;
