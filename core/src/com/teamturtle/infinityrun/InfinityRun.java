@@ -16,14 +16,18 @@ import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
 
 public class InfinityRun extends Game implements IScreenObserver {
 
+
     public static final int WIDTH = 800;
     public static final int HEIGHT = 480;
     public static final float PPM = 75;
 
     private SpriteBatch mSpriteBatch;
+    private PlayerData mPlayerData;
 
     @Override
     public void create() {
+
+        mPlayerData = new PlayerData();
 
         setSpriteBatch(new SpriteBatch());
 
