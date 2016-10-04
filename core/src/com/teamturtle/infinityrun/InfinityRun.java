@@ -32,6 +32,8 @@ public class InfinityRun extends Game implements IScreenObserver {
 
         setSpriteBatch(new SpriteBatch());
 
+
+
         try {
             changeScreen(ScreenID.MAIN_MENU);
         } catch (Exception e) {

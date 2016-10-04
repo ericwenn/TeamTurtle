@@ -92,7 +92,7 @@ public class GameScreen extends AbstractScreen {
 
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
-        tiledMap = tmxMapLoader.load(level.getUrl());
+        tiledMap = tmxMapLoader.load(level.getMapUrl());
 
         //TODO: Move WordLoader to Level
         wordLoader = new WordLoader();
