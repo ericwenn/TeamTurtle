@@ -3,6 +3,7 @@ package com.teamturtle.infinityrun.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.collisions.EventHandler;
 import com.teamturtle.infinityrun.collisions.IEventHandler;
 import com.teamturtle.infinityrun.map_parsing.EmojiParser;
@@ -51,9 +53,12 @@ public class GameScreen extends AbstractScreen {
 
     public static final float GRAVITY = -10;
 
-    private Texture bg;
+    private Texture bg, mountains, trees;
+    private float mountainsPos1, mountainsPos2;
+    private float treePos1, treePos2;
+    private float oldCamX;
+    private final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
 
-    private float bg1, bg2;
     private FillViewport mFillViewport;
 
     private Player mPlayer;
@@ -76,7 +81,9 @@ public class GameScreen extends AbstractScreen {
 
     private State state;
 
-    public GameScreen( SpriteBatch mSpriteBatch, Level level, IScreenObserver screenObserver) {
+    private OrthographicCamera mFixedCamera;
+
+    public GameScreen(SpriteBatch mSpriteBatch, Level level, IScreenObserver screenObserver) {
         super(mSpriteBatch);
         this.screenObserver = screenObserver;
 
@@ -102,10 +109,23 @@ public class GameScreen extends AbstractScreen {
                 , InfinityRun.HEIGHT / InfinityRun.PPM);
 
         // Init background from file and setup starting positions to have continous background.
-        this.bg = new Texture("bg2.png");
+        bg = new Texture(PathConstants.BACKGROUND_PATH);
+        mountains = new Texture(PathConstants.MOUNTAINS_PATH);
+        trees = new Texture(PathConstants.TREE_PATH);
 
-        bg1 = 0;
-        bg2 = InfinityRun.WIDTH / InfinityRun.PPM;
+//        Creates position of mountain and tree texture
+        mountainsPos1 = 0;
+        mountainsPos2 = mountains.getWidth() / InfinityRun.PPM;
+        treePos1 = 0;
+        treePos2 = trees.getWidth() / InfinityRun.PPM;
+
+        oldCamX = getOrthoCam().position.x;
+
+//        Creates a new camera for our static background
+        mFixedCamera = new OrthographicCamera(mFillViewport.getWorldWidth(), mFillViewport.getWorldHeight());
+        mFixedCamera.position.set(mFillViewport.getWorldWidth() / 2,
+                mFillViewport.getWorldHeight() / 2,
+                0);
 
         // TODO Remove this before production
         b2dr = new Box2DDebugRenderer();
@@ -159,10 +179,20 @@ public class GameScreen extends AbstractScreen {
         tiledMapRenderer.setView(getOrthoCam());
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        getSpriteBatch().setProjectionMatrix(getCamera().combined);
 
+//        Draw static background
+        getSpriteBatch().setProjectionMatrix(mFixedCamera.combined);
         getSpriteBatch().begin();
-        drawBackground();
+        getSpriteBatch().draw(bg, -getViewport().getWorldWidth() / 2,
+                -getViewport().getWorldHeight() / 2,
+                InfinityRun.WIDTH / InfinityRun.PPM,
+                InfinityRun.HEIGHT / InfinityRun.PPM);
+        getSpriteBatch().end();
+
+//        Draw dynamic content
+        getSpriteBatch().setProjectionMatrix(getCamera().combined);
+        getSpriteBatch().begin();
+        drawParallaxContent();
 
         mPlayer.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
@@ -180,7 +210,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void handleInput() {
-        if((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)))
+        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)))
             mPlayer.jump();
     }
 
@@ -211,23 +241,43 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        for( Entity ent : emojiSprites) {
+        for (Entity ent : emojiSprites) {
             ent.dispose();
         }
         mPlayer.dispose();
         bg.dispose();
     }
 
-    public void drawBackground(){
-        if(bg1 + InfinityRun.WIDTH / InfinityRun.PPM< getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
-            bg1 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
-        if(bg2 + InfinityRun.WIDTH / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth/2)
-            bg2 += (InfinityRun.WIDTH * 2) / InfinityRun.PPM;
+    public void drawParallaxContent() {
+//        Gets how much screen scrolled since last render()
+        float deltaPosX = getOrthoCam().position.x - oldCamX;
 
-        getSpriteBatch().draw(bg, bg1, 0, InfinityRun.WIDTH / InfinityRun.PPM,
-                InfinityRun.HEIGHT / InfinityRun.PPM);
-        getSpriteBatch().draw(bg, bg2, 0, InfinityRun.WIDTH / InfinityRun.PPM,
-                InfinityRun.HEIGHT / InfinityRun.PPM);
+//        Updates mountains and trees position, based on a parallax factor
+        mountainsPos1 += (deltaPosX / MOUNTAINS_PARALLAX_FACTOR);
+        mountainsPos2 += (deltaPosX / MOUNTAINS_PARALLAX_FACTOR);
+
+        treePos1 += (deltaPosX / TREE_PARALLAX_FACTOR);
+        treePos2 += (deltaPosX / TREE_PARALLAX_FACTOR);
+
+//        Makes sure mountains and trees never stops scrolling
+        if (mountainsPos1 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
+            mountainsPos1 += (mountains.getWidth() * 2) / InfinityRun.PPM;
+        if (mountainsPos2 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
+            mountainsPos2 += (mountains.getWidth() * 2) / InfinityRun.PPM;
+
+        if (treePos1 + trees.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
+            treePos1 += (trees.getWidth() * 2) / InfinityRun.PPM;
+        if (treePos2 + trees.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
+            treePos2 += (trees.getWidth() * 2) / InfinityRun.PPM;
+
+//        Renders mountains and trees
+        getSpriteBatch().draw(mountains, mountainsPos1, 0, trees.getWidth() / InfinityRun.PPM, trees.getHeight() / InfinityRun.PPM);
+        getSpriteBatch().draw(mountains, mountainsPos2, 0, trees.getWidth() / InfinityRun.PPM, trees.getHeight() / InfinityRun.PPM);
+
+        getSpriteBatch().draw(trees, treePos1, 0, trees.getWidth() / InfinityRun.PPM, trees.getHeight() / InfinityRun.PPM);
+        getSpriteBatch().draw(trees, treePos2, 0, trees.getWidth() / InfinityRun.PPM, trees.getHeight() / InfinityRun.PPM);
+
+        oldCamX = getOrthoCam().position.x;
     }
 
     private void setUpWorld() {
