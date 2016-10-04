@@ -2,8 +2,8 @@ package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.DictionaryScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
@@ -11,9 +11,11 @@ import com.teamturtle.infinityrun.screens.IScreenObserver;
 import com.teamturtle.infinityrun.screens.LevelSelectScreen;
 import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
+import com.teamturtle.infinityrun.screens.WordScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.EndLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
+import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 public class InfinityRun extends Game implements IScreenObserver {
 
@@ -31,7 +33,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 
 
         try {
-            changeScreen(ScreenID.MAIN_MENU);
+            changeScreen(ScreenID.WORD);
         } catch (Exception e) {
             // This cannot fail...yet
         }
@@ -87,6 +89,10 @@ public class InfinityRun extends Game implements IScreenObserver {
 
                 newScreen = new DictionaryScreen(getSpriteBatch(), this);
                 break;
+			case WORD:
+				Emoji apple = new Emoji("Äpple","audio/apple.wav", new Texture("emoji/00a9.png"));
+				newScreen = new WordScreen(getSpriteBatch(), this, apple);
+				break;
 
             default:
                 throw new Exception("Unknown screen enum");
@@ -105,6 +111,6 @@ public class InfinityRun extends Game implements IScreenObserver {
     }
 
     public enum ScreenID {
-        MAIN_MENU, GAME, WON_GAME, LOST_GAME, LEVELS_MENU, QUIZ, DICTIONARY
+        MAIN_MENU, GAME, WON_GAME, LOST_GAME, LEVELS_MENU, QUIZ, DICTIONARY, WORD
     }
 }

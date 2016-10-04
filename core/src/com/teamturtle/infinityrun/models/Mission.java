@@ -1,6 +1,8 @@
 package com.teamturtle.infinityrun.models;
 
 
+import com.teamturtle.infinityrun.models.words.Word;
+
 /**
  * A mission is a portion of the game map, which contains n=[1,3] unique words.
  * One of these words is the correct one, that the user should try to catch.
