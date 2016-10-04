@@ -352,8 +352,12 @@ public class GameScreen extends AbstractScreen {
         eventHandler.onQuestChanged(new IEventHandler.QuestChangedListener() {
             @Override
             public void onQuestChanged() {
-                Mission nextMission = mMissionHandler.getNextMission();
-                mMissionStage.setMission(nextMission);
+                try {
+                    Mission nextMission = mMissionHandler.getNextMission();
+                    mMissionStage.setMission(nextMission);
+                } catch( IndexOutOfBoundsException e) {
+
+                }
             }
         });
 
