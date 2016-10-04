@@ -3,6 +3,7 @@ package com.teamturtle.infinityrun.storage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 
 import java.util.ArrayList;
@@ -21,10 +22,18 @@ public class PlayerData {
     private FileHandle mWordsCollectedFile;
     private List<Integer> mWordsCollected;
 
+    private FileHandle mLevelProgressFile;
+    private Map<String,Integer> mLevelProgress;
+
     public PlayerData() {
 
         mWordsCollectedFile = Gdx.files.external(STORAGE_DIR + PATH_SEPARATOR + WORDS_COLLECTED_FILE);
         mWordsCollected = readWordsCollectedFromFile(mWordsCollectedFile);
+
+
+        mLevelProgressFile = Gdx.files.external(STORAGE_DIR + PATH_SEPARATOR + LEVEL_PROGRESS_FILE);
+        mLevelProgress = readLevelProgressFromFile(mLevelProgressFile);
+
 
     }
 
@@ -45,28 +54,48 @@ public class PlayerData {
     }
 
     
-    public boolean playerHasCollectedWord(Word word) {
+    public boolean hasPlayerCollectedWord(Word word) {
         return mWordsCollected.contains( word.getId() );
     }
     public void playerCollectedWord(Word word) {
-        if (!playerHasCollectedWord(word)) {
+        if (!hasPlayerCollectedWord(word)) {
             mWordsCollected.add(word.getId());
             writeWordsCollectedToFile(mWordsCollectedFile, mWordsCollected);
         }
     }
 
 
-    private Map<Integer, Integer> readLevelProgressFromFile(FileHandle fileHandle) {
+    @SuppressWarnings("unchecked")
+    private Map<String, Integer> readLevelProgressFromFile(FileHandle fileHandle) {
         if( !fileHandle.exists()) {
-            return new HashMap<Integer, Integer>();
+            return new HashMap<String, Integer>();
         } else {
             Json json = new Json();
-            return json.fromJson(Map.class, Integer.class)
+            return json.fromJson(HashMap.class, Integer.class, fileHandle);
         }
     }
 
+    public int getPlayerProgressOnLevel(Level level) {
+        if(mLevelProgress.containsKey(Integer.toString(level.getId()))) {
+            return mLevelProgress.get(Integer.toString(level.getId()));
+        } else {
+            return 0;
+        }
+    }
 
+    public void setPlayerProgressOnLevel(Level level, int score) {
 
+        if(mLevelProgress.containsKey(Integer.toString(level.getId()))) {
+            mLevelProgress.remove(Integer.toString(level.getId()));
+        }
+        mLevelProgress.put(Integer.toString(level.getId()), score);
+        writeLevelProgressToFile(mLevelProgressFile, mLevelProgress);
+    }
+
+    private void writeLevelProgressToFile(FileHandle mLevelProgressFile, Map<String, Integer> mLevelProgress) {
+        Json json = new Json();
+        json.toJson(mLevelProgress, HashMap.class, Integer.class, mLevelProgressFile);
+    }
 
 
 }
