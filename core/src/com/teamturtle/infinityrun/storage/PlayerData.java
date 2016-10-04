@@ -44,8 +44,7 @@ public class PlayerData {
         json.toJson(wordsCollected, List.class, Integer.class, fileHandle);
     }
 
-
-
+    
     public boolean playerHasCollectedWord(Word word) {
         return mWordsCollected.contains( word.getId() );
     }
