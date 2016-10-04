@@ -17,8 +17,7 @@ import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
-
-import java.util.ArrayList;
+import com.teamturtle.infinityrun.storage.PlayerData;
 
 /**
  * Created by Henrik on 2016-10-03.
@@ -39,10 +38,12 @@ public class LevelSelectScreen extends AbstractScreen{
     LevelDataHandler handler;
 
     private IScreenObserver observer;
+    private PlayerData mPlayerData;
 
-    public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer) {
+    public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer, PlayerData playerData) {
         super(spriteBatch);
         this.observer = observer;
+        this.mPlayerData = playerData;
         handler = new LevelDataHandler();
     }
 
@@ -74,8 +75,9 @@ public class LevelSelectScreen extends AbstractScreen{
             levelButtonTable.add(button);
             levelButtonTable.row();
             Table starTabel = new Table();
+            int playerScoreOnLevel = mPlayerData.getPlayerProgressOnLevel(level);
             for(int j = 0; j < STAR_AMOUNT; j++) {
-                if (Math.random() < 0.5) {
+                if(j < playerScoreOnLevel) {
                     starTabel.add(new Image(new Texture("ui/small_star.png")));
                 }else{
                     starTabel.add(new Image(new Texture("ui/small_no_star.png")));

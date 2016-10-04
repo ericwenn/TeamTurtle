@@ -18,19 +18,24 @@ import com.teamturtle.infinityrun.screens.WordScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.storage.PlayerData;
 import java.util.List;
 
 public class InfinityRun extends Game implements IScreenObserver {
+
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 480;
     public static final float PPM = 75;
 
     private SpriteBatch mSpriteBatch;
+    private PlayerData mPlayerData;
     private LevelDataHandler levelHandler;
 
     @Override
     public void create() {
+
+        mPlayerData = new PlayerData();
 
         setSpriteBatch(new SpriteBatch());
         levelHandler = new LevelDataHandler();
@@ -71,6 +76,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 
     @Override
     public void levelWon(Level level, int score) {
+        mPlayerData.setPlayerProgressOnLevel(level, score);
         changeScreen(new WonLevelScreen(getSpriteBatch(), this, level, score));
     }
 
@@ -97,7 +103,7 @@ public class InfinityRun extends Game implements IScreenObserver {
                 break;
 
             case LEVELS_MENU:
-                newScreen = new LevelSelectScreen(getSpriteBatch(), this);
+                newScreen = new LevelSelectScreen(getSpriteBatch(), this, mPlayerData);
                 break;
 
             case DICTIONARY:
