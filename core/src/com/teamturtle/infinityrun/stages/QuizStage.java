@@ -12,8 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.models.Word;
+import com.teamturtle.infinityrun.models.WordRandomizer;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
-import com.teamturtle.infinityrun.sprites.emoji.EmojiRandomizer;
 
 /**
  * Text om klassen
@@ -49,8 +50,9 @@ public class QuizStage extends Stage {
         guess1 = "Banan";
         guess2 = "Äpple";
         guess3 = "Päron";
-        EmojiRandomizer emojiRandomizer = new EmojiRandomizer();
-        emoji = emojiRandomizer.getNext();
+        WordRandomizer emojiRandomizer = new WordRandomizer();
+        Word word = emojiRandomizer.getNext();
+        emoji = new Emoji(word);
         /*
         *   In near future guess-strings should be changed to emojis.
         *   Check if emoji.getName() == chosenGuess.getName()

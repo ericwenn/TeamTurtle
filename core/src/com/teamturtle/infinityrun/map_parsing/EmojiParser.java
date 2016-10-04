@@ -11,9 +11,12 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.models.Mission;
+import com.teamturtle.infinityrun.models.MissionHandler;
+import com.teamturtle.infinityrun.models.Word;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
-import com.teamturtle.infinityrun.sprites.emoji.EmojiRandomizer;
+import com.teamturtle.infinityrun.models.WordRandomizer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +28,18 @@ public class EmojiParser implements MapParser {
     private final World world;
     private final TiledMap tiledMap;
     private String emojiPlaceholderName;
-    private EmojiRandomizer emojiRandomizer;
+    private MissionHandler missionHandler;
+    private WordRandomizer wordRandomizer;
 
     private List<Emoji> emojis = new ArrayList<Emoji>();
 
 
-    public EmojiParser(World world, TiledMap tiledMap, String emojiPlaceholderName) {
+    public EmojiParser(World world, TiledMap tiledMap, String emojiPlaceholderName, MissionHandler missionHandler) {
         this.world = world;
         this.tiledMap = tiledMap;
         this.emojiPlaceholderName = emojiPlaceholderName;
-        this.emojiRandomizer = new EmojiRandomizer();
+        this.missionHandler = missionHandler;
+        this.wordRandomizer = new WordRandomizer();
     }
 
 
@@ -59,8 +64,18 @@ public class EmojiParser implements MapParser {
             fdef.shape = shape;
             Fixture fixture = body.createFixture(fdef);
             fixture.setSensor(true);
-            Emoji emoji = emojiRandomizer.getNext();
 
+
+            Mission mission = missionHandler.getMissionAtPosition( rect.getX() );
+
+            Word word;
+            do {
+                word = wordRandomizer.getNext();
+            } while (mission.haveWord(word));
+
+            mission.addWord(word);
+
+            Emoji emoji = new Emoji(word);
             emoji.setBody( body );
             fixture.setUserData(emoji);
             emojis.add(emoji);
