@@ -1,10 +1,8 @@
 package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.DictionaryScreen;
@@ -16,8 +14,6 @@ import com.teamturtle.infinityrun.screens.StartScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.EndLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
-
-import java.util.List;
 
 public class InfinityRun extends Game implements IScreenObserver {
 
@@ -32,11 +28,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 
         setSpriteBatch(new SpriteBatch());
 
-        LevelDataHandler levelDataHandler = new LevelDataHandler();
 
-
-
-        List<Level> levels = levelDataHandler.getLevels();
 
         try {
             changeScreen(ScreenID.MAIN_MENU);
