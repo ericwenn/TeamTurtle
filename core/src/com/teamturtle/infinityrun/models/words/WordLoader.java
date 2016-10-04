@@ -3,6 +3,7 @@ package com.teamturtle.infinityrun.models.words;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.teamturtle.infinityrun.PathConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ public class WordLoader {
     private HashMap<String, Word> wordMap;
 
     public WordLoader() {
-        FileHandle file = Gdx.files.internal("data/words.json");
+        FileHandle file = Gdx.files.internal(PathConstants.WORD_JSON_PATH);
         Json json = new Json();
         wordMap = json.fromJson(HashMap.class, WordImpl.class, file);
     }
