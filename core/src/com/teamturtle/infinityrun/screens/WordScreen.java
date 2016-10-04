@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,8 +25,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import jdk.nashorn.internal.parser.JSONParser;
 
 /**
  * Created by Rasmus on 2016-10-02.
@@ -49,6 +61,7 @@ public class WordScreen extends AbstractScreen {
     private TextButton soundButton;
     private Label titleLabel, descriptionLabel1, descriptionLabel2, descriptionLabel3;
     private Image emojiImage;
+    private List<String> descriptionList;
 
     private IScreenObserver observer;
 
@@ -70,6 +83,16 @@ public class WordScreen extends AbstractScreen {
         parameter.size = DESCRIPTION_SIZE;
         descriptionFont = generator.generateFont(parameter);
         generator.dispose();
+
+        descriptionList = new ArrayList<String>();
+
+        FileHandle file = Gdx.files.internal("jsonfiles/json.json");
+
+        JsonValue json = new JsonReader().parse(file);
+
+        for(JsonValue item : json.get(emoji.getName())){
+            descriptionList.add(item.toString().substring(14));
+        }
     }
 
     @Override
@@ -90,11 +113,11 @@ public class WordScreen extends AbstractScreen {
         skin.load(Gdx.files.internal("skin/uiskin.json"));
 
         titleLabel = new Label(emoji.getName(), new Label.LabelStyle(titleFont, FONT_COLOR));
-        descriptionLabel1 = new Label("Ett äpple", new Label.LabelStyle(descriptionFont,
+        descriptionLabel1 = new Label(descriptionList.get(0), new Label.LabelStyle(descriptionFont,
                 FONT_COLOR));
-        descriptionLabel2 = new Label("Flera äpplen", new Label.LabelStyle(descriptionFont,
+        descriptionLabel2 = new Label(descriptionList.get(1), new Label.LabelStyle(descriptionFont,
                 FONT_COLOR));
-        descriptionLabel3 = new Label("Äpple är en frukt", new Label.LabelStyle(descriptionFont,
+        descriptionLabel3 = new Label(descriptionList.get(2), new Label.LabelStyle(descriptionFont,
                 FONT_COLOR));
 
         emojiImage = new Image(emoji.getImage());
