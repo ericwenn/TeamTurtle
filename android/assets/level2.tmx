@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="18">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="19">
  <tileset firstgid="1" name="tileset32" tilewidth="32" tileheight="32" tilecount="1080" columns="36">
   <image source="tileset32.png" width="1152" height="960"/>
  </tileset>
@@ -31,10 +31,10 @@
   <object id="7" x="1568" y="192" width="192" height="32"/>
   <object id="8" x="1632" y="160" width="160" height="32"/>
   <object id="9" x="1696" y="128" width="160" height="32"/>
-  <object id="10" x="1760" y="96" width="626" height="18"/>
   <object id="11" x="1952" y="128" width="224" height="32"/>
   <object id="13" x="2496" y="192" width="224" height="32"/>
   <object id="17" x="2784" y="128" width="224" height="32"/>
+  <object id="18" x="1760" y="96" width="640" height="32"/>
  </objectgroup>
  <objectgroup name="emoji_placeholders"/>
  <objectgroup name="finish"/>
