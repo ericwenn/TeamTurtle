@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 
@@ -39,7 +40,7 @@ public class StartScreen extends AbstractScreen {
         this.observer = observer;
 
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
-        this.stage = new Stage();
+        this.stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
     }
 
     @Override
