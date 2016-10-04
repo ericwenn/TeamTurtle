@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -31,6 +32,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 import java.io.FileReader;
@@ -48,7 +50,7 @@ public class WordScreen extends AbstractScreen {
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf", BACK_BUTTON_URL = "back_button";
     private static final int TITLE_SIZE = 50, DESCRIPTION_SIZE = 25, TABLE_WIDTH = 600,
     TABLE_HEIGHT = 400, TABLE_X = 100, TABLE_Y = 50;
-    private static final Color FONT_COLOR = Color.BLACK;
+    private static final Color FONT_COLOR = Color.WHITE, TABLE_COLOR = Color.GRAY;
 
     private Texture bg;
     private Emoji emoji;
@@ -70,7 +72,7 @@ public class WordScreen extends AbstractScreen {
 
         this.observer = observer;
 
-        this.bg = new Texture("bg2.png");
+        this.bg = new Texture(PathConstants.BACKGROUND_PATH);
         this.emoji = emoji;
         this.stage = new Stage();
 
@@ -78,7 +80,7 @@ public class WordScreen extends AbstractScreen {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter
                 = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = TITLE_SIZE;
-        parameter.color = Color.RED;
+        parameter.color = FONT_COLOR;
         titleFont = generator.generateFont(parameter);
         parameter.size = DESCRIPTION_SIZE;
         descriptionFont = generator.generateFont(parameter);
@@ -105,6 +107,11 @@ public class WordScreen extends AbstractScreen {
         table = new Table();
         table.setSize(TABLE_WIDTH, TABLE_HEIGHT);
         table.setPosition(TABLE_X, TABLE_Y);
+
+        Pixmap map = new Pixmap(1, 1, Pixmap.Format.RGB565);
+        map.setColor(TABLE_COLOR);
+        map.fill();
+        table.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(map))));
 
         descriptionTable = new Table();
 
@@ -135,7 +142,7 @@ public class WordScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
+                    observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -149,13 +156,13 @@ public class WordScreen extends AbstractScreen {
         descriptionTable.row();
         descriptionTable.add(descriptionLabel3).left();
 
-        table.add(titleLabel).right().padRight(20).padTop(25);
-        table.add(soundButton).left().padLeft(20).padTop(25);
+        table.add(titleLabel).left().padLeft(-200).padTop(25);
+        table.add(soundButton).left().padTop(25).padLeft(-50);
         table.row().padTop(10);
-        table.add(emojiImage);
-        table.add(descriptionTable).left();
+        table.add(emojiImage).left().padLeft(-200);
+        table.add(descriptionTable).left().padLeft(-50);
         table.row().padTop(25);
-        table.add(returnButton).colspan(2);
+        table.add(returnButton).colspan(2).left().padLeft(-200);
 
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
@@ -165,8 +172,12 @@ public class WordScreen extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
 
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        getSpriteBatch().begin();
+
+        getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(),
+                getViewport().getScreenHeight() / InfinityRun.PPM);
+
+        getSpriteBatch().end();
 
         stage.draw();
     }

@@ -70,7 +70,7 @@ public class DictionaryScreen extends AbstractScreen {
         }
 
         //TODO get all unlocked from json file and get all locked from json file
-        for (Emoji emoji : emojis) {
+        for (final Emoji emoji : emojis) {
             Table listItem = new Table();
             listItem.setTouchable(Touchable.enabled);
             Image image = new Image(emoji.getTexture());
@@ -80,6 +80,11 @@ public class DictionaryScreen extends AbstractScreen {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     //TODO changeScreen(id, emoji)
+                    try {
+                        observer.changeScreen(emoji);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             listItems.add(listItem).expandX().fill();

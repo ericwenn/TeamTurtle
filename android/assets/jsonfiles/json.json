@@ -5,6 +5,12 @@
       description2: "Flera äpplen",
       description3: "Äpple är en frukt"
     }
+  Äpple0:
+  {
+    description1: "Ett äpple",
+    description2: "Flera äpplen",
+    description3: "Äpple är en frukt"
+  }
   Banan:
     {
       description1: "En banan",

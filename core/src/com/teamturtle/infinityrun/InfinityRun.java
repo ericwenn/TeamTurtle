@@ -32,7 +32,7 @@ public class InfinityRun extends Game implements IScreenObserver {
         setSpriteBatch(new SpriteBatch());
 
         try {
-            changeScreen(ScreenID.WORD);
+            changeScreen(ScreenID.MAIN_MENU);
         } catch (Exception e) {
             // This cannot fail...yet
         }
@@ -54,6 +54,21 @@ public class InfinityRun extends Game implements IScreenObserver {
     @Override
     public void dispose() {
         getSpriteBatch().dispose();
+    }
+
+    public void changeScreen(Emoji emoji) throws Exception {
+        AbstractScreen newScreen;
+        newScreen = new WordScreen(getSpriteBatch(), this, emoji);
+
+        Screen oldScreen = getScreen();
+
+        // Set the new screen
+        newScreen.buildStage();
+        setScreen(newScreen);
+
+        // Dispose the old one
+        oldScreen.dispose();
+
     }
 
     @Override
