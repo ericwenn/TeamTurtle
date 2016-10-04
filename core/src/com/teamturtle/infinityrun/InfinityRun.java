@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
@@ -26,13 +27,13 @@ public class InfinityRun extends Game implements IScreenObserver {
     public static final float PPM = 75;
 
     private SpriteBatch mSpriteBatch;
+    private LevelDataHandler levelHandler;
 
     @Override
     public void create() {
 
         setSpriteBatch(new SpriteBatch());
-
-
+        levelHandler = new LevelDataHandler();
 
         try {
             changeScreen(ScreenID.MAIN_MENU);
@@ -76,6 +77,14 @@ public class InfinityRun extends Game implements IScreenObserver {
     @Override
     public void levelFailed(Level level) {
         changeScreen(new LostLevelScreen(getSpriteBatch(), this, level));
+    }
+
+    @Override
+    public void playLevelAfterThis(Level level) {
+        Level nextLevel = levelHandler.getLevel(level.getId() + 1);
+        if (nextLevel != null) {
+            playLevel(nextLevel);
+        }
     }
 
     @Override

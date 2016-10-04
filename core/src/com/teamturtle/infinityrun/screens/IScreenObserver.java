@@ -21,27 +21,6 @@ public interface IScreenObserver {
 
     void levelFailed(Level level);
 
+    void playLevelAfterThis(Level level);
+
 }
-
-/*
-public interface GameScreen {
-    public GameScreen(Level level);
-}
-
-public interface QuizScreen {
-    public QuizScreen(List<Word> possibleWords);
-}
-public interface WonGameScreen {
-    public WonGameScreen(Level level, int score);
-}
-
-public interface LostGameScreen {
-    public LostGameScreen(Level level);
-}
-
-
-public interface PlayerData {
-
-    boolean haveCollectedWord(Word word);
-    int scoreOnLevel(Level level);
-}*/
