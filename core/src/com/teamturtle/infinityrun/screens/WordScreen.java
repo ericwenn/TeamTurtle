@@ -7,12 +7,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -27,16 +33,22 @@ import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 public class WordScreen extends AbstractScreen {
 
-    private static final int X_OFFSET_SOUND_BUTTON = 220;
-    private static final float IMAGE_SCALE = 2;
-    private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf";
-    private static final int FONT_SIZE = 50;
+    private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf", BACK_BUTTON_URL = "back_button";
+    private static final int TITLE_SIZE = 50, DESCRIPTION_SIZE = 25, TABLE_WIDTH = 600,
+    TABLE_HEIGHT = 400, TABLE_X = 100, TABLE_Y = 50;
+    private static final Color FONT_COLOR = Color.BLACK;
 
     private Texture bg;
     private Emoji emoji;
     private Stage stage;
-    private BitmapFont font;
-    private float textLength;
+    private BitmapFont titleFont, descriptionFont;
+    private Table table;
+    private Table descriptionTable;
+    private Skin skin;
+    private ImageButton returnButton;
+    private TextButton soundButton;
+    private Label titleLabel, descriptionLabel1, descriptionLabel2, descriptionLabel3;
+    private Image emojiImage;
 
     private IScreenObserver observer;
 
@@ -47,21 +59,17 @@ public class WordScreen extends AbstractScreen {
 
         this.bg = new Texture("bg2.png");
         this.emoji = emoji;
-        font = new BitmapFont();
-
         this.stage = new Stage();
-
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_URL));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter
                 = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = FONT_SIZE;
+        parameter.size = TITLE_SIZE;
         parameter.color = Color.RED;
-        font = generator.generateFont(parameter);
+        titleFont = generator.generateFont(parameter);
+        parameter.size = DESCRIPTION_SIZE;
+        descriptionFont = generator.generateFont(parameter);
         generator.dispose();
-
-        GlyphLayout layout = new GlyphLayout(font, "Äpple");
-        textLength = layout.width;
     }
 
     @Override
@@ -71,16 +79,27 @@ public class WordScreen extends AbstractScreen {
 
     @Override
     public void buildStage() {
-        Gdx.input.setInputProcessor(stage);
+        table = new Table();
+        table.setSize(TABLE_WIDTH, TABLE_HEIGHT);
+        table.setPosition(TABLE_X, TABLE_Y);
 
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("play_button.png")));
-        textButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("play_button_pressed.png")));
-        textButtonStyle.font = new BitmapFont();
+        descriptionTable = new Table();
 
-        TextButton soundButton = new TextButton("", textButtonStyle);
-        soundButton.setPosition(getViewport().getScreenWidth() / 2 + X_OFFSET_SOUND_BUTTON,
-                (getHeight() / 2) * InfinityRun.PPM + emoji.getImage().getHeight(), Align.center);
+        skin = new Skin();
+        skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
+        skin.load(Gdx.files.internal("skin/uiskin.json"));
+
+        titleLabel = new Label(emoji.getName(), new Label.LabelStyle(titleFont, FONT_COLOR));
+        descriptionLabel1 = new Label("Ett äpple", new Label.LabelStyle(descriptionFont,
+                FONT_COLOR));
+        descriptionLabel2 = new Label("Flera äpplen", new Label.LabelStyle(descriptionFont,
+                FONT_COLOR));
+        descriptionLabel3 = new Label("Äpple är en frukt", new Label.LabelStyle(descriptionFont,
+                FONT_COLOR));
+
+        emojiImage = new Image(emoji.getImage());
+
+        soundButton = new TextButton("", skin, "level_text_button");
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -88,8 +107,7 @@ public class WordScreen extends AbstractScreen {
             }
         });
 
-        TextButton returnButton = new TextButton("", textButtonStyle);
-        returnButton.setPosition(0, 0);
+        returnButton = new ImageButton(skin, BACK_BUTTON_URL);
         returnButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -101,39 +119,31 @@ public class WordScreen extends AbstractScreen {
             }
         });
 
-        stage.addActor(soundButton);
-        stage.addActor(returnButton);
+        descriptionTable = new Table();
+        descriptionTable.add(descriptionLabel1).left();
+        descriptionTable.row();
+        descriptionTable.add(descriptionLabel2).left();
+        descriptionTable.row();
+        descriptionTable.add(descriptionLabel3).left();
+
+        table.add(titleLabel).right().padRight(20).padTop(25);
+        table.add(soundButton).left().padLeft(20).padTop(25);
+        table.row().padTop(10);
+        table.add(emojiImage);
+        table.add(descriptionTable).left();
+        table.row().padTop(25);
+        table.add(returnButton).colspan(2);
+
+        stage.addActor(table);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
 
-        getSpriteBatch().begin();
-
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        //getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
-        float x = (getWidth() / 2 - ((emoji.getImage().getWidth() * IMAGE_SCALE)) / InfinityRun.PPM);
-        float y = (getHeight() / 2 - ((emoji.getImage().getHeight() * IMAGE_SCALE) - 150) / InfinityRun.PPM);
-
-        getSpriteBatch().draw(emoji.getImage(), x, y, emoji.getImage().getWidth() * IMAGE_SCALE /
-                InfinityRun.PPM, emoji.getImage().getHeight() * IMAGE_SCALE / InfinityRun.PPM);
-
-        //A scaled projection is created to draw font
-        Matrix4 scaledProjection = getSpriteBatch().getProjectionMatrix()
-                .scale(1 / (InfinityRun.PPM), 1 / (InfinityRun.PPM), 0);
-        getSpriteBatch().setProjectionMatrix(scaledProjection);
-
-        font.draw(getSpriteBatch(), "Äpple", (getWidth() / 2) * InfinityRun.PPM,
-                (getHeight() / 2) * InfinityRun.PPM + emoji.getImage().getHeight());
-
-        //Reset the projection
-        Matrix4 normalProjection = getSpriteBatch().getProjectionMatrix()
-                .scale(InfinityRun.PPM, InfinityRun.PPM, 0);
-        getSpriteBatch().setProjectionMatrix(normalProjection);
-        getSpriteBatch().end();
 
         stage.draw();
     }
