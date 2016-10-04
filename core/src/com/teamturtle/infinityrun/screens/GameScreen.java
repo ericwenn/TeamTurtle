@@ -24,6 +24,7 @@ import com.teamturtle.infinityrun.map_parsing.MissionParser;
 import com.teamturtle.infinityrun.map_parsing.SensorParser;
 import com.teamturtle.infinityrun.models.Mission;
 import com.teamturtle.infinityrun.models.MissionHandler;
+import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sprites.Entity;
@@ -39,16 +40,6 @@ import java.util.List;
  */
 
 public class GameScreen extends AbstractScreen {
-
-    public enum Level {
-        LEVEL_1("mission_level.tmx"), LEVEL_2("level2.tmx"), LEVEL_3("level3.tmx");
-
-        private final String tmx;
-
-        Level(String tmx) {
-            this.tmx = tmx;
-        }
-    }
 
     private enum State {
         PLAY, PAUSE, LOST_GAME, WON_GAME
@@ -88,18 +79,22 @@ public class GameScreen extends AbstractScreen {
     private List<Word> possibleWords;
     private WordLoader wordLoader;
 
-    public GameScreen(SpriteBatch mSpriteBatch, Level level, IScreenObserver screenObserver) {
+    private Level level;
+
+    public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
         super(mSpriteBatch);
         this.screenObserver = screenObserver;
+
+        this.level = level;
 
         //Set state
         state = State.PLAY;
 
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
-        tiledMap = tmxMapLoader.load(level.tmx);
+        tiledMap = tmxMapLoader.load(level.getMapUrl());
 
-//        TODO: Move WordLoader to Level
+        //TODO: Move WordLoader to Level
         wordLoader = new WordLoader();
         possibleWords = wordLoader.getWordsFromCategory(1);
     }
@@ -168,18 +163,11 @@ public class GameScreen extends AbstractScreen {
                 mMissionStage.draw();
                 break;
             case LOST_GAME:
-                try {
-                    screenObserver.changeScreen(InfinityRun.ScreenID.LOST_GAME);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    screenObserver.levelFailed(level);
                 break;
             case WON_GAME:
-                try {
-                    screenObserver.changeScreen(InfinityRun.ScreenID.WON_GAME);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                //TODO should read some player model
+                    screenObserver.levelCompleted(level, possibleWords, 2);
             case PAUSE:
                 break;
         }
