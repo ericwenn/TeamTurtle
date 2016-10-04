@@ -4,6 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.teamturtle.infinityrun.models.level.LevelDataHandler;
+import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.DictionaryScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
@@ -12,11 +15,11 @@ import com.teamturtle.infinityrun.screens.LevelSelectScreen;
 import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
 import com.teamturtle.infinityrun.screens.WordScreen;
-import com.teamturtle.infinityrun.screens.level_end_screens.EndLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.storage.PlayerData;
+import java.util.List;
 
 public class InfinityRun extends Game implements IScreenObserver {
 
@@ -27,6 +30,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 
     private SpriteBatch mSpriteBatch;
     private PlayerData mPlayerData;
+    private LevelDataHandler levelHandler;
 
     @Override
     public void create() {
@@ -34,9 +38,10 @@ public class InfinityRun extends Game implements IScreenObserver {
         mPlayerData = new PlayerData();
 
         setSpriteBatch(new SpriteBatch());
+        levelHandler = new LevelDataHandler();
 
         try {
-            changeScreen(ScreenID.WORD);
+            changeScreen(ScreenID.MAIN_MENU);
         } catch (Exception e) {
             // This cannot fail...yet
         }
@@ -50,14 +55,42 @@ public class InfinityRun extends Game implements IScreenObserver {
         return this.mSpriteBatch;
     }
 
-	/*@Override
-    public void render () {
-		super.render();
-	}*/
-
     @Override
     public void dispose() {
         getSpriteBatch().dispose();
+    }
+
+    @Override
+    public void playLevel(Level level) {
+        changeScreen(new GameScreen(getSpriteBatch(), this, level));
+    }
+
+    @Override
+    public void levelCompleted(Level level, List<Word> missionWords, int score) {
+        if (score > 0) {
+            changeScreen(new QuizScreen(getSpriteBatch(), this, level, missionWords, score));
+        }else{
+            levelFailed(level);
+        }
+    }
+
+    @Override
+    public void levelWon(Level level, int score) {
+        mPlayerData.setPlayerProgressOnLevel(level, score);
+        changeScreen(new WonLevelScreen(getSpriteBatch(), this, level, score));
+    }
+
+    @Override
+    public void levelFailed(Level level) {
+        changeScreen(new LostLevelScreen(getSpriteBatch(), this, level));
+    }
+
+    @Override
+    public void playLevelAfterThis(Level level) {
+        Level nextLevel = levelHandler.getLevel(level.getId() + 1);
+        if (nextLevel != null) {
+            playLevel(nextLevel);
+        }
     }
 
     @Override
@@ -69,29 +102,14 @@ public class InfinityRun extends Game implements IScreenObserver {
                 newScreen = new StartScreen(getSpriteBatch(), this);
                 break;
 
-            case GAME:
-                newScreen = new GameScreen(getSpriteBatch(), GameScreen.Level.LEVEL_1, this);
-                break;
-
-            case WON_GAME:
-                newScreen = new WonLevelScreen(getSpriteBatch(), this, EndLevelScreen.Rating.TWO);
-                break;
-
-            case LOST_GAME:
-                newScreen = new LostLevelScreen(getSpriteBatch(), this);
-                break;
-
             case LEVELS_MENU:
-                newScreen = new LevelSelectScreen(getSpriteBatch(), this);
+                newScreen = new LevelSelectScreen(getSpriteBatch(), this, mPlayerData);
                 break;
 
-            case QUIZ:
-                newScreen = new QuizScreen(getSpriteBatch(), this);
-                break;
             case DICTIONARY:
-
                 newScreen = new DictionaryScreen(getSpriteBatch(), this);
                 break;
+
 			case WORD:
 				Emoji apple = new Emoji("Äpple","audio/apple.wav", new Texture("emoji/00a9.png"));
 				newScreen = new WordScreen(getSpriteBatch(), this, apple);
@@ -101,6 +119,12 @@ public class InfinityRun extends Game implements IScreenObserver {
                 throw new Exception("Unknown screen enum");
         }
 
+        changeScreen(newScreen);
+
+    }
+
+    private void changeScreen(AbstractScreen newScreen) {
+
         Screen oldScreen = getScreen();
 
         // Set the new screen
@@ -109,11 +133,9 @@ public class InfinityRun extends Game implements IScreenObserver {
 
         // Dispose the old one
         oldScreen.dispose();
-
-
     }
 
     public enum ScreenID {
-        MAIN_MENU, GAME, WON_GAME, LOST_GAME, LEVELS_MENU, QUIZ, DICTIONARY, WORD
+        MAIN_MENU, GAME, LEVELS_MENU, DICTIONARY, WORD
     }
 }

@@ -62,7 +62,7 @@ public class StartScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    observer.changeScreen(InfinityRun.ScreenID.GAME);
+                    observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
