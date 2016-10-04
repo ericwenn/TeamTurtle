@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
+import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
 
@@ -43,14 +44,16 @@ public abstract class EndLevelScreen extends AbstractScreen {
 
     private IScreenObserver observer;
 
+    private Level level;
     private int score;
 
     public EndLevelScreen(SpriteBatch sb, IScreenObserver observer, Texture uiBg
-            , String topLabelStr, int score) {
+            , String topLabelStr, Level level, int score) {
         super(sb);
         this.observer = observer;
         this.uiBg = uiBg;
         this.topLabelStr = topLabelStr;
+        this.level = level;
         this.score = score;
 
         skin = new Skin();
@@ -89,11 +92,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
         retryButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                try {
-                    observer.changeScreen(InfinityRun.ScreenID.GAME);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                observer.playLevel(level);
             }
         });
     }

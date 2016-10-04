@@ -1,7 +1,7 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.models.Word;
+import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.level.Level;
 
 import java.util.List;
@@ -17,9 +17,9 @@ public interface IScreenObserver {
 
     void levelCompleted(Level level, List<Word> missionWords, int score);
 
-    void levelWon(int score);
+    void levelWon(Level level, int score);
 
-    void levelFailed();
+    void levelFailed(Level level);
 
 }
 

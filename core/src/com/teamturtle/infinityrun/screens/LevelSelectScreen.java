@@ -59,17 +59,16 @@ public class LevelSelectScreen extends AbstractScreen{
         rootTable = new Table();
         rootTable.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
         rootTable.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
+
+
         for(int i = 1; i <= LEVEL_AMOUNT; i++) {
+            final Level level = handler.getLevel(i);
             Table levelButtonTable = new Table();
             TextButton button = new TextButton(i+ "", skin, "level_text_button");
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
-                        try {
-                            observer.changeScreen(InfinityRun.ScreenID.GAME);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        observer.playLevel(level);
                     }
                 });
             levelButtonTable.add(button);

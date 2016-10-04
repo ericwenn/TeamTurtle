@@ -79,9 +79,13 @@ public class GameScreen extends AbstractScreen {
     private List<Word> possibleWords;
     private WordLoader wordLoader;
 
+    private Level level;
+
     public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
         super(mSpriteBatch);
         this.screenObserver = screenObserver;
+
+        this.level = level;
 
         //Set state
         state = State.PLAY;
@@ -159,18 +163,11 @@ public class GameScreen extends AbstractScreen {
                 mMissionStage.draw();
                 break;
             case LOST_GAME:
-                try {
-                    screenObserver.changeScreen(InfinityRun.ScreenID.LOST_GAME);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    screenObserver.levelFailed(level);
                 break;
             case WON_GAME:
-                try {
-                    screenObserver.changeScreen(InfinityRun.ScreenID.WON_GAME);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                //TODO should read some player model
+                    screenObserver.levelCompleted(level, possibleWords, 2);
             case PAUSE:
                 break;
         }
