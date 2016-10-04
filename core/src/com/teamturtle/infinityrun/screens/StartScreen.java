@@ -70,7 +70,11 @@ public class StartScreen extends AbstractScreen {
         dictionaryButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO dictionary screen
+                try {
+                    observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
