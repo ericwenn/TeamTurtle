@@ -20,7 +20,7 @@ public class WordLoader {
     public WordLoader() {
         FileHandle file = Gdx.files.internal("data/words.json");
         Json json = new Json();
-        wordMap = json.fromJson(HashMap.class, WordImpl.class, file.readString());
+        wordMap = json.fromJson(HashMap.class, WordImpl.class, file);
     }
 
     public HashMap<String, Word> getWords() {
