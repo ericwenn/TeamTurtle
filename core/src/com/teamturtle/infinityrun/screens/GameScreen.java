@@ -24,6 +24,7 @@ import com.teamturtle.infinityrun.map_parsing.MissionParser;
 import com.teamturtle.infinityrun.map_parsing.SensorParser;
 import com.teamturtle.infinityrun.models.Mission;
 import com.teamturtle.infinityrun.models.MissionHandler;
+import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
@@ -37,16 +38,6 @@ import java.util.List;
  */
 
 public class GameScreen extends AbstractScreen {
-
-    public enum Level {
-        LEVEL_1("mission_level.tmx"), LEVEL_2("level2.tmx"), LEVEL_3("level3.tmx");
-
-        private final String tmx;
-
-        Level(String tmx) {
-            this.tmx = tmx;
-        }
-    }
 
     private enum State {
         PLAY, PAUSE, LOST_GAME, WON_GAME
@@ -84,7 +75,7 @@ public class GameScreen extends AbstractScreen {
 
     private OrthographicCamera mFixedCamera;
 
-    public GameScreen(SpriteBatch mSpriteBatch, Level level, IScreenObserver screenObserver) {
+    public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
         super(mSpriteBatch);
         this.screenObserver = screenObserver;
 
@@ -93,7 +84,7 @@ public class GameScreen extends AbstractScreen {
 
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
-        tiledMap = tmxMapLoader.load(level.tmx);
+        tiledMap = tmxMapLoader.load(level.getUrl());
     }
 
 

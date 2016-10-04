@@ -5,8 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
+import com.teamturtle.infinityrun.models.Word;
+import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.stages.IQuizStageListener;
 import com.teamturtle.infinityrun.stages.QuizStage;
+
+import java.util.List;
 
 /**
  * Text om klassen
@@ -20,12 +24,15 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     private Texture bg;
     private QuizStage stage;
     private IScreenObserver observer;
+    private int score;
 
-    public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer) {
+    public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, List<Word> possibleWords
+            , int score) {
         super(spriteBatch);
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
-        this.stage = new QuizStage(this);
+        this.stage = new QuizStage(this, possibleWords);
         this.observer = observer;
+        this.score = score;
     }
 
     @Override
@@ -45,11 +52,9 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     @Override
     public void onGuessClick(boolean isChoiceRight) {
         if (isChoiceRight) {
-            try {
-                observer.changeScreen(InfinityRun.ScreenID.GAME);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            observer.levelWon(score++);
+        }else{
+            observer.levelWon(score);
         }
     }
 }

@@ -12,6 +12,6 @@ public class LostLevelScreen extends EndLevelScreen {
     private static final String LB_LEVEL_LOST = "Bana förlorad";
 
     public LostLevelScreen(SpriteBatch sb, IScreenObserver observer) {
-        super(sb, observer, new Texture("ui/ui_bg.png"), LB_LEVEL_LOST, Rating.ZERO);
+        super(sb, observer, new Texture("ui/ui_bg.png"), LB_LEVEL_LOST, 0);
     }
 }

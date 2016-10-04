@@ -15,6 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
+import com.teamturtle.infinityrun.models.level.Level;
+import com.teamturtle.infinityrun.models.level.LevelDataHandler;
+
+import java.util.ArrayList;
 
 /**
  * Created by Henrik on 2016-10-03.
@@ -32,11 +36,14 @@ public class LevelSelectScreen extends AbstractScreen{
     private ImageButton backButton;
     private Texture bg;
 
+    LevelDataHandler handler;
+
     private IScreenObserver observer;
 
     public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer) {
         super(spriteBatch);
         this.observer = observer;
+        handler = new LevelDataHandler();
     }
 
     @Override

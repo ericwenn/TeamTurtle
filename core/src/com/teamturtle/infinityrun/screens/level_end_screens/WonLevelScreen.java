@@ -18,8 +18,8 @@ public class WonLevelScreen extends EndLevelScreen{
 
     private ImageButton nextButton;
 
-    public WonLevelScreen(SpriteBatch sb, final IScreenObserver observer, Rating rating) {
-        super(sb, observer, new Texture("ui/ui_bg_big.png"), LB_LEVEL_LOST, rating);
+    public WonLevelScreen(SpriteBatch sb, final IScreenObserver observer, int score) {
+        super(sb, observer, new Texture("ui/ui_bg_big.png"), LB_LEVEL_LOST, score);
         Skin skin = super.getSkin();
         nextButton = new ImageButton(skin, "next_button");
         nextButton.addListener(new ChangeListener() {

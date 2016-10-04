@@ -16,6 +16,9 @@ import com.teamturtle.infinityrun.models.Word;
 import com.teamturtle.infinityrun.models.WordRandomizer;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
+import java.util.List;
+import java.util.Random;
+
 /**
  * Text om klassen
  *
@@ -39,12 +42,14 @@ public class QuizStage extends Stage {
     private static final float PARENT_TABLE_POS_X = 100.0f, PARENT_TABLE_POS_Y = 50.0f;
     private static final float ROW_PADDING = 20.0f;
 
-    public QuizStage(IQuizStageListener handler) {
+    public QuizStage(IQuizStageListener handler, List<Word> possibleWords) {
         super(new FitViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         this.handler = handler;
 
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         quizLabel = new Label("Quiz-dags!", skin);
+
+        Random random = new Random();
 
 //        Temporary strings and emoji
         guess1 = "Banan";
@@ -62,6 +67,10 @@ public class QuizStage extends Stage {
         createTableUi();
         addActor(parentTable);
         Gdx.input.setInputProcessor(this);
+    }
+
+    private void randomizeWords() {
+
     }
 
     private void createButtons() {

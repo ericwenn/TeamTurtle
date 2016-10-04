@@ -1,0 +1,92 @@
+[
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 1
+	url: levels/level1.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 2
+	url: levels/level2.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 3
+	url: levels/level3.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 4
+	url: levels/level4.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 5
+	url: levels/level0.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 6
+	url: levels/level1.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 7
+	url: levels/level2.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 8
+	url: levels/level3.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 9
+	url: levels/level4.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 10
+	url: levels/level0.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 11
+	url: levels/level1.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 12
+	url: levels/level2.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 13
+	url: levels/level3.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 14
+	url: levels/level4.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+{
+	class: com.teamturtle.infinityrun.models.level.Level
+	id: 15
+	url: levels/level0.tmx
+	categoryIDs: [ 1, 2, 3 ]
+}
+]
