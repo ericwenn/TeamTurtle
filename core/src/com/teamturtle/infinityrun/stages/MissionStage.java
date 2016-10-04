@@ -11,7 +11,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.models.WordImpl;
+import com.teamturtle.infinityrun.models.Mission;
+import com.teamturtle.infinityrun.models.Word;
 
 
 
@@ -32,18 +33,13 @@ public class MissionStage extends Stage {
         mMissionTable = new Table(mSkin);
         mMissionTable.setSize(TABLE_WIDTH, TABLE_HEIGHT);
         mMissionTable.setPosition( TABLE_OFFSET_LEFT, InfinityRun.HEIGHT - TABLE_HEIGHT - TABLE_OFFSET_TOP);
-
-
-        // TODO get emojimodel from mission
-        WordImpl emojiModel = new WordImpl("Äpple", "audio/apple.wav", "emoji/1f34e.png");
-        changeEmoji(emojiModel);
-
+        
         this.addActor(mMissionTable);
 
     }
 
 
-    private void changeEmoji(WordImpl emojiModel) {
+    private void changeEmoji(Word emojiModel) {
 
         mMissionTable.clearChildren();
 
@@ -53,5 +49,16 @@ public class MissionStage extends Stage {
 
         Label emojiLabel = new Label( emojiModel.getText(), mSkin);
         mMissionTable.add(emojiLabel).height(50).expandX().align(Align.left).padLeft(10);
+    }
+
+
+
+    public void setMission(Mission mission) {
+        Word correctWord = mission.getCorrectWord();
+        if( correctWord != null) {
+            changeEmoji(correctWord);
+
+        }
+
     }
 }

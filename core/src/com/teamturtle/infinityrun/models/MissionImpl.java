@@ -50,12 +50,11 @@ public class MissionImpl implements Mission {
         return endX;
     }
 
-    public Word decideCorrectWord() {
+    public void decideCorrectWord() {
 
         int nWords = mWords.size();
-        int correctWordIndex = mRandomizer.nextInt(3);
+        int correctWordIndex = mRandomizer.nextInt(nWords);
 
         mCorrectWord = mWords.get( correctWordIndex );
-        return mCorrectWord;
     }
 }

@@ -18,4 +18,6 @@ public interface Mission {
     boolean haveWord(Word word);
 
     void addWord(Word word);
+
+    void decideCorrectWord();
 }
