@@ -12,8 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.models.Word;
-import com.teamturtle.infinityrun.models.WordRandomizer;
+import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.models.words.WordLoader;
+import com.teamturtle.infinityrun.models.words.WordRandomizer;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 /**
@@ -50,7 +51,9 @@ public class QuizStage extends Stage {
         guess1 = "Banan";
         guess2 = "Äpple";
         guess3 = "Päron";
-        WordRandomizer emojiRandomizer = new WordRandomizer();
+
+//        TODO: FIX THIS MESS
+        WordRandomizer emojiRandomizer = new WordRandomizer(new WordLoader().getWordsFromCategory(1));
         Word word = emojiRandomizer.getNext();
         emoji = new Emoji(word);
         /*

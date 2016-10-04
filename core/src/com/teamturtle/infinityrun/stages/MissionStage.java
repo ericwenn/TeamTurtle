@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.Mission;
-import com.teamturtle.infinityrun.models.Word;
+import com.teamturtle.infinityrun.models.words.Word;
 
 
 

@@ -1,4 +1,4 @@
-package com.teamturtle.infinityrun.models;
+package com.teamturtle.infinityrun.models.words;
 
 /**
  * A word consists of a textual representation, along with an icon describing the word and a pronounciation.
@@ -12,5 +12,8 @@ public interface Word {
 
     String getIconUrl();
 
-    Integer getId();
+    int getCategory();
+
+    int getId();
+
 }
