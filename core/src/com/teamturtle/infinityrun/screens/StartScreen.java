@@ -4,9 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -19,6 +23,10 @@ import com.teamturtle.infinityrun.PathConstants;
  */
 
 public class StartScreen extends AbstractScreen {
+
+    private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 370.0f;
+    private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 50.0f;
+    protected static final float BUTTON_PADDING = 5.0f;
 
     private Texture bg;
     private Stage stage;
@@ -43,43 +51,42 @@ public class StartScreen extends AbstractScreen {
     public void buildStage() {
         Gdx.input.setInputProcessor(stage);
 
-        // This can be used to render the font that is used in the button.
-        /*BitmapFont font;
-        String FONT_CHARACTERS = "abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789][_!$%#@|\\/?-+=()*&.;,{}\"´`'<>";
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Boogaloo-Regular.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        param.characters = FONT_CHARACTERS;
-        font = generator.generateFont(param);*/
+        Skin skin = new Skin();
 
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("play_button.png")));
-        textButtonStyle.down = new TextureRegionDrawable(new TextureRegion(new Texture("play_button_pressed.png")));
-        //textButtonStyle.font = font;
-        //temp font
-        textButtonStyle.font = new BitmapFont();
-        TextButton button = new TextButton("", textButtonStyle);
-        button.setPosition(getViewport().getScreenWidth() / 2, getViewport().getScreenHeight() / 2, Align.center);
+        skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
+        skin.load(Gdx.files.internal("skin/uiskin.json"));
 
-        button.addListener(new ChangeListener() {
+        ImageButton playButton = new ImageButton(skin, "play_button");
+        playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
+                    observer.changeScreen(InfinityRun.ScreenID.GAME);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        ImageButton dictionaryButton = new ImageButton(skin, "dictionary_button");
+        dictionaryButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                try {
+                    observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
 
-        /*button.addAction(new Action() {
-            @Override
-            public boolean act(float delta) {
+        Table rootTabel = new Table().center();
+        rootTabel.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
+        rootTabel.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
+        rootTabel.add(playButton).pad(BUTTON_PADDING);
+        rootTabel.row();
+        rootTabel.add(dictionaryButton);
 
-                return true;
-            }
-        });*/
-
-        stage.addActor(button);
+        stage.addActor(rootTabel);
     }
 
     @Override
