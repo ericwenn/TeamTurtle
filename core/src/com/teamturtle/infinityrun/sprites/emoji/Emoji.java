@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.models.Word;
+import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.sprites.AbstractEntity;
 
 /**

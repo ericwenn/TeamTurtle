@@ -24,6 +24,8 @@ import com.teamturtle.infinityrun.map_parsing.MissionParser;
 import com.teamturtle.infinityrun.map_parsing.SensorParser;
 import com.teamturtle.infinityrun.models.Mission;
 import com.teamturtle.infinityrun.models.MissionHandler;
+import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
@@ -83,6 +85,8 @@ public class GameScreen extends AbstractScreen {
     private State state;
 
     private OrthographicCamera mFixedCamera;
+    private List<Word> possibleWords;
+    private WordLoader wordLoader;
 
     public GameScreen(SpriteBatch mSpriteBatch, Level level, IScreenObserver screenObserver) {
         super(mSpriteBatch);
@@ -94,6 +98,10 @@ public class GameScreen extends AbstractScreen {
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load(level.tmx);
+
+//        TODO: Move WordLoader to Level
+        wordLoader = new WordLoader();
+        possibleWords = wordLoader.getWordsFromCategory(1);
     }
 
 
@@ -297,7 +305,7 @@ public class GameScreen extends AbstractScreen {
         MissionParser missionParser = new MissionParser(world, tiledMap, "quest");
         mMissionHandler = missionParser.getMissionHandler();
 
-        MapParser emojiParser = new EmojiParser(world, tiledMap,  "emoji_placeholders", mMissionHandler);
+        MapParser emojiParser = new EmojiParser(world, tiledMap, "emoji_placeholders", mMissionHandler, possibleWords);
         emojiParser.parse();
         emojiSprites = emojiParser.getEntities();
 
