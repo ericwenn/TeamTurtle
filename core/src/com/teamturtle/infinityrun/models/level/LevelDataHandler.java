@@ -23,10 +23,10 @@ public class LevelDataHandler {
         System.out.println("hej");
         FileHandle file = Gdx.files.internal("data/levels.json");
         Json json = new Json();
-        ArrayList<Level> levels = new ArrayList<Level>();
+        ArrayList<LevelImpl> levels = new ArrayList<LevelImpl>();
         int[] j = {1, 2, 3};
         for(int i = 1; i <= 15; i++) {
-            levels.add(new Level(i, "levels/level" + i % 5 + ".tmx", j));
+            levels.add(new LevelImpl(i, "levels/level" + i % 5 + ".tmx", j));
         }
         String text = json.prettyPrint(levels);
         FileHandle jsonfile = Gdx.files.local("data/levels.json");
@@ -38,7 +38,7 @@ public class LevelDataHandler {
         FileHandle file = Gdx.files.local("data/levels.json");
         ArrayList<JsonValue> jsonValues = json.fromJson(ArrayList.class, file);
         System.out.println(jsonValues.size());
-        ArrayList<Level> levels = json.fromJson(ArrayList.class, Level.class, file.readString());
+        ArrayList<Level> levels = json.fromJson(ArrayList.class, LevelImpl.class, file.readString());
         return levels;
     }
 

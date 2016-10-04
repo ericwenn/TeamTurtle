@@ -1,49 +1,14 @@
 package com.teamturtle.infinityrun.models.level;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 /**
- * Created by ostmos on 2016-10-04.
+ * Created by ericwenn on 10/4/16.
  */
-public class Level {
+public interface Level {
 
-    private int id;
-    private String url;
-    private int[] categoryIDs;
+    String getMapUrl();
 
-    public Level() {
+    int getId();
 
-    }
+    int[] getCategoryIDs();
 
-    public Level(int id, String url, int[] categoryIDs) {
-        this.id = id;
-        this.url = url;
-        this.categoryIDs = categoryIDs;
-
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int[] getCategoryIDs() {
-        return categoryIDs;
-    }
-
-    public void setCategoryIDs(int[] categoryIDs) {
-        this.categoryIDs = categoryIDs;
-    }
 }
