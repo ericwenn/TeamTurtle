@@ -31,7 +31,7 @@ public class MissionStage extends Stage {
         mSkin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         mMissionTable = new Table(mSkin);
         mMissionTable.setSize(TABLE_WIDTH, TABLE_HEIGHT);
-        mMissionTable.setPosition( TABLE_OFFSET_TOP, InfinityRun.HEIGHT - TABLE_HEIGHT - TABLE_OFFSET_TOP);
+        mMissionTable.setPosition( TABLE_OFFSET_LEFT, InfinityRun.HEIGHT - TABLE_HEIGHT - TABLE_OFFSET_TOP);
 
 
         // TODO get emojimodel from mission
@@ -51,7 +51,7 @@ public class MissionStage extends Stage {
         emojiImage.setScaling(Scaling.fit);
         mMissionTable.add(emojiImage).height(40).width(40).align(Align.center);
 
-        Label emojiLabel = new Label( emojiModel.getEmojiName(), mSkin);
+        Label emojiLabel = new Label( emojiModel.getText(), mSkin);
         mMissionTable.add(emojiLabel).height(50).expandX().align(Align.left).padLeft(10);
     }
 }

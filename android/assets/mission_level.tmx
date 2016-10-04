@@ -15,11 +15,19 @@
   <object x="0" y="352" height="32"/>
   <object x="0" y="354" width="1632" height="32"/>
  </objectgroup>
- <objectgroup name="emoji_placeholders" width="0" height="0"/>
+ <objectgroup name="emoji_placeholders" width="0" height="0">
+  <object x="706" y="65" width="32" height="33"/>
+  <object x="768" y="128" width="32" height="32"/>
+  <object x="704" y="256" width="32" height="32"/>
+  <object x="1344" y="64" width="32" height="32"/>
+  <object x="1440" y="160" width="32" height="32"/>
+  <object x="1376" y="256" width="32" height="32"/>
+ </objectgroup>
  <objectgroup name="obstacle" width="0" height="0"/>
  <objectgroup name="goal" width="0" height="0"/>
  <objectgroup name="quest" width="0" height="0">
   <object x="416" y="0" width="32" height="480"/>
   <object x="1120" y="0" width="32" height="480"/>
+  <object x="1568" y="0" width="32" height="480"/>
  </objectgroup>
 </map>

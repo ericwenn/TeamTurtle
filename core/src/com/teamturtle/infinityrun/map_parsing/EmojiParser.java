@@ -68,10 +68,12 @@ public class EmojiParser implements MapParser {
 
             Mission mission = missionHandler.getMissionAtPosition( rect.getX() );
 
-            Word word = wordRandomizer.getNext();
-            while (mission.haveWord(word)) {
+            Word word;
+            do {
                 word = wordRandomizer.getNext();
-            }
+            } while (mission.haveWord(word));
+
+            mission.addWord(word);
 
             Emoji emoji = new Emoji(word);
             emoji.setBody( body );

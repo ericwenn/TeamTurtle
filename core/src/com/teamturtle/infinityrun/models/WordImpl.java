@@ -29,4 +29,21 @@ public class WordImpl implements Word {
     public String getIconUrl() {
         return iconUrl;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if( !(obj instanceof Word)) {
+            return false;
+        }
+
+        if( obj == this) {
+            return true;
+        }
+
+        Word rhs = (Word) obj;
+        return rhs.getText().equals(this.getText())
+                && rhs.getIconUrl().equals(this.getIconUrl())
+                && rhs.getSoundUrl().equals(this.getSoundUrl());
+
+    }
 }

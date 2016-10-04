@@ -53,7 +53,7 @@ public class Emoji extends AbstractEntity {
     }
 
     public Emoji(Word word) {
-        new Emoji(word.getText(), word.getSoundUrl(), new Texture(word.getIconUrl()));
+        this(word.getText(), word.getSoundUrl(), new Texture(word.getIconUrl()));
     }
 
     public void setBody(Body body) {

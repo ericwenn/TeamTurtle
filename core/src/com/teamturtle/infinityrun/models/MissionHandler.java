@@ -1,5 +1,7 @@
 package com.teamturtle.infinityrun.models;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.LinkedList;
 
 /**
@@ -12,11 +14,14 @@ public class MissionHandler {
     private int iteratorIndex = 0;
 
     public void addMission(float startX, float endX) {
+        Gdx.app.log("MissionHandler", "addMission" + "start: " + Float.toString(startX) + " end: " + Float.toString(endX));
         mMissions.add( new MissionImpl(startX, endX));
     }
 
     public Mission getMissionAtPosition(float posX) {
+        Gdx.app.log("MissionHandler", "getMissionAtPosition" + Float.toString(posX));
         for (Mission m : mMissions) {
+            Gdx.app.log("MissionHandler", "mission_start: "+ Float.toString(m.getStartPosition()) + " mission_end: "+ Float.toString(m.getEndPosition()));
             if (m.getStartPosition() < posX && posX < m.getEndPosition()) {
                 return m;
             }

@@ -243,7 +243,7 @@ public class GameScreen extends AbstractScreen {
         MissionParser missionParser = new MissionParser(world, tiledMap, "quest");
         MissionHandler missionHandler = missionParser.getMissionHandler();
 
-        MapParser emojiParser = new EmojiParser(world, tiledMap,  "emoji_placeholders");
+        MapParser emojiParser = new EmojiParser(world, tiledMap,  "emoji_placeholders", missionHandler);
         emojiParser.parse();
         emojiSprites = emojiParser.getEntities();
 
