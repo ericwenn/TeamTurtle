@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.PathConstants;
 
 /**
  * Created by Alfred on 2016-09-22.
@@ -29,7 +30,7 @@ public class StartScreen extends AbstractScreen {
 
         this.observer = observer;
 
-        this.bg = new Texture("bg2.png");
+        this.bg = new Texture(PathConstants.BACKGROUND_PATH);
         this.stage = new Stage();
     }
 

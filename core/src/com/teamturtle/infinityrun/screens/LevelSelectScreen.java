@@ -1,7 +1,6 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -15,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.PathConstants;
 
 /**
  * Created by Henrik on 2016-10-03.
@@ -41,7 +41,7 @@ public class LevelSelectScreen extends AbstractScreen{
 
     @Override
     public void buildStage() {
-        bg = new Texture("bg2.png");
+        bg = new Texture(PathConstants.BACKGROUND_PATH);
 
         skin = new Skin();
 

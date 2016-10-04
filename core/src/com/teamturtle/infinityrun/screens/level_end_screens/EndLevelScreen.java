@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
 
@@ -79,7 +80,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         Gdx.input.setInputProcessor(stage);
-        bg = new Texture("bg2.png");
+        bg = new Texture(PathConstants.BACKGROUND_PATH);
     }
 
     private void initButtons() {
