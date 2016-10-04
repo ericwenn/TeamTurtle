@@ -15,6 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
+import com.teamturtle.infinityrun.models.level.Level;
+import com.teamturtle.infinityrun.models.level.LevelDataHandler;
+
+import java.util.ArrayList;
 
 /**
  * Created by Henrik on 2016-10-03.
@@ -32,11 +36,14 @@ public class LevelSelectScreen extends AbstractScreen{
     private ImageButton backButton;
     private Texture bg;
 
+    LevelDataHandler handler;
+
     private IScreenObserver observer;
 
     public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer) {
         super(spriteBatch);
         this.observer = observer;
+        handler = new LevelDataHandler();
     }
 
     @Override
@@ -52,17 +59,16 @@ public class LevelSelectScreen extends AbstractScreen{
         rootTable = new Table();
         rootTable.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
         rootTable.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
+
+
         for(int i = 1; i <= LEVEL_AMOUNT; i++) {
+            final Level level = handler.getLevel(i);
             Table levelButtonTable = new Table();
             TextButton button = new TextButton(i+ "", skin, "level_text_button");
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
-                        try {
-                            observer.changeScreen(InfinityRun.ScreenID.GAME);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        observer.playLevel(level);
                     }
                 });
             levelButtonTable.add(button);
