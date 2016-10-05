@@ -1,7 +1,11 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -19,9 +23,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
+import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.models.words.WordLoader;
+import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Henrik on 2016-10-03.
@@ -30,25 +39,27 @@ public class DictionaryScreen extends AbstractScreen {
 
     private Stage stage;
     private IScreenObserver observer;
-    private ScrollPane wordList;
     private Skin skin;
     private Texture bg;
     private ImageButton imageButton;
 
-    public DictionaryScreen(SpriteBatch spriteBatch, IScreenObserver observer) {
+    public DictionaryScreen(final SpriteBatch spriteBatch, IScreenObserver observer) {
         super(spriteBatch);
         this.observer = observer;
         stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
-    }
 
-    @Override
-    public void buildStage() {
         bg = new Texture(PathConstants.BACKGROUND_PATH);
 
         skin = new Skin();
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
         skin.load(Gdx.files.internal("skin/uiskin.json"));
 
+        createBackButton();
+        createGridTable();
+
+    }
+
+    private void createBackButton() {
         imageButton = new ImageButton(skin, "back_button");
         imageButton.addListener(new ChangeListener() {
             @Override
@@ -60,41 +71,37 @@ public class DictionaryScreen extends AbstractScreen {
                 }
             }
         });
+    }
 
-        ArrayList<Emoji> emojis = new ArrayList<Emoji>();
-        for(int i = 0; i < 40; i++) {
-            emojis.add(new Emoji("Äpple", "audio/apple.wav", "1f3d7"));
-            emojis.add(new Emoji("xd", "audio/apple.wav", "1f4bb"));
-            emojis.add(new Emoji("Clownfisk", "audio/apple.wav", "1f34e"));
-        }
+    private void createGridTable() {
+        WordLoader wordLoader = new WordLoader();
+        PlayerData playerData = new PlayerData();
 
         Table grid = new Table();
 
-        //TODO get all unlocked from json file and get all locked from json file
-        for(int i = 0; i < emojis.size(); i++) {
+
+        /*for(int i = 0; i < emojis.size(); i++) {
             grid.add(createGridItem(emojis.get(i)));
-            if ((i+1) % 5 == 0) {
+            if ((i+1) % 4 == 0) {
                 grid.row();
             }
-        }
+        }*/
 
         ScrollPane scroller = new ScrollPane(grid, skin);
         scroller.setForceScroll(false, true);
         Table rootTable = new Table();
         rootTable.setFillParent(true);
-        rootTable.add(scroller).fill().expand().pad(20f);
-        rootTable.row();
-        rootTable.add(imageButton).left().padLeft(20f).padBottom(20f);
-
+        rootTable.add(imageButton).left().top();
+        rootTable.add(scroller).fill().expand().pad(5f);
         stage.addActor(rootTable);
-        Gdx.input.setInputProcessor(stage);
     }
 
-    private Table createGridItem(Emoji emoji) {
+    private Table createGridItem(Word word) {
         Table gridItem = new Table();
-        gridItem.add(new Image(emoji.getTexture()));
+        System.out.println(word.getIconUrl());
+        gridItem.add(new Image(new Texture(word.getIconUrl())));
         gridItem.row();
-        gridItem.add(new Label(emoji.getName(), skin));
+        gridItem.add(new Label(word.getText(), skin));
         gridItem.setTouchable(Touchable.enabled);
         gridItem.addListener(new ClickListener() {
             @Override
@@ -103,6 +110,11 @@ public class DictionaryScreen extends AbstractScreen {
             }
         });
         return gridItem;
+    }
+
+    @Override
+    public void buildStage() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
