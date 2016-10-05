@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="46">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="48">
  <tileset firstgid="1" name="tileset32" tilewidth="32" tileheight="32" tilecount="1080" columns="36">
   <image source="tileset32.png" width="1152" height="960"/>
  </tileset>
@@ -37,9 +37,6 @@
   <object id="22" x="2496" y="320" width="64" height="96"/>
   <object id="24" x="2560" y="352" width="64" height="64"/>
   <object id="25" x="2624" y="384" width="64" height="32"/>
-  <object id="27" x="3431" y="238" width="108" height="72">
-   <ellipse/>
-  </object>
   <object id="29" x="0" y="416" width="3104" height="64"/>
   <object id="30" x="3232" y="416" width="3968" height="64"/>
   <object id="35" x="3200" y="384" width="32" height="96"/>
@@ -49,6 +46,8 @@
   <object id="41" x="448" y="256" width="32" height="32"/>
   <object id="44" x="384" y="256" width="32" height="96"/>
   <object id="45" x="416" y="256" width="32" height="32"/>
+  <object id="46" x="145" y="688" width="149" height="26"/>
+  <object id="47" x="3441" y="246" width="87" height="55"/>
  </objectgroup>
  <objectgroup name="emoji_placeholders">
   <object id="42" x="448" y="288" width="32" height="32"/>
