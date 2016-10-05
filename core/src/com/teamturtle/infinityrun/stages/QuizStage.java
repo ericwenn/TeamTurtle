@@ -34,16 +34,13 @@ public class QuizStage extends Stage {
     private IQuizStageListener handler;
     private Label quizLabel;
     private Emoji emoji;
-    private Word guess1, guess2, guess3;
-    private List<Word> collectedWords;
-    private Word chosenWord;
     private int wordCategory;
+    private List<Word> guesses;
+    private List<TextButton> guessButtons;
+    private WordLoader wordLoader;
 
     //    Components
-    private TextButton guess1Button, guess2Button, guess3Button;
     private Table parentTable, buttonTable;
-    private List<Word> guesses;
-    private WordLoader wordLoader;
 
     private static final float TEXT_BUTTON_PADDING = 5.0f;
     private static final float PARENT_TABLE_WIDTH = 600.0f, PARENT_TABLE_HEIGHT = 370.0f;
@@ -53,7 +50,6 @@ public class QuizStage extends Stage {
     public QuizStage(IQuizStageListener handler, List<Word> collectedWords) {
         super(new FitViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         this.handler = handler;
-        this.collectedWords = collectedWords;
 
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         quizLabel = new Label("Quiz-dags!", skin);
@@ -90,47 +86,24 @@ public class QuizStage extends Stage {
         return returnList;
     }
 
-    private void createButtons(List<Word> guesses) {
+    private void createButtons(final List<Word> guesses) {
+        guessButtons = new ArrayList<TextButton>();
         while (guesses.size() > 0) {
             int index = random.nextInt((guesses.size() - 1) + 1);
-            if (guess1Button == null) {
-                guess1Button = new TextButton(guesses.get(index).getText() + "?", skin);
-                guess1 = guesses.get(index);
-            }
-            else if (guess2Button == null) {
-                guess2Button = new TextButton(guesses.get(index).getText() + "?", skin);
-                guess2 = guesses.get(index);
-            }
-            else if (guess3Button == null) {
-                guess3Button = new TextButton(guesses.get(index).getText() + "?", skin);
-                guess3 = guesses.get(index);
-            }
+
+            TextButton button = new TextButton(guesses.get(index).getText() + "?", skin);
+            final Word word = guesses.get(index);
+            button.pad(TEXT_BUTTON_PADDING);
+            button.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    handler.onGuessClick(word.equals(emoji.getWordModel()));
+                }
+            });
+            guessButtons.add(button);
+
             guesses.remove(index);
         }
-        guess1Button.pad(TEXT_BUTTON_PADDING);
-        guess1Button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                handler.onGuessClick(guess1.equals(emoji.getWordModel()));
-            }
-        });
-
-        guess2Button.pad(TEXT_BUTTON_PADDING);
-        guess2Button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                handler.onGuessClick(guess2.equals(emoji.getWordModel()));
-            }
-        });
-
-        guess3Button.pad(TEXT_BUTTON_PADDING);
-        guess3Button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                handler.onGuessClick(guess3.equals(emoji.getWordModel()));
-            }
-        });
-
     }
 
     private void createTableUi() {
@@ -154,9 +127,9 @@ public class QuizStage extends Stage {
 
     private void addButtonsToTable() {
         buttonTable = new Table();
-        buttonTable.add(guess1Button);
-        buttonTable.add(guess2Button).padLeft(ROW_PADDING).padRight(ROW_PADDING);
-        buttonTable.add(guess3Button);
+        for (TextButton button : guessButtons) {
+            buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
+        }
         buttonTable.padTop(ROW_PADDING);
         parentTable.add(buttonTable).bottom();
     }

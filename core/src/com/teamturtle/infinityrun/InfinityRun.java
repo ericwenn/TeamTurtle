@@ -68,8 +68,10 @@ public class InfinityRun extends Game implements IScreenObserver {
     @Override
     public void levelCompleted(Level level, List<Word> collectedWords, int score) {
         if (score > 0) {
-            changeScreen(new QuizScreen(getSpriteBatch(), this, level, collectedWords, score));
-        }else{
+            if (collectedWords.size() > 0) {
+                changeScreen(new QuizScreen(getSpriteBatch(), this, level, collectedWords, score));
+            } else levelWon(level, score);
+        } else {
             levelFailed(level);
         }
     }
@@ -111,10 +113,10 @@ public class InfinityRun extends Game implements IScreenObserver {
                 newScreen = new DictionaryScreen(getSpriteBatch(), this);
                 break;
 
-			case WORD:
-				Emoji apple = new Emoji("Äpple","audio/apple.wav", "emoji/00a9.png");
-				newScreen = new WordScreen(getSpriteBatch(), this, apple);
-				break;
+            case WORD:
+                Emoji apple = new Emoji("Äpple", "audio/apple.wav", "emoji/00a9.png");
+                newScreen = new WordScreen(getSpriteBatch(), this, apple);
+                break;
 
             default:
                 throw new Exception("Unknown screen enum");
