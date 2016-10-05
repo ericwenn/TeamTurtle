@@ -140,7 +140,6 @@ public class Emoji extends AbstractEntity {
         return texture;
     }
 
-
     public Word getWordModel() {
         return wordModel;
     }
