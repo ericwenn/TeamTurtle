@@ -15,7 +15,7 @@ public interface IScreenObserver {
 
     void playLevel(Level level);
 
-    void levelCompleted(Level level, List<Word> missionWords, int score);
+    void levelCompleted(Level level, List<Word> collectedWords, int score);
 
     void levelWon(Level level, int score);
 

@@ -29,10 +29,10 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     private int score;
 
     public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level
-            , List<Word> possibleWords, int score) {
+            , List<Word> collectedWords, int score) {
         super(spriteBatch);
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
-        this.stage = new QuizStage(this, possibleWords);
+        this.stage = new QuizStage(this, collectedWords);
         this.observer = observer;
         this.level = level;
         this.score = score;
