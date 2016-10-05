@@ -54,39 +54,6 @@ public class SensorParser implements MapParser {
         FixtureDef fdef = new FixtureDef();
 
 
-        // Rectangular objects
-        /*for (MapObject object : tiledMap.getLayers().get(layerName).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(((rect.getX() + rect.getWidth() / 2) / InfinityRun.PPM)
-                    , ((rect.getY() + rect.getHeight() / 2) / InfinityRun.PPM));
-            Body body = world.createBody(bdef);
-
-            shape.setAsBox((rect.getWidth() / 2) / InfinityRun.PPM
-                    , (rect.getHeight() / 2) / InfinityRun.PPM);
-            fdef.shape = shape;
-            fdef.isSensor = true;
-            body.createFixture(fdef).setUserData(layerName);
-        }
-
-        // Polygon shapes
-        for (MapObject object : tiledMap.getLayers().get(layerName).getObjects().getByType(PolygonMapObject.class)) {
-            Polygon pol = ((PolygonMapObject) object).getPolygon();
-
-            bdef.type = BodyDef.BodyType.StaticBody;
-
-            bdef.position.set(((pol.getX() + pol.getBoundingRectangle().getWidth() / 2) / InfinityRun.PPM)
-                    , ((pol.getY() + pol.getBoundingRectangle().getHeight() / 2) / InfinityRun.PPM));
-
-            Body body = world.createBody(bdef);
-
-            shape.set(pol.getVertices());
-
-            fdef.shape = shape;
-            fdef.isSensor = true;
-            body.createFixture(fdef).setUserData(layerName);
-        }*/
-
         for (MapObject object : tiledMap.getLayers().get(layerName).getObjects()) {
             if (object instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -123,6 +90,7 @@ public class SensorParser implements MapParser {
                 body.createFixture(fdef).setUserData(layerName);
             }
 
+            // Copy pasted code that could be used for polyline objects
             /*if (object instanceof PolylineMapObject) {
                 float vertices[] = ((PolylineMapObject) object).getPolyline()
                         .getTransformedVertices();
