@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -66,7 +64,7 @@ public class DictionaryScreen extends AbstractScreen {
 
         ArrayList<Emoji> emojis = new ArrayList<Emoji>();
         for(int i = 0; i < 30; i++) {
-            emojis.add(new Emoji("Äpple" + i*999, "audio/apple.wav", new Texture("emoji/1f34e.png")));
+            emojis.add(new Emoji("Äpple" + i*999, "audio/apple.wav", "1f34e"));
         }
 
         //TODO get all unlocked from json file and get all locked from json file

@@ -80,6 +80,8 @@ public class GameScreen extends AbstractScreen {
     private WordLoader wordLoader;
 
     private Level level;
+    private Mission activeMission;
+    private boolean hasSuccededInAllMissions = true;
 
     public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
         super(mSpriteBatch);
@@ -144,8 +146,8 @@ public class GameScreen extends AbstractScreen {
 
         world.setContactListener(mEventHandler);
 
-        Mission nextMission = mMissionHandler.getNextMission();
-        mMissionStage.setMission( nextMission );
+        activeMission = mMissionHandler.getNextMission();
+        mMissionStage.setMission( activeMission );
     }
 
     private void gameUpdate(float delta) {
@@ -167,7 +169,7 @@ public class GameScreen extends AbstractScreen {
                 break;
             case WON_GAME:
                 //TODO should read some player model
-                    screenObserver.levelCompleted(level, possibleWords, 2);
+                    screenObserver.levelCompleted(level, possibleWords, hasSuccededInAllMissions ? 2 : 1);
             case PAUSE:
                 break;
         }
@@ -316,6 +318,9 @@ public class GameScreen extends AbstractScreen {
             public void onCollision(Player p, Emoji e) {
                 Gdx.app.log("Collision", "Emoji collision");
                 e.triggerExplode();
+                if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
+                    hasSuccededInAllMissions = false;
+                }
             }
 
         });
@@ -341,8 +346,8 @@ public class GameScreen extends AbstractScreen {
             @Override
             public void onQuestChanged() {
                 try {
-                    Mission nextMission = mMissionHandler.getNextMission();
-                    mMissionStage.setMission(nextMission);
+                    activeMission = mMissionHandler.getNextMission();
+                    mMissionStage.setMission(activeMission);
                 } catch( IndexOutOfBoundsException e) {
 
                 }
