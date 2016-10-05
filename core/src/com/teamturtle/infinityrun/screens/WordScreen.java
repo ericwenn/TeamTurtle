@@ -31,6 +31,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonWriter;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
@@ -74,7 +75,7 @@ public class WordScreen extends AbstractScreen {
 
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
         this.emoji = emoji;
-        this.stage = new Stage();
+        this.stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_URL));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter
