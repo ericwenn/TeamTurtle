@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.badlogic.gdx.math.MathUtils.random;
+
 /**
  * Text om klassen
  *
@@ -32,7 +34,7 @@ public class QuizStage extends Stage {
     private IQuizStageListener handler;
     private Label quizLabel;
     private Emoji emoji;
-    private String rightGuess, guess2, guess3;
+    private Word guess1, guess2, guess3;
     private List<Word> collectedWords;
     private Word chosenWord;
     private int wordCategory;
@@ -60,10 +62,7 @@ public class QuizStage extends Stage {
 
         guesses = getRandomGuesses(collectedWords);
         emoji = new Emoji(guesses.get(0));
-        rightGuess = guesses.get(0).getText();
-        guess2 = guesses.get(1).getText();
-        guess3 = guesses.get(2).getText();
-        createButtons();
+        createButtons(guesses);
         createTableUi();
         addActor(parentTable);
         Gdx.input.setInputProcessor(this);
@@ -74,7 +73,6 @@ public class QuizStage extends Stage {
         List<Word> returnList = new ArrayList<Word>();
         while (returnList.size() < 3) {
             if (collectedWords.size() > 0) {
-                System.out.println("Adding a word from collectedWords");
                 int index = random.nextInt((collectedWords.size() - 1) + 1);
                 if (!returnList.contains(collectedWords.get(index))) {
                     returnList.add(collectedWords.get(index));
@@ -82,7 +80,6 @@ public class QuizStage extends Stage {
                 collectedWords.remove(index);
             }
             else {
-                System.out.println("Adding a word from wordLoader");
                 List<Word> wordsFromCategory = wordLoader.getWordsFromCategory(wordCategory);
                 int index = random.nextInt((wordsFromCategory.size() - 1) + 1);
                 if (!returnList.contains(wordsFromCategory.get(index))) {
@@ -93,31 +90,44 @@ public class QuizStage extends Stage {
         return returnList;
     }
 
-    private void createButtons() {
-        guess1Button = new TextButton(rightGuess + "?", skin);
+    private void createButtons(List<Word> guesses) {
+        while (guesses.size() > 0) {
+            int index = random.nextInt((guesses.size() - 1) + 1);
+            if (guess1Button == null) {
+                guess1Button = new TextButton(guesses.get(index).getText() + "?", skin);
+                guess1 = guesses.get(index);
+            }
+            else if (guess2Button == null) {
+                guess2Button = new TextButton(guesses.get(index).getText() + "?", skin);
+                guess2 = guesses.get(index);
+            }
+            else if (guess3Button == null) {
+                guess3Button = new TextButton(guesses.get(index).getText() + "?", skin);
+                guess3 = guesses.get(index);
+            }
+            guesses.remove(index);
+        }
         guess1Button.pad(TEXT_BUTTON_PADDING);
         guess1Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                handler.onGuessClick(rightGuess.equals(emoji.getName()));
+                handler.onGuessClick(guess1.equals(emoji.getWordModel()));
             }
         });
 
-        guess2Button = new TextButton(guess2 + "?", skin);
         guess2Button.pad(TEXT_BUTTON_PADDING);
         guess2Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                handler.onGuessClick(guess2.equals(emoji.getName()));
+                handler.onGuessClick(guess2.equals(emoji.getWordModel()));
             }
         });
 
-        guess3Button = new TextButton(guess3 + "?", skin);
         guess3Button.pad(TEXT_BUTTON_PADDING);
         guess3Button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                handler.onGuessClick(guess3.equals(emoji.getName()));
+                handler.onGuessClick(guess3.equals(emoji.getWordModel()));
             }
         });
 
