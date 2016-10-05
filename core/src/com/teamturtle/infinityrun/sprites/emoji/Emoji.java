@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.models.words.WordImpl;
 import com.teamturtle.infinityrun.sprites.AbstractEntity;
 
 /**
@@ -23,10 +24,10 @@ public class Emoji extends AbstractEntity {
     private  static final int FONT_SIZE = 25;
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf";
 
-    private String emojiName;
-    private Sound emojiSound;
 
+    private Word wordModel;
     private Texture texture;
+    private Sound emojiSound;
 
     private boolean isExploded = false;
     private Body mBody;
@@ -34,10 +35,32 @@ public class Emoji extends AbstractEntity {
     private BitmapFont font;
     private float textLength;
 
+    @Deprecated
     public Emoji(String emojiName, String soundURL, Texture texture){
-        this.emojiName = emojiName;
         this.texture = texture;
+        setup();
+    }
 
+    public Emoji(String emojiName, String soundUrl, String iconUrl) {
+        WordImpl w = new WordImpl();
+        w.word = emojiName;
+        w.filename = iconUrl;
+        w.soundUrl = soundUrl;
+
+        wordModel = w;
+
+        setup();
+
+    }
+
+    public Emoji(Word word) {
+        wordModel = word;
+        setup();
+    }
+
+
+    private void setup() {
+        texture = new Texture(wordModel.getIconUrl());
         //Create font
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_URL));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter
@@ -46,14 +69,10 @@ public class Emoji extends AbstractEntity {
         font = generator.generateFont(parameter);
         generator.dispose();
 
-        GlyphLayout layout = new GlyphLayout(font, emojiName);
+        GlyphLayout layout = new GlyphLayout(font, wordModel.getText());
         textLength = layout.width;
 
-        emojiSound = Gdx.audio.newSound(Gdx.files.internal(soundURL));
-    }
-
-    public Emoji(Word word) {
-        this(word.getText(), word.getSoundUrl(), new Texture(word.getIconUrl()));
+        emojiSound = Gdx.audio.newSound(Gdx.files.internal(wordModel.getSoundUrl()));
     }
 
     public void setBody(Body body) {
@@ -88,7 +107,7 @@ public class Emoji extends AbstractEntity {
             //Draws font above emoji
             float y = (getY() * InfinityRun.PPM) + EMOJI_SIZE * 2;
             float x = (getX() * InfinityRun.PPM) + (EMOJI_SIZE / 2) - textLength / 2;
-            font.draw(sb, emojiName, x, y);
+            font.draw(sb, wordModel.getText(), x, y);
 
             //Reset the projection
             Matrix4 normalProjection = sb.getProjectionMatrix()
@@ -114,10 +133,14 @@ public class Emoji extends AbstractEntity {
     }
 
     public String getName() {
-        return emojiName;
+        return wordModel.getText();
     }
 
     public Texture getTexture() {
         return texture;
+    }
+
+    public Word getWordModel() {
+        return wordModel;
     }
 }

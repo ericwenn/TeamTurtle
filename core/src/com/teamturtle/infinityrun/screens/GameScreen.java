@@ -33,6 +33,7 @@ import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
 import com.teamturtle.infinityrun.stages.QuizStage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,10 +77,12 @@ public class GameScreen extends AbstractScreen {
     private State state;
 
     private OrthographicCamera mFixedCamera;
-    private List<Word> possibleWords;
+    private List<Word> possibleWords, collectedWords;
     private WordLoader wordLoader;
 
     private Level level;
+    private Mission activeMission;
+    private boolean hasSuccededInAllMissions = true;
 
     public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
         super(mSpriteBatch);
@@ -97,6 +100,7 @@ public class GameScreen extends AbstractScreen {
         //TODO: Move WordLoader to Level
         wordLoader = new WordLoader();
         possibleWords = wordLoader.getWordsFromCategory(1);
+        collectedWords = new ArrayList<Word>();
     }
 
 
@@ -144,8 +148,8 @@ public class GameScreen extends AbstractScreen {
 
         world.setContactListener(mEventHandler);
 
-        Mission nextMission = mMissionHandler.getNextMission();
-        mMissionStage.setMission( nextMission );
+        activeMission = mMissionHandler.getNextMission();
+        mMissionStage.setMission( activeMission );
     }
 
     private void gameUpdate(float delta) {
@@ -167,7 +171,7 @@ public class GameScreen extends AbstractScreen {
                 break;
             case WON_GAME:
                 //TODO should read some player model
-                    screenObserver.levelCompleted(level, possibleWords, 2);
+                    screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
             case PAUSE:
                 break;
         }
@@ -316,6 +320,10 @@ public class GameScreen extends AbstractScreen {
             public void onCollision(Player p, Emoji e) {
                 Gdx.app.log("Collision", "Emoji collision");
                 e.triggerExplode();
+                if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
+                    hasSuccededInAllMissions = false;
+                }
+                collectedWords.add(e.getWordModel());
             }
 
         });
@@ -341,8 +349,8 @@ public class GameScreen extends AbstractScreen {
             @Override
             public void onQuestChanged() {
                 try {
-                    Mission nextMission = mMissionHandler.getNextMission();
-                    mMissionStage.setMission(nextMission);
+                    activeMission = mMissionHandler.getNextMission();
+                    mMissionStage.setMission(activeMission);
                 } catch( IndexOutOfBoundsException e) {
 
                 }

@@ -17,15 +17,16 @@ import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
+import com.teamturtle.infinityrun.storage.PlayerData;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Henrik on 2016-10-03.
  */
 public class LevelSelectScreen extends AbstractScreen{
 
-    private static final int LEVEL_AMOUNT = 15, STAR_AMOUNT = 3;
+    private static final int STAR_AMOUNT = 3;
     private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 370.0f;
     private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 50.0f;
     private static final float STAR_PAD = -20f, RETURN_BUTTON_PAD = 10f;
@@ -39,10 +40,14 @@ public class LevelSelectScreen extends AbstractScreen{
     LevelDataHandler handler;
 
     private IScreenObserver observer;
+    private final List<Level> levels;
+    private PlayerData mPlayerData;
 
-    public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer) {
+    public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer, List<Level> levels, PlayerData playerData) {
         super(spriteBatch);
         this.observer = observer;
+        this.levels = levels;
+        this.mPlayerData = playerData;
         handler = new LevelDataHandler();
     }
 
@@ -60,22 +65,32 @@ public class LevelSelectScreen extends AbstractScreen{
         rootTable.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
         rootTable.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
 
+        int i = 1;
+        // If the user has gotten atleast 2 starts on the previous level, they can play this one.
+        boolean progressedThisFar = true;
+        for(final Level level: levels) {
+            int playerScoreOnLevel = mPlayerData.getPlayerProgressOnLevel(level);
 
-        for(int i = 1; i <= LEVEL_AMOUNT; i++) {
-            final Level level = handler.getLevel(i);
+
+
             Table levelButtonTable = new Table();
             TextButton button = new TextButton(i+ "", skin, "level_text_button");
+            // TODO Change button style if the level is unplayable
+            if( progressedThisFar ) {
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         observer.playLevel(level);
                     }
                 });
+            }
             levelButtonTable.add(button);
             levelButtonTable.row();
+
+
             Table starTabel = new Table();
             for(int j = 0; j < STAR_AMOUNT; j++) {
-                if (Math.random() < 0.5) {
+                if(j < playerScoreOnLevel) {
                     starTabel.add(new Image(new Texture("ui/small_star.png")));
                 }else{
                     starTabel.add(new Image(new Texture("ui/small_no_star.png")));
@@ -87,6 +102,8 @@ public class LevelSelectScreen extends AbstractScreen{
             if (i % 5 == 0){
                 rootTable.row();
             }
+            progressedThisFar = progressedThisFar && playerScoreOnLevel > 1;
+            i++;
         }
         backButton = new ImageButton(skin, "back_button");
         backButton.addListener(new ChangeListener() {

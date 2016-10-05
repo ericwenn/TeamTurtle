@@ -2,11 +2,10 @@ package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.DictionaryScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
@@ -18,19 +17,25 @@ import com.teamturtle.infinityrun.screens.WordScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.storage.PlayerData;
+
 import java.util.List;
 
 public class InfinityRun extends Game implements IScreenObserver {
+
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 480;
     public static final float PPM = 75;
 
     private SpriteBatch mSpriteBatch;
+    private PlayerData mPlayerData;
     private LevelDataHandler levelHandler;
 
     @Override
     public void create() {
+
+        mPlayerData = new PlayerData();
 
         setSpriteBatch(new SpriteBatch());
         levelHandler = new LevelDataHandler();
@@ -76,9 +81,9 @@ public class InfinityRun extends Game implements IScreenObserver {
     }
 
     @Override
-    public void levelCompleted(Level level, List<Word> missionWords, int score) {
+    public void levelCompleted(Level level, List<Word> collectedWords, int score) {
         if (score > 0) {
-            changeScreen(new QuizScreen(getSpriteBatch(), this, level, missionWords, score));
+            changeScreen(new QuizScreen(getSpriteBatch(), this, level, collectedWords, score));
         }else{
             levelFailed(level);
         }
@@ -86,6 +91,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 
     @Override
     public void levelWon(Level level, int score) {
+        mPlayerData.setPlayerProgressOnLevel(level, score);
         changeScreen(new WonLevelScreen(getSpriteBatch(), this, level, score));
     }
 
@@ -112,7 +118,8 @@ public class InfinityRun extends Game implements IScreenObserver {
                 break;
 
             case LEVELS_MENU:
-                newScreen = new LevelSelectScreen(getSpriteBatch(), this);
+                List<Level> levels = levelHandler.getLevels();
+                newScreen = new LevelSelectScreen(getSpriteBatch(), this, levels, mPlayerData);
                 break;
 
             case DICTIONARY:
@@ -120,7 +127,7 @@ public class InfinityRun extends Game implements IScreenObserver {
                 break;
 
 			case WORD:
-				Emoji apple = new Emoji("Äpple","audio/apple.wav", new Texture("emoji/00a9.png"));
+				Emoji apple = new Emoji("Äpple","audio/apple.wav", "emoji/00a9.png");
 				newScreen = new WordScreen(getSpriteBatch(), this, apple);
 				break;
 
