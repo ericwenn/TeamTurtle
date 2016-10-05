@@ -47,7 +47,6 @@ public class EventHandler implements IEventHandler, ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        System.out.println("Begin contact");
         Object obj1 = contact.getFixtureA().getUserData();
         Object obj2 = contact.getFixtureB().getUserData();
 
@@ -69,8 +68,6 @@ public class EventHandler implements IEventHandler, ContactListener {
 
 
         // Check obstacle
-        Gdx.app.log("EventHandler1", obj1.toString());
-        Gdx.app.log("EventHandler2", obj2.toString());
         if (obj1 == SensorParser.Type.OBSTACLE.getName() && obj2 instanceof Player) {
             mObstacleCollisionHandler.onCollision((Player) obj2);
             return;
@@ -83,20 +80,18 @@ public class EventHandler implements IEventHandler, ContactListener {
 
 
 
+        if (mQuestChangedListener != null) {
+            // Check quest
+            if (obj1 == SensorParser.Type.QUEST.getName() && obj2 instanceof Player) {
+                mQuestChangedListener.onQuestChanged();
+                return;
+            }
+            if (obj2 == SensorParser.Type.QUEST.getName() && obj1 instanceof Player) {
+                mQuestChangedListener.onQuestChanged();
+                return;
+            }
 
-        // Check quest
-        if (obj1 == SensorParser.Type.QUEST.getName() && obj2 instanceof Player) {
-            mQuestChangedListener.onQuestChanged();
-            return;
         }
-        if (obj2 == SensorParser.Type.QUEST.getName() && obj1 instanceof Player) {
-            mQuestChangedListener.onQuestChanged();
-            return;
-        }
-
-
-
-
 
 
 

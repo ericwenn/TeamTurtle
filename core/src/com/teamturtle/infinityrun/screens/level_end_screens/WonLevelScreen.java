@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
 
 /**
@@ -18,18 +19,14 @@ public class WonLevelScreen extends EndLevelScreen{
 
     private ImageButton nextButton;
 
-    public WonLevelScreen(SpriteBatch sb, final IScreenObserver observer, Rating rating) {
-        super(sb, observer, new Texture("ui/ui_bg_big.png"), LB_LEVEL_LOST, rating);
+    public WonLevelScreen(SpriteBatch sb, final IScreenObserver observer, final Level level, int score) {
+        super(sb, observer, new Texture("ui/ui_bg_big.png"), LB_LEVEL_LOST, level, score);
         Skin skin = super.getSkin();
         nextButton = new ImageButton(skin, "next_button");
         nextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                try {
-                    observer.changeScreen(InfinityRun.ScreenID.GAME);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                observer.playLevelAfterThis(level);
             }
         });
         super.getButtonTable().add(nextButton).pad(BUTTON_PADDING);

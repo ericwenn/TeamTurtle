@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.PathConstants;
+import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
 
@@ -21,16 +23,6 @@ import com.teamturtle.infinityrun.screens.IScreenObserver;
  * Created by Henrik on 2016-10-02.
  */
 public abstract class EndLevelScreen extends AbstractScreen {
-
-    public enum Rating {
-        ZERO(0), ONE(1), TWO(2), THREE(3);
-
-        int stars;
-
-        Rating(int stars) {
-            this.stars = stars;
-        }
-    }
 
     private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 370.0f;
     private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 50.0f;
@@ -52,15 +44,17 @@ public abstract class EndLevelScreen extends AbstractScreen {
 
     private IScreenObserver observer;
 
-    private Rating rating;
+    private Level level;
+    private int score;
 
     public EndLevelScreen(SpriteBatch sb, IScreenObserver observer, Texture uiBg
-            , String topLabelStr, Rating rating) {
+            , String topLabelStr, Level level, int score) {
         super(sb);
         this.observer = observer;
         this.uiBg = uiBg;
         this.topLabelStr = topLabelStr;
-        this.rating = rating;
+        this.level = level;
+        this.score = score;
 
         skin = new Skin();
 
@@ -79,7 +73,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
     @Override
     public void buildStage() {
         Gdx.input.setInputProcessor(stage);
-        bg = new Texture("bg2.png");
+        bg = new Texture(PathConstants.BACKGROUND_PATH);
     }
 
     private void initButtons() {
@@ -98,11 +92,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
         retryButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                try {
-                    observer.changeScreen(InfinityRun.ScreenID.GAME);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                observer.playLevel(level);
             }
         });
     }
@@ -117,10 +107,10 @@ public abstract class EndLevelScreen extends AbstractScreen {
         rootTable.row();
 
         Table starTabel = new Table();
-        for(int i = 0; i < rating.stars; i++) {
+        for(int i = 0; i < score; i++) {
             starTabel.add(new Image(star));
         }
-        for(int i = 0; i < MAX_STARS - rating.stars; i++) {
+        for(int i = 0; i < MAX_STARS - score; i++) {
             starTabel.add(new Image(no_star));
         }
         rootTable.add(starTabel).padTop(TABLE_PADDING);
