@@ -80,8 +80,8 @@ public class SensorParser implements MapParser {
                 }
 
                 bdef.type = BodyDef.BodyType.StaticBody;
-                bdef.position.set(((pol.getBoundingRectangle().getX() + pol.getBoundingRectangle().getWidth() / 2) / InfinityRun.PPM)
-                        , ((pol.getBoundingRectangle().getY() + pol.getBoundingRectangle().getHeight() / 2) / InfinityRun.PPM));
+                bdef.position.set(((pol.getOriginX()) / InfinityRun.PPM)
+                        , ((pol.getOriginY()) / InfinityRun.PPM));
                 Body body = world.createBody(bdef);
 
                 shape.set(vertices);
