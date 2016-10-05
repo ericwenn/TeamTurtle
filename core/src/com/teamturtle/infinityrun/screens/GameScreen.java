@@ -33,6 +33,7 @@ import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
 import com.teamturtle.infinityrun.stages.QuizStage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,7 +77,7 @@ public class GameScreen extends AbstractScreen {
     private State state;
 
     private OrthographicCamera mFixedCamera;
-    private List<Word> possibleWords;
+    private List<Word> possibleWords, collectedWords;
     private WordLoader wordLoader;
 
     private Level level;
@@ -99,6 +100,7 @@ public class GameScreen extends AbstractScreen {
         //TODO: Move WordLoader to Level
         wordLoader = new WordLoader();
         possibleWords = wordLoader.getWordsFromCategory(1);
+        collectedWords = new ArrayList<Word>();
     }
 
 
@@ -169,7 +171,7 @@ public class GameScreen extends AbstractScreen {
                 break;
             case WON_GAME:
                 //TODO should read some player model
-                    screenObserver.levelCompleted(level, possibleWords, hasSuccededInAllMissions ? 2 : 1);
+                    screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
             case PAUSE:
                 break;
         }
@@ -321,6 +323,7 @@ public class GameScreen extends AbstractScreen {
                 if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
                     hasSuccededInAllMissions = false;
                 }
+                collectedWords.add(e.getWordModel());
             }
 
         });

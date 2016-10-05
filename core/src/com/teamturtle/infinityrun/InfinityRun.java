@@ -66,9 +66,9 @@ public class InfinityRun extends Game implements IScreenObserver {
     }
 
     @Override
-    public void levelCompleted(Level level, List<Word> missionWords, int score) {
+    public void levelCompleted(Level level, List<Word> collectedWords, int score) {
         if (score > 0) {
-            changeScreen(new QuizScreen(getSpriteBatch(), this, level, missionWords, score));
+            changeScreen(new QuizScreen(getSpriteBatch(), this, level, collectedWords, score));
         }else{
             levelFailed(level);
         }
