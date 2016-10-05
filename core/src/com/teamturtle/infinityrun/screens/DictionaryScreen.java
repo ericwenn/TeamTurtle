@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class DictionaryScreen extends AbstractScreen {
 
     @Override
     public void buildStage() {
-        bg = new Texture("bg2.png");
+        bg = new Texture(PathConstants.BACKGROUND_PATH);
 
         skin = new Skin();
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
@@ -60,31 +61,25 @@ public class DictionaryScreen extends AbstractScreen {
             }
         });
 
-        Table listItems = new Table();
-
         ArrayList<Emoji> emojis = new ArrayList<Emoji>();
-        for(int i = 0; i < 30; i++) {
-            emojis.add(new Emoji("Äpple" + i*999, "audio/apple.wav", "1f34e"));
+        for(int i = 0; i < 40; i++) {
+            emojis.add(new Emoji("Äpple", "audio/apple.wav", "1f3d7"));
+            emojis.add(new Emoji("xd", "audio/apple.wav", "1f4bb"));
+            emojis.add(new Emoji("Clownfisk", "audio/apple.wav", "1f34e"));
         }
+
+        Table grid = new Table();
 
         //TODO get all unlocked from json file and get all locked from json file
-        for (Emoji emoji : emojis) {
-            Table listItem = new Table();
-            listItem.setTouchable(Touchable.enabled);
-            Image image = new Image(emoji.getTexture());
-            listItem.add(image).left().padLeft(50f);
-            listItem.add(new Label(emoji.getName(), skin)).center().expandX();
-            listItem.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    //TODO changeScreen(id, emoji)
-                }
-            });
-            listItems.add(listItem).expandX().fill();
-            listItems.row();
+        for(int i = 0; i < emojis.size(); i++) {
+            grid.add(createGridItem(emojis.get(i)));
+            if ((i+1) % 5 == 0) {
+                grid.row();
+            }
         }
 
-        ScrollPane scroller = new ScrollPane(listItems, skin);
+        ScrollPane scroller = new ScrollPane(grid, skin);
+        scroller.setForceScroll(false, true);
         Table rootTable = new Table();
         rootTable.setFillParent(true);
         rootTable.add(scroller).fill().expand().pad(20f);
@@ -93,6 +88,21 @@ public class DictionaryScreen extends AbstractScreen {
 
         stage.addActor(rootTable);
         Gdx.input.setInputProcessor(stage);
+    }
+
+    private Table createGridItem(Emoji emoji) {
+        Table gridItem = new Table();
+        gridItem.add(new Image(emoji.getTexture()));
+        gridItem.row();
+        gridItem.add(new Label(emoji.getName(), skin));
+        gridItem.setTouchable(Touchable.enabled);
+        gridItem.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //TODO changeScreen(id, emoji)
+            }
+        });
+        return gridItem;
     }
 
     @Override
