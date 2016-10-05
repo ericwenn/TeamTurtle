@@ -26,7 +26,7 @@ public class WordImpl implements Word {
 
     @Override
     public String getIconUrl() {
-        return "emoji/" + filename + ".png";
+        return "emoji/good/" + filename + ".png";
     }
 
     @Override
