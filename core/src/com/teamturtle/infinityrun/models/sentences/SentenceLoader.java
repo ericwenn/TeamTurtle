@@ -13,7 +13,7 @@ import java.util.List;
  * Created by ericwenn on 10/5/16.
  */
 public class SentenceLoader {
-    private HashMap<String, List<Sentence>> sentenceMap;
+    private HashMap<String, SentenceList> sentenceMap;
     private Json mJson;
     private FileHandle mFile;
 
@@ -24,13 +24,13 @@ public class SentenceLoader {
     }
 
     @SuppressWarnings("unchecked")
-    private HashMap<String, List<Sentence>> read() {
-        return mJson.fromJson(HashMap.class, List.class, mFile);
+    private HashMap<String, SentenceList> read() {
+        return mJson.fromJson(HashMap.class, SentenceList.class, mFile);
 
     }
 
 
-    public List<Sentence> getSentences(Word word) {
-        return sentenceMap.get( Integer.toString(word.getId()));
+    public List<? extends Sentence> getSentences(Word word) {
+        return sentenceMap.get( Integer.toString(word.getId())).getSentences();
     }
 }
