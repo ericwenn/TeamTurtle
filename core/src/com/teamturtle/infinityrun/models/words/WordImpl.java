@@ -8,6 +8,7 @@ public class WordImpl implements Word {
     public String word;
     public String category;
     public String filename;
+    public String soundUrl;
 
     public WordImpl() {
     }
@@ -19,7 +20,7 @@ public class WordImpl implements Word {
 
     @Override
     public String getSoundUrl() {
-//        SUPER DUMB
+//        TODO SUPER DUMB
         return "audio/apple.wav";
     }
 
