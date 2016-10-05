@@ -34,7 +34,10 @@ public class Emoji extends AbstractEntity {
     private BitmapFont font;
     private float textLength;
 
+    private Word word;
+
     public Emoji(String emojiName, String soundURL, Texture texture){
+//        TODO: Remove this constructor
         this.emojiName = emojiName;
         this.texture = texture;
 
@@ -54,6 +57,7 @@ public class Emoji extends AbstractEntity {
 
     public Emoji(Word word) {
         this(word.getText(), word.getSoundUrl(), new Texture(word.getIconUrl()));
+        this.word = word;
     }
 
     public void setBody(Body body) {
@@ -119,5 +123,9 @@ public class Emoji extends AbstractEntity {
 
     public Texture getTexture() {
         return texture;
+    }
+
+    public Word getWord() {
+        return word;
     }
 }
