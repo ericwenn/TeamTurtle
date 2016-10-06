@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -49,8 +48,7 @@ public class WordScreen extends AbstractScreen {
     private Table table;
     private Table descriptionTable;
     private Skin skin;
-    private ImageButton returnButton;
-    private TextButton soundButton;
+    private ImageButton returnButton, soundButton;
     private Label titleLabel, descriptionLabel1, descriptionLabel2, descriptionLabel3;
     private Image image;
     private List<String> descriptionList;
@@ -125,7 +123,7 @@ public class WordScreen extends AbstractScreen {
 
         image = new Image(new Texture(word.getIconUrl()));
 
-        soundButton = new TextButton("", skin, "level_text_button");
+        soundButton = new ImageButton(skin, "listen_button");
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
