@@ -1,0 +1,41 @@
+{
+  "1": {
+    "sentences" : [
+      {
+        "text": "Jag äter ett äpple"
+      },
+      {
+        "text": "Jag hatar hajar"
+      },
+      {
+        "text": "Ett äpple om dagen är bra för magen"
+      }
+    ]
+  },
+  "2": {
+    "sentences" : [
+      {
+        "text": "Jag äter ett äpple"
+      },
+      {
+        "text": "Jag hatar hajar"
+      },
+      {
+        "text": "Ett äpple om dagen är bra för magen"
+      }
+    ]
+  },
+  "27": {
+    "sentences" : [
+      {
+        "text": "En banan"
+      },
+      {
+        "text": "Flera bananer"
+      },
+      {
+        "text": "Bananer är gula"
+      }
+    ]
+  }
+}
