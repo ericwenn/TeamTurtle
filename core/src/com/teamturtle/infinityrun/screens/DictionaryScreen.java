@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.models.words.WordImpl;
 import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
@@ -91,7 +92,7 @@ public class DictionaryScreen extends AbstractScreen {
         Table grid = new Table();
 
         int collectedWordsAmount = 0;
-        List<Word> allWords = wordLoader.getAllWords();
+        List<WordImpl> allWords = wordLoader.getAllWords();
         for(int i = 0; i < allWords.size(); i++){
             Word word = allWords.get(i);
             if (playerData.hasPlayerCollectedWord(word)) {
