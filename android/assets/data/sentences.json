@@ -25,16 +25,1064 @@
       }
     ]
   },
-  "27": {
+  "37": {
     "sentences" : [
       {
-        "text": "En banan"
+        "text": "En val"
       },
       {
-        "text": "Flera bananer"
+        "text": "Flera valar"
+      },
+      {
+        "text": "Valar lever i havet"
+      }
+    ]
+  },
+  "38": {
+    "sentences" : [
+      {
+        "text": "En Orm"
+      },
+      {
+        "text": "Flera ormar"
+      },
+      {
+        "text": "Ormar finns i Sverige"
+      }
+    ]
+  },
+  "39": {
+    "sentences" : [
+      {
+        "text": "En häst"
+      },
+      {
+        "text": "Flera hästar"
+      },
+      {
+        "text": "Hästar kan man rida på"
+      }
+    ]
+  },
+  "40": {
+    "sentences" : [
+      {
+        "text": "En myra"
+      },
+      {
+        "text": "Flera myror"
+      },
+      {
+        "text": "Myror bor i en stack"
+      }
+    ]
+  },
+  "41": {
+    "sentences" : [
+      {
+        "text": "Ett bi"
+      },
+      {
+        "text": "Flera bin"
+      },
+      {
+        "text": "Bin gör honung"
+      }
+    ]
+  },
+  "42": {
+    "sentences" : [
+      {
+        "text": "En nyckelpiga"
+      },
+      {
+        "text": "Flera nyckelpigor"
       },
       {
         "text": "Bananer är gula"
+      }
+    ]
+  },
+  "43": {
+    "sentences" : [
+      {
+        "text": "En fisk"
+      },
+      {
+        "text": "Flera fiskar"
+      },
+      {
+        "text": "Fisk gör en smart"
+      }
+    ]
+  },
+  "44": {
+    "sentences" : [
+      {
+        "text": "En kamel"
+      },
+      {
+        "text": "Flera kameler"
+      },
+      {
+        "text": "Kameler bor i öknen"
+      }
+    ]
+  },
+  "45": {
+    "sentences" : [
+      {
+        "text": "En ekorre"
+      },
+      {
+        "text": "Flera ekorrar"
+      },
+      {
+        "text": "Bananer är gula"
+      }
+    ]
+  },
+  "46": {
+    "sentences" : [
+      {
+        "text": "Att vinka"
+      },
+      {
+        "text": "Man kan vinka hejdå"
+      }
+    ]
+  },
+  "47": {
+    "sentences" : [
+      {
+        "text": "En handväska"
+      },
+      {
+        "text": "Flera handväskor"
+      },
+      {
+        "text": "Man kan ha saker i handväskor"
+      }
+    ]
+  },
+  "48": {
+    "sentences" : [
+      {
+        "text": "En sko"
+      },
+      {
+        "text": "Flera skor"
+      },
+      {
+        "text": "Man har skor på fötterna"
+      }
+    ]
+  },
+  "49": {
+    "sentences" : [
+      {
+        "text": "En kniv"
+      },
+      {
+        "text": "Flera knivar"
+      },
+      {
+        "text": "Knivar är vassa"
+      }
+    ]
+  },
+  "50": {
+    "sentences" : [
+      {
+        "text": "En penna"
+      },
+      {
+        "text": "Flera pennor"
+      },
+      {
+        "text": "Pennor används för att skriva med"
+      }
+    ]
+  },
+  "51": {
+    "sentences" : [
+      {
+        "text": "En pensel"
+      },
+      {
+        "text": "Flera penslar"
+      },
+      {
+        "text": "Penslar används för att måla"
+      }
+    ]
+  },
+  "52": {
+    "sentences" : [
+      {
+        "text": "En lastbil"
+      },
+      {
+        "text": "Flera lastbilar"
+      },
+      {
+        "text": "Lastbilar är stora"
+      }
+    ]
+  },
+  "53": {
+    "sentences" : [
+      {
+        "text": "En traktor"
+      },
+      {
+        "text": "Flera traktorer"
+      },
+      {
+        "text": "Trakorer åker sakta"
+      }
+    ]
+  },
+  "54": {
+    "sentences" : [
+      {
+        "text": "Ett ägg"
+      },
+      {
+        "text": "Flera ägg"
+      },
+      {
+        "text": "Ägg kommer från hönan"
+      }
+    ]
+  },
+  "55": {
+    "sentences" : [
+      {
+        "text": "Ett glas mjölk"
+      },
+      {
+        "text": "Mjölk kommer från kon"
+      }
+    ]
+  },
+  "56": {
+    "sentences" : [
+      {
+        "text": "En räv"
+      },
+      {
+        "text": "Flera rävar"
+      },
+      {
+        "text": "Rävar bor i skogen"
+      }
+    ]
+  },
+  "57": {
+    "sentences" : [
+      {
+        "text": "En fjäril"
+      },
+      {
+        "text": "Flera fjärilar"
+      },
+      {
+        "text": "Fjärilar kommer från larver"
+      }
+    ]
+  },
+  "58": {
+    "sentences" : [
+      {
+        "text": "En gorilla"
+      },
+      {
+        "text": "Flera gorillor"
+      },
+      {
+        "text": "Gorillor finns inte i Sverige"
+      }
+    ]
+  },
+  "59": {
+    "sentences" : [
+      {
+        "text": "En noshörning"
+      },
+      {
+        "text": "Flera noshörningar"
+      },
+      {
+        "text": "Noshörningar finns i Afrika"
+      }
+    ]
+  },
+  "60": {
+    "sentences" : [
+      {
+        "text": "Det regnar"
+      },
+      {
+        "text": "På hösten regnar det mycket"
+      }
+    ]
+  },
+  "61": {
+    "sentences" : [
+      {
+        "text": "Det snöar"
+      },
+      {
+        "text": "Det brukar snöa på vintern"
+      }
+    ]
+  },
+  "62": {
+    "sentences" : [
+      {
+        "text": "Ett träd"
+      },
+      {
+        "text": "Flera träd"
+      },
+      {
+        "text": "I skogen finns det mycket träd"
+      }
+    ]
+  },
+  "63": {
+    "sentences" : [
+      {
+        "text": "En vattenmelon"
+      },
+      {
+        "text": "Flera vattenmeloner"
+      },
+      {
+        "text": "Vattenmelon är gott"
+      }
+    ]
+  },
+  "64": {
+    "sentences" : [
+      {
+        "text": "En jordgubbe"
+      },
+      {
+        "text": "Flera jordgubbar"
+      },
+      {
+        "text": "Det finns mycket jordgubbar i Sverige"
+      }
+    ]
+  },
+  "65": {
+    "sentences" : [
+      {
+        "text": "En hamburgare"
+      },
+      {
+        "text": "Flera hamburgare"
+      },
+      {
+        "text": "Hamburgare säljs på Max och McDonald´s"
+      }
+    ]
+  },
+  "66": {
+    "sentences" : [
+      {
+        "text": "En pizza"
+      },
+      {
+        "text": "Flera pizzor"
+      },
+      {
+        "text": "Pizzor är runda"
+      }
+    ]
+  },
+  "67": {
+    "sentences" : [
+      {
+        "text": "En ballong"
+      },
+      {
+        "text": "Flera ballongar"
+      },
+      {
+        "text": "Ballonger kan man blåsa upp"
+      }
+    ]
+  },
+  "68": {
+    "sentences" : [
+      {
+        "text": "En ryggsäck"
+      },
+      {
+        "text": "Flera ryggsäckar"
+      },
+      {
+        "text": "Ryggsäck brukar man ha med sig till skolan"
+      }
+    ]
+  },
+  "69": {
+    "sentences" : [
+      {
+        "text": "En mus"
+      },
+      {
+        "text": "Flera möss"
+      },
+      {
+        "text": "Möss gillar ost"
+      }
+    ]
+  },
+  "70": {
+    "sentences" : [
+      {
+        "text": "En ko"
+      },
+      {
+        "text": "Flera kor"
+      },
+      {
+        "text": "Kor ger mjölk"
+      }
+    ]
+  },
+  "71": {
+    "sentences" : [
+      {
+        "text": "En tiger"
+      },
+      {
+        "text": "Flera tigrar"
+      },
+      {
+        "text": "Tigrar finns i Asien"
+      }
+    ]
+  },
+  "72": {
+    "sentences" : [
+      {
+        "text": "En kanin"
+      },
+      {
+        "text": "Flera kaniner"
+      },
+      {
+        "text": "Kaniner är vanliga husdjur i Sverige"
+      }
+    ]
+  },
+  "73": {
+    "sentences" : [
+      {
+        "text": "En katt"
+      },
+      {
+        "text": "Flera katter"
+      },
+      {
+        "text": "Katter är vanliga husdjur"
+      }
+    ]
+  },
+  "74": {
+    "sentences" : [
+      {
+        "text": "Ett får"
+      },
+      {
+        "text": "Flera får"
+      },
+      {
+        "text": "Får är vita och fluffiga"
+      }
+    ]
+  },
+  "75": {
+    "sentences" : [
+      {
+        "text": "En apa"
+      },
+      {
+        "text": "Flera apor"
+      },
+      {
+        "text": "Apor bor i djungeln"
+      }
+    ]
+  },
+  "76": {
+    "sentences" : [
+      {
+        "text": "En tupp"
+      },
+      {
+        "text": "Flera tuppar"
+      },
+      {
+        "text": "Tupp är en hane bland hönfåglar"
+      }
+    ]
+  },
+  "77": {
+    "sentences" : [
+      {
+        "text": "En höna"
+      },
+      {
+        "text": "Flera höns"
+      },
+      {
+        "text": "Höna är en hona bland hönfåglar"
+      }
+    ]
+  },
+  "78": {
+    "sentences" : [
+      {
+        "text": "En hund"
+      },
+      {
+        "text": "Flera hundar"
+      },
+      {
+        "text": "Hunden sägs vara människans bästa vän"
+      }
+    ]
+  },
+  "79": {
+    "sentences" : [
+      {
+        "text": "En gris"
+      },
+      {
+        "text": "Flera grisar"
+      },
+      {
+        "text": "Bacon kommer från grisar"
+      }
+    ]
+  },
+  "80": {
+    "sentences" : [
+      {
+        "text": "En elefant"
+      },
+      {
+        "text": "Flera elefanter"
+      },
+      {
+        "text": "Elefanten har en lång snabel"
+      }
+    ]
+  },
+  "81": {
+    "sentences" : [
+      {
+        "text": "En bläckfisk"
+      },
+      {
+        "text": "Flera bläckfiskar"
+      },
+      {
+        "text": "Bläckfiskar har 8 eller 10 armar"
+      }
+    ]
+  },
+  "82": {
+    "sentences" : [
+      {
+        "text": "En clownfisk"
+      },
+      {
+        "text": "Flera clownfiskar"
+      },
+      {
+        "text": "Nemo är en clownfisk"
+      }
+    ]
+  },
+  "83": {
+    "sentences" : [
+      {
+        "text": "En sköldpadda"
+      },
+      {
+        "text": "Flera sköldpaddor"
+      },
+      {
+        "text": "Sköldpaddor har ett skal"
+      }
+    ]
+  },
+  "84": {
+    "sentences" : [
+      {
+        "text": "En kyckling"
+      },
+      {
+        "text": "Flera kycklingar"
+      },
+      {
+        "text": "Kycklingar lägger ägg"
+      }
+    ]
+  },
+  "85": {
+    "sentences" : [
+      {
+        "text": "En fågel"
+      },
+      {
+        "text": "Flera fåglar"
+      },
+      {
+        "text": "Fåglar kan flyga"
+      }
+    ]
+  },
+  "86": {
+    "sentences" : [
+      {
+        "text": "En pingvin"
+      },
+      {
+        "text": "Flera pingviner"
+      },
+      {
+        "text": "Pingviner bor vid sydpolen"
+      }
+    ]
+  },
+  "87": {
+    "sentences" : [
+      {
+        "text": "En groda"
+      },
+      {
+        "text": "Flera grodor"
+      },
+      {
+        "text": "Groddor kan hoppa långt"
+      }
+    ]
+  },
+  "88": {
+    "sentences" : [
+      {
+        "text": "Ett par glasögon"
+      },
+      {
+        "text": "Glasögon gör så man ser bättre"
+      }
+    ]
+  },
+  "89": {
+    "sentences" : [
+      {
+        "text": "En t-shirt"
+      },
+      {
+        "text": "Flera t-shirts"
+      },
+      {
+        "text": "T-shirts kan man ha på sig"
+      }
+    ]
+  },
+  "90": {
+    "sentences" : [
+      {
+        "text": "En byxa"
+      },
+      {
+        "text": "Flera byxor"
+      },
+      {
+        "text": "Byxor har man på benen"
+      }
+    ]
+  },
+  "91": {
+    "sentences" : [
+      {
+        "text": "En nyckel"
+      },
+      {
+        "text": "Flera nycklar"
+      },
+      {
+        "text": "Nycklar kan man låsa upp dörrar med"
+      }
+    ]
+  },
+  "92": {
+    "sentences" : [
+      {
+        "text": "Ett hänglås"
+      },
+      {
+        "text": "Flera hänglås"
+      },
+      {
+        "text": "Hänglös kan låsa upp med nycklar"
+      }
+    ]
+  },
+  "93": {
+    "sentences" : [
+      {
+        "text": "En lastbil"
+      },
+      {
+        "text": "Flera lastbilar"
+      },
+      {
+        "text": "Lastbilar är stora"
+      }
+    ]
+  },
+  "94": {
+    "sentences" : [
+      {
+        "text": "En ficklampa"
+      },
+      {
+        "text": "Flera ficklampor"
+      },
+      {
+        "text": "Ficklampor lyser upp mörker"
+      }
+    ]
+  },
+  "95": {
+    "sentences" : [
+      {
+        "text": "En hammare"
+      },
+      {
+        "text": "Flera hammare"
+      },
+      {
+        "text": "Hammare används för att bygga"
+      }
+    ]
+  },
+  "96": {
+    "sentences" : [
+      {
+        "text": "En spindel"
+      },
+      {
+        "text": "Flera spindlar"
+      },
+      {
+        "text": "Spindlar kan vara giftiga"
+      }
+    ]
+  },
+  "97": {
+    "sentences" : [
+      {
+        "text": "En rymdraket"
+      },
+      {
+        "text": "Flera rymdraketer"
+      },
+      {
+        "text": "NASA har skickat upp rymdraketer till rymded"
+      }
+    ]
+  },
+  "98": {
+    "sentences" : [
+      {
+        "text": "En helikopter"
+      },
+      {
+        "text": "Flera helikoptrar"
+      },
+      {
+        "text": "Helikoptrar flyger"
+      }
+    ]
+  },
+  "99": {
+    "sentences" : [
+      {
+        "text": "Ett lok"
+      },
+      {
+        "text": "Flera lok"
+      },
+      {
+        "text": "Lok åker på räls"
+      }
+    ]
+  },
+  "100": {
+    "sentences" : [
+      {
+        "text": "En ambulans"
+      },
+      {
+        "text": "Flera ambulanser"
+      },
+      {
+        "text": "Ambulanser skickar skadade mässikor till sjukhuset"
+      }
+    ]
+  },
+  "101": {
+    "sentences" : [
+      {
+        "text": "En brandbil"
+      },
+      {
+        "text": "Flera brandbilar"
+      },
+      {
+        "text": "Brandbilar släcker bränder"
+      }
+    ]
+  },
+  "102": {
+    "sentences" : [
+      {
+        "text": "En polisbil"
+      },
+      {
+        "text": "Flera polisbilar"
+      },
+      {
+        "text": "Poliser kör polisbilar"
+      }
+    ]
+  },
+  "103": {
+    "sentences" : [
+      {
+        "text": "En taxi"
+      },
+      {
+        "text": "Flera taxis"
+      },
+      {
+        "text": "Taxis skjutsar människor"
+      }
+    ]
+  },
+  "104": {
+    "sentences" : [
+      {
+        "text": "En bil"
+      },
+      {
+        "text": "Flera bilar"
+      },
+      {
+        "text": "Bilar åker på vägar"
+      }
+    ]
+  },
+  "105": {
+    "sentences" : [
+      {
+        "text": "En clown"
+      },
+      {
+        "text": "Flera clowner"
+      },
+      {
+        "text": "Många människor tycker clowner är läskiga"
+      }
+    ]
+  },
+  "106": {
+    "sentences" : [
+      {
+        "text": "En trumma"
+      },
+      {
+        "text": "Flera trummor"
+      },
+      {
+        "text": "Trumma är ett instrument"
+      }
+    ]
+  },
+  "107": {
+    "sentences" : [
+      {
+        "text": "En morot"
+      },
+      {
+        "text": "Flera morötter"
+      },
+      {
+        "text": "Morötter växer i marken"
+      }
+    ]
+  },
+  "108": {
+    "sentences" : [
+      {
+        "text": "En krabba"
+      },
+      {
+        "text": "Flera krabbor"
+      },
+      {
+        "text": "Krabbor har klor"
+      }
+    ]
+  },
+  "109": {
+    "sentences" : [
+      {
+        "text": "En skorpion"
+      },
+      {
+        "text": "Flera skorpioner"
+      },
+      {
+        "text": "Skorpioner kan vara farliga"
+      }
+    ]
+  },
+  "110": {
+    "sentences" : [
+      {
+        "text": "En enhörning"
+      },
+      {
+        "text": "Flera enhörningar"
+      },
+      {
+        "text": "Enhörningar har horn"
+      }
+    ]
+  },
+  "111": {
+    "sentences" : [
+      {
+        "text": "En örn"
+      },
+      {
+        "text": "Flera örnar"
+      },
+      {
+        "text": "Örnar flyger"
+      }
+    ]
+  },
+  "112": {
+    "sentences" : [
+      {
+        "text": "En anka"
+      },
+      {
+        "text": "Flera änder"
+      },
+      {
+        "text": "Änder har oranga näbbar"
+      }
+    ]
+  },
+  "113": {
+    "sentences" : [
+      {
+        "text": "En fladdermus"
+      },
+      {
+        "text": "Flera fladdermöss"
+      },
+      {
+        "text": "Fladdermöss är vakna på natten"
+      }
+    ]
+  },
+  "114": {
+    "sentences" : [
+      {
+        "text": "En snögubbe"
+      },
+      {
+        "text": "Flera snögubbar"
+      },
+      {
+        "text": "Snögubbar byggs av snö på vintern"
+      }
+    ]
+  },
+  "115": {
+    "sentences" : [
+      {
+        "text": "En skridsko"
+      },
+      {
+        "text": "Flera skridskor"
+      },
+      {
+        "text": "Skridskor används för att åka på is"
+      }
+    ]
+  },
+  "116": {
+    "sentences" : [
+      {
+        "text": "En sol"
+      },
+      {
+        "text": "Flera solar"
+      },
+      {
+        "text": "Solen syns på dagen"
+      }
+    ]
+  },
+  "117": {
+    "sentences" : [
+      {
+        "text": "Ett moln"
+      },
+      {
+        "text": "Flera moln"
+      },
+      {
+        "text": "Moln finns i himlen"
+      }
+    ]
+  },
+  "118": {
+    "sentences" : [
+      {
+        "text": "Ett paraply"
+      },
+      {
+        "text": "Flera paraplyn"
+      },
+      {
+        "text": "Paraplyn används när det regnar"
+      }
+    ]
+  },
+  "119": {
+    "sentences" : [
+      {
+        "text": "En kopp kaffe"
+      },
+      {
+        "text": "Man blir pigg av kaffe"
       }
     ]
   }
