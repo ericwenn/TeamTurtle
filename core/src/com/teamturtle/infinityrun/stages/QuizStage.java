@@ -1,14 +1,18 @@
 package com.teamturtle.infinityrun.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.teamturtle.infinityrun.InfinityRun;
@@ -37,10 +41,11 @@ public class QuizStage extends Stage {
     private int wordCategory;
     private List<Word> guesses;
     private List<TextButton> guessButtons;
+    private List<ImageButton> soundButtons;
     private WordLoader wordLoader;
 
     //    Components
-    private Table parentTable, buttonTable;
+    private Table parentTable, buttonTable, soundButtonTable;
 
     private static final float TEXT_BUTTON_PADDING = 5.0f;
     private static final float PARENT_TABLE_WIDTH = 600.0f, PARENT_TABLE_HEIGHT = 370.0f;
@@ -88,6 +93,7 @@ public class QuizStage extends Stage {
 
     private void createButtons(final List<Word> guesses) {
         guessButtons = new ArrayList<TextButton>();
+        soundButtons = new ArrayList<ImageButton>();
         while (guesses.size() > 0) {
             int index = random.nextInt((guesses.size() - 1) + 1);
 
@@ -103,6 +109,16 @@ public class QuizStage extends Stage {
             guessButtons.add(button);
 
             guesses.remove(index);
+
+            ImageButton soundButton = new ImageButton(skin, "listen_button");
+            soundButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y){
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal("audio/apple.wav"));
+                    sound.play();
+                }
+            });
+            soundButtons.add(soundButton);
         }
     }
 
@@ -117,6 +133,8 @@ public class QuizStage extends Stage {
         addEmojiToTable();
         parentTable.row();
         addButtonsToTable();
+        parentTable.row();
+        addSoundButtonToTable();
     }
 
     private void addEmojiToTable() {
@@ -132,6 +150,15 @@ public class QuizStage extends Stage {
         }
         buttonTable.padTop(ROW_PADDING);
         parentTable.add(buttonTable).bottom();
+    }
+
+    public void addSoundButtonToTable(){
+        soundButtonTable = new Table();
+        for(ImageButton button : soundButtons){
+            soundButtonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
+        }
+        soundButtonTable.padTop(ROW_PADDING);
+        parentTable.add(soundButtonTable).bottom();
     }
 
     @Override
