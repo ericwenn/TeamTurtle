@@ -132,17 +132,19 @@ public class InfinityRun extends Game implements IScreenObserver {
                 newScreen = new DictionaryScreen(getSpriteBatch(), this);
                 break;
 
-            case WORD:
-                Emoji apple = new Emoji("Äpple", "audio/apple.wav", "emoji/00a9.png");
-                newScreen = new WordScreen(getSpriteBatch(), this, apple);
-                break;
-
             default:
                 throw new Exception("Unknown screen enum");
         }
 
         changeScreen(newScreen);
 
+    }
+
+    @Override
+    public void changeScreen(Word word) throws Exception {
+        AbstractScreen newScreen;
+        newScreen = new WordScreen(getSpriteBatch(), this, word);
+        changeScreen(newScreen);
     }
 
     private void changeScreen(AbstractScreen newScreen) {
@@ -158,6 +160,6 @@ public class InfinityRun extends Game implements IScreenObserver {
     }
 
     public enum ScreenID {
-        MAIN_MENU, GAME, LEVELS_MENU, DICTIONARY, WORD
+        MAIN_MENU, GAME, LEVELS_MENU, DICTIONARY
     }
 }
