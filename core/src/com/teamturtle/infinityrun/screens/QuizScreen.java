@@ -53,7 +53,7 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     @Override
     public void onGuessClick(boolean isChoiceRight) {
         if (isChoiceRight) {
-            observer.levelWon(level, score++);
+            observer.levelWon(level, ++score);
         } else {
             observer.levelWon(level, score);
         }
