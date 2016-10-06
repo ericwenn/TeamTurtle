@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,7 +28,6 @@ import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.sentences.Sentence;
 import com.teamturtle.infinityrun.models.sentences.SentenceLoader;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,6 @@ public class WordScreen extends AbstractScreen {
     private static final Color FONT_COLOR = Color.WHITE, TABLE_COLOR = Color.GRAY;
 
     private Texture bg;
-    private Emoji emoji;
     private Stage stage;
     private BitmapFont titleFont, descriptionFont;
     private Table table;
@@ -53,18 +52,21 @@ public class WordScreen extends AbstractScreen {
     private ImageButton returnButton;
     private TextButton soundButton;
     private Label titleLabel, descriptionLabel1, descriptionLabel2, descriptionLabel3;
-    private Image emojiImage;
+    private Image image;
     private List<String> descriptionList;
+    private Word word;
+    private Sound sound;
 
     private IScreenObserver observer;
 
-    public WordScreen(SpriteBatch sb, IScreenObserver observer, Emoji emoji, Word word){
+    public WordScreen(SpriteBatch sb, IScreenObserver observer, Word word){
         super(sb);
         this.observer = observer;
 
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
-        this.emoji = emoji;
         this.stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
+        this.word = word;
+        sound = Gdx.audio.newSound(Gdx.files.internal("audio/apple.wav"));
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_URL));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter
@@ -112,7 +114,8 @@ public class WordScreen extends AbstractScreen {
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
         skin.load(Gdx.files.internal("skin/uiskin.json"));
 
-        titleLabel = new Label(emoji.getName(), new Label.LabelStyle(titleFont, FONT_COLOR));
+        titleLabel = new Label(word.getText().substring(0, 1).toUpperCase() +
+                word.getText().substring(1), new Label.LabelStyle(titleFont, FONT_COLOR));
         descriptionLabel1 = new Label(descriptionList.get(0), new Label.LabelStyle(descriptionFont,
                 FONT_COLOR));
         descriptionLabel2 = new Label(descriptionList.get(1), new Label.LabelStyle(descriptionFont,
@@ -120,13 +123,13 @@ public class WordScreen extends AbstractScreen {
         descriptionLabel3 = new Label(descriptionList.get(2), new Label.LabelStyle(descriptionFont,
                 FONT_COLOR));
 
-        emojiImage = new Image(emoji.getImage());
+        image = new Image(new Texture(word.getIconUrl()));
 
         soundButton = new TextButton("", skin, "level_text_button");
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                emoji.playSound();
+                sound.play();
             }
         });
 
@@ -152,7 +155,7 @@ public class WordScreen extends AbstractScreen {
         table.add(titleLabel).left().padLeft(-80).padTop(25);
         table.add(soundButton).left().padTop(25).padLeft(30);
         table.row().padTop(10);
-        table.add(emojiImage).left().padLeft(-100);
+        table.add(image).left().padLeft(-100);
         table.add(descriptionTable).left().padLeft(40);
         table.row().padTop(25);
         table.add(returnButton).colspan(2).left().padLeft(-100);

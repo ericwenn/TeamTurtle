@@ -60,7 +60,7 @@ public class InfinityRun extends Game implements IScreenObserver {
             Gdx.app.log("InfRun", "No words");
         }
         try {
-            changeScreen(ScreenID.WORD);
+            changeScreen(ScreenID.MAIN_MENU);
         } catch (Exception e) {
             // This cannot fail...yet
         }
@@ -77,21 +77,6 @@ public class InfinityRun extends Game implements IScreenObserver {
     @Override
     public void dispose() {
         getSpriteBatch().dispose();
-    }
-
-    public void changeScreen(Emoji emoji) throws Exception {
-        AbstractScreen newScreen;
-        newScreen = new WordScreen(getSpriteBatch(), this, emoji, emoji.getWord());
-
-        Screen oldScreen = getScreen();
-
-        // Set the new screen
-        newScreen.buildStage();
-        setScreen(newScreen);
-
-        // Dispose the old one
-        oldScreen.dispose();
-
     }
 
     @Override
@@ -147,11 +132,6 @@ public class InfinityRun extends Game implements IScreenObserver {
                 newScreen = new DictionaryScreen(getSpriteBatch(), this);
                 break;
 
-            case WORD:
-                Emoji apple = new Emoji("Äpple", "audio/apple.wav", "1f34c");
-                newScreen = new WordScreen(getSpriteBatch(), this, apple, apple.getWord());
-                break;
-
             default:
                 throw new Exception("Unknown screen enum");
         }
@@ -162,7 +142,9 @@ public class InfinityRun extends Game implements IScreenObserver {
 
     @Override
     public void changeScreen(Word word) throws Exception {
-
+        AbstractScreen newScreen;
+        newScreen = new WordScreen(getSpriteBatch(), this, word);
+        changeScreen(newScreen);
     }
 
     private void changeScreen(AbstractScreen newScreen) {
@@ -178,6 +160,6 @@ public class InfinityRun extends Game implements IScreenObserver {
     }
 
     public enum ScreenID {
-        MAIN_MENU, GAME, LEVELS_MENU, DICTIONARY, WORD
+        MAIN_MENU, GAME, LEVELS_MENU, DICTIONARY
     }
 }

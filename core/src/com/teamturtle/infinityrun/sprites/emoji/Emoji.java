@@ -49,12 +49,11 @@ public class Emoji extends AbstractEntity {
         w.word = emojiName;
         w.filename = iconUrl;
         w.soundUrl = soundUrl;
-
         WordLoader wl = new WordLoader();
         Map<String, ? extends Word> words = wl.getWords();
 
         for(Word word : words.values()){
-            if(word.getText().equals("banan"))
+            if(word.getText().equals(w.getText()))
                 w.id = word.getId() + "";
         }
 
@@ -63,15 +62,10 @@ public class Emoji extends AbstractEntity {
         setup();
     }
 
-    public Word getWord(){
-        return wordModel;
-    }
-
     public Emoji(Word word) {
         wordModel = word;
         setup();
     }
-
 
     private void setup() {
         texture = new Texture(wordModel.getIconUrl());
@@ -133,9 +127,6 @@ public class Emoji extends AbstractEntity {
     }
     public Texture getImage(){
         return texture;
-    }
-    public void playSound(){
-        emojiSound.play();
     }
 
     @Override
