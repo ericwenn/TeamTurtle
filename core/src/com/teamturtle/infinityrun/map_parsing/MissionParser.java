@@ -57,8 +57,8 @@ public class MissionParser {
 
         MissionHandler missionHandler = new MissionHandler();
         for( int i = 0; i<mMissionRectangles.size(); i++) {
-            float startX = mMissionRectangles.get(i).getX();
-            float endX = i == mMissionRectangles.size() - 1 ? tiledMap.getProperties().get("width", Integer.class) : mMissionRectangles.get(i + 1).getX();
+            float startX = i == 0 ? 0 : mMissionRectangles.get(i - 1).getX();
+            float endX = mMissionRectangles.get(i).getX();
 
             missionHandler.addMission(startX, endX);
 
