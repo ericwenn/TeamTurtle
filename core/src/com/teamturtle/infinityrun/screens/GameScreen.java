@@ -349,7 +349,6 @@ public class GameScreen extends AbstractScreen {
             }
         });
 
-        // TODO Implement quest listener
         eventHandler.onQuestChanged(new IEventHandler.QuestChangedListener() {
             @Override
             public void onQuestChanged() {
