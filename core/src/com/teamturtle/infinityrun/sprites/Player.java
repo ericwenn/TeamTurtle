@@ -19,6 +19,7 @@ public class Player extends AbstractEntity {
 
     private World world;
     private Body b2body;
+    private boolean canDoubleJump;
     private TextureRegion playerStand;
     private static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32,
             COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 150, START_Y = 300;
@@ -29,6 +30,7 @@ public class Player extends AbstractEntity {
 
     public Player(World world) {
         this.world = world;
+        canDoubleJump = true;
 
         setPosition(0, InfinityRun.HEIGHT / 2);
         definePlayer();
@@ -73,8 +75,20 @@ public class Player extends AbstractEntity {
     }
 
     public void jump(){
+        float jumpStrength = 0;
         if (b2body.getLinearVelocity().y == 0) {
-            b2body.applyLinearImpulse(new Vector2(0, JUMP_IMPULSE), b2body.getWorldCenter(), true);
+            jumpStrength = JUMP_IMPULSE;
+            canDoubleJump = true;
         }
+        else if(canDoubleJump){
+            if(b2body.getLinearVelocity().y == 0)
+                b2body.setLinearVelocity(b2body.getLinearVelocity().x, 0);
+            else
+                b2body.setLinearVelocity(b2body.getLinearVelocity().x,
+                        b2body.getLinearVelocity().y / 2);
+            jumpStrength = JUMP_IMPULSE;
+            canDoubleJump = false;
+        }
+        b2body.applyLinearImpulse(new Vector2(0, jumpStrength), b2body.getWorldCenter(), true);
     }
 }
