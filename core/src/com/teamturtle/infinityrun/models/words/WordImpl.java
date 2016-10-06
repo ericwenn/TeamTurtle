@@ -3,7 +3,7 @@ package com.teamturtle.infinityrun.models.words;
 /**
  * Created by ericwenn on 10/2/16.
  */
-public class WordImpl implements Word {
+public class WordImpl implements Word{
     public String id;
     public String word;
     public String category;
