@@ -13,7 +13,7 @@ import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 public interface IScreenObserver {
 
     void changeScreen(InfinityRun.ScreenID id) throws Exception;
-    void changeScreen(Emoji emoji) throws Exception;
+    void changeScreen(Word word) throws Exception;
 
     void playLevel(Level level);
 

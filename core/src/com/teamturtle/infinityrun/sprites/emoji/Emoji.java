@@ -12,7 +12,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordImpl;
+import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sprites.AbstractEntity;
+
+import java.util.Map;
 
 /**
  * Created by Henrik on 2016-09-21.
@@ -47,10 +50,21 @@ public class Emoji extends AbstractEntity {
         w.filename = iconUrl;
         w.soundUrl = soundUrl;
 
+        WordLoader wl = new WordLoader();
+        Map<String, ? extends Word> words = wl.getWords();
+
+        for(Word word : words.values()){
+            if(word.getText().equals("banan"))
+                w.id = word.getId() + "";
+        }
+
         wordModel = w;
 
         setup();
+    }
 
+    public Word getWord(){
+        return wordModel;
     }
 
     public Emoji(Word word) {

@@ -1,18 +1,14 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,22 +21,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
+import com.teamturtle.infinityrun.models.sentences.Sentence;
+import com.teamturtle.infinityrun.models.sentences.SentenceLoader;
+import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import jdk.nashorn.internal.parser.JSONParser;
 
 /**
  * Created by Rasmus on 2016-10-02.
@@ -49,8 +39,8 @@ import jdk.nashorn.internal.parser.JSONParser;
 public class WordScreen extends AbstractScreen {
 
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf", BACK_BUTTON_URL = "back_button";
-    private static final int TITLE_SIZE = 50, DESCRIPTION_SIZE = 25, TABLE_WIDTH = 600,
-    TABLE_HEIGHT = 400, TABLE_X = 100, TABLE_Y = 50;
+    private static final int TITLE_SIZE = 50, DESCRIPTION_SIZE = 25, TABLE_WIDTH = 650,
+    TABLE_HEIGHT = 400, TABLE_X = 75, TABLE_Y = 50;
     private static final Color FONT_COLOR = Color.WHITE, TABLE_COLOR = Color.GRAY;
 
     private Texture bg;
@@ -68,9 +58,8 @@ public class WordScreen extends AbstractScreen {
 
     private IScreenObserver observer;
 
-    public WordScreen(SpriteBatch sb, IScreenObserver observer, Emoji emoji){
+    public WordScreen(SpriteBatch sb, IScreenObserver observer, Emoji emoji, Word word){
         super(sb);
-
         this.observer = observer;
 
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
@@ -89,12 +78,15 @@ public class WordScreen extends AbstractScreen {
 
         descriptionList = new ArrayList<String>();
 
-        FileHandle file = Gdx.files.internal("jsonfiles/json.json");
+        SentenceLoader sl = new SentenceLoader();
+        List<? extends Sentence> sentences = sl.getSentences(word);
 
-        JsonValue json = new JsonReader().parse(file);
-
-        for(JsonValue item : json.get(emoji.getName())){
-            descriptionList.add(item.toString().substring(14));
+        if (sentences != null) {
+            for( Sentence s : sentences) {
+                descriptionList.add(s.getText());
+            }
+        } else {
+            Gdx.app.log("InfRun", "No words");
         }
     }
 
@@ -157,13 +149,13 @@ public class WordScreen extends AbstractScreen {
         descriptionTable.row();
         descriptionTable.add(descriptionLabel3).left();
 
-        table.add(titleLabel).left().padLeft(-200).padTop(25);
-        table.add(soundButton).left().padTop(25).padLeft(-50);
+        table.add(titleLabel).left().padLeft(-80).padTop(25);
+        table.add(soundButton).left().padTop(25).padLeft(30);
         table.row().padTop(10);
-        table.add(emojiImage).left().padLeft(-200);
-        table.add(descriptionTable).left().padLeft(-50);
+        table.add(emojiImage).left().padLeft(-100);
+        table.add(descriptionTable).left().padLeft(40);
         table.row().padTop(25);
-        table.add(returnButton).colspan(2).left().padLeft(-200);
+        table.add(returnButton).colspan(2).left().padLeft(-100);
 
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);

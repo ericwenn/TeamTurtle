@@ -60,7 +60,7 @@ public class InfinityRun extends Game implements IScreenObserver {
             Gdx.app.log("InfRun", "No words");
         }
         try {
-            changeScreen(ScreenID.MAIN_MENU);
+            changeScreen(ScreenID.WORD);
         } catch (Exception e) {
             // This cannot fail...yet
         }
@@ -81,7 +81,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 
     public void changeScreen(Emoji emoji) throws Exception {
         AbstractScreen newScreen;
-        newScreen = new WordScreen(getSpriteBatch(), this, emoji);
+        newScreen = new WordScreen(getSpriteBatch(), this, emoji, emoji.getWord());
 
         Screen oldScreen = getScreen();
 
@@ -148,8 +148,8 @@ public class InfinityRun extends Game implements IScreenObserver {
                 break;
 
             case WORD:
-                Emoji apple = new Emoji("Äpple", "audio/apple.wav", "emoji/00a9.png");
-                newScreen = new WordScreen(getSpriteBatch(), this, apple);
+                Emoji apple = new Emoji("Äpple", "audio/apple.wav", "1f34c");
+                newScreen = new WordScreen(getSpriteBatch(), this, apple, apple.getWord());
                 break;
 
             default:
@@ -157,6 +157,11 @@ public class InfinityRun extends Game implements IScreenObserver {
         }
 
         changeScreen(newScreen);
+
+    }
+
+    @Override
+    public void changeScreen(Word word) throws Exception {
 
     }
 
