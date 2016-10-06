@@ -31,7 +31,6 @@ import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
-import com.teamturtle.infinityrun.stages.QuizStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.ArrayList;
@@ -63,8 +62,6 @@ public class GameScreen extends AbstractScreen {
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
-
-    private QuizStage quizStage;
 
     private World world;
     private Box2DDebugRenderer b2dr;
@@ -200,8 +197,9 @@ public class GameScreen extends AbstractScreen {
 
 //        Draw dynamic content
         getSpriteBatch().setProjectionMatrix(getCamera().combined);
-        getSpriteBatch().begin();
         drawParallaxContent();
+        tiledMapRenderer.render();
+        getSpriteBatch().begin();
 
         mPlayer.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
@@ -213,7 +211,6 @@ public class GameScreen extends AbstractScreen {
         getCamera().position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
                 , mFillViewport.getWorldHeight() / 2, 0);
         getCamera().update();
-        tiledMapRenderer.render();
         //Use to show collision rectangles
         //b2dr.render(world, getOrthoCam().combined);
     }
@@ -258,6 +255,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     public void drawParallaxContent() {
+        getSpriteBatch().begin();
 //        Gets how much screen scrolled since last render()
         float deltaPosX = getOrthoCam().position.x - oldCamX;
 
@@ -287,6 +285,7 @@ public class GameScreen extends AbstractScreen {
         getSpriteBatch().draw(trees, treePos2, 0, trees.getWidth() / InfinityRun.PPM, trees.getHeight() / InfinityRun.PPM);
 
         oldCamX = getOrthoCam().position.x;
+        getSpriteBatch().end();
     }
 
     private void setUpWorld() {
@@ -328,6 +327,7 @@ public class GameScreen extends AbstractScreen {
                 if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
                     hasSuccededInAllMissions = false;
                 }
+
                 //TODO there should only be 1 collection process
                 collectedWords.add(e.getWordModel());
                 playerData.playerCollectedWord(e.getWordModel());
