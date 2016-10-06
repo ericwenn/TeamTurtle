@@ -322,7 +322,6 @@ public class GameScreen extends AbstractScreen {
         eventHandler.onCollisionWithEmoji(new IEventHandler.EmojiCollisionListener() {
             @Override
             public void onCollision(Player p, Emoji e) {
-                Gdx.app.log("Collision", "Emoji collision");
                 e.triggerExplode();
                 if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
                     hasSuccededInAllMissions = false;
@@ -339,7 +338,6 @@ public class GameScreen extends AbstractScreen {
         eventHandler.onCollisionWithObstacle(new IEventHandler.ObstacleCollisionListener() {
             @Override
             public void onCollision(Player p) {
-                Gdx.app.log("Collision", "Obstacle collision");
                 state = State.LOST_GAME;
             }
         });
