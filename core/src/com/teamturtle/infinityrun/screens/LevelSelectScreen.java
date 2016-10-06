@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -83,6 +84,8 @@ public class LevelSelectScreen extends AbstractScreen{
                         observer.playLevel(level);
                     }
                 });
+            } else {
+                button.setColor(Color.BLACK);
             }
             levelButtonTable.add(button);
             levelButtonTable.row();

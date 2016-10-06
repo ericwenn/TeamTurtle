@@ -142,8 +142,11 @@ public class DictionaryScreen extends AbstractScreen {
         gridItem.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //TODO change screen
-                //showWordScreen(word);
+                try {
+                    observer.changeScreen(word);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         return gridItem;
