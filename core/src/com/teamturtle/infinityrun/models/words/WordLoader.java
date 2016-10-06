@@ -37,4 +37,12 @@ public class WordLoader {
         }
         return returnList;
     }
+
+    public ArrayList<Word> getAllWords() {
+        ArrayList<Word> allWordsList = new ArrayList<Word>();
+        for (Word word : wordMap.values()) {
+            allWordsList.add(word);
+        }
+        return allWordsList;
+    }
 }

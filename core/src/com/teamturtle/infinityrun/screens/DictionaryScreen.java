@@ -1,9 +1,14 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,38 +21,54 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.PathConstants;
+import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.models.words.WordLoader;
+import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Henrik on 2016-10-03.
  */
 public class DictionaryScreen extends AbstractScreen {
 
+    private static final String LABEL_BG_URL = "label_bg.png";
+    private static final String LABEL_TEXT = "Ord hittade:";
+    private static final String LABEL_UNKNOWN = "???";
+    private static final float PAD_ROW = 20f;
+    private static final float PAD_SCROLL = 5f;
+    private static final float GRID_COLUMN_WIDTH = 4;
+
     private Stage stage;
     private IScreenObserver observer;
-    private ScrollPane wordList;
     private Skin skin;
     private Texture bg;
     private ImageButton imageButton;
 
-    public DictionaryScreen(SpriteBatch spriteBatch, IScreenObserver observer) {
+    public DictionaryScreen(final SpriteBatch spriteBatch, IScreenObserver observer) {
         super(spriteBatch);
         this.observer = observer;
         stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
-    }
 
-    @Override
-    public void buildStage() {
-        bg = new Texture("bg2.png");
+        bg = new Texture(PathConstants.BACKGROUND_PATH);
 
         skin = new Skin();
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
         skin.load(Gdx.files.internal("skin/uiskin.json"));
 
+        initBackButton();
+        initGridTable();
+
+    }
+
+    private void initBackButton() {
         imageButton = new ImageButton(skin, "back_button");
         imageButton.addListener(new ChangeListener() {
             @Override
@@ -59,44 +80,76 @@ public class DictionaryScreen extends AbstractScreen {
                 }
             }
         });
+        imageButton.pad(10f);
+    }
 
-        Table listItems = new Table();
 
-        ArrayList<Emoji> emojis = new ArrayList<Emoji>();
-        for(int i = 0; i < 30; i++) {
-            emojis.add(new Emoji("Äpple" + i*999, "audio/apple.wav", "1f34e"));
+    private void initGridTable() {
+        WordLoader wordLoader = new WordLoader();
+        PlayerData playerData = new PlayerData();
+
+        Table grid = new Table();
+
+        int collectedWordsAmount = 0;
+        List<Word> allWords = wordLoader.getAllWords();
+        for(int i = 0; i < allWords.size(); i++){
+            Word word = allWords.get(i);
+            if (playerData.hasPlayerCollectedWord(word)) {
+                grid.add(createGridItem(word, false));
+                collectedWordsAmount++;
+            }else{
+                grid.add(createGridItem(word, true));
+            }
+            if ((i+1) % GRID_COLUMN_WIDTH == 0) {
+                grid.row().padTop(PAD_ROW);
+            }
         }
 
-        //TODO get all unlocked from json file and get all locked from json file
-        for (final Emoji emoji : emojis) {
-            Table listItem = new Table();
-            listItem.setTouchable(Touchable.enabled);
-            Image image = new Image(emoji.getTexture());
-            listItem.add(image).left().padLeft(50f);
-            listItem.add(new Label(emoji.getName(), skin)).center().expandX();
-            listItem.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    //TODO changeScreen(id, emoji)
-                    try {
-                        observer.changeScreen(emoji);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            listItems.add(listItem).expandX().fill();
-            listItems.row();
-        }
-
-        ScrollPane scroller = new ScrollPane(listItems, skin);
+        ScrollPane scroller = new ScrollPane(grid);
+        scroller.setForceScroll(false, true);
         Table rootTable = new Table();
         rootTable.setFillParent(true);
-        rootTable.add(scroller).fill().expand().pad(20f);
-        rootTable.row();
-        rootTable.add(imageButton).left().padLeft(20f).padBottom(20f);
 
+        Table leftPanel = new Table();
+        leftPanel.add(imageButton);
+        leftPanel.row();
+        Table labelBg = new Table();
+        labelBg.add(new Label(
+                 LABEL_TEXT + "\n" + collectedWordsAmount + " / " + allWords.size(), skin));
+        labelBg.setBackground(
+                new TextureRegionDrawable(new TextureRegion(new Texture(LABEL_BG_URL))));
+        leftPanel.add(labelBg);
+        rootTable.add(leftPanel).left().top();
+        rootTable.add(scroller).fill().expand().pad(PAD_SCROLL);
         stage.addActor(rootTable);
+    }
+
+    private Table createGridItem(final Word word, boolean tinted) {
+        final Table gridItem = new Table();
+        Image image = new Image(new Texture(word.getIconUrl()));
+        Label label;
+        if (tinted) {
+            image.setColor(Color.BLACK);
+            label = new Label(LABEL_UNKNOWN, skin);
+        }else{
+            label = new Label(word.getText(), skin);
+        }
+        gridItem.add(image);
+        gridItem.row();
+        gridItem.add(label);
+        gridItem.setTouchable(Touchable.enabled);
+        gridItem.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //TODO change screen
+                //showWordScreen(word);
+            }
+        });
+        return gridItem;
+    }
+
+    @Override
+    public void buildStage() {
         Gdx.input.setInputProcessor(stage);
     }
 

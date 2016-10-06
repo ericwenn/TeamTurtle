@@ -12,4 +12,5 @@ public class PathConstants {
     public static final String MOUNTAINS_PATH = "mountains.png";
     public static final String TREE_PATH = "tree.png";
     public static final String WORD_JSON_PATH = "data/words.json";
+    public static final String SENTENCE_JSON_PATH = "data/sentences.json";
 }
