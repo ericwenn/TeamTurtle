@@ -20,14 +20,14 @@ back_button_up
   index: -1
 check-off
   rotate: false
-  xy: 1548, 264
+  xy: 682, 86
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 textfield
   rotate: false
-  xy: 1548, 264
+  xy: 682, 86
   size: 14, 14
   split: 3, 3, 3, 3
   orig: 14, 14
@@ -35,14 +35,14 @@ textfield
   index: -1
 check-on
   rotate: false
-  xy: 617, 33
+  xy: 1689, 243
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 cursor
   rotate: false
-  xy: 715, 212
+  xy: 1483, 239
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -73,7 +73,7 @@ default-rect-pad
   index: -1
 default-pane-noborder
   rotate: false
-  xy: 1863, 326
+  xy: 2038, 491
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -81,7 +81,7 @@ default-pane-noborder
   index: -1
 default-rect
   rotate: false
-  xy: 1483, 238
+  xy: 720, 134
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -89,7 +89,7 @@ default-rect
   index: -1
 default-rect-down
   rotate: false
-  xy: 1989, 331
+  xy: 1983, 324
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -97,7 +97,7 @@ default-rect-down
   index: -1
 default-round
   rotate: false
-  xy: 1511, 242
+  xy: 867, 215
   size: 12, 20
   split: 5, 5, 5, 4
   pad: 4, 4, 1, 1
@@ -106,7 +106,7 @@ default-round
   index: -1
 default-round-down
   rotate: false
-  xy: 2017, 344
+  xy: 666, 45
   size: 12, 20
   split: 5, 5, 5, 4
   orig: 12, 20
@@ -114,7 +114,7 @@ default-round-down
   index: -1
 default-round-large
   rotate: false
-  xy: 617, 48
+  xy: 1989, 344
   size: 20, 20
   split: 5, 5, 5, 4
   orig: 20, 20
@@ -122,7 +122,7 @@ default-round-large
   index: -1
 default-scroll
   rotate: false
-  xy: 1842, 307
+  xy: 818, 166
   size: 20, 20
   split: 2, 2, 2, 2
   orig: 20, 20
@@ -130,7 +130,7 @@ default-scroll
   index: -1
 default-select
   rotate: false
-  xy: 1483, 242
+  xy: 1689, 258
   size: 27, 20
   split: 4, 14, 4, 4
   orig: 27, 20
@@ -138,7 +138,7 @@ default-select
   index: -1
 default-select-selection
   rotate: false
-  xy: 2038, 489
+  xy: 710, 127
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -177,7 +177,7 @@ default-splitpane-vertical
   index: -1
 default-window
   rotate: false
-  xy: 1989, 335
+  xy: 682, 101
   size: 27, 29
   split: 4, 3, 20, 3
   orig: 27, 29
@@ -225,6 +225,13 @@ listen_up
   orig: 251, 91
   offset: 0, 0
   index: -1
+lock_image
+  rotate: false
+  xy: 1483, 243
+  size: 102, 84
+  orig: 102, 84
+  offset: 0, 0
+  index: -1
 next_down
   rotate: false
   xy: 981, 420
@@ -241,7 +248,7 @@ next_up
   index: -1
 paint_brush
   rotate: false
-  xy: 1483, 263
+  xy: 617, 66
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -270,6 +277,20 @@ standard_bg
   size: 363, 214
   split: 90, 90, 52, 53
   orig: 363, 214
+  offset: 0, 0
+  index: -1
+pause_down
+  rotate: false
+  xy: 617, 131
+  size: 102, 84
+  orig: 102, 84
+  offset: 0, 0
+  index: -1
+pause_up
+  rotate: false
+  xy: 1586, 243
+  size: 102, 84
+  orig: 102, 84
   offset: 0, 0
   index: -1
 play_down
@@ -315,7 +336,7 @@ standard_bg
   index: 4
 selection
   rotate: false
-  xy: 2017, 342
+  xy: 2010, 363
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
@@ -343,14 +364,14 @@ text_button_up
   index: -1
 tree-minus
   rotate: false
-  xy: 638, 54
+  xy: 1717, 264
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 tree-plus
   rotate: false
-  xy: 1842, 292
+  xy: 1989, 329
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
@@ -371,7 +392,7 @@ try_again_up
   index: -1
 white
   rotate: false
-  xy: 2030, 363
+  xy: 818, 164
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
@@ -385,98 +406,98 @@ widgets/Button
   index: -1
 widgets/CheckBox
   rotate: false
-  xy: 617, 167
+  xy: 1689, 279
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/ImageButton
   rotate: false
-  xy: 1548, 279
+  xy: 1989, 414
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/Label
   rotate: false
-  xy: 1989, 414
+  xy: 1738, 279
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/List
   rotate: false
-  xy: 617, 118
+  xy: 1989, 365
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/ProgressBar
   rotate: false
-  xy: 666, 167
+  xy: 1787, 279
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/ScrollPane
   rotate: false
-  xy: 1597, 279
+  xy: 1836, 279
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/SelectBox
   rotate: false
-  xy: 1989, 365
+  xy: 1885, 279
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/Slider
   rotate: false
-  xy: 617, 69
+  xy: 1934, 279
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/SplitPane
   rotate: false
-  xy: 666, 118
+  xy: 617, 17
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/TextButton
   rotate: false
-  xy: 1646, 279
+  xy: 720, 187
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/TextField
   rotate: false
-  xy: 666, 69
+  xy: 720, 138
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/Touchpad
   rotate: false
-  xy: 1695, 279
+  xy: 769, 187
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/Tree
   rotate: false
-  xy: 1744, 279
+  xy: 769, 138
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 widgets/Window
   rotate: false
-  xy: 1793, 279
+  xy: 818, 187
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
