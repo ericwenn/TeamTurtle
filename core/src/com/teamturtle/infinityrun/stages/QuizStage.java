@@ -97,7 +97,7 @@ public class QuizStage extends Stage {
         while (guesses.size() > 0) {
             int index = random.nextInt((guesses.size() - 1) + 1);
 
-            TextButton button = new TextButton(guesses.get(index).getText() + "?", skin);
+            TextButton button = new TextButton(guesses.get(index).getText() + "?", skin, "text_button");
             final Word word = guesses.get(index);
             button.pad(TEXT_BUTTON_PADDING);
             button.addListener(new ChangeListener() {
@@ -147,6 +147,10 @@ public class QuizStage extends Stage {
         buttonTable = new Table();
         for (TextButton button : guessButtons) {
             buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
+        }
+        buttonTable.row();
+        for(int i = 0; i < guessButtons.size(); i++) {
+            buttonTable.add(new ImageButton(skin, "sound_button"));
         }
         buttonTable.padTop(ROW_PADDING);
         parentTable.add(buttonTable).bottom();
