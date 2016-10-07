@@ -5,6 +5,7 @@ import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.level.Level;
 
 import java.util.List;
+import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 /**
  * Created by ostmos on 2016-09-28.
@@ -12,10 +13,11 @@ import java.util.List;
 public interface IScreenObserver {
 
     void changeScreen(InfinityRun.ScreenID id) throws Exception;
+    void changeScreen(Word word) throws Exception;
 
     void playLevel(Level level);
 
-    void levelCompleted(Level level, List<Word> missionWords, int score);
+    void levelCompleted(Level level, List<Word> collectedWords, int score);
 
     void levelWon(Level level, int score);
 

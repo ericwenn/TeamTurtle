@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -66,7 +67,7 @@ public class LevelSelectScreen extends AbstractScreen{
         rootTable.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
 
         int i = 1;
-        // If the user has gotten atleast 2 starts on the previous level, they can play this one.
+        // If the user has gotten atleast 1 star on the previous level, they can play this one.
         boolean progressedThisFar = true;
         for(final Level level: levels) {
             int playerScoreOnLevel = mPlayerData.getPlayerProgressOnLevel(level);
@@ -83,6 +84,8 @@ public class LevelSelectScreen extends AbstractScreen{
                         observer.playLevel(level);
                     }
                 });
+            } else {
+                button.setColor(Color.BLACK);
             }
             levelButtonTable.add(button);
             levelButtonTable.row();
@@ -102,7 +105,7 @@ public class LevelSelectScreen extends AbstractScreen{
             if (i % 5 == 0){
                 rootTable.row();
             }
-            progressedThisFar = progressedThisFar && playerScoreOnLevel > 1;
+            progressedThisFar = progressedThisFar && playerScoreOnLevel > 0;
             i++;
         }
         backButton = new ImageButton(skin, "back_button");

@@ -6,7 +6,10 @@ import com.badlogic.gdx.utils.Json;
 import com.teamturtle.infinityrun.PathConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Text om klassen
@@ -36,5 +39,31 @@ public class WordLoader {
             }
         }
         return returnList;
+    }
+
+    public ArrayList<WordImpl> getAllWords() {
+        ArrayList<WordImpl> allWordsList = new ArrayList<WordImpl>();
+        for (Word word : wordMap.values()) {
+            allWordsList.add((WordImpl)word);
+        }
+        sortWordByCategory(allWordsList);
+        return allWordsList;
+    }
+
+    private void sortWordByCategory(List<WordImpl> words) {
+        Collections.sort(words, new Comparator<WordImpl>() {
+            @Override
+            public int compare(WordImpl o1, WordImpl o2) {
+                if (o1.getCategory() < o2.getCategory()) {
+                    return -1;
+                }else{
+                    return 1;
+                }
+            }
+        });
+
+        for (Word word : words) {
+            System.out.println(word.getCategory());
+        }
     }
 }

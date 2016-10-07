@@ -36,7 +36,8 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		up: default-round,
 		down: default-round-down,
 		checked: default-round-down
-	}
+	},
+	text_button : {font: large-font, up: text_button_up, down: text_button_down}
 },
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: { imageUp: paint_brush, up: default-round, down: default-round-down },
@@ -45,7 +46,8 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	next_button: { imageUp: next_up, imageDown: next_down },
 	back_button: { imageUp: back_button_up, imageDown: back_button_down},
 	play_button: {imageUp: play_up, imageDown: play_down},
-	dictionary_button: {imageUp: wordlist_up, imageDown: wordlist_down}
+	dictionary_button: {imageUp: wordlist_up, imageDown: wordlist_down},
+	listen_button: {imageUp: listen_up, imageDown: listen_down}
 },
 com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 	default-vertical: { handle: default-splitpane-vertical },

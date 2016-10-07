@@ -27,11 +27,11 @@ public class PlayerData {
 
     public PlayerData() {
 
-        mWordsCollectedFile = Gdx.files.external(STORAGE_DIR + PATH_SEPARATOR + WORDS_COLLECTED_FILE);
+        mWordsCollectedFile = Gdx.files.local(STORAGE_DIR + PATH_SEPARATOR + WORDS_COLLECTED_FILE);
         mWordsCollected = readWordsCollectedFromFile(mWordsCollectedFile);
 
 
-        mLevelProgressFile = Gdx.files.external(STORAGE_DIR + PATH_SEPARATOR + LEVEL_PROGRESS_FILE);
+        mLevelProgressFile = Gdx.files.local(STORAGE_DIR + PATH_SEPARATOR + LEVEL_PROGRESS_FILE);
         mLevelProgress = readLevelProgressFromFile(mLevelProgressFile);
 
 
@@ -57,6 +57,7 @@ public class PlayerData {
     public boolean hasPlayerCollectedWord(Word word) {
         return mWordsCollected.contains( word.getId() );
     }
+
     public void playerCollectedWord(Word word) {
         if (!hasPlayerCollectedWord(word)) {
             mWordsCollected.add(word.getId());

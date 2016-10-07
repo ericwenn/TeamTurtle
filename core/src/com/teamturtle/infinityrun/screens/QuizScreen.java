@@ -3,11 +3,9 @@ package com.teamturtle.infinityrun.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.stages.IQuizStageListener;
 import com.teamturtle.infinityrun.stages.QuizStage;
 
@@ -29,10 +27,10 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     private int score;
 
     public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level
-            , List<Word> possibleWords, int score) {
+            , List<Word> collectedWords, int score) {
         super(spriteBatch);
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
-        this.stage = new QuizStage(this, possibleWords);
+        this.stage = new QuizStage(this, collectedWords);
         this.observer = observer;
         this.level = level;
         this.score = score;
@@ -55,8 +53,8 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     @Override
     public void onGuessClick(boolean isChoiceRight) {
         if (isChoiceRight) {
-            observer.levelWon(level, score++);
-        }else{
+            observer.levelWon(level, ++score);
+        } else {
             observer.levelWon(level, score);
         }
     }
