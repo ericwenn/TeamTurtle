@@ -92,7 +92,7 @@ public class QuizStage extends Stage {
         while (guesses.size() > 0) {
             int index = random.nextInt((guesses.size() - 1) + 1);
 
-            TextButton button = new TextButton(guesses.get(index).getText() + "?", skin, "text_button");
+            TextButton button = new TextButton(guesses.get(index).getText(), skin, "text_button");
             final Word word = guesses.get(index);
             button.pad(TEXT_BUTTON_PADDING);
             button.addListener(new ChangeListener() {
