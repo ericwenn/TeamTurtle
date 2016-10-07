@@ -21,7 +21,7 @@ public class WordImpl implements Word{
     @Override
     public String getSoundUrl() {
 //        TODO SUPER DUMB
-        return "audio/apple.wav";
+        return "audio/skoldpadda.mp3";
     }
 
     @Override
