@@ -45,7 +45,7 @@ public class QuizStage extends Stage {
     private WordLoader wordLoader;
 
     //    Components
-    private Table parentTable, buttonTable, soundButtonTable;
+    private Table parentTable, buttonTable;
 
     private static final float TEXT_BUTTON_PADDING = 5.0f;
     private static final float PARENT_TABLE_WIDTH = 600.0f, PARENT_TABLE_HEIGHT = 370.0f;
@@ -97,7 +97,8 @@ public class QuizStage extends Stage {
         while (guesses.size() > 0) {
             int index = random.nextInt((guesses.size() - 1) + 1);
 
-            TextButton button = new TextButton(guesses.get(index).getText() + "?", skin, "text_button");
+            TextButton button = new TextButton(guesses.get(index).getText().substring(0,1).toUpperCase() +
+                    guesses.get(index).getText().substring(1), skin, "text_button");
             final Word word = guesses.get(index);
             button.pad(TEXT_BUTTON_PADDING);
             button.addListener(new ChangeListener() {
@@ -110,7 +111,7 @@ public class QuizStage extends Stage {
 
             guesses.remove(index);
 
-            ImageButton soundButton = new ImageButton(skin, "listen_button");
+            ImageButton soundButton = new ImageButton(skin, "sound_button");
             soundButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y){
@@ -134,7 +135,6 @@ public class QuizStage extends Stage {
         parentTable.row();
         addButtonsToTable();
         parentTable.row();
-        addSoundButtonToTable();
     }
 
     private void addEmojiToTable() {
@@ -149,20 +149,11 @@ public class QuizStage extends Stage {
             buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
         }
         buttonTable.row();
-        for(int i = 0; i < guessButtons.size(); i++) {
-            buttonTable.add(new ImageButton(skin, "sound_button"));
+        for(ImageButton button : soundButtons){
+            buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
         }
         buttonTable.padTop(ROW_PADDING);
         parentTable.add(buttonTable).bottom();
-    }
-
-    public void addSoundButtonToTable(){
-        soundButtonTable = new Table();
-        for(ImageButton button : soundButtons){
-            soundButtonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
-        }
-        soundButtonTable.padTop(ROW_PADDING);
-        parentTable.add(soundButtonTable).bottom();
     }
 
     @Override
