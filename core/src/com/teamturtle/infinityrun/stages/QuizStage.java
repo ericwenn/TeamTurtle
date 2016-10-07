@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -53,7 +54,7 @@ public class QuizStage extends Stage {
         this.handler = handler;
 
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-        quizLabel = new Label("Quiz-dags!", skin);
+        quizLabel = new Label("Fråga!", skin);
         wordLoader = new WordLoader();
         wordCategory = collectedWords.get(0).getCategory();
 
@@ -133,7 +134,16 @@ public class QuizStage extends Stage {
         }
         buttonTable.row();
         for(int i = 0; i < guessButtons.size(); i++) {
-            buttonTable.add(new ImageButton(skin, "sound_button"));
+            ImageButton soundButton = new ImageButton(skin, "sound_button");
+            final int index = i;
+            soundButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    //Sound sound = Gdx.audio.newSound(Gdx.files.internal(guesses.get(index).getSoundUrl()));
+                    //sound.play();
+                }
+            });
+            buttonTable.add(soundButton);
         }
         buttonTable.padTop(ROW_PADDING);
         parentTable.add(buttonTable).bottom();
