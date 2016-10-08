@@ -1,66 +1,99 @@
 package com.teamturtle.infinityrun.sprites;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.teamturtle.infinityrun.InfinityRun;
-
-import java.util.LinkedList;
 
 /**
  * Created by ericwenn on 10/7/16.
  */
 public class PlayerTail extends AbstractEntity {
     private Player mPlayer;
-    private LinkedList<Vector2> tailList;
-    private Texture mTexture;
-    private TextureRegion[] frames;
 
-    private static final int TAIL_LENGTH = 30;
+    private float[] vertices;
+
+    private static final int TAIL_LENGTH = 40;
     private static final int TAIL_INTERVAL = 1;
 
-    private static final int FRAME_COLS = 5;
-    private static final int FRAME_ROWS = 3;
 
     private int addIndex = 0;
 
+
+    private Color lineColor;
+    private float lineWidth = 2f;
+
     public PlayerTail(Player player) {
         mPlayer = player;
-        tailList = new LinkedList<Vector2>();
-        mTexture = new Texture( "player_tail.png");
-        TextureRegion[][] tr = TextureRegion.split(mTexture, mTexture.getWidth() / FRAME_COLS, mTexture.getHeight() / FRAME_ROWS);
-        frames = new TextureRegion[FRAME_COLS * FRAME_COLS];
-        int index = 0;
-        for(int i = 0; i < FRAME_ROWS; i++) {
-            for( int j = 0; j < FRAME_COLS; j++) {
-                frames[index++] = tr[i][j];
-            }
-        }
 
+        lineColor = new Color(1,1,1,1);
+        vertices = new float[ TAIL_LENGTH * 2];
     }
 
     @Override
     public void update(float dt) {
         if( ++addIndex % TAIL_INTERVAL == 0) {
-            tailList.addFirst( new Vector2(mPlayer.getX(), mPlayer.getY()) );
-            if( tailList.size() > TAIL_LENGTH) {
-                tailList.removeLast();
-            }
-
+            addToVertices( mPlayer.getX() + Player.PLAYER_WIDTH / (2 * InfinityRun.PPM), mPlayer.getY() + Player.PLAYER_HEIGHT / (2*InfinityRun.PPM));
         }
     }
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        int i = 0;
-        for (Vector2 v : tailList) {
-            spriteBatch.draw(frames[(i++/2)], v.x, v.y, 32 / InfinityRun.PPM, 32/ InfinityRun.PPM);
+        spriteBatch.end();
+
+
+        Gdx.gl.glLineWidth(lineWidth);
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+        ShapeRenderer sr = new ShapeRenderer();
+        sr.setProjectionMatrix( spriteBatch.getProjectionMatrix());
+        sr.begin(ShapeRenderer.ShapeType.Line);
+        Color c1 = new Color(lineColor);
+        Color c2 = new Color(lineColor);
+
+
+        for( int i = 0; i < vertices.length - 2; i = i+2) {
+            c1.a = (vertices.length - i) / (float)vertices.length;
+            c2.a = (vertices.length - i - 1) / (float)vertices.length;
+            sr.line(vertices[i], vertices[i + 1], vertices[i + 2], vertices[i + 3], c1, c2);
         }
+        sr.end();
+
+        Gdx.gl.glDisable(GL20.GL_BLEND);
+
+        spriteBatch.begin();
     }
 
     @Override
     public void dispose() {
 
+    }
+
+
+    private void addToVertices(float x, float y) {
+
+
+        for( int i = vertices.length - 1; i > 1; i--) {
+            if (vertices[i - 2] == 0) {
+                vertices[i] = i % 2 == 0 ? x : y;
+            } else {
+                vertices[i] = vertices[i - 2];
+            }
+        }
+        vertices[0] = x;
+        vertices[1] = y;
+    }
+
+
+    
+    public void setColor(float r, float g, float b) {
+        this.lineColor = new Color(r, g, b, 1);
+    }
+
+    public void setLineWidth(float width) {
+        this.lineWidth = width;
     }
 }
