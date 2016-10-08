@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
@@ -31,6 +32,7 @@ import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
+import com.teamturtle.infinityrun.stages.pause.PauseStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.ArrayList;
@@ -71,6 +73,8 @@ public class GameScreen extends AbstractScreen {
 
     private MissionHandler mMissionHandler;
     private MissionStage mMissionStage;
+
+    private PauseStage pauseStage;
 
     private State state;
 
@@ -113,6 +117,8 @@ public class GameScreen extends AbstractScreen {
 
 
         mMissionStage = new MissionStage();
+
+        pauseStage = new PauseStage();
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
@@ -175,6 +181,7 @@ public class GameScreen extends AbstractScreen {
                 //TODO should read some player model
                     screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
             case PAUSE:
+                pauseStage.draw();
                 break;
         }
     }
@@ -216,8 +223,17 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void handleInput() {
-        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)))
+        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) {
             mPlayer.jump();
+            state = State.PAUSE;
+            Timer timer = new Timer();
+            timer.scheduleTask(new Timer.Task() {
+                @Override
+                public void run() {
+                    state = State.PLAY;
+                }
+            }, 5);
+        }
     }
 
     @Override
