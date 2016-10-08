@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 
 /**
  * Created by Alfred on 2016-09-22.
@@ -74,6 +76,7 @@ public class StartScreen extends AbstractScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 try {
                     observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
+                    SoundPlayer.playSound("ordlista", "feedback");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
