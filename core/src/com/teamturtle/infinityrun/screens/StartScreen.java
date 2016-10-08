@@ -64,6 +64,7 @@ public class StartScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    SoundPlayer.playSound("spela", "feedback");
                     observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -75,8 +76,8 @@ public class StartScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
                     SoundPlayer.playSound("ordlista", "feedback");
+                    observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -28,6 +28,7 @@ import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordImpl;
 import com.teamturtle.infinityrun.models.words.WordLoader;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.storage.PlayerData;
@@ -35,9 +36,6 @@ import com.teamturtle.infinityrun.storage.PlayerData;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Henrik on 2016-10-03.
- */
 public class DictionaryScreen extends AbstractScreen {
 
     private static final String LABEL_BG_URL = "label_bg.png";
@@ -75,6 +73,7 @@ public class DictionaryScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    SoundPlayer.playSound("tillbaka", "feedback");
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();

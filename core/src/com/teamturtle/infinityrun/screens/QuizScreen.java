@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 import com.teamturtle.infinityrun.stages.IQuizStageListener;
 import com.teamturtle.infinityrun.stages.QuizStage;
 
@@ -53,8 +54,10 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     @Override
     public void onGuessClick(boolean isChoiceRight) {
         if (isChoiceRight) {
+            SoundPlayer.playSound("rattgissat", "feedback");
             observer.levelWon(level, ++score);
         } else {
+            SoundPlayer.playSound("felgissat", "feedback");
             observer.levelWon(level, score);
         }
     }
