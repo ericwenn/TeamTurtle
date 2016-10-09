@@ -18,11 +18,9 @@ public class PauseButtonStage extends Stage {
 
     private Skin skin;
     private ImageButton pauseButton;
-    private IPauseButtonHandler handler;
 
-    public PauseButtonStage(IPauseButtonHandler handler) {
+    public PauseButtonStage() {
         super(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
-        this.handler = handler;
         skin = new Skin();
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
         skin.load(Gdx.files.internal("skin/uiskin.json"));
@@ -32,25 +30,12 @@ public class PauseButtonStage extends Stage {
 
     private void setUpButton() {
         pauseButton = new ImageButton(skin, "pause_button");
-        pauseButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                handler.pauseBtnClick();
-            }
-        });
         Table table = new Table();
         table.setSize((InfinityRun.WIDTH * 2) - pauseButton.getWidth()
                 , (InfinityRun.HEIGHT * 2) - pauseButton.getHeight());
         table.add(pauseButton);
+        pauseButton.setChecked(true);
         addActor(table);
-    }
-
-    public float getButtonX() {
-        return pauseButton.getX();
-    }
-
-    public float getButtonY() {
-        return pauseButton.getY();
     }
 
 }

@@ -12,9 +12,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
@@ -35,7 +32,6 @@ import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
-import com.teamturtle.infinityrun.stages.pause.IPauseButtonHandler;
 import com.teamturtle.infinityrun.stages.pause.IPauseStageHandler;
 import com.teamturtle.infinityrun.stages.pause.PauseButtonStage;
 import com.teamturtle.infinityrun.stages.pause.PauseStage;
@@ -48,8 +44,7 @@ import java.util.List;
  * Created by ericwenn on 9/20/16.
  */
 
-public class GameScreen extends AbstractScreen implements IPauseStageHandler
-        , IPauseButtonHandler{
+public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     private enum State {
         PLAY, PAUSE, LOST_GAME, WON_GAME
@@ -125,7 +120,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
         mMissionStage = new MissionStage();
 
         pauseStage = new PauseStage(this, screenObserver, level);
-        pauseButtonStage = new PauseButtonStage(this);
+        pauseButtonStage = new PauseButtonStage();
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
@@ -246,7 +241,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
             touchViewport.unproject(touchPos);
             if (touchPos.x > pBtnXMin && touchPos.x < pBtnXMax
                     && touchPos.y > pBtnYMin && touchPos.y < pBtnYMax) {
-                Gdx.input.setInputProcessor(pauseButtonStage);
+                pauseBtnClick();
             }else{
                 mPlayer.jump();
             }
@@ -407,8 +402,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
         resume();
     }
 
-    @Override
-    public void pauseBtnClick() {
+    private void pauseBtnClick() {
         pause();
     }
 }
