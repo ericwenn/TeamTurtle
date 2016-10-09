@@ -12,6 +12,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
@@ -32,7 +34,9 @@ import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
+import com.teamturtle.infinityrun.stages.pause.IPauseButtonHandler;
 import com.teamturtle.infinityrun.stages.pause.IPauseStageHandler;
+import com.teamturtle.infinityrun.stages.pause.PauseButtonStage;
 import com.teamturtle.infinityrun.stages.pause.PauseStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
@@ -43,12 +47,8 @@ import java.util.List;
  * Created by ericwenn on 9/20/16.
  */
 
-public class GameScreen extends AbstractScreen implements IPauseStageHandler{
-
-    @Override
-    public void continueButtonClick() {
-        System.out.println("click");
-    }
+public class GameScreen extends AbstractScreen implements IPauseStageHandler
+        , IPauseButtonHandler{
 
     private enum State {
         PLAY, PAUSE, LOST_GAME, WON_GAME
@@ -81,6 +81,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler{
     private MissionStage mMissionStage;
 
     private PauseStage pauseStage;
+    private PauseButtonStage pauseButtonStage;
 
     private State state;
 
@@ -101,7 +102,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler{
         this.screenObserver = screenObserver;
 
         this.level = level;
-
         //Set state
         resume();
 
@@ -117,7 +117,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler{
         playerData = new PlayerData();
     }
 
-
     @Override
     public void show() {
         //Change input focus to this stage
@@ -126,7 +125,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler{
 
         mMissionStage = new MissionStage();
 
-        pauseStage = new PauseStage(this);
+        pauseStage = new PauseStage(this, screenObserver, level);
+        pauseButtonStage = new PauseButtonStage();
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
@@ -185,6 +185,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler{
                 gameUpdate(delta);
                 renderWorld();
                 mMissionStage.draw();
+                pauseButtonStage.draw();
                 break;
             case LOST_GAME:
                     screenObserver.levelFailed(level);
@@ -195,6 +196,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler{
             case PAUSE:
                 renderWorld();
                 pauseStage.draw();
+                mMissionStage.draw();
                 break;
         }
     }
@@ -235,13 +237,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler{
     private void handleInput() {
         if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) {
             mPlayer.jump();
-            Timer timer = new Timer();
-            timer.scheduleTask(new Timer.Task() {
-                @Override
-                public void run() {
-                    state = State.PLAY;
-                }
-            }, 5);
         }
     }
 
@@ -277,6 +272,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler{
         }
         mPlayer.dispose();
         bg.dispose();
+        pauseStage.dispose();
     }
 
     public void drawParallaxContent() {
@@ -387,5 +383,15 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler{
         });
 
         this.mEventHandler = eventHandler;
+    }
+
+    @Override
+    public void continueButtonClick() {
+        resume();
+    }
+
+    @Override
+    public void pauseButtonClick() {
+        pause();
     }
 }
