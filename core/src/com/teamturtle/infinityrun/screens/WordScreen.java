@@ -54,6 +54,7 @@ public class WordScreen extends AbstractScreen {
     private List<String> descriptionList;
     private Word word;
     private Sound sound;
+    private Boolean hasSound;
 
     private IScreenObserver observer;
 
@@ -64,7 +65,12 @@ public class WordScreen extends AbstractScreen {
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
         this.stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         this.word = word;
-        sound = Gdx.audio.newSound(Gdx.files.internal("audio/apple.wav"));
+        if(word.getSoundUrl() != null) {
+            sound = Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl()));
+            hasSound = true;
+        }
+        else
+            hasSound = false;
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_URL));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter
@@ -127,7 +133,8 @@ public class WordScreen extends AbstractScreen {
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                sound.play();
+                if(hasSound)
+                    sound.play();
             }
         });
 
