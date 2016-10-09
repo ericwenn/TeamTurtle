@@ -42,6 +42,7 @@ public class QuizStage extends Stage {
     private List<Word> guesses;
     private List<TextButton> guessButtons;
     private List<ImageButton> soundButtons;
+    private List<Sound> soundList;
     private WordLoader wordLoader;
 
     //    Components
@@ -94,6 +95,7 @@ public class QuizStage extends Stage {
     private void createButtons(final List<Word> guesses) {
         guessButtons = new ArrayList<TextButton>();
         soundButtons = new ArrayList<ImageButton>();
+        soundList = new ArrayList<Sound>();
         while (guesses.size() > 0) {
             final int index = random.nextInt((guesses.size() - 1) + 1);
 
@@ -111,12 +113,13 @@ public class QuizStage extends Stage {
 
             guesses.remove(index);
 
+            final int i = soundList.size();
             ImageButton soundButton = new ImageButton(skin, "sound_button");
+            soundList.add(Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl())));
             soundButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y){
-                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl()));
-                    sound.play();
+                    soundList.get(i).play();
                 }
             });
             soundButtons.add(soundButton);
