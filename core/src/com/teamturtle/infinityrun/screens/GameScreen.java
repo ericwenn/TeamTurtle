@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
@@ -327,6 +328,19 @@ public class GameScreen extends AbstractScreen {
             @Override
             public void onCollision(Player p, Emoji e) {
                 e.triggerExplode();
+                if (activeMission.getCorrectWord().equals(e.getWordModel())) {
+                    mPlayerTail.setColor(0,1,0);
+                } else {
+                    mPlayerTail.setColor(1,0,0);
+                }
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        mPlayerTail.setColor(1,1,1);
+                    }
+                },2);
+
+
                 if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
                     hasSuccededInAllMissions = false;
                 }

@@ -22,6 +22,7 @@ public class MissionStage extends Stage {
             TABLE_HEIGHT = 50,
             TABLE_OFFSET_BOTTOM = 10,
             TABLE_OFFSET_RIGHT = 10;
+    private static final String CATCH_PREFIX = "Plocka 1x";
     private Skin mSkin;
 
     private Table mMissionTable;
@@ -43,7 +44,7 @@ public class MissionStage extends Stage {
 
         mMissionTable.clearChildren();
 
-        Label emojiLabel = new Label( "Plocka 1x " + emojiModel.getText(), mSkin);
+        Label emojiLabel = new Label( CATCH_PREFIX + " " + emojiModel.getText(), mSkin);
         mMissionTable.add(emojiLabel).height(50).expandX().align(Align.right).padRight(10);
 
         Image emojiImage = new Image(new Texture(Gdx.files.internal(emojiModel.getIconUrl())));
