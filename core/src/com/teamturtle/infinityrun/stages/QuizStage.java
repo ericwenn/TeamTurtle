@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
@@ -53,7 +53,7 @@ public class QuizStage extends Stage {
     private static final float ROW_PADDING = 20.0f;
 
     public QuizStage(IQuizStageListener handler, List<Word> collectedWords) {
-        super(new FitViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
+        super(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         this.handler = handler;
 
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
