@@ -17,6 +17,7 @@ public class PlayerTail extends AbstractEntity {
 
     private static final int TAIL_LENGTH = 40;
     private static final int TAIL_INTERVAL = 1;
+    private ShapeRenderer shapeRenderer;
 
 
     private int addIndex = 0;
@@ -30,6 +31,7 @@ public class PlayerTail extends AbstractEntity {
 
         lineColor = new Color(1,1,1,1);
         vertices = new float[ TAIL_LENGTH * 2];
+        shapeRenderer = new ShapeRenderer();
     }
 
     @Override
@@ -48,9 +50,8 @@ public class PlayerTail extends AbstractEntity {
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-        ShapeRenderer sr = new ShapeRenderer();
-        sr.setProjectionMatrix( spriteBatch.getProjectionMatrix());
-        sr.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setProjectionMatrix( spriteBatch.getProjectionMatrix());
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         Color c1 = new Color(lineColor);
         Color c2 = new Color(lineColor);
 
@@ -58,9 +59,9 @@ public class PlayerTail extends AbstractEntity {
         for( int i = 0; i < vertices.length - 2; i = i+2) {
             c1.a = (vertices.length - i) / (float)vertices.length;
             c2.a = (vertices.length - i - 1) / (float)vertices.length;
-            sr.line(vertices[i], vertices[i + 1], vertices[i + 2], vertices[i + 3], c1, c2);
+            shapeRenderer.line(vertices[i], vertices[i + 1], vertices[i + 2], vertices[i + 3], c1, c2);
         }
-        sr.end();
+        shapeRenderer.end();
 
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
@@ -69,7 +70,7 @@ public class PlayerTail extends AbstractEntity {
 
     @Override
     public void dispose() {
-
+        shapeRenderer.dispose();
     }
 
 
@@ -88,7 +89,7 @@ public class PlayerTail extends AbstractEntity {
     }
 
 
-    
+
     public void setColor(float r, float g, float b) {
         this.lineColor = new Color(r, g, b, 1);
     }
