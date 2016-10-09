@@ -47,8 +47,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	back_button: { imageUp: back_button_up, imageDown: back_button_down},
 	play_button: {imageUp: play_up, imageDown: play_down},
 	dictionary_button: {imageUp: wordlist_up, imageDown: wordlist_down},
-	listen_button: {imageUp: listen_up, imageDown: listen_down},
-	lock_button: {imageUp: lock_image, imageDown: lock_image}
+	listen_button: {imageUp: listen_up, imageDown: listen_down}
 },
 com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 	default-vertical: { handle: default-splitpane-vertical },
