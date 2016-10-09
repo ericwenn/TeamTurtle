@@ -72,9 +72,11 @@ public class Player extends AbstractEntity {
         fixture.setUserData(this);
     }
 
-    public void jump(){
+    public boolean tryToJump(){
         if (b2body.getLinearVelocity().y == 0) {
             b2body.applyLinearImpulse(new Vector2(0, JUMP_IMPULSE), b2body.getWorldCenter(), true);
+            return true;
         }
+        return false;
     }
 }
