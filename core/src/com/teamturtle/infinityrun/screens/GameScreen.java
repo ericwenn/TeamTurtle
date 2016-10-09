@@ -32,6 +32,7 @@ import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
+import com.teamturtle.infinityrun.stages.pause.IPauseStageHandler;
 import com.teamturtle.infinityrun.stages.pause.PauseStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
@@ -42,7 +43,12 @@ import java.util.List;
  * Created by ericwenn on 9/20/16.
  */
 
-public class GameScreen extends AbstractScreen {
+public class GameScreen extends AbstractScreen implements IPauseStageHandler{
+
+    @Override
+    public void continueButtonClick() {
+        System.out.println("click");
+    }
 
     private enum State {
         PLAY, PAUSE, LOST_GAME, WON_GAME
@@ -86,6 +92,8 @@ public class GameScreen extends AbstractScreen {
     private Mission activeMission;
     private boolean hasSuccededInAllMissions = true;
 
+    private Texture screenShot;
+
     private PlayerData playerData;
 
     public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
@@ -95,7 +103,7 @@ public class GameScreen extends AbstractScreen {
         this.level = level;
 
         //Set state
-        state = State.PLAY;
+        resume();
 
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
@@ -118,7 +126,7 @@ public class GameScreen extends AbstractScreen {
 
         mMissionStage = new MissionStage();
 
-        pauseStage = new PauseStage();
+        pauseStage = new PauseStage(this);
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
@@ -164,6 +172,9 @@ public class GameScreen extends AbstractScreen {
         handleInput();
         world.step(1 / 60f, 6, 2);
         mPlayer.update(delta);
+        for (Entity entity : emojiSprites) {
+            entity.update(delta);
+        }
     }
 
 
@@ -171,7 +182,8 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         switch (state) {
             case PLAY:
-                renderWorld(delta);
+                gameUpdate(delta);
+                renderWorld();
                 mMissionStage.draw();
                 break;
             case LOST_GAME:
@@ -181,14 +193,13 @@ public class GameScreen extends AbstractScreen {
                 //TODO should read some player model
                     screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
             case PAUSE:
+                renderWorld();
                 pauseStage.draw();
                 break;
         }
     }
 
-    private void renderWorld(float delta) {
-        gameUpdate(delta);
-
+    private void renderWorld() {
         tiledMapRenderer.setView(getOrthoCam());
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -210,7 +221,6 @@ public class GameScreen extends AbstractScreen {
 
         mPlayer.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
-            entity.update(delta);
             entity.render(getSpriteBatch());
         }
         getSpriteBatch().end();
@@ -225,7 +235,6 @@ public class GameScreen extends AbstractScreen {
     private void handleInput() {
         if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) {
             mPlayer.jump();
-            state = State.PAUSE;
             Timer timer = new Timer();
             timer.scheduleTask(new Timer.Task() {
                 @Override
@@ -243,12 +252,12 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void pause() {
-
+        state = State.PAUSE;
     }
 
     @Override
     public void resume() {
-
+        state= State.PLAY;
     }
 
     @Override
