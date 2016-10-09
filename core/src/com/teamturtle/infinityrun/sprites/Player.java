@@ -81,11 +81,13 @@ public class Player extends AbstractEntity {
             canDoubleJump = true;
         }
         else if(canDoubleJump){
-            if(b2body.getLinearVelocity().y <= 0)
+            if(b2body.getLinearVelocity().y <= 0) {
                 b2body.setLinearVelocity(b2body.getLinearVelocity().x, 0);
-            else
+            }
+            else {
                 b2body.setLinearVelocity(b2body.getLinearVelocity().x,
                         b2body.getLinearVelocity().y / 2);
+            }
             jumpStrength = JUMP_IMPULSE;
             canDoubleJump = false;
         }
