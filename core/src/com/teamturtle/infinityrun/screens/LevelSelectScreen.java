@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -71,21 +72,22 @@ public class LevelSelectScreen extends AbstractScreen{
         for(final Level level: levels) {
             int playerScoreOnLevel = mPlayerData.getPlayerProgressOnLevel(level);
 
+
+
             Table levelButtonTable = new Table();
+            TextButton button = new TextButton(i+ "", skin, "level_text_button");
             // TODO Change button style if the level is unplayable
             if( progressedThisFar ) {
-                TextButton button = new TextButton(i+ "", skin, "level_text_button");
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         observer.playLevel(level);
                     }
                 });
-                levelButtonTable.add(button);
             } else {
-                ImageButton button = new ImageButton(skin, "lock_button");
-                levelButtonTable.add(button);
+                button.setColor(Color.BLACK);
             }
+            levelButtonTable.add(button);
             levelButtonTable.row();
 
 
