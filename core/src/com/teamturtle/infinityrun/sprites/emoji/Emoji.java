@@ -24,7 +24,7 @@ public class Emoji extends AbstractEntity {
 
     private static final float EXPLOSION_SCALE = 1.3f;
     private static final float EMOJI_SIZE = 32;
-    private  static final int FONT_SIZE = 25;
+    private static final int FONT_SIZE = 25;
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf";
 
 
@@ -34,6 +34,7 @@ public class Emoji extends AbstractEntity {
 
     private boolean isExploded = false;
     private Body mBody;
+    private boolean hasSound;
 
     private BitmapFont font;
     private float textLength;
@@ -80,7 +81,14 @@ public class Emoji extends AbstractEntity {
         GlyphLayout layout = new GlyphLayout(font, wordModel.getText());
         textLength = layout.width;
 
-        emojiSound = Gdx.audio.newSound(Gdx.files.internal(wordModel.getSoundUrl()));
+        if(!wordModel.getSoundUrl().equals("404")) {
+            emojiSound = Gdx.audio.newSound(Gdx.files.internal(wordModel.getSoundUrl()));
+            hasSound = true;
+        }
+        else
+        {
+            hasSound = false;
+        }
     }
 
     public void setBody(Body body) {
@@ -89,7 +97,8 @@ public class Emoji extends AbstractEntity {
 
     public void triggerExplode() {
         isExploded = true;
-        emojiSound.play();
+        if(hasSound)
+            emojiSound.play();
     }
 
     @Override
@@ -133,7 +142,8 @@ public class Emoji extends AbstractEntity {
     public void dispose() {
         texture.dispose();
         mBody.getWorld().destroyBody(mBody);
-        emojiSound.dispose();
+        if(hasSound)
+            emojiSound.dispose();
         font.dispose();
     }
 

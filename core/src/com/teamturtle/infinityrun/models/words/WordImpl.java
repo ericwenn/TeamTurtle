@@ -1,8 +1,5 @@
 package com.teamturtle.infinityrun.models.words;
 
-/**
- * Created by ericwenn on 10/2/16.
- */
 public class WordImpl implements Word{
     public String id;
     public String word;
@@ -20,8 +17,10 @@ public class WordImpl implements Word{
 
     @Override
     public String getSoundUrl() {
-//        TODO SUPER DUMB
-        return "audio/apple.wav";
+        if(soundUrl != null)
+            return "audio/" + soundUrl + ".mp3";
+        else
+            return "404";
     }
 
     @Override

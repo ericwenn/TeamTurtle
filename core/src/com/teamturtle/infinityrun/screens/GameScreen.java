@@ -29,6 +29,7 @@ import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
+import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
@@ -57,7 +58,7 @@ public class GameScreen extends AbstractScreen {
     private FillViewport mFillViewport;
 
     private Player mPlayer;
-
+    private PlayerTail mPlayerTail;
     private EventHandler mEventHandler;
 
     private TiledMap tiledMap;
@@ -158,6 +159,7 @@ public class GameScreen extends AbstractScreen {
         handleInput();
         world.step(1 / 60f, 6, 2);
         mPlayer.update(delta);
+        mPlayerTail.update(delta);
     }
 
 
@@ -202,6 +204,7 @@ public class GameScreen extends AbstractScreen {
         getSpriteBatch().begin();
 
         mPlayer.render(getSpriteBatch());
+        mPlayerTail.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
             entity.update(delta);
             entity.render(getSpriteBatch());
@@ -293,6 +296,7 @@ public class GameScreen extends AbstractScreen {
         world = new World(new Vector2(0, GRAVITY), true);
 
         mPlayer = new Player(world);
+        mPlayerTail = new PlayerTail(mPlayer);
 
         MapParser groundParser = new GroundParser(world, tiledMap, "ground");
         groundParser.parse();
