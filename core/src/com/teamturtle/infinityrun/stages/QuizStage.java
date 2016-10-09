@@ -95,7 +95,7 @@ public class QuizStage extends Stage {
         guessButtons = new ArrayList<TextButton>();
         soundButtons = new ArrayList<ImageButton>();
         while (guesses.size() > 0) {
-            int index = random.nextInt((guesses.size() - 1) + 1);
+            final int index = random.nextInt((guesses.size() - 1) + 1);
 
             TextButton button = new TextButton(guesses.get(index).getText().substring(0,1).toUpperCase() +
                     guesses.get(index).getText().substring(1), skin, "text_button");
@@ -115,7 +115,7 @@ public class QuizStage extends Stage {
             soundButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y){
-                    Sound sound = Gdx.audio.newSound(Gdx.files.internal("audio/apple.wav"));
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl()));
                     sound.play();
                 }
             });
@@ -148,22 +148,10 @@ public class QuizStage extends Stage {
             buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
         }
         buttonTable.row();
-        for(ImageButton button : soundButtons){
+        for(ImageButton button : soundButtons)
             buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
-        for(int i = 0; i < guessButtons.size(); i++) {
-            ImageButton soundButton = new ImageButton(skin, "sound_button");
-            final int index = i;
-            soundButton.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    //Sound sound = Gdx.audio.newSound(Gdx.files.internal(guesses.get(index).getSoundUrl()));
-                    //sound.play();
-                }
-            });
-            buttonTable.add(soundButton);
-        }
-        buttonTable.padTop(ROW_PADDING);
-        parentTable.add(buttonTable).bottom();
+        parentTable.add(buttonTable);
+
     }
 
     @Override
