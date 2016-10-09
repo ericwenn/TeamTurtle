@@ -3,6 +3,7 @@ package com.teamturtle.infinityrun.stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.teamturtle.infinityrun.InfinityRun;
@@ -39,6 +41,7 @@ public class QuizStage extends Stage {
     private int wordCategory;
     private List<Word> guesses;
     private List<TextButton> guessButtons;
+    private List<ImageButton> soundButtons;
     private WordLoader wordLoader;
 
     //    Components
@@ -90,10 +93,12 @@ public class QuizStage extends Stage {
 
     private void createButtons(final List<Word> guesses) {
         guessButtons = new ArrayList<TextButton>();
+        soundButtons = new ArrayList<ImageButton>();
         while (guesses.size() > 0) {
-            int index = random.nextInt((guesses.size() - 1) + 1);
+            final int index = random.nextInt((guesses.size() - 1) + 1);
 
-            TextButton button = new TextButton(guesses.get(index).getText(), skin, "text_button");
+            TextButton button = new TextButton(guesses.get(index).getText().substring(0,1).toUpperCase() +
+                    guesses.get(index).getText().substring(1), skin, "text_button");
             final Word word = guesses.get(index);
             button.pad(TEXT_BUTTON_PADDING);
             button.addListener(new ChangeListener() {
@@ -105,6 +110,16 @@ public class QuizStage extends Stage {
             guessButtons.add(button);
 
             guesses.remove(index);
+
+            ImageButton soundButton = new ImageButton(skin, "sound_button");
+            soundButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y){
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl()));
+                    sound.play();
+                }
+            });
+            soundButtons.add(soundButton);
         }
     }
 
@@ -133,20 +148,10 @@ public class QuizStage extends Stage {
             buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
         }
         buttonTable.row();
-        for(int i = 0; i < guessButtons.size(); i++) {
-            ImageButton soundButton = new ImageButton(skin, "sound_button");
-            final int index = i;
-            soundButton.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    //Sound sound = Gdx.audio.newSound(Gdx.files.internal(guesses.get(index).getSoundUrl()));
-                    //sound.play();
-                }
-            });
-            buttonTable.add(soundButton);
-        }
-        buttonTable.padTop(ROW_PADDING);
-        parentTable.add(buttonTable).bottom();
+        for(ImageButton button : soundButtons)
+            buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
+        parentTable.add(buttonTable);
+
     }
 
     @Override
