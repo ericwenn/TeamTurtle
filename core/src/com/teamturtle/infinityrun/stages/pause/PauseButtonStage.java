@@ -35,7 +35,7 @@ public class PauseButtonStage extends Stage {
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                handler.pauseButtonClick();
+                handler.pauseBtnClick();
             }
         });
         Table table = new Table();

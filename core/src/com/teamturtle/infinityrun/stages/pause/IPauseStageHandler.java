@@ -5,6 +5,6 @@ package com.teamturtle.infinityrun.stages.pause;
  */
 public interface IPauseStageHandler {
 
-    void continueButtonClick();
+    void continueBtnClick();
 
 }

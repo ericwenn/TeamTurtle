@@ -403,12 +403,12 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
     }
 
     @Override
-    public void continueButtonClick() {
+    public void continueBtnClick() {
         resume();
     }
 
     @Override
-    public void pauseButtonClick() {
+    public void pauseBtnClick() {
         pause();
     }
 }

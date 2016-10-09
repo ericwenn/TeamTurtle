@@ -54,7 +54,7 @@ public class Player extends AbstractEntity {
 
     @Override
     public void dispose() {
-        playerStand = null;
+        playerStand.getTexture().dispose();
         world.destroyBody(b2body);
     }
 
