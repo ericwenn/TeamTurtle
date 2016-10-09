@@ -105,8 +105,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
         this.screenObserver = screenObserver;
 
         this.level = level;
-        //Set state
-        resume();
 
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
@@ -122,9 +120,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
 
     @Override
     public void show() {
-        //Change input focus to this stage
-        Gdx.input.setInputProcessor(this);
-
+        resume();
 
         mMissionStage = new MissionStage();
 
@@ -265,11 +261,13 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
 
     @Override
     public void pause() {
+        Gdx.input.setInputProcessor(pauseStage);
         state = State.PAUSE;
     }
 
     @Override
     public void resume() {
+        Gdx.input.setInputProcessor(this);
         state= State.PLAY;
     }
 
@@ -407,12 +405,10 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
     @Override
     public void continueButtonClick() {
         resume();
-        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void pauseButtonClick() {
         pause();
-        Gdx.input.setInputProcessor(pauseStage);
     }
 }
