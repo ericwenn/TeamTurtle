@@ -43,7 +43,7 @@ public class MissionStage extends Stage {
 
         mMissionTable.clearChildren();
 
-        Label emojiLabel = new Label( emojiModel.getText(), mSkin);
+        Label emojiLabel = new Label( "Plocka 1x " + emojiModel.getText(), mSkin);
         mMissionTable.add(emojiLabel).height(50).expandX().align(Align.right).padRight(10);
 
         Image emojiImage = new Image(new Texture(Gdx.files.internal(emojiModel.getIconUrl())));
