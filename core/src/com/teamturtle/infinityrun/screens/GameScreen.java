@@ -32,6 +32,7 @@ import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.Player;
+import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
 import com.teamturtle.infinityrun.stages.pause.IPauseButtonHandler;
@@ -55,6 +56,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
     }
 
     public static final float GRAVITY = -10;
+    private static final int pBtnXMax = 400, pBtnXMin = 300, pBtnYMax = 240, pBtnYMin = 160;
 
     private Texture bg, mountains, trees;
     private float mountainsPos1, mountainsPos2;
@@ -63,9 +65,10 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
     private final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
 
     private FillViewport mFillViewport;
+    private FillViewport touchViewport;
 
     private Player mPlayer;
-
+    private PlayerTail mPlayerTail;
     private EventHandler mEventHandler;
 
     private TiledMap tiledMap;
@@ -126,11 +129,14 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
         mMissionStage = new MissionStage();
 
         pauseStage = new PauseStage(this, screenObserver, level);
-        pauseButtonStage = new PauseButtonStage();
+        pauseButtonStage = new PauseButtonStage(this);
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
                 , InfinityRun.HEIGHT / InfinityRun.PPM);
+
+        //Used to transform touch input position for diffrent screen sizes
+        touchViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
 
         // Init background from file and setup starting positions to have continous background.
         bg = new Texture(PathConstants.BACKGROUND_PATH);
@@ -172,9 +178,12 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
         handleInput();
         world.step(1 / 60f, 6, 2);
         mPlayer.update(delta);
+
         for (Entity entity : emojiSprites) {
             entity.update(delta);
         }
+
+        mPlayerTail.update(delta);
     }
 
 
@@ -222,6 +231,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
         getSpriteBatch().begin();
 
         mPlayer.render(getSpriteBatch());
+        mPlayerTail.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
             entity.render(getSpriteBatch());
         }
@@ -236,13 +246,21 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
 
     private void handleInput() {
         if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) {
-            mPlayer.jump();
+            Vector2 touchPos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+            touchViewport.unproject(touchPos);
+            if (touchPos.x > pBtnXMin && touchPos.x < pBtnXMax
+                    && touchPos.y > pBtnYMin && touchPos.y < pBtnYMax) {
+                Gdx.input.setInputProcessor(pauseButtonStage);
+            }else{
+                mPlayer.jump();
+            }
         }
+
     }
 
     @Override
     public void resize(int width, int height) {
-
+        touchViewport.update(width, height);
     }
 
     @Override
@@ -314,6 +332,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
         world = new World(new Vector2(0, GRAVITY), true);
 
         mPlayer = new Player(world);
+        mPlayerTail = new PlayerTail(mPlayer);
 
         MapParser groundParser = new GroundParser(world, tiledMap, "ground");
         groundParser.parse();
@@ -388,10 +407,12 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler
     @Override
     public void continueButtonClick() {
         resume();
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
     public void pauseButtonClick() {
         pause();
+        Gdx.input.setInputProcessor(pauseStage);
     }
 }
