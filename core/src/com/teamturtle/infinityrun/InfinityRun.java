@@ -46,19 +46,6 @@ public class InfinityRun extends Game implements IScreenObserver {
 
 
 
-        WordImpl w = new WordImpl();
-        w.id = "27";
-
-        SentenceLoader sl = new SentenceLoader();
-        List<? extends Sentence> sentences = sl.getSentences(w);
-
-        if (sentences != null) {
-            for( Sentence s : sentences) {
-                Gdx.app.log("InfRun", s.getText());
-            }
-        } else {
-            Gdx.app.log("InfRun", "No words");
-        }
         try {
             changeScreen(ScreenID.MAIN_MENU);
         } catch (Exception e) {
