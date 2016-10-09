@@ -20,8 +20,8 @@ public class MissionStage extends Stage {
 
     private static final int TABLE_WIDTH = 200,
             TABLE_HEIGHT = 50,
-            TABLE_OFFSET_TOP = 10,
-            TABLE_OFFSET_LEFT = 10;
+            TABLE_OFFSET_BOTTOM = 10,
+            TABLE_OFFSET_RIGHT = 10;
     private Skin mSkin;
 
     private Table mMissionTable;
@@ -32,7 +32,7 @@ public class MissionStage extends Stage {
         mSkin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         mMissionTable = new Table(mSkin);
         mMissionTable.setSize(TABLE_WIDTH, TABLE_HEIGHT);
-        mMissionTable.setPosition( TABLE_OFFSET_LEFT, InfinityRun.HEIGHT - TABLE_HEIGHT - TABLE_OFFSET_TOP);
+        mMissionTable.setPosition( InfinityRun.WIDTH - TABLE_WIDTH - TABLE_OFFSET_RIGHT, TABLE_OFFSET_BOTTOM);
         
         this.addActor(mMissionTable);
 
@@ -43,12 +43,13 @@ public class MissionStage extends Stage {
 
         mMissionTable.clearChildren();
 
+        Label emojiLabel = new Label( emojiModel.getText(), mSkin);
+        mMissionTable.add(emojiLabel).height(50).expandX().align(Align.right).padRight(10);
+
         Image emojiImage = new Image(new Texture(Gdx.files.internal(emojiModel.getIconUrl())));
         emojiImage.setScaling(Scaling.fit);
         mMissionTable.add(emojiImage).height(40).width(40).align(Align.center);
 
-        Label emojiLabel = new Label( emojiModel.getText(), mSkin);
-        mMissionTable.add(emojiLabel).height(50).expandX().align(Align.left).padLeft(10);
     }
 
 
