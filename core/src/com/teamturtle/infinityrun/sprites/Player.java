@@ -1,9 +1,7 @@
 package com.teamturtle.infinityrun.sprites;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -42,7 +40,7 @@ public class Player extends AbstractEntity {
     }
 
     public void update(float dt) {
-        if (b2body.getLinearVelocity().x != SPEED_X) {
+        if (Math.abs( b2body.getLinearVelocity().x - SPEED_X) > 0.001) {
             b2body.setLinearVelocity(SPEED_X, b2body.getLinearVelocity().y);
         }
 
@@ -86,7 +84,7 @@ public class Player extends AbstractEntity {
 
     public boolean tryToJump(){
         float jumpStrength = 0;
-        if (b2body.getLinearVelocity().y == 0) {
+        if (Math.abs(b2body.getLinearVelocity().y) < 0.0001) {
             jumpStrength = JUMP_IMPULSE;
             canDoubleJump = true;
         }
