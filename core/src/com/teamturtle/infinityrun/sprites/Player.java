@@ -28,6 +28,9 @@ public class Player extends AbstractEntity {
     private ShapeRenderer shapeRenderer;
     private Color fillColor;
 
+
+    private int jumpsLeft = 2;
+
     public Player(World world) {
         this.world = world;
         canDoubleJump = true;
@@ -84,11 +87,10 @@ public class Player extends AbstractEntity {
 
     public boolean tryToJump(){
         float jumpStrength = 0;
-        if (Math.abs(b2body.getLinearVelocity().y) < 0.0001) {
+        if (jumpsLeft == 2) {
             jumpStrength = JUMP_IMPULSE;
-            canDoubleJump = true;
-        }
-        else if(canDoubleJump){
+            jumpsLeft--;
+        } else if(jumpsLeft == 1){
             if(b2body.getLinearVelocity().y <= 0) {
                 b2body.setLinearVelocity(b2body.getLinearVelocity().x, 0);
             }
@@ -97,7 +99,7 @@ public class Player extends AbstractEntity {
                         b2body.getLinearVelocity().y / 2);
             }
             jumpStrength = JUMP_IMPULSE;
-            canDoubleJump = false;
+            jumpsLeft--;
         }
         b2body.applyLinearImpulse(new Vector2(0, jumpStrength), b2body.getWorldCenter(), true);
         return Math.abs(jumpStrength - JUMP_IMPULSE) < 0.001;
@@ -109,5 +111,9 @@ public class Player extends AbstractEntity {
 
     public void setColor(Color c) {
         this.fillColor = c;
+    }
+
+    public void resetJump() {
+        jumpsLeft = 2;
     }
 }

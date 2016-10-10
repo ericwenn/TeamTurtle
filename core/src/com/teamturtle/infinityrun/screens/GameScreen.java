@@ -382,6 +382,14 @@ public class GameScreen extends AbstractScreen {
 
         });
 
+        eventHandler.onCollisionWithGround(new IEventHandler.GroundCollisionListener() {
+            @Override
+            public void onCollision(IEventHandler.HitDirection d) {
+                if (d == IEventHandler.HitDirection.DOWNWARDS) {
+                    mPlayer.resetJump();
+                }
+            }
+        });
 
         eventHandler.onCollisionWithObstacle(new IEventHandler.ObstacleCollisionListener() {
             @Override
