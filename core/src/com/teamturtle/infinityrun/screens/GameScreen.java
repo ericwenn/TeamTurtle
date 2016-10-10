@@ -129,8 +129,9 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         mMissionStage = new MissionStage();
 
-        pauseStage = new PauseStage(this, screenObserver, level);
         pauseButtonStage = new PauseButtonStage();
+
+        pauseStage = new PauseStage(this, screenObserver, level);
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
@@ -259,6 +260,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             touchViewport.unproject(touchPos);
             if (touchPos.x > pBtnXMin && touchPos.x < pBtnXMax
                     && touchPos.y > pBtnYMin && touchPos.y < pBtnYMax) {
+                pauseStage = new PauseStage(this, screenObserver, level);
                 pauseBtnClick();
             } else {
                 if (mPlayer.tryToJump()) {

@@ -34,7 +34,6 @@ public class PauseStage extends Stage{
 
     public PauseStage(IPauseStageHandler handler, IScreenObserver observer, Level level) {
         super(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
-
         this.handler = handler;
         this.observer = observer;
         this.level = level;
@@ -66,7 +65,6 @@ public class PauseStage extends Stage{
             public void changed(ChangeEvent event, Actor actor) {
                 removeActors();
                 runCountDownSeq();
-                //handler.continueBtnClick();
             }
         });
         retryBtn = new ImageButton(skin, "retry_button");
@@ -96,27 +94,23 @@ public class PauseStage extends Stage{
     }
 
     private void runCountDownSeq() {
-        Timer timer = new Timer();
         Table table = new Table();
         table.setFillParent(true);
         table.add(countDownLbl);
         this.addActor(table);
-        for(int i = 3; i >= 0; i--) {
-            countDownLbl.setText(i + "");
-            timer.delay(1);
-        }
+        Timer timer = new Timer();
+        timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                System.out.println("xd");
+            }
+        }, 0, 1, 1);
+        timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                handler.continueBtnClick();
+            }
+        },2);
     }
-
-    @Override
-    public void draw() {
-        super.draw();
-    }
-
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-        System.out.println("acting");
-    }
-
 
 }
