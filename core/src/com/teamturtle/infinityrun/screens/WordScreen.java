@@ -39,7 +39,7 @@ public class WordScreen extends AbstractScreen {
 
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf", BACK_BUTTON_URL = "back_button";
     private static final int TITLE_SIZE = 50, DESCRIPTION_SIZE = 25, TABLE_WIDTH = 650,
-    TABLE_HEIGHT = 400, TABLE_X = 75, TABLE_Y = 50;
+    TABLE_HEIGHT = 400, TABLE_X = 75, TABLE_Y = 50, SENTENCE_LENGTH = 45;
     private static final Color FONT_COLOR = Color.WHITE, TABLE_COLOR = Color.GRAY;
 
     private Texture bg;
@@ -49,7 +49,7 @@ public class WordScreen extends AbstractScreen {
     private Table descriptionTable;
     private Skin skin;
     private ImageButton returnButton, soundButton;
-    private Label titleLabel, descriptionLabel1, descriptionLabel2, descriptionLabel3;
+    private Label titleLabel;
     private Image image;
     private List<String> descriptionList;
     private Word word;
@@ -120,12 +120,40 @@ public class WordScreen extends AbstractScreen {
 
         titleLabel = new Label(word.getText().substring(0, 1).toUpperCase() +
                 word.getText().substring(1), new Label.LabelStyle(titleFont, FONT_COLOR));
-        descriptionLabel1 = new Label(descriptionList.get(0), new Label.LabelStyle(descriptionFont,
-                FONT_COLOR));
-        descriptionLabel2 = new Label(descriptionList.get(1), new Label.LabelStyle(descriptionFont,
-                FONT_COLOR));
-        descriptionLabel3 = new Label(descriptionList.get(2), new Label.LabelStyle(descriptionFont,
-                FONT_COLOR));
+
+        descriptionTable = new Table();
+
+        for(String s : descriptionList){
+            int rowOffset;
+            for(int i = 0; i <s.length(); i+=SENTENCE_LENGTH){
+                Label label;
+                //If the sentence is to long, it needs to get cut into multiple rows.
+                if(s.length() > i + SENTENCE_LENGTH){
+                    //Variable to know which space is furthest to the right
+                    int highestSpace = 0;
+                    int index = 0;
+                    //Find the higestSpace variable, is needed so one word isnt cut in half.
+                    for(char c : s.substring(i, i + SENTENCE_LENGTH).toCharArray()){
+                        if(c == ' '){
+                            highestSpace = index;
+                        }
+                        index++;
+                    }
+                    label = new Label(s.substring(i, i + highestSpace),
+                            new Label.LabelStyle(descriptionFont, FONT_COLOR));
+                    //Sets i to the word after the last word added the label, -1 offset because
+                    //"space" isnt requiereed to be printed when there is a new row.
+                    i -= (SENTENCE_LENGTH-highestSpace-1);
+                    rowOffset = 0;
+                }else {
+                    label = new Label(s.substring(i, s.length()),
+                            new Label.LabelStyle(descriptionFont, FONT_COLOR));
+                    rowOffset = 10;
+                }
+                descriptionTable.add(label).left().padBottom(rowOffset);
+                descriptionTable.row();
+            }
+        }
 
         image = new Image(new Texture(word.getIconUrl()));
 
@@ -150,21 +178,13 @@ public class WordScreen extends AbstractScreen {
             }
         });
 
-        descriptionTable = new Table();
-        descriptionTable.add(descriptionLabel1).left();
-        descriptionTable.row();
-        descriptionTable.add(descriptionLabel2).left();
-        descriptionTable.row();
-        descriptionTable.add(descriptionLabel3).left();
-
-        table.add(titleLabel).left().padLeft(-80).padTop(25);
+        table.add(titleLabel).left().padTop(25);
         table.add(soundButton).left().padTop(25).padLeft(30);
         table.row().padTop(10);
-        table.add(image).left().padLeft(-100);
-        table.add(descriptionTable).left().padLeft(40);
+        table.add(image).left();
+        table.add(descriptionTable).left().padLeft(40).top();
         table.row().padTop(25);
-        table.add(returnButton).colspan(2).left().padLeft(-100);
-
+        table.add(returnButton).colspan(2).left();
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
     }

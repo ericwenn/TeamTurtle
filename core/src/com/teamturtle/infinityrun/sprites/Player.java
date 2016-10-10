@@ -19,16 +19,17 @@ public class Player extends AbstractEntity {
 
     private World world;
     private Body b2body;
+    private boolean canDoubleJump;
     private TextureRegion playerStand;
     public static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32;
     private static final int COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 150, START_Y = 300;
     private static final float JUMP_IMPULSE = 4.5f;
-    private static final float IMPULSE_X = 0.1f;
     private static final float SPEED_X = 2.5f;
     private static final String TEXTURE_URL = "dalahorse_32_flipped.png";
 
     public Player(World world) {
         this.world = world;
+        canDoubleJump = true;
 
         setPosition(0, InfinityRun.HEIGHT / 2);
         definePlayer();
@@ -37,8 +38,8 @@ public class Player extends AbstractEntity {
     }
 
     public void update(float dt) {
-        if (b2body.getLinearVelocity().x <= SPEED_X) {
-            b2body.applyLinearImpulse(new Vector2(IMPULSE_X, 0), b2body.getWorldCenter(), true);
+        if (b2body.getLinearVelocity().x != SPEED_X) {
+            b2body.setLinearVelocity(SPEED_X, b2body.getLinearVelocity().y);
         }
 
         setPosition(b2body.getPosition().x - PLAYER_WIDTH / 2 / InfinityRun.PPM
@@ -73,10 +74,23 @@ public class Player extends AbstractEntity {
     }
 
     public boolean tryToJump(){
+        float jumpStrength = 0;
         if (b2body.getLinearVelocity().y == 0) {
-            b2body.applyLinearImpulse(new Vector2(0, JUMP_IMPULSE), b2body.getWorldCenter(), true);
-            return true;
+            jumpStrength = JUMP_IMPULSE;
+            canDoubleJump = true;
         }
-        return false;
+        else if(canDoubleJump){
+            if(b2body.getLinearVelocity().y <= 0) {
+                b2body.setLinearVelocity(b2body.getLinearVelocity().x, 0);
+            }
+            else {
+                b2body.setLinearVelocity(b2body.getLinearVelocity().x,
+                        b2body.getLinearVelocity().y / 2);
+            }
+            jumpStrength = JUMP_IMPULSE;
+            canDoubleJump = false;
+        }
+        b2body.applyLinearImpulse(new Vector2(0, jumpStrength), b2body.getWorldCenter(), true);
+        return jumpStrength == JUMP_IMPULSE;
     }
 }
