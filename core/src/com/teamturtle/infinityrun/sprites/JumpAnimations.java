@@ -92,7 +92,7 @@ public class JumpAnimations extends AbstractEntity {
     }
 
 
-    private class JumpAnimation {
+    private static class JumpAnimation {
         public float x;
         public float y;
         public float radius;
