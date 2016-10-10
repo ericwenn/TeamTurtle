@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="385">
+ <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="mini_tileset.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="17" name="greentileset" tilewidth="32" tileheight="32" tilecount="52" columns="13">
+  <image source="greentileset.png" width="440" height="131"/>
+  <tile id="3">
+   <animation>
+    <frame tileid="8" duration="100"/>
+    <frame tileid="7" duration="100"/>
+    <frame tileid="6" duration="100"/>
+    <frame tileid="5" duration="100"/>
+    <frame tileid="4" duration="100"/>
+    <frame tileid="3" duration="100"/>
+   </animation>
+  </tile>
+ </tileset>
+ <layer name="graphics" width="225" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt18EKgkAQBmBfobpXUJ2KOlfv/16NUBCVsrrpRn4f/DfF0R13tKoAAAAAAIZ3jlxeci1aEQD/zNxhKj71un5/fy5Tfx7Ab3jsTfakcQ01E0rNmj6z31ykTVNPtfXM2N+gs8gi8dgx/gU390zFtnQBT75ZS8oa9lnnrjWW7KWUWuv6lpF15rWa7rPPmrbtCbnv5y7j3BRzkY7ZRw6RY+SknqzU+8ZKRIplHbkBWYg+1g==
+  </data>
+ </layer>
+ <objectgroup name="ground">
+  <object id="338" x="-3586.78" y="416.118" width="14373.6" height="63.8825"/>
+  <object id="341" x="992" y="320">
+   <polygon points="0,0 29.7521,22.2471 62.6797,21.2493 96,0"/>
+  </object>
+  <object id="351" x="3232" y="352">
+   <polygon points="0,0 320,0 298.635,20.8861 20.01,20.8861"/>
+  </object>
+  <object id="352" x="3648" y="352">
+   <polygon points="0,0 224,0 194.528,22.2722 19.868,19.4999"/>
+  </object>
+  <object id="353" x="3712" y="256">
+   <polygon points="0,0 224,0 198.452,22.6249 16.8605,19.8525"/>
+  </object>
+  <object id="354" x="4000" y="320">
+   <polygon points="0,0 160,0 139.174,21.0036 19.9612,21.0036"/>
+  </object>
+  <object id="364" x="4544" y="352" width="64" height="64"/>
+  <object id="369" x="4704" y="320">
+   <polygon points="0,0 160,0 138.436,21.0036 18.2992,21.0036"/>
+  </object>
+  <object id="370" x="4896" y="352">
+   <polygon points="0,0 192,0 165.455,21.3481 20.3663,21.3481"/>
+  </object>
+  <object id="371" x="4928" y="224">
+   <polygon points="0,0 192,0 169.496,23.6666 21.635,21.8183"/>
+  </object>
+  <object id="376" x="5696" y="384" width="64" height="32"/>
+  <object id="379" x="5664" y="320">
+   <polygon points="0,0 224,0 200.523,20.0795 15.6969,21.0036"/>
+  </object>
+  <object id="380" x="5952" y="256">
+   <polygon points="0,0 160,0 137.086,22.1628 17.8734,22.1628"/>
+  </object>
+  <object id="381" x="6080" y="320">
+   <polygon points="0,0 160,0 138.464,22.8519 19.2515,21.9277"/>
+  </object>
+  <object id="382" x="6080" y="160">
+   <polygon points="0,0 192,0 170.809,22.0534 20.1756,22.0534"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="emoji_placeholders">
+  <object id="335" x="1024" y="384" width="32" height="32"/>
+  <object id="339" x="1024" y="256" width="32" height="32"/>
+  <object id="344" x="2368" y="384" width="32" height="32"/>
+  <object id="347" x="2368" y="288" width="32" height="32"/>
+  <object id="357" x="3808" y="320" width="32" height="32"/>
+  <object id="359" x="3840" y="224" width="32" height="32"/>
+  <object id="366" x="5056" y="320" width="32" height="32"/>
+  <object id="367" x="5120" y="160" width="32" height="32"/>
+  <object id="374" x="6240" y="256" width="32" height="32"/>
+  <object id="375" x="6272" y="96" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="obstacle">
+  <object id="348" x="2142.61" y="414.731">
+   <polygon points="0,0 7.26721,-18.9439 24.2299,-14.9527 32,0"/>
+  </object>
+  <object id="349" x="2430.65" y="416.132">
+   <polygon points="0,0 11.9737,-18.9583 27.9385,-15.9649 33.3474,-0.0143684"/>
+  </object>
+  <object id="355" x="3232" y="416">
+   <polygon points="0,0 7.53424,-16.7763 28.3271,-15.3901 32,0"/>
+  </object>
+  <object id="365" x="4512" y="416">
+   <polygon points="0,0 7.45435,-18.3872 25.281,-19.1623 32,0"/>
+  </object>
+  <object id="368" x="5088" y="416">
+   <polygon points="0,0 5.79909,-19.5487 26.1299,-15.8521 32,0"/>
+  </object>
+  <object id="377" x="5696" y="384">
+   <polygon points="0,0 6.80011,-18.969 24.3586,-17.1208 32,0"/>
+  </object>
+  <object id="378" x="5728" y="384">
+   <polygon points="0,0 9.91701,-18.969 28.3996,-15.2725 32,0"/>
+  </object>
+  <object id="383" x="5920" y="416">
+   <polygon points="0,0 10.1358,-17.7004 30.4667,-14.0039 32,0"/>
+  </object>
+  <object id="384" x="5952" y="416">
+   <polygon points="0,0 10.4804,-18.6245 28.9629,-14.0039 32,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="goal">
+  <object id="361" x="6656" y="0" width="32" height="480"/>
+ </objectgroup>
+ <objectgroup name="quest">
+  <object id="334" x="416" y="0" width="32" height="480"/>
+  <object id="340" x="1536" y="0" width="32" height="480"/>
+  <object id="350" x="2848" y="0" width="32" height="480"/>
+  <object id="360" x="6656" y="0" width="32" height="480"/>
+  <object id="363" x="4224" y="0" width="32" height="480"/>
+  <object id="373" x="5280" y="0" width="32" height="480"/>
+ </objectgroup>
+</map>
