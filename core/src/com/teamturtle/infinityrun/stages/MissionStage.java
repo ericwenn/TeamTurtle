@@ -25,7 +25,9 @@ public class MissionStage extends Stage {
             TABLE_OFFSET_RIGHT = 10;
     private static final String CATCH_PREFIX = "Plocka 1x";
 
-    private static final float SCALE_BY = 1.1f;
+    private static final float SCALE_BY = 1.2f;
+    private static final int SCALE_STEP_COUNT = 100;
+    private static final float SCALE_STEP_SECONDS = .01f;
     private Skin mSkin;
 
     private Table mMissionTable;
@@ -36,9 +38,9 @@ public class MissionStage extends Stage {
         mSkin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         mMissionTable = new Table(mSkin);
         mMissionTable.setSize(TABLE_WIDTH, TABLE_HEIGHT);
-        mMissionTable.setPosition( InfinityRun.WIDTH - TABLE_WIDTH - TABLE_OFFSET_RIGHT, TABLE_OFFSET_BOTTOM);
+        mMissionTable.setPosition( InfinityRun.WIDTH / 2 - TABLE_WIDTH / 2, TABLE_OFFSET_BOTTOM);
         mMissionTable.setTransform(true);
-        mMissionTable.setOrigin( Align.bottomRight);
+        mMissionTable.setOrigin( Align.bottom);
         
         this.addActor(mMissionTable);
 
@@ -46,7 +48,6 @@ public class MissionStage extends Stage {
 
 
     private void changeEmoji(Word emojiModel) {
-
         mMissionTable.clearChildren();
 
         Label emojiLabel = new Label( CATCH_PREFIX + " " + emojiModel.getText(), mSkin);
@@ -67,13 +68,12 @@ public class MissionStage extends Stage {
         }
 
         final int[] index = {0};
-        final int steps = 10;
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                mMissionTable.setScale( scaleFn(index[0]++, steps));
+                mMissionTable.setScale( scaleFn(index[0]++, SCALE_STEP_COUNT));
             }
-        }, 0, .1f, steps);
+        }, 0, SCALE_STEP_SECONDS, SCALE_STEP_COUNT);
 
     }
 
