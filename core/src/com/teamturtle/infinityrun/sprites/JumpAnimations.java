@@ -74,8 +74,11 @@ public class JumpAnimations extends AbstractEntity {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
 
+        Color c = new Color(circleColor);
+
         for (JumpAnimation a : mAnimations) {
-            shapeRenderer.setColor( circleColor );
+            c.a = a.alpha;
+            shapeRenderer.setColor( c );
             shapeRenderer.circle(a.x, a.y, a.radius / InfinityRun.PPM, CIRCLE_SEGMENTS);
         }
 
@@ -93,7 +96,7 @@ public class JumpAnimations extends AbstractEntity {
 
 
     private static class JumpAnimation {
-        public float x;
+        private float x;
         public float y;
         public float radius;
         public int frame;
