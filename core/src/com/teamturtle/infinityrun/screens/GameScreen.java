@@ -56,7 +56,7 @@ public class GameScreen extends AbstractScreen {
     private float mountainsPos1, mountainsPos2;
     private float treePos1, treePos2;
     private float oldCamX;
-    private final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
+    private static final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
 
     private FillViewport mFillViewport;
 
