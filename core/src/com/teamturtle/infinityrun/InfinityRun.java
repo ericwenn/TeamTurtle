@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.models.level.Level;
@@ -44,7 +45,7 @@ public class InfinityRun extends Game implements IScreenObserver {
         try {
             changeScreen(ScreenID.MAIN_MENU);
         } catch (Exception e) {
-            // This cannot fail...yet
+            Gdx.app.error("InfinityRun", "Could not change screen", e);
         }
     }
 

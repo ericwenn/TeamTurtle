@@ -1,6 +1,5 @@
 package com.teamturtle.infinityrun.collisions;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -68,11 +67,11 @@ public class EventHandler implements IEventHandler, ContactListener {
 
 
         // Check obstacle
-        if (obj1 == SensorParser.Type.OBSTACLE.getName() && obj2 instanceof Player) {
+        if (SensorParser.Type.OBSTACLE.getName().equals(obj1) && obj2 instanceof Player) {
             mObstacleCollisionHandler.onCollision((Player) obj2);
             return;
         }
-        if (obj2 == SensorParser.Type.OBSTACLE.getName() && obj1 instanceof Player) {
+        if (SensorParser.Type.OBSTACLE.getName().equals(obj2) && obj1 instanceof Player) {
             mObstacleCollisionHandler.onCollision((Player) obj1);
             return;
         }
@@ -82,11 +81,11 @@ public class EventHandler implements IEventHandler, ContactListener {
 
         if (mQuestChangedListener != null) {
             // Check quest
-            if (obj1 == SensorParser.Type.QUEST.getName() && obj2 instanceof Player) {
+            if (SensorParser.Type.QUEST.getName().equals(obj1) && obj2 instanceof Player) {
                 mQuestChangedListener.onQuestChanged();
                 return;
             }
-            if (obj2 == SensorParser.Type.QUEST.getName() && obj1 instanceof Player) {
+            if (SensorParser.Type.QUEST.getName().equals(obj2) && obj1 instanceof Player) {
                 mQuestChangedListener.onQuestChanged();
                 return;
             }
@@ -96,11 +95,11 @@ public class EventHandler implements IEventHandler, ContactListener {
 
 
         // Check goal
-        if (obj1 == SensorParser.Type.GOAL.getName() && obj2 instanceof Player) {
+        if (SensorParser.Type.GOAL.getName().equals(obj1) && obj2 instanceof Player) {
             mLevelFinishedListener.onLevelFinished();
             return;
         }
-        if (obj2 == SensorParser.Type.GOAL.getName() && obj1 instanceof Player) {
+        if (SensorParser.Type.GOAL.getName().equals(obj2) && obj1 instanceof Player) {
             mLevelFinishedListener.onLevelFinished();
             return;
         }
