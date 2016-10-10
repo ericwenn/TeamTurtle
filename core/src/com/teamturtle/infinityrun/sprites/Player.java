@@ -1,5 +1,6 @@
 package com.teamturtle.infinityrun.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,7 +27,11 @@ public class Player extends AbstractEntity {
     public static final int PLAYER_WIDTH = 16, PLAYER_HEIGHT = 16;
     private static final int COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 150, START_Y = 300;
     private static final float JUMP_IMPULSE = 4.5f;
-    private static final float SPEED_X = 2.5f;
+    private static final float SPEED_X_MIN = 2.5f;
+    private static final float SPEED_X_MAX = 2.58f;
+    private static final float LINEAR_SPEED_X = 2.5799992f;
+    private static final float IMPULSE_X = 0.1f;
+
     private ShapeRenderer shapeRenderer;
     private Color fillColor;
 
@@ -42,8 +47,10 @@ public class Player extends AbstractEntity {
     }
 
     public void update(float dt) {
-        if (b2body.getLinearVelocity().x != SPEED_X) {
-            b2body.setLinearVelocity(SPEED_X, b2body.getLinearVelocity().y);
+        if (b2body.getLinearVelocity().x < SPEED_X_MIN) {
+            b2body.applyLinearImpulse(new Vector2(IMPULSE_X, 0), b2body.getWorldCenter(), true);
+        } else if (b2body.getLinearVelocity().x > SPEED_X_MAX) {
+            b2body.setLinearVelocity(LINEAR_SPEED_X, b2body.getLinearVelocity().y);
         }
 
         setPosition(b2body.getPosition().x - PLAYER_WIDTH / 2 / InfinityRun.PPM
