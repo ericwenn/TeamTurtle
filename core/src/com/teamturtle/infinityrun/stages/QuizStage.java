@@ -39,7 +39,6 @@ import static com.badlogic.gdx.math.MathUtils.random;
 public class QuizStage extends Stage {
     private Skin skin;
     private IQuizStageListener handler;
-    private Label quizLabel;
     private Emoji emoji;
     private int wordCategory;
     private List<Word> guesses;
@@ -67,7 +66,6 @@ public class QuizStage extends Stage {
         this.handler = handler;
 
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-        quizLabel = new Label("Fråga!", skin);
         wordLoader = new WordLoader();
         wordCategory = collectedWords.get(0).getCategory();
         this.score = score;

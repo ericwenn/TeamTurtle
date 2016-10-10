@@ -4,7 +4,6 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.World;
 import com.teamturtle.infinityrun.models.MissionHandler;
 
 import java.io.Serializable;
@@ -22,15 +21,13 @@ import java.util.List;
 public class MissionParser {
 
 
-    private final World world;
     private final TiledMap tiledMap;
     private final String layerName;
 
 
     private List<Rectangle> mMissionRectangles = new ArrayList<Rectangle>();
 
-    public MissionParser(World world, TiledMap tiledMap, String layerName) {
-        this.world = world;
+    public MissionParser(TiledMap tiledMap, String layerName) {
         this.tiledMap = tiledMap;
         this.layerName = layerName;
     }

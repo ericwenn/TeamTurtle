@@ -37,8 +37,6 @@ import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
-import org.junit.internal.runners.statements.Fail;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -324,7 +322,7 @@ public class GameScreen extends AbstractScreen {
         groundParser.parse();
 
 
-        MissionParser missionParser = new MissionParser(world, tiledMap, "quest");
+        MissionParser missionParser = new MissionParser(tiledMap, "quest");
         mMissionHandler = missionParser.getMissionHandler();
 
         MapParser emojiParser = new EmojiParser(world, tiledMap, "emoji_placeholders", mMissionHandler, possibleWords);
