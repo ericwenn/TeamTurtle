@@ -146,8 +146,11 @@ public class InfinityRun extends Game implements IScreenObserver {
         newScreen.buildStage();
         setScreen(newScreen);
 
-        // Dispose the old one
-        oldScreen.dispose();
+        //Cant dispose oldScreen when you launch the application
+        if(oldScreen != null) {
+            // Dispose the old one
+            oldScreen.dispose();
+        }
     }
 
     public enum ScreenID {
