@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="334">
+ <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="mini_tileset.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="17" name="greentileset" tilewidth="32" tileheight="32" tilecount="52" columns="13">
+  <image source="greentileset.png" width="440" height="131"/>
+  <tile id="3">
+   <animation>
+    <frame tileid="8" duration="100"/>
+    <frame tileid="7" duration="100"/>
+    <frame tileid="6" duration="100"/>
+    <frame tileid="5" duration="100"/>
+    <frame tileid="4" duration="100"/>
+    <frame tileid="3" duration="100"/>
+   </animation>
+  </tile>
+ </tileset>
+ <layer name="graphics" width="225" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztmdkOwiAQRfmFqs/a2PjkviVu8f8/S4wlGUmRaelQWu9JbvpQloEyM0CVAgAAAADoP0XXBgDwp1y1bqXuHdtieNtkbMm0RqXGnnoZsxwAgM9Ua1bqUfGe+utFa+0oVwcTl1KJSUODxn3Mc/q05VdguKTs0ynbVgXNabH668vcAAAAF4nYn9r5QCq/tdmuZA72fY/Y+bSrPgFoeg/Ztz0ykCWF/2KF9QxtJxbmzjIX7id0H2L7PHy/XbjnavqfyWip9dTaqnqxPOSbVtnh015rQrRzlOOMISQH2futod1Z/vMdTYyxm/XikvQ6MjmK/u/i6qg1Jzo7yuWM/kE4KZ39msR0btz2tf2rbqhPV+W5uu248k0TH9yoT742WjnK5Yz+Y+DbJ7je23bWXet9ymOLltppsp6oDup7j0V1CqibsnzjkppPSF6uM4KkXo/aRrE=
+  </data>
+ </layer>
+ <objectgroup name="ground">
+  <object id="225" x="0" y="416" width="544" height="64"/>
+  <object id="226" x="736" y="416" width="288" height="64"/>
+  <object id="227" x="1376" y="352" width="288" height="64"/>
+  <object id="228" x="2464" y="352" width="448" height="128"/>
+  <object id="229" x="2912" y="416" width="96" height="64"/>
+  <object id="230" x="3008" y="352" width="224" height="128"/>
+  <object id="232" x="577.333" y="385.333" width="124" height="21.3333"/>
+  <object id="233" x="1057.33" y="353.333" width="125.333" height="21.3333"/>
+  <object id="234" x="1185.33" y="257.333" width="157.333" height="21.3333"/>
+  <object id="235" x="1217.33" y="417.333" width="124" height="20"/>
+  <object id="236" x="1441.33" y="162.667" width="156" height="20"/>
+  <object id="237" x="1729.33" y="417.333" width="188" height="22.6667"/>
+  <object id="238" x="1985.33" y="352" width="220" height="22.6667"/>
+  <object id="239" x="1854.67" y="258.667" width="94.6667" height="18.6667"/>
+  <object id="240" x="2080" y="192" width="158.667" height="21.3333"/>
+  <object id="241" x="2273.33" y="418.667" width="154.667" height="18.6667"/>
+  <object id="274" x="4096" y="288" width="96" height="96"/>
+  <object id="286" x="5248" y="96" width="96" height="64"/>
+  <object id="292" x="3008" y="256">
+   <polygon points="0,0 32,21.5869 128,21.5869 160,0"/>
+  </object>
+  <object id="294" x="3296" y="416">
+   <polygon points="0,0 31.5483,23.6622 127.58,22.5051 160,0"/>
+  </object>
+  <object id="295" x="3488" y="352">
+   <polygon points="0,0 30.4542,24.0268 129.957,22.8698 160,0"/>
+  </object>
+  <object id="293" x="3328" y="192">
+   <polygon points="0,0 30.7875,24.3601 127.976,23.2031 160,0"/>
+  </object>
+  <object id="297" x="3616" y="96">
+   <polygon points="0,0 30.8819,23.1716 95.6742,23.1716 128,0"/>
+  </object>
+  <object id="298" x="3712" y="256">
+   <polygon points="0,0 29.7563,21.6814 130.416,21.6814 160,0"/>
+  </object>
+  <object id="299" x="3968" y="352">
+   <polygon points="0,0 28.2976,24.0268 41.0246,24.0268 64,0"/>
+  </object>
+  <object id="301" x="4288" y="416">
+   <polygon points="0,0 28.7882,22.5051 193.083,22.5051 224,0"/>
+  </object>
+  <object id="300" x="4320" y="256">
+   <polygon points="0,0 30.3413,22.8384 127.53,22.8384 160,0"/>
+  </object>
+  <object id="302" x="4544" y="416">
+   <polygon points="0,0 28.4864,23.6622 226.334,21.3481 256,0"/>
+  </object>
+  <object id="304" x="4544" y="288">
+   <polygon points="0,0 30.8004,23.2345 129.146,24.3915 160,0"/>
+  </object>
+  <object id="305" x="4736" y="192">
+   <polygon points="0,0 21.6073,24.3601 41.2764,24.3601 64,0"/>
+  </object>
+  <object id="307" x="4864" y="416">
+   <polygon points="0,0 23.1919,23.6622 38.233,23.6622 64,0"/>
+  </object>
+  <object id="306" x="4800" y="96">
+   <polygon points="0,0 22.3996,22.0146 40.9117,22.0146 64,0"/>
+  </object>
+  <object id="313" x="4896" y="96" width="64" height="95.6038"/>
+  <object id="314" x="4960" y="96" width="32" height="96"/>
+  <object id="315" x="4992" y="96" width="32" height="64"/>
+  <object id="308" x="4928" y="320">
+   <polygon points="0,0 23.9843,23.6307 73.7355,22.4737 96,0"/>
+  </object>
+  <object id="309" x="5056" y="256">
+   <polygon points="0,0 22.0979,20.5244 73.0061,22.8384 96,0"/>
+  </object>
+  <object id="310" x="5152" y="128">
+   <polygon points="0,0 18.6583,22.4107 41.7984,22.4107 64,0"/>
+  </object>
+  <object id="321" x="5248" y="416">
+   <polygon points="0,0 30.2599,22.5051 97.3662,22.5051 128,0"/>
+  </object>
+  <object id="322" x="5312" y="256">
+   <polygon points="0,0 22.9531,21.6814 40.3082,21.6814 64,0"/>
+  </object>
+  <object id="323" x="5440" y="320">
+   <polygon points="0,0 30.3228,23.6307 191.147,23.6307 224,0"/>
+  </object>
+  <object id="324" x="5632" y="192">
+   <polygon points="0,0 28.0717,26.6741 98.6491,25.5171 128,0"/>
+  </object>
+  <object id="325" x="5760" y="352">
+   <polygon points="0,0 21.5573,22.8698 95.6057,24.0268 128,0"/>
+  </object>
+  <object id="326" x="5824" y="128">
+   <polygon points="0,0 28.1347,22.4107 62.8448,23.5677 96,0"/>
+  </object>
+  <object id="327" x="6080" y="384">
+   <polygon points="0,0 19.7339,23.266 38.246,23.266 64,0"/>
+  </object>
+  <object id="328" x="6240" y="256">
+   <polygon points="0,0 18.2437,19.3673 42.5408,22.8384 64,0"/>
+  </object>
+  <object id="330" x="6272" y="448" width="928" height="32"/>
+ </objectgroup>
+ <objectgroup name="emoji_placeholders">
+  <object id="251" x="1249.11" y="191.22" width="31.2392" height="31.2392"/>
+  <object id="257" x="1280" y="352" width="32" height="32"/>
+  <object id="259" x="2112" y="288" width="32" height="32"/>
+  <object id="260" x="2176" y="128" width="32" height="32"/>
+  <object id="287" x="4384" y="352" width="32" height="32"/>
+  <object id="288" x="4480" y="160" width="32" height="32"/>
+  <object id="319" x="5824" y="288" width="32" height="32"/>
+  <object id="320" x="5856" y="64" width="32" height="32"/>
+  <object id="332" x="3328" y="352" width="32" height="32"/>
+  <object id="333" x="3392" y="128" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="obstacle">
+  <object id="242" x="544" y="448" width="192" height="32"/>
+  <object id="244" x="1024" y="456.099" width="1440" height="23.901"/>
+  <object id="245" x="2912" y="384" width="96" height="32"/>
+  <object id="246" x="2911.39" y="359.548" width="96.9566" height="24.2392"/>
+  <object id="248" x="3230.84" y="456.099" width="3038.92" height="23.901"/>
+  <object id="255" x="1569.08" y="348.039">
+   <polygon points="0,0 13.9681,-17.4601 32.5922,3.49203"/>
+  </object>
+  <object id="262" x="2400.79" y="414.208">
+   <polygon points="0,0 15.0411,-17.3551 31.2392,2.31401"/>
+  </object>
+  <object id="263" x="2625.25" y="349.416">
+   <polygon points="0,0 13.8841,-17.3551 30.0821,0"/>
+  </object>
+  <object id="264" x="2688.57" y="347.943">
+   <polygon points="0,0 12.7271,-12.7271 30.0821,1.15701"/>
+  </object>
+  <object id="266" x="3201.43" y="350.573">
+   <polygon points="0,0 13.8841,-18.5121 27.7681,0"/>
+  </object>
+  <object id="271" x="3681.59" y="92.5605">
+   <polygon points="0,0 12.7271,-13.8841 30.0821,1.15701"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="goal">
+  <object id="318" x="6848" y="0" width="32" height="480"/>
+ </objectgroup>
+ <objectgroup name="quest">
+  <object id="223" x="256" y="0" width="32" height="480"/>
+  <object id="254" x="2528" y="0" width="32" height="480"/>
+  <object id="224" x="1568" y="0" width="32" height="480"/>
+  <object id="261" x="3616" y="0" width="32" height="480"/>
+  <object id="289" x="4864" y="0" width="32" height="480"/>
+  <object id="331" x="6336" y="0" width="32" height="480"/>
+ </objectgroup>
+</map>
