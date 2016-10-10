@@ -2,7 +2,10 @@ package com.teamturtle.infinityrun.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -11,7 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
@@ -40,17 +45,25 @@ public class QuizStage extends Stage {
     private int wordCategory;
     private List<Word> guesses;
     private List<TextButton> guessButtons;
+    private List<ImageButton> soundButtons;
+    private List<Sound> soundList;
     private WordLoader wordLoader;
+    private int score;
+    private boolean isStarFilled = false;
+    private float stageTime = 0;
 
     //    Components
     private Table parentTable, buttonTable;
+    private Table starTable, animatedStarTable;
+    private Texture star, noStar;
 
     private static final float TEXT_BUTTON_PADDING = 5.0f;
     private static final float PARENT_TABLE_WIDTH = 600.0f, PARENT_TABLE_HEIGHT = 370.0f;
     private static final float PARENT_TABLE_POS_X = 100.0f, PARENT_TABLE_POS_Y = 50.0f;
     private static final float ROW_PADDING = 20.0f;
+    private static final int MAX_STARS = 3;
 
-    public QuizStage(IQuizStageListener handler, List<Word> collectedWords) {
+    public QuizStage(IQuizStageListener handler, List<Word> collectedWords, int score) {
         super(new FitViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         this.handler = handler;
 
@@ -58,11 +71,19 @@ public class QuizStage extends Stage {
         quizLabel = new Label("Fråga!", skin);
         wordLoader = new WordLoader();
         wordCategory = collectedWords.get(0).getCategory();
+        this.score = score;
+        star = new Texture("ui/star.png");
+        noStar = new Texture("ui/no_star.png");
+        TextureRegion starRegion = new TextureRegion(star, 101, 101);
+        TextureRegion noStarRegion = new TextureRegion(noStar, 101, 101);
+
+        starTable = getStarsTable();
+        animatedStarTable = getAnimatedStarsTable();
 
         guesses = getRandomGuesses(collectedWords);
         emoji = new Emoji(guesses.get(0));
         createButtons(guesses);
-        createTableUi();
+        createTableUi(starTable);
         addActor(parentTable);
         Gdx.input.setInputProcessor(this);
         SoundPlayer.playSound("hararenfraga", "feedback");
@@ -92,10 +113,13 @@ public class QuizStage extends Stage {
 
     private void createButtons(final List<Word> guesses) {
         guessButtons = new ArrayList<TextButton>();
+        soundButtons = new ArrayList<ImageButton>();
+        soundList = new ArrayList<Sound>();
         while (guesses.size() > 0) {
-            int index = random.nextInt((guesses.size() - 1) + 1);
+            final int index = random.nextInt((guesses.size() - 1) + 1);
 
-            TextButton button = new TextButton(guesses.get(index).getText(), skin, "text_button");
+            TextButton button = new TextButton(guesses.get(index).getText().substring(0,1).toUpperCase() +
+                    guesses.get(index).getText().substring(1), skin, "text_button");
             final Word word = guesses.get(index);
             button.pad(TEXT_BUTTON_PADDING);
             button.addListener(new ChangeListener() {
@@ -107,16 +131,28 @@ public class QuizStage extends Stage {
             guessButtons.add(button);
 
             guesses.remove(index);
+
+            final int i = soundList.size();
+            ImageButton soundButton = new ImageButton(skin, "sound_button");
+            soundList.add(Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl())));
+            soundButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y){
+                    soundList.get(i).play();
+                }
+            });
+            soundButtons.add(soundButton);
         }
     }
 
-    private void createTableUi() {
+    private void createTableUi(Table starTable) {
         parentTable = new Table();
         parentTable.setSize(PARENT_TABLE_WIDTH, PARENT_TABLE_HEIGHT);
         parentTable.setPosition(PARENT_TABLE_POS_X, PARENT_TABLE_POS_Y);
 
-        parentTable.center().top();
-        parentTable.add(quizLabel).center().padBottom(ROW_PADDING);
+//        parentTable.center().top();
+        parentTable.add(starTable).center().top();
+        isStarFilled = false;
         parentTable.row();
         addEmojiToTable();
         parentTable.row();
@@ -135,26 +171,58 @@ public class QuizStage extends Stage {
             buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
         }
         buttonTable.row();
-        for(int i = 0; i < guessButtons.size(); i++) {
-            ImageButton soundButton = new ImageButton(skin, "sound_button");
-            final int index = i;
-            soundButton.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    //Sound sound = Gdx.audio.newSound(Gdx.files.internal(guesses.get(index).getSoundUrl()));
-                    //sound.play();
-                }
-            });
-            buttonTable.add(soundButton);
+        for(ImageButton button : soundButtons)
+            buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
+        parentTable.add(buttonTable);
+
+    }
+
+    private Table getStarsTable() {
+        Table starTable = new Table();
+        for(int i = 0; i < score; i++) {
+            starTable.add(new Image(star));
         }
-        buttonTable.padTop(ROW_PADDING);
-        parentTable.add(buttonTable).bottom();
+        for(int i = 0; i < MAX_STARS - score; i++) {
+            starTable.add(new Image(noStar));
+        }
+        return starTable;
+    }
+
+    private Table getAnimatedStarsTable() {
+        Table starTable = new Table();
+        for(int i = 0; i <= score; i++) {
+            starTable.add(new Image(star));
+        }
+        for(int i = 0; i < MAX_STARS - score - 1; i++) {
+            starTable.add(new Image(noStar));
+        }
+        return starTable;
     }
 
     @Override
     public void draw() {
         Gdx.input.setInputProcessor(this);
         super.draw();
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        stageTime += delta;
+        if (stageTime > 0.5f) {
+            if (isStarFilled) {
+                getActors().clear();
+                createTableUi(starTable);
+                isStarFilled = false;
+            }
+            else {
+                getActors().clear();
+                createTableUi(animatedStarTable);
+                isStarFilled = true;
+            }
+            addActor(parentTable);
+            stageTime = 0;
+        }
     }
 
     public void hide() {

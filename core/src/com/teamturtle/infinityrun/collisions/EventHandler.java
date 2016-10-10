@@ -6,8 +6,11 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.teamturtle.infinityrun.map_parsing.SensorParser;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+
+import java.util.Random;
 
 /**
  * Created by ericwenn on 9/25/16.
@@ -70,10 +73,12 @@ public class EventHandler implements IEventHandler, ContactListener {
         // Check obstacle
         if (obj1 == SensorParser.Type.OBSTACLE.getName() && obj2 instanceof Player) {
             mObstacleCollisionHandler.onCollision((Player) obj2);
+            SoundPlayer.playSound("banaforlorad", "feedback");
             return;
         }
         if (obj2 == SensorParser.Type.OBSTACLE.getName() && obj1 instanceof Player) {
             mObstacleCollisionHandler.onCollision((Player) obj1);
+            SoundPlayer.playSound("banaforlorad", "feedback");
             return;
         }
 

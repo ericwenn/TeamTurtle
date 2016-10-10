@@ -124,7 +124,7 @@ public class DictionaryScreen extends AbstractScreen {
         stage.addActor(rootTable);
     }
 
-    private Table createGridItem(final Word word, boolean tinted) {
+    private Table createGridItem(final Word word, final boolean tinted) {
         final Table gridItem = new Table();
         Image image = new Image(new Texture(word.getIconUrl()));
         Label label;
@@ -142,7 +142,8 @@ public class DictionaryScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 try {
-                    observer.changeScreen(word);
+                    if(!tinted)
+                        observer.changeScreen(word);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
