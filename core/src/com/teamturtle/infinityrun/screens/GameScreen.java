@@ -191,6 +191,8 @@ public class GameScreen extends AbstractScreen {
                     screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
             case PAUSE:
                 break;
+            default:
+                render(delta);
         }
     }
 
