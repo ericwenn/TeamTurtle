@@ -17,6 +17,7 @@ import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -78,6 +79,7 @@ public class LevelSelectScreen extends AbstractScreen{
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
+                        SoundPlayer.playSound("bana" + level.getId(), "feedback");
                         observer.playLevel(level);
                     }
                 });
@@ -111,6 +113,7 @@ public class LevelSelectScreen extends AbstractScreen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    SoundPlayer.playSound("tillbaka", "feedback");
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -27,6 +27,7 @@ import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.sentences.Sentence;
 import com.teamturtle.infinityrun.models.sentences.SentenceLoader;
 import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,6 +172,7 @@ public class WordScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    SoundPlayer.playSound("tillbaka", "feedback");
                     observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
                 } catch (Exception e) {
                     e.printStackTrace();
