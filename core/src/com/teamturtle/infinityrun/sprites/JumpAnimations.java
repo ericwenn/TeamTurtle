@@ -103,6 +103,7 @@ public class JumpAnimations extends AbstractEntity {
             this.x = x;
             this.y = y;
             this.radius = radius;
+            this.alpha = alpha;
             this.frame = frame;
         }
     }
