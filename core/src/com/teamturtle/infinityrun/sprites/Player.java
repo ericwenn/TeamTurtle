@@ -100,7 +100,7 @@ public class Player extends AbstractEntity {
             canDoubleJump = false;
         }
         b2body.applyLinearImpulse(new Vector2(0, jumpStrength), b2body.getWorldCenter(), true);
-        return jumpStrength == JUMP_IMPULSE;
+        return Math.abs(jumpStrength - JUMP_IMPULSE) < 0.001;
     }
 
     public void setColor(float r, float g, float b) {
