@@ -20,7 +20,24 @@ import com.teamturtle.infinityrun.screens.IScreenObserver;
  */
 public class PauseStage extends Stage{
 
+    private enum State {
+        READY(0), GO(1), RUN_GAME(2);
+
+        private int index;
+
+        State(int index) {
+            this.index = index;
+        }
+    }
+
     private static final int ROW_PAD = 10;
+    private static final int LBL_PAD = 250;
+    private static final int REPEAT_COUNT = 2;
+    private static final int TIMER_DELAY = 1;
+    private static final String READY_STR = "Redo?";
+    private static final String GO_STR = "Kör!";
+    private static final String SKIN_URL_JSON = "skin/uiskin.json";
+    private static final String SKIN_URL_ATLAS = "skin/uiskin.atlas";
 
     private Skin skin;
     private ImageButton continueBtn;
@@ -31,6 +48,10 @@ public class PauseStage extends Stage{
     private IPauseStageHandler handler;
     private IScreenObserver observer;
     private Level level;
+
+    private TextureAtlas textureAtlas;
+
+    private int sequenceState = 0;
 
     public PauseStage(IPauseStageHandler handler, IScreenObserver observer, Level level) {
         super(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
@@ -43,9 +64,10 @@ public class PauseStage extends Stage{
 
     private void setUpStage() {
         skin = new Skin();
-        skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
-        skin.load(Gdx.files.internal("skin/uiskin.json"));
-        countDownLbl = new Label("", skin);
+        textureAtlas = new TextureAtlas(Gdx.files.internal(SKIN_URL_ATLAS));
+        skin.addRegions(textureAtlas);
+        skin.load(Gdx.files.internal(SKIN_URL_JSON));
+        countDownLbl = new Label("", skin, "text-large");
         setUpButtons();
         Table table = new Table();
         table.setFillParent(true);
@@ -96,21 +118,28 @@ public class PauseStage extends Stage{
     private void runCountDownSeq() {
         Table table = new Table();
         table.setFillParent(true);
-        table.add(countDownLbl);
+        table.add(countDownLbl).padBottom(LBL_PAD);
         this.addActor(table);
         Timer timer = new Timer();
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                System.out.println("xd");
+                if (sequenceState == State.READY.index) {
+                    countDownLbl.setText(READY_STR);
+                } else if (sequenceState == State.GO.index) {
+                    countDownLbl.setText(GO_STR);
+                } else if (sequenceState == State.RUN_GAME.index) {
+                    handler.continueBtnClick();
+                }
+                sequenceState++;
             }
-        }, 0, 1, 1);
-        timer.scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                handler.continueBtnClick();
-            }
-        },2);
+        }, 0, TIMER_DELAY, REPEAT_COUNT);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        textureAtlas.dispose();
     }
 
 }

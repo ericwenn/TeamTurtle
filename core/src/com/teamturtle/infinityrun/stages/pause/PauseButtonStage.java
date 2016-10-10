@@ -1,13 +1,9 @@
 package com.teamturtle.infinityrun.stages.pause;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 
@@ -16,26 +12,29 @@ import com.teamturtle.infinityrun.InfinityRun;
  */
 public class PauseButtonStage extends Stage {
 
-    private Skin skin;
-    private ImageButton pauseButton;
+    private static final String IMAGE_URL = "ui/pause_button.png";
+    private Image pauseButton;
+    private Texture btnTexture;
 
     public PauseButtonStage() {
         super(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
-        skin = new Skin();
-        skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
-        skin.load(Gdx.files.internal("skin/uiskin.json"));
-
         setUpButton();
     }
 
     private void setUpButton() {
-        pauseButton = new ImageButton(skin, "pause_button");
+        btnTexture = new Texture(IMAGE_URL);
+        pauseButton = new Image(btnTexture);
         Table table = new Table();
         table.setSize((InfinityRun.WIDTH * 2) - pauseButton.getWidth()
                 , (InfinityRun.HEIGHT * 2) - pauseButton.getHeight());
         table.add(pauseButton);
-        pauseButton.setChecked(true);
         addActor(table);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        btnTexture.dispose();
     }
 
 }
