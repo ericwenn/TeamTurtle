@@ -2,6 +2,7 @@ package com.teamturtle.infinityrun.sprites.emoji;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -26,6 +27,7 @@ public class Emoji extends AbstractEntity {
     private static final float EMOJI_SIZE = 32;
     private static final int FONT_SIZE = 25;
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf";
+    private static final Color FONT_COLOR = Color.BLACK;
 
 
     private Word wordModel;
@@ -75,6 +77,7 @@ public class Emoji extends AbstractEntity {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter
                 = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = FONT_SIZE;
+        parameter.color = FONT_COLOR;
         font = generator.generateFont(parameter);
         generator.dispose();
 
