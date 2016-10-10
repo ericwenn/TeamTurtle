@@ -1,5 +1,6 @@
 package com.teamturtle.infinityrun.sprites;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.screens.GameScreen;
 
 /**
  * Created by ericwenn on 9/20/16.
@@ -28,6 +30,7 @@ public class Player extends AbstractEntity {
     private static final float SPEED_X = 2.5f;
     private static final String TEXTURE_URL = "dalahorse_32_flipped.png";
     private ShapeRenderer shapeRenderer;
+    private Color fillColor;
 
     public Player(World world) {
         this.world = world;
@@ -39,6 +42,7 @@ public class Player extends AbstractEntity {
         playerStand = new TextureRegion(new Texture(TEXTURE_URL), 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
 
         this.shapeRenderer = new ShapeRenderer();
+        this.setColor(GameScreen.NEUTRAL_PLAYER_COLOR);
     }
 
     public void update(float dt) {
@@ -58,6 +62,7 @@ public class Player extends AbstractEntity {
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
+        shapeRenderer.setColor(this.fillColor);
         shapeRenderer.circle(getX() + (PLAYER_WIDTH / 2 / InfinityRun.PPM), getY() + (PLAYER_HEIGHT / 2 / InfinityRun.PPM), COLLISION_RADIUS / InfinityRun.PPM, 20);
         shapeRenderer.end();
 
@@ -105,5 +110,13 @@ public class Player extends AbstractEntity {
         }
         b2body.applyLinearImpulse(new Vector2(0, jumpStrength), b2body.getWorldCenter(), true);
         return jumpStrength == JUMP_IMPULSE;
+    }
+
+    public void setColor(float r, float g, float b) {
+        this.fillColor = new Color(r, g, b, 1);
+    }
+
+    public void setColor(Color c) {
+        this.fillColor = c;
     }
 }

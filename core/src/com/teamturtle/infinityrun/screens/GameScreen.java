@@ -2,6 +2,7 @@ package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -35,6 +36,8 @@ import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
+
+import org.junit.internal.runners.statements.Fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +91,10 @@ public class GameScreen extends AbstractScreen {
     private JumpAnimations mJumpAnimations;
 
     private PlayerData playerData;
+
+    public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);
+    public static final Color FAILURE_COLOR = new Color((float) 194/255, (float) 59/255, (float) 34/255, 1);
+    public static final Color NEUTRAL_PLAYER_COLOR = new Color((float) 253/255, (float) 253/255, (float) 150/255, 1);
 
     public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
         super(mSpriteBatch);
@@ -343,14 +350,20 @@ public class GameScreen extends AbstractScreen {
             public void onCollision(Player p, Emoji e) {
                 e.triggerExplode();
                 if (activeMission.getCorrectWord().equals(e.getWordModel())) {
-                    mPlayerTail.setColor(0,1,0);
+                    mPlayerTail.setColor(SUCCESS_COLOR);
+                    mPlayer.setColor(SUCCESS_COLOR);
+                    mJumpAnimations.setColor(SUCCESS_COLOR);
                 } else {
-                    mPlayerTail.setColor(1,0,0);
+                    mPlayerTail.setColor(FAILURE_COLOR);
+                    mPlayer.setColor(FAILURE_COLOR);
+                    mJumpAnimations.setColor(FAILURE_COLOR);
                 }
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
-                        mPlayerTail.setColor(1,1,1);
+                        mPlayerTail.setColor(NEUTRAL_PLAYER_COLOR);
+                        mPlayer.setColor(NEUTRAL_PLAYER_COLOR);
+                        mJumpAnimations.setColor(NEUTRAL_PLAYER_COLOR);
                     }
                 },2);
 
