@@ -392,6 +392,7 @@ public class GameScreen extends AbstractScreen {
         eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
             @Override
             public void onLevelFinished() {
+                SoundPlayer.playSound("duklaradedet", "feedback");
                 state = State.WON_GAME;
             }
         });
