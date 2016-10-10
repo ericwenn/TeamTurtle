@@ -3,6 +3,7 @@ package com.teamturtle.infinityrun.sprites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -21,11 +22,12 @@ public class Player extends AbstractEntity {
     private Body b2body;
     private boolean canDoubleJump;
     private TextureRegion playerStand;
-    public static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32;
+    public static final int PLAYER_WIDTH = 16, PLAYER_HEIGHT = 16;
     private static final int COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 150, START_Y = 300;
     private static final float JUMP_IMPULSE = 4.5f;
     private static final float SPEED_X = 2.5f;
     private static final String TEXTURE_URL = "dalahorse_32_flipped.png";
+    private ShapeRenderer shapeRenderer;
 
     public Player(World world) {
         this.world = world;
@@ -35,6 +37,8 @@ public class Player extends AbstractEntity {
         definePlayer();
 
         playerStand = new TextureRegion(new Texture(TEXTURE_URL), 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
+
+        this.shapeRenderer = new ShapeRenderer();
     }
 
     public void update(float dt) {
@@ -48,7 +52,16 @@ public class Player extends AbstractEntity {
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        spriteBatch.draw(playerStand, getX(), getY(), 32 / InfinityRun.PPM, 32 / InfinityRun.PPM);
+        //spriteBatch.draw(playerStand, getX(), getY(), 32 / InfinityRun.PPM, 32 / InfinityRun.PPM);
+
+        spriteBatch.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
+        shapeRenderer.circle(getX() + (PLAYER_WIDTH / 2 / InfinityRun.PPM), getY() + (PLAYER_HEIGHT / 2 / InfinityRun.PPM), COLLISION_RADIUS / InfinityRun.PPM, 20);
+        shapeRenderer.end();
+
+        spriteBatch.begin();
     }
 
     @Override
