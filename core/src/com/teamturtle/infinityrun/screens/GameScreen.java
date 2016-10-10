@@ -2,6 +2,7 @@ package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,6 +29,7 @@ import com.teamturtle.infinityrun.models.MissionHandler;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.JumpAnimations;
 import com.teamturtle.infinityrun.sprites.Player;
@@ -59,7 +61,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private float mountainsPos1, mountainsPos2;
     private float treePos1, treePos2;
     private float oldCamX;
-    private final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
+    private static final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
 
     private FillViewport mFillViewport;
     private FillViewport touchViewport;
@@ -72,6 +74,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
     private World world;
+    // TODO remove before publish
     private Box2DDebugRenderer b2dr;
 
     private List<? extends Entity> emojiSprites;
@@ -96,6 +99,10 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private JumpAnimations mJumpAnimations;
 
     private PlayerData playerData;
+
+    public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);
+    public static final Color FAILURE_COLOR = new Color((float) 194/255, (float) 59/255, (float) 34/255, 1);
+    public static final Color NEUTRAL_PLAYER_COLOR = new Color((float) 253/255, (float) 253/255, (float) 150/255, 1);
 
     public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
         super(mSpriteBatch);
@@ -165,6 +172,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         world.setContactListener(mEventHandler);
 
         activeMission = mMissionHandler.getNextMission();
+        SoundPlayer.playSound("kor", "feedback");
         //mMissionStage.setMission( activeMission );
         Gdx.app.log("setMissions", "show()");
     }
@@ -194,16 +202,18 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 pauseButtonStage.draw();
                 break;
             case LOST_GAME:
-                    screenObserver.levelFailed(level);
+                screenObserver.levelFailed(level);
                 break;
             case WON_GAME:
-                //TODO should read some player model
-                    screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
+                screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
+                break;
             case PAUSE:
                 renderWorld();
                 pauseStage.draw();
                 mMissionStage.draw();
                 break;
+            default:
+                render(delta);
         }
     }
 
@@ -341,7 +351,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         groundParser.parse();
 
 
-        MissionParser missionParser = new MissionParser(world, tiledMap, "quest");
+        MissionParser missionParser = new MissionParser(tiledMap, "quest");
         mMissionHandler = missionParser.getMissionHandler();
 
         MapParser emojiParser = new EmojiParser(world, tiledMap, "emoji_placeholders", mMissionHandler, possibleWords);
@@ -367,14 +377,20 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             public void onCollision(Player p, Emoji e) {
                 e.triggerExplode();
                 if (activeMission.getCorrectWord().equals(e.getWordModel())) {
-                    mPlayerTail.setColor(0,1,0);
+                    mPlayerTail.setColor(SUCCESS_COLOR);
+                    mPlayer.setColor(SUCCESS_COLOR);
+                    mJumpAnimations.setColor(SUCCESS_COLOR);
                 } else {
-                    mPlayerTail.setColor(1,0,0);
+                    mPlayerTail.setColor(FAILURE_COLOR);
+                    mPlayer.setColor(FAILURE_COLOR);
+                    mJumpAnimations.setColor(FAILURE_COLOR);
                 }
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
-                        mPlayerTail.setColor(1,1,1);
+                        mPlayerTail.setColor(NEUTRAL_PLAYER_COLOR);
+                        mPlayer.setColor(NEUTRAL_PLAYER_COLOR);
+                        mJumpAnimations.setColor(NEUTRAL_PLAYER_COLOR);
                     }
                 },2);
 
@@ -401,6 +417,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
             @Override
             public void onLevelFinished() {
+                SoundPlayer.playSound("duklaradedet", "feedback");
                 state = State.WON_GAME;
             }
         });

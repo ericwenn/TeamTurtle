@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
-import com.teamturtle.infinityrun.models.level.LevelDataHandler;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -37,7 +37,6 @@ public class LevelSelectScreen extends AbstractScreen{
     private ImageButton backButton;
     private Texture bg;
 
-    LevelDataHandler handler;
 
     private IScreenObserver observer;
     private final List<Level> levels;
@@ -48,7 +47,6 @@ public class LevelSelectScreen extends AbstractScreen{
         this.observer = observer;
         this.levels = levels;
         this.mPlayerData = playerData;
-        handler = new LevelDataHandler();
     }
 
     @Override
@@ -78,6 +76,7 @@ public class LevelSelectScreen extends AbstractScreen{
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
+                        SoundPlayer.playSound("bana" + level.getId(), "feedback");
                         observer.playLevel(level);
                     }
                 });
@@ -111,6 +110,7 @@ public class LevelSelectScreen extends AbstractScreen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    SoundPlayer.playSound("tillbaka", "feedback");
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -126,9 +126,12 @@ public class LevelSelectScreen extends AbstractScreen{
     @Override
     public void render(float dt) {
         super.render(dt);
-        getSpriteBatch().begin();
-        getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
-        getSpriteBatch().end();
-        stage.draw();
+        if (stage != null) {
+
+            getSpriteBatch().begin();
+            getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
+            getSpriteBatch().end();
+            stage.draw();
+        }
     }
 }

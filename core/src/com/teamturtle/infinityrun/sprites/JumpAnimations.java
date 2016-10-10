@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.screens.GameScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +23,25 @@ public class JumpAnimations extends AbstractEntity {
 
     private ShapeRenderer shapeRenderer;
     private List<JumpAnimation> mAnimations;
+    private Color circleColor;
 
     public JumpAnimations() {
         shapeRenderer = new ShapeRenderer();
         mAnimations = new ArrayList<JumpAnimation>();
+        setColor(GameScreen.NEUTRAL_PLAYER_COLOR);
     }
 
 
     public void createNew(float x, float y) {
         mAnimations.add(new JumpAnimation(x, y, CIRCLE_START_RADIUS, 1, 0));
+    }
+
+    public void setColor(float r, float g, float b) {
+        this.circleColor = new Color(r, g, b, 1);
+    }
+
+    public void setColor(Color c) {
+        this.circleColor = c;
     }
 
     @Override
@@ -63,8 +74,11 @@ public class JumpAnimations extends AbstractEntity {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
 
+        Color c = new Color(circleColor);
+
         for (JumpAnimation a : mAnimations) {
-            shapeRenderer.setColor( new Color(1,1,1, a.alpha));
+            c.a = a.alpha;
+            shapeRenderer.setColor( c );
             shapeRenderer.circle(a.x, a.y, a.radius / InfinityRun.PPM, CIRCLE_SEGMENTS);
         }
 
@@ -81,8 +95,8 @@ public class JumpAnimations extends AbstractEntity {
     }
 
 
-    private class JumpAnimation {
-        public float x;
+    private static class JumpAnimation {
+        private float x;
         public float y;
         public float radius;
         public int frame;
@@ -92,6 +106,7 @@ public class JumpAnimations extends AbstractEntity {
             this.x = x;
             this.y = y;
             this.radius = radius;
+            this.alpha = alpha;
             this.frame = frame;
         }
     }

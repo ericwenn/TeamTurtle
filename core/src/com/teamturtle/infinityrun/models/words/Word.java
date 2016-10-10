@@ -12,6 +12,8 @@ public interface Word {
 
     String getIconUrl();
 
+    String getArticle();
+
     int getCategory();
 
     int getId();

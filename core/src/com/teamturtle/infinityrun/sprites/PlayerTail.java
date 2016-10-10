@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.screens.GameScreen;
 
 /**
  * Created by ericwenn on 10/7/16.
@@ -16,11 +17,9 @@ public class PlayerTail extends AbstractEntity {
     private float[] vertices;
 
     private static final int TAIL_LENGTH = 40;
-    private static final int TAIL_INTERVAL = 1;
     private ShapeRenderer shapeRenderer;
 
 
-    private int addIndex = 0;
 
 
     private Color lineColor;
@@ -29,16 +28,14 @@ public class PlayerTail extends AbstractEntity {
     public PlayerTail(Player player) {
         mPlayer = player;
 
-        lineColor = new Color(1,1,1,1);
+        setColor(GameScreen.NEUTRAL_PLAYER_COLOR);
         vertices = new float[ TAIL_LENGTH * 2];
         shapeRenderer = new ShapeRenderer();
     }
 
     @Override
     public void update(float dt) {
-        if( ++addIndex % TAIL_INTERVAL == 0) {
-            addToVertices( mPlayer.getX() + Player.PLAYER_WIDTH / (2 * InfinityRun.PPM), mPlayer.getY() + Player.PLAYER_HEIGHT / (2*InfinityRun.PPM));
-        }
+        addToVertices( mPlayer.getX() + Player.PLAYER_WIDTH / (2 * InfinityRun.PPM), mPlayer.getY() + Player.PLAYER_HEIGHT / (2*InfinityRun.PPM));
     }
 
     @Override
@@ -92,6 +89,10 @@ public class PlayerTail extends AbstractEntity {
 
     public void setColor(float r, float g, float b) {
         this.lineColor = new Color(r, g, b, 1);
+    }
+
+    public void setColor(Color c) {
+        this.lineColor = c;
     }
 
     public void setLineWidth(float width) {

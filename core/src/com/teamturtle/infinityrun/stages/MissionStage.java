@@ -23,7 +23,7 @@ public class MissionStage extends Stage {
             TABLE_HEIGHT = 50,
             TABLE_OFFSET_BOTTOM = 10,
             TABLE_OFFSET_RIGHT = 10;
-    private static final String CATCH_PREFIX = "Plocka 1x";
+    private static final String CATCH_PREFIX = "Plocka ";
 
     private static final float SCALE_BY = 1.2f;
     private static final int SCALE_STEP_COUNT = 100;
@@ -50,7 +50,7 @@ public class MissionStage extends Stage {
     private void changeEmoji(Word emojiModel) {
         mMissionTable.clearChildren();
 
-        Label emojiLabel = new Label( CATCH_PREFIX + " " + emojiModel.getText(), mSkin);
+        Label emojiLabel = new Label( CATCH_PREFIX + emojiModel.getArticle() + " " + emojiModel.getText(), mSkin);
         mMissionTable.add(emojiLabel).height(50).expandX().align(Align.right).padRight(10);
 
         Image emojiImage = new Image(new Texture(Gdx.files.internal(emojiModel.getIconUrl())));
@@ -85,7 +85,6 @@ public class MissionStage extends Stage {
         } else {
             r = SCALE_BY - (SCALE_BY - 1) * index / (float)steps;
         }
-        Gdx.app.log("ScaleFn", "Index: "+index+  ", scale: "+r);
         return r;
     }
 }

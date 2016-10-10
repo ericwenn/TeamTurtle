@@ -86,10 +86,16 @@ public class PlayerData {
 
     public void setPlayerProgressOnLevel(Level level, int score) {
 
-        if(mLevelProgress.containsKey(Integer.toString(level.getId()))) {
-            mLevelProgress.remove(Integer.toString(level.getId()));
+
+        if (mLevelProgress.containsKey(Integer.toString(level.getId()))) {
+            if (getPlayerProgressOnLevel(level) < score) {
+                mLevelProgress.remove(Integer.toString(level.getId()));
+                mLevelProgress.put( Integer.toString(level.getId()), score);
+            }
+        } else {
+            mLevelProgress.put( Integer.toString(level.getId()), score);
         }
-        mLevelProgress.put(Integer.toString(level.getId()), score);
+
         writeLevelProgressToFile(mLevelProgressFile, mLevelProgress);
     }
 

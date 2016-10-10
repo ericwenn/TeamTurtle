@@ -3,7 +3,6 @@ package com.teamturtle.infinityrun.stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,15 +15,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import static com.badlogic.gdx.math.MathUtils.random;
@@ -39,7 +40,6 @@ import static com.badlogic.gdx.math.MathUtils.random;
 public class QuizStage extends Stage {
     private Skin skin;
     private IQuizStageListener handler;
-    private Label quizLabel;
     private Emoji emoji;
     private int wordCategory;
     private List<Word> guesses;
@@ -49,7 +49,9 @@ public class QuizStage extends Stage {
     private WordLoader wordLoader;
     private int score;
     private boolean isStarFilled = false;
+    private boolean isWrongGuessed = false;
     private float stageTime = 0;
+    private Sound wrongAnswerSound;
 
     //    Components
     private Table parentTable, buttonTable;
@@ -67,14 +69,12 @@ public class QuizStage extends Stage {
         this.handler = handler;
 
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-        quizLabel = new Label("Fråga!", skin);
         wordLoader = new WordLoader();
         wordCategory = collectedWords.get(0).getCategory();
         this.score = score;
         star = new Texture("ui/star.png");
         noStar = new Texture("ui/no_star.png");
-        TextureRegion starRegion = new TextureRegion(star, 101, 101);
-        TextureRegion noStarRegion = new TextureRegion(noStar, 101, 101);
+        wrongAnswerSound = Gdx.audio.newSound(Gdx.files.internal("audio/wrong_answer.wav"));
 
         starTable = getStarsTable();
         animatedStarTable = getAnimatedStarsTable();
@@ -85,6 +85,7 @@ public class QuizStage extends Stage {
         createTableUi(starTable);
         addActor(parentTable);
         Gdx.input.setInputProcessor(this);
+        SoundPlayer.playSound("hararenfraga", "feedback");
     }
 
     private List<Word> getRandomGuesses(List<Word> collectedWords) {
@@ -116,14 +117,29 @@ public class QuizStage extends Stage {
         while (guesses.size() > 0) {
             final int index = random.nextInt((guesses.size() - 1) + 1);
 
-            TextButton button = new TextButton(guesses.get(index).getText().substring(0,1).toUpperCase() +
+            TextButton button = new TextButton(guesses.get(index).getText().substring(0,1).toUpperCase(Locale.getDefault()) +
                     guesses.get(index).getText().substring(1), skin, "text_button");
             final Word word = guesses.get(index);
             button.pad(TEXT_BUTTON_PADDING);
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    handler.onGuessClick(word.equals(emoji.getWordModel()));
+                    if (!word.equals(emoji.getWordModel())) {
+                        isWrongGuessed = true;
+                        wrongAnswerSound.play();
+                        getActors().clear();
+                        showRightWord(starTable);
+                        Timer timer = new Timer();
+                        timer.scheduleTask(new Timer.Task() {
+                            @Override
+                            public void run() {
+                                handler.onGuessClick(word.equals(emoji.getWordModel()));
+                            }
+                        }, 2.5f);
+                    }
+                    else {
+                        handler.onGuessClick(word.equals(emoji.getWordModel()));
+                    }
                 }
             });
             guessButtons.add(button);
@@ -143,12 +159,25 @@ public class QuizStage extends Stage {
         }
     }
 
+    private void showRightWord(Table starTable) {
+        parentTable = new Table();
+        parentTable.setSize(PARENT_TABLE_WIDTH, PARENT_TABLE_HEIGHT);
+        parentTable.setPosition(PARENT_TABLE_POS_X, PARENT_TABLE_POS_Y);
+
+        parentTable.add(starTable).center().top();
+        parentTable.row();
+        addEmojiToTable();
+        parentTable.row();
+        Label label = new Label("Rätt ord: " + emoji.getWordModel().getText(), skin);
+        parentTable.add(label);
+        addActor(parentTable);
+    }
+
     private void createTableUi(Table starTable) {
         parentTable = new Table();
         parentTable.setSize(PARENT_TABLE_WIDTH, PARENT_TABLE_HEIGHT);
         parentTable.setPosition(PARENT_TABLE_POS_X, PARENT_TABLE_POS_Y);
 
-//        parentTable.center().top();
         parentTable.add(starTable).center().top();
         isStarFilled = false;
         parentTable.row();
@@ -207,19 +236,20 @@ public class QuizStage extends Stage {
     public void act(float delta) {
         super.act(delta);
         stageTime += delta;
-        if (stageTime > 0.5f) {
-            if (isStarFilled) {
+        if (!isWrongGuessed) {
+            if (stageTime > 0.5f) {
                 getActors().clear();
-                createTableUi(starTable);
-                isStarFilled = false;
+                if (isStarFilled) {
+                    createTableUi(starTable);
+                    isStarFilled = false;
+                }
+                else {
+                    createTableUi(animatedStarTable);
+                    isStarFilled = true;
+                }
+                addActor(parentTable);
+                stageTime = 0;
             }
-            else {
-                getActors().clear();
-                createTableUi(animatedStarTable);
-                isStarFilled = true;
-            }
-            addActor(parentTable);
-            stageTime = 0;
         }
     }
 

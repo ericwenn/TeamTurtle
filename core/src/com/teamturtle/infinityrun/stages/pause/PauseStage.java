@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.level.Level;
@@ -24,6 +26,7 @@ public class PauseStage extends Stage{
     private ImageButton continueBtn;
     private ImageButton retryBtn;
     private ImageButton levelsBtn;
+    private Label countDownLbl;
 
     private IPauseStageHandler handler;
     private IScreenObserver observer;
@@ -43,6 +46,7 @@ public class PauseStage extends Stage{
         skin = new Skin();
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
         skin.load(Gdx.files.internal("skin/uiskin.json"));
+        countDownLbl = new Label("", skin);
         setUpButtons();
         Table table = new Table();
         table.setFillParent(true);
@@ -60,7 +64,9 @@ public class PauseStage extends Stage{
         continueBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                handler.continueBtnClick();
+                removeActors();
+                runCountDownSeq();
+                //handler.continueBtnClick();
             }
         });
         retryBtn = new ImageButton(skin, "retry_button");
@@ -81,6 +87,35 @@ public class PauseStage extends Stage{
                 }
             }
         });
+    }
+
+    private void removeActors() {
+        for (Actor actor : getActors()) {
+            actor.remove();
+        }
+    }
+
+    private void runCountDownSeq() {
+        Timer timer = new Timer();
+        Table table = new Table();
+        table.setFillParent(true);
+        table.add(countDownLbl);
+        this.addActor(table);
+        for(int i = 3; i >= 0; i--) {
+            countDownLbl.setText(i + "");
+            timer.delay(1);
+        }
+    }
+
+    @Override
+    public void draw() {
+        super.draw();
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        System.out.println("acting");
     }
 
 
