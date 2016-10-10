@@ -28,7 +28,9 @@ import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sprites.Entity;
+import com.teamturtle.infinityrun.sprites.JumpAnimations;
 import com.teamturtle.infinityrun.sprites.Player;
+import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
@@ -57,7 +59,7 @@ public class GameScreen extends AbstractScreen {
     private FillViewport mFillViewport;
 
     private Player mPlayer;
-
+    private PlayerTail mPlayerTail;
     private EventHandler mEventHandler;
 
     private TiledMap tiledMap;
@@ -82,6 +84,8 @@ public class GameScreen extends AbstractScreen {
     private Mission activeMission;
     private boolean hasSuccededInAllMissions = true;
 
+    private JumpAnimations mJumpAnimations;
+
     private PlayerData playerData;
 
     public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
@@ -103,6 +107,7 @@ public class GameScreen extends AbstractScreen {
         collectedWords = new ArrayList<Word>();
 
         playerData = new PlayerData();
+        mJumpAnimations = new JumpAnimations();
     }
 
 
@@ -158,6 +163,9 @@ public class GameScreen extends AbstractScreen {
         handleInput();
         world.step(1 / 60f, 6, 2);
         mPlayer.update(delta);
+        mPlayerTail.update(delta);
+
+        mJumpAnimations.update(delta);
     }
 
 
@@ -201,11 +209,14 @@ public class GameScreen extends AbstractScreen {
         tiledMapRenderer.render();
         getSpriteBatch().begin();
 
+        mPlayerTail.render(getSpriteBatch());
         mPlayer.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
             entity.update(delta);
             entity.render(getSpriteBatch());
         }
+
+        mJumpAnimations.render(getSpriteBatch());
         getSpriteBatch().end();
 
         getCamera().position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
@@ -216,8 +227,13 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void handleInput() {
-        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)))
-            mPlayer.jump();
+        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) {
+            if (mPlayer.tryToJump()) {
+                mJumpAnimations.createNew(mPlayer.getX() + Player.PLAYER_WIDTH / (InfinityRun.PPM * 2), mPlayer.getY() + Player.PLAYER_HEIGHT / (InfinityRun.PPM * 2));
+            }
+
+        }
+
     }
 
     @Override
@@ -293,6 +309,7 @@ public class GameScreen extends AbstractScreen {
         world = new World(new Vector2(0, GRAVITY), true);
 
         mPlayer = new Player(world);
+        mPlayerTail = new PlayerTail(mPlayer);
 
         MapParser groundParser = new GroundParser(world, tiledMap, "ground");
         groundParser.parse();
