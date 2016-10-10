@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.teamturtle.infinityrun.models.MissionHandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -42,12 +43,7 @@ public class MissionParser {
     }
 
     void sort() {
-        Collections.sort(mMissionRectangles, new Comparator<Rectangle>() {
-            @Override
-            public int compare(Rectangle o1, Rectangle o2) {
-                return (int)(o1.getX() - o2.getX());
-            }
-        });
+        Collections.sort(mMissionRectangles, new RectPositionComparator());
     }
 
 
@@ -65,6 +61,14 @@ public class MissionParser {
         }
 
         return missionHandler;
+    }
+
+    private static class RectPositionComparator implements Comparator<Rectangle>, Serializable {
+
+        @Override
+        public int compare(Rectangle o1, Rectangle o2) {
+            return (int)(o1.getX() - o2.getX());
+        }
     }
 
 }
