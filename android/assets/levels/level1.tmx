@@ -8,7 +8,7 @@
  </tileset>
  <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJztlV2LwjAQRSOKvmrFVy2UfVL8eFTZ//+3NoWGLXFqkpnatOM9cEAKydS0t9cYMEVmigVgKuTOSsh5QOQPaCB3jqQif0ADQ+Vvkfjbd01cQ/6ABjidE9t37zKV4rrZi8rhvP8jAWBQJN00hO38deUQgCmTkgeXAZcHbmarxLnoQb3crQ/rU7gHZ72bnTK/vUZ63w5OL3VlgfLAlJrbNaNPOM9FE31kQgMp70HVyGVvXt//0qRnk+o2bv6oDFKuGpeEIMwQefN7QzpvYy2s20zzJVDnXf+fk3l9/8/EtRxK+rUw3c9qTM9lCoS+8ZIOSN3PdUb5gbmh2bHrqT0qTwfVgdos35xLLDFrfwT7Syi+yKP574y6Jy4juCepVAdq8zyCc471Zt15XgNrcp8vhJqsvxe/nt/wnYQQQgi5/gEnmoos
+   eJztldGKwjAQRbMo7qvbxVdXKD656Proivr/f2UKDUqZOJmZ0jbxHjggQmbapDfjHMiRj4IFIBfGzgrnjBH5AyUwdo6sIn+gBIbK31z4u+uS+A/5AyWgmTmp8+5VpiQu21pUDmf9bwkAg2KZTUP4nL9YDgHIGUkeQgZCHrSZrYV9MQfL5eT9956NNTTrQ29J/+c11ucOaOZSLAuUF+9V6C3SN9ajTzTnUhJ9ZKIEJN9B3aqFygiVAc1sa2r/en+EbhJ7frYuCAHPEHnrzg1rvy9v5f0eqb8Far+b96Eysnfy2UWpyV/oz90D3HytXPyspnQuOcDd8ZYZIK23do97uu++XO/U9VSNumMgvM8U5e6B1HxvXuxLKilrt4b6Fqo3cuce5958H4cJPJNV7ZzKyf0E9jnVo3fV8Y9ZM/b+QliS1Ox/h3sSQggh1HoHwm6Q/w==
   </data>
  </layer>
  <objectgroup name="ground">
@@ -39,23 +39,23 @@
   <object id="201" x="5346" y="288" width="94" height="33.5"/>
   <object id="206" x="480" y="288.667" width="96" height="22.6667"/>
  </objectgroup>
- <objectgroup name="emoji_placeholders" visible="0">
+ <objectgroup name="emoji_placeholders">
   <object id="53" x="640" y="319" width="32" height="32"/>
-  <object id="55" x="640" y="192" width="32" height="32"/>
-  <object id="73" x="1536" y="320" width="32" height="32"/>
+  <object id="55" x="800" y="191" width="32" height="32"/>
+  <object id="73" x="1344" y="256" width="32" height="32"/>
   <object id="87" x="1536" y="189.333" width="32" height="32"/>
-  <object id="94" x="2208" y="320" width="31" height="28"/>
+  <object id="94" x="2113" y="320" width="31" height="28"/>
   <object id="95" x="2208" y="127" width="32" height="32"/>
-  <object id="97" x="2976" y="320" width="32" height="31.3333"/>
+  <object id="97" x="2944" y="321.333" width="32" height="31.3333"/>
   <object id="98" x="2976" y="161.333" width="32" height="32"/>
   <object id="129" x="3841" y="255" width="32" height="32"/>
-  <object id="130" x="3840" y="160" width="32" height="32"/>
-  <object id="159" x="4896" y="128" width="33" height="32"/>
+  <object id="130" x="3904" y="191" width="32" height="32"/>
+  <object id="159" x="4832.5" y="127.5" width="33" height="32"/>
   <object id="161" x="4897" y="286" width="32" height="32"/>
   <object id="166" x="5824" y="320" width="32" height="32"/>
-  <object id="167" x="5824" y="192" width="32" height="32"/>
+  <object id="167" x="5815.83" y="189.667" width="32" height="32"/>
  </objectgroup>
- <objectgroup name="obstacle" visible="0">
+ <objectgroup name="obstacle">
   <object id="56" x="800" y="319" width="32" height="32"/>
   <object id="72" x="1056" y="320" width="32" height="32"/>
   <object id="102" x="1695" y="321" width="34" height="29"/>
@@ -80,10 +80,10 @@
   <object id="200" x="5439.5" y="320" width="63.5" height="30.5"/>
   <object id="203" x="4193.5" y="257" width="29.5" height="29"/>
  </objectgroup>
- <objectgroup name="goal" visible="0">
+ <objectgroup name="goal">
   <object id="24" x="6496" y="0" width="28" height="476"/>
  </objectgroup>
- <objectgroup name="quest" visible="0">
+ <objectgroup name="quest">
   <object id="21" x="188" y="0" width="30" height="478"/>
   <object id="29" x="928" y="0" width="32" height="480"/>
   <object id="65" x="2304" y="0" width="32" height="480"/>
