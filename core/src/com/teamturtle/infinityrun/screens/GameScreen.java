@@ -36,6 +36,9 @@ import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
+import com.teamturtle.infinityrun.stages.pause.IPauseStageHandler;
+import com.teamturtle.infinityrun.stages.pause.PauseButtonStage;
+import com.teamturtle.infinityrun.stages.pause.PauseStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.ArrayList;
@@ -45,13 +48,14 @@ import java.util.List;
  * Created by ericwenn on 9/20/16.
  */
 
-public class GameScreen extends AbstractScreen {
+public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     private enum State {
         PLAY, PAUSE, LOST_GAME, WON_GAME
     }
 
     public static final float GRAVITY = -10;
+    private static final int pBtnXMax = 400, pBtnXMin = 365, pBtnYMax = 240, pBtnYMin = 193;
 
     private Texture bg, mountains, trees;
     private float mountainsPos1, mountainsPos2;
@@ -60,6 +64,7 @@ public class GameScreen extends AbstractScreen {
     private static final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
 
     private FillViewport mFillViewport;
+    private FillViewport touchViewport;
 
     private Player mPlayer;
     private PlayerTail mPlayerTail;
@@ -77,6 +82,9 @@ public class GameScreen extends AbstractScreen {
 
     private MissionHandler mMissionHandler;
     private MissionStage mMissionStage;
+
+    private PauseStage pauseStage;
+    private PauseButtonStage pauseButtonStage;
 
     private State state;
 
@@ -102,9 +110,6 @@ public class GameScreen extends AbstractScreen {
 
         this.level = level;
 
-        //Set state
-        state = State.PLAY;
-
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load(level.getMapUrl());
@@ -118,18 +123,22 @@ public class GameScreen extends AbstractScreen {
         mJumpAnimations = new JumpAnimations();
     }
 
-
     @Override
     public void show() {
-        //Change input focus to this stage
-        Gdx.input.setInputProcessor(this);
-
+        resume();
 
         mMissionStage = new MissionStage();
+
+        pauseButtonStage = new PauseButtonStage();
+
+        pauseStage = new PauseStage(this, screenObserver, level);
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
                 , InfinityRun.HEIGHT / InfinityRun.PPM);
+
+        //Used to transform touch input position for diffrent screen sizes
+        touchViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
 
         // Init background from file and setup starting positions to have continous background.
         bg = new Texture(PathConstants.BACKGROUND_PATH);
@@ -173,6 +182,11 @@ public class GameScreen extends AbstractScreen {
         handleInput();
         world.step(1 / 60f, 6, 2);
         mPlayer.update(delta);
+
+        for (Entity entity : emojiSprites) {
+            entity.update(delta);
+        }
+
         mPlayerTail.update(delta);
 
         mJumpAnimations.update(delta);
@@ -183,8 +197,10 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         switch (state) {
             case PLAY:
-                renderWorld(delta);
+                gameUpdate(delta);
+                renderWorld();
                 mMissionStage.draw();
+                pauseButtonStage.draw();
                 break;
             case LOST_GAME:
                 screenObserver.levelFailed(level);
@@ -193,15 +209,16 @@ public class GameScreen extends AbstractScreen {
                 screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
                 break;
             case PAUSE:
+                renderWorld();
+                pauseStage.draw();
+                mMissionStage.draw();
                 break;
             default:
                 render(delta);
         }
     }
 
-    private void renderWorld(float delta) {
-        gameUpdate(delta);
-
+    private void renderWorld() {
         tiledMapRenderer.setView(getOrthoCam());
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -224,7 +241,6 @@ public class GameScreen extends AbstractScreen {
         mPlayerTail.render(getSpriteBatch());
         mPlayer.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
-            entity.update(delta);
             entity.render(getSpriteBatch());
         }
 
@@ -240,27 +256,36 @@ public class GameScreen extends AbstractScreen {
 
     private void handleInput() {
         if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) {
-            if (mPlayer.tryToJump()) {
-                mJumpAnimations.createNew(mPlayer.getX() + Player.PLAYER_WIDTH / (InfinityRun.PPM * 2), mPlayer.getY() + Player.PLAYER_HEIGHT / (InfinityRun.PPM * 2));
+            Vector2 touchPos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+            touchViewport.unproject(touchPos);
+            if (touchPos.x > pBtnXMin && touchPos.x < pBtnXMax
+                    && touchPos.y > pBtnYMin && touchPos.y < pBtnYMax) {
+                pauseStage = new PauseStage(this, screenObserver, level);
+                pauseBtnClick();
+            } else {
+                if (mPlayer.tryToJump()) {
+                    mJumpAnimations.createNew(mPlayer.getX() + Player.PLAYER_WIDTH / (InfinityRun.PPM * 2), mPlayer.getY() + Player.PLAYER_HEIGHT / (InfinityRun.PPM * 2));
+                }
             }
-
         }
 
     }
 
     @Override
     public void resize(int width, int height) {
-
+        touchViewport.update(width, height);
     }
 
     @Override
     public void pause() {
-
+        Gdx.input.setInputProcessor(pauseStage);
+        state = State.PAUSE;
     }
 
     @Override
     public void resume() {
-
+        Gdx.input.setInputProcessor(this);
+        state= State.PLAY;
     }
 
     @Override
@@ -280,6 +305,7 @@ public class GameScreen extends AbstractScreen {
         }
         mPlayer.dispose();
         bg.dispose();
+        pauseStage.dispose();
     }
 
     public void drawParallaxContent() {
@@ -412,5 +438,14 @@ public class GameScreen extends AbstractScreen {
         });
 
         this.mEventHandler = eventHandler;
+    }
+
+    @Override
+    public void continueBtnClick() {
+        resume();
+    }
+
+    private void pauseBtnClick() {
+        pause();
     }
 }
