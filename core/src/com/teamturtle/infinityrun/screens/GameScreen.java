@@ -184,11 +184,11 @@ public class GameScreen extends AbstractScreen {
                 mMissionStage.draw();
                 break;
             case LOST_GAME:
-                    screenObserver.levelFailed(level);
+                screenObserver.levelFailed(level);
                 break;
             case WON_GAME:
-                //TODO should read some player model
-                    screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
+                screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
+                break;
             case PAUSE:
                 break;
             default:
