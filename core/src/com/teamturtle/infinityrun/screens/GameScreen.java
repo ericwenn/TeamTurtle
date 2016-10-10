@@ -38,8 +38,6 @@ import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
-import org.junit.internal.runners.statements.Fail;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +57,7 @@ public class GameScreen extends AbstractScreen {
     private float mountainsPos1, mountainsPos2;
     private float treePos1, treePos2;
     private float oldCamX;
-    private final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
+    private static final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
 
     private FillViewport mFillViewport;
 
@@ -71,6 +69,7 @@ public class GameScreen extends AbstractScreen {
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
     private World world;
+    // TODO remove before publish
     private Box2DDebugRenderer b2dr;
 
     private List<? extends Entity> emojiSprites;
@@ -188,13 +187,15 @@ public class GameScreen extends AbstractScreen {
                 mMissionStage.draw();
                 break;
             case LOST_GAME:
-                    screenObserver.levelFailed(level);
+                screenObserver.levelFailed(level);
                 break;
             case WON_GAME:
-                //TODO should read some player model
-                    screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
+                screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
+                break;
             case PAUSE:
                 break;
+            default:
+                render(delta);
         }
     }
 
@@ -326,7 +327,7 @@ public class GameScreen extends AbstractScreen {
         groundParser.parse();
 
 
-        MissionParser missionParser = new MissionParser(world, tiledMap, "quest");
+        MissionParser missionParser = new MissionParser(tiledMap, "quest");
         mMissionHandler = missionParser.getMissionHandler();
 
         MapParser emojiParser = new EmojiParser(world, tiledMap, "emoji_placeholders", mMissionHandler, possibleWords);
