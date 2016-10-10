@@ -2,6 +2,7 @@ package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
@@ -28,10 +30,14 @@ import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sprites.Entity;
+import com.teamturtle.infinityrun.sprites.JumpAnimations;
 import com.teamturtle.infinityrun.sprites.Player;
+import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
+
+import org.junit.internal.runners.statements.Fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +63,7 @@ public class GameScreen extends AbstractScreen {
     private FillViewport mFillViewport;
 
     private Player mPlayer;
-
+    private PlayerTail mPlayerTail;
     private EventHandler mEventHandler;
 
     private TiledMap tiledMap;
@@ -82,7 +88,13 @@ public class GameScreen extends AbstractScreen {
     private Mission activeMission;
     private boolean hasSuccededInAllMissions = true;
 
+    private JumpAnimations mJumpAnimations;
+
     private PlayerData playerData;
+
+    public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);
+    public static final Color FAILURE_COLOR = new Color((float) 194/255, (float) 59/255, (float) 34/255, 1);
+    public static final Color NEUTRAL_PLAYER_COLOR = new Color((float) 253/255, (float) 253/255, (float) 150/255, 1);
 
     public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
         super(mSpriteBatch);
@@ -103,6 +115,7 @@ public class GameScreen extends AbstractScreen {
         collectedWords = new ArrayList<Word>();
 
         playerData = new PlayerData();
+        mJumpAnimations = new JumpAnimations();
     }
 
 
@@ -151,13 +164,17 @@ public class GameScreen extends AbstractScreen {
         world.setContactListener(mEventHandler);
 
         activeMission = mMissionHandler.getNextMission();
-        mMissionStage.setMission( activeMission );
+        //mMissionStage.setMission( activeMission );
+        Gdx.app.log("setMissions", "show()");
     }
 
     private void gameUpdate(float delta) {
         handleInput();
         world.step(1 / 60f, 6, 2);
         mPlayer.update(delta);
+        mPlayerTail.update(delta);
+
+        mJumpAnimations.update(delta);
     }
 
 
@@ -201,11 +218,14 @@ public class GameScreen extends AbstractScreen {
         tiledMapRenderer.render();
         getSpriteBatch().begin();
 
+        mPlayerTail.render(getSpriteBatch());
         mPlayer.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
             entity.update(delta);
             entity.render(getSpriteBatch());
         }
+
+        mJumpAnimations.render(getSpriteBatch());
         getSpriteBatch().end();
 
         getCamera().position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
@@ -216,8 +236,13 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void handleInput() {
-        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)))
-            mPlayer.jump();
+        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) {
+            if (mPlayer.tryToJump()) {
+                mJumpAnimations.createNew(mPlayer.getX() + Player.PLAYER_WIDTH / (InfinityRun.PPM * 2), mPlayer.getY() + Player.PLAYER_HEIGHT / (InfinityRun.PPM * 2));
+            }
+
+        }
+
     }
 
     @Override
@@ -293,6 +318,7 @@ public class GameScreen extends AbstractScreen {
         world = new World(new Vector2(0, GRAVITY), true);
 
         mPlayer = new Player(world);
+        mPlayerTail = new PlayerTail(mPlayer);
 
         MapParser groundParser = new GroundParser(world, tiledMap, "ground");
         groundParser.parse();
@@ -322,8 +348,26 @@ public class GameScreen extends AbstractScreen {
         eventHandler.onCollisionWithEmoji(new IEventHandler.EmojiCollisionListener() {
             @Override
             public void onCollision(Player p, Emoji e) {
-                Gdx.app.log("Collision", "Emoji collision");
                 e.triggerExplode();
+                if (activeMission.getCorrectWord().equals(e.getWordModel())) {
+                    mPlayerTail.setColor(SUCCESS_COLOR);
+                    mPlayer.setColor(SUCCESS_COLOR);
+                    mJumpAnimations.setColor(SUCCESS_COLOR);
+                } else {
+                    mPlayerTail.setColor(FAILURE_COLOR);
+                    mPlayer.setColor(FAILURE_COLOR);
+                    mJumpAnimations.setColor(FAILURE_COLOR);
+                }
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        mPlayerTail.setColor(NEUTRAL_PLAYER_COLOR);
+                        mPlayer.setColor(NEUTRAL_PLAYER_COLOR);
+                        mJumpAnimations.setColor(NEUTRAL_PLAYER_COLOR);
+                    }
+                },2);
+
+
                 if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
                     hasSuccededInAllMissions = false;
                 }
@@ -339,7 +383,6 @@ public class GameScreen extends AbstractScreen {
         eventHandler.onCollisionWithObstacle(new IEventHandler.ObstacleCollisionListener() {
             @Override
             public void onCollision(Player p) {
-                Gdx.app.log("Collision", "Obstacle collision");
                 state = State.LOST_GAME;
             }
         });
@@ -351,13 +394,13 @@ public class GameScreen extends AbstractScreen {
             }
         });
 
-        // TODO Implement quest listener
         eventHandler.onQuestChanged(new IEventHandler.QuestChangedListener() {
             @Override
             public void onQuestChanged() {
                 try {
                     activeMission = mMissionHandler.getNextMission();
                     mMissionStage.setMission(activeMission);
+                    Gdx.app.log("setMissions", "onQuestChanged()");
                 } catch( IndexOutOfBoundsException e) {
 
                 }

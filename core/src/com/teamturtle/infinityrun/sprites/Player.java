@@ -1,8 +1,10 @@
 package com.teamturtle.infinityrun.sprites;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.teamturtle.infinityrun.InfinityRun;
+import com.teamturtle.infinityrun.screens.GameScreen;
 
 /**
  * Created by ericwenn on 9/20/16.
@@ -19,26 +22,28 @@ public class Player extends AbstractEntity {
 
     private World world;
     private Body b2body;
-    private TextureRegion playerStand;
-    private static final int PLAYER_WIDTH = 32, PLAYER_HEIGHT = 32,
-            COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 150, START_Y = 300;
+    private boolean canDoubleJump;
+    public static final int PLAYER_WIDTH = 16, PLAYER_HEIGHT = 16;
+    private static final int COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 150, START_Y = 300;
     private static final float JUMP_IMPULSE = 4.5f;
-    private static final float IMPULSE_X = 0.1f;
     private static final float SPEED_X = 2.5f;
-    private static final String TEXTURE_URL = "dalahorse_32_flipped.png";
+    private ShapeRenderer shapeRenderer;
+    private Color fillColor;
 
     public Player(World world) {
         this.world = world;
+        canDoubleJump = true;
 
         setPosition(0, InfinityRun.HEIGHT / 2);
         definePlayer();
 
-        playerStand = new TextureRegion(new Texture(TEXTURE_URL), 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
+        this.shapeRenderer = new ShapeRenderer();
+        this.setColor(GameScreen.NEUTRAL_PLAYER_COLOR);
     }
 
     public void update(float dt) {
-        if (b2body.getLinearVelocity().x <= SPEED_X) {
-            b2body.applyLinearImpulse(new Vector2(IMPULSE_X, 0), b2body.getWorldCenter(), true);
+        if (b2body.getLinearVelocity().x != SPEED_X) {
+            b2body.setLinearVelocity(SPEED_X, b2body.getLinearVelocity().y);
         }
 
         setPosition(b2body.getPosition().x - PLAYER_WIDTH / 2 / InfinityRun.PPM
@@ -47,12 +52,19 @@ public class Player extends AbstractEntity {
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        spriteBatch.draw(playerStand, getX(), getY(), 32 / InfinityRun.PPM, 32 / InfinityRun.PPM);
+        spriteBatch.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
+        shapeRenderer.setColor(this.fillColor);
+        shapeRenderer.circle(getX() + (PLAYER_WIDTH / 2 / InfinityRun.PPM), getY() + (PLAYER_HEIGHT / 2 / InfinityRun.PPM), COLLISION_RADIUS / InfinityRun.PPM, 20);
+        shapeRenderer.end();
+
+        spriteBatch.begin();
     }
 
     @Override
     public void dispose() {
-        playerStand = null;
         world.destroyBody(b2body);
     }
 
@@ -72,9 +84,32 @@ public class Player extends AbstractEntity {
         fixture.setUserData(this);
     }
 
-    public void jump(){
+    public boolean tryToJump(){
+        float jumpStrength = 0;
         if (b2body.getLinearVelocity().y == 0) {
-            b2body.applyLinearImpulse(new Vector2(0, JUMP_IMPULSE), b2body.getWorldCenter(), true);
+            jumpStrength = JUMP_IMPULSE;
+            canDoubleJump = true;
         }
+        else if(canDoubleJump){
+            if(b2body.getLinearVelocity().y <= 0) {
+                b2body.setLinearVelocity(b2body.getLinearVelocity().x, 0);
+            }
+            else {
+                b2body.setLinearVelocity(b2body.getLinearVelocity().x,
+                        b2body.getLinearVelocity().y / 2);
+            }
+            jumpStrength = JUMP_IMPULSE;
+            canDoubleJump = false;
+        }
+        b2body.applyLinearImpulse(new Vector2(0, jumpStrength), b2body.getWorldCenter(), true);
+        return jumpStrength == JUMP_IMPULSE;
+    }
+
+    public void setColor(float r, float g, float b) {
+        this.fillColor = new Color(r, g, b, 1);
+    }
+
+    public void setColor(Color c) {
+        this.fillColor = c;
     }
 }

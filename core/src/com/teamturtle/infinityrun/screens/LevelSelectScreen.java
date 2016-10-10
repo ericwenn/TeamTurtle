@@ -66,25 +66,26 @@ public class LevelSelectScreen extends AbstractScreen{
         rootTable.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
 
         int i = 1;
-        // If the user has gotten atleast 2 starts on the previous level, they can play this one.
+        // If the user has gotten atleast 1 star on the previous level, they can play this one.
         boolean progressedThisFar = true;
         for(final Level level: levels) {
             int playerScoreOnLevel = mPlayerData.getPlayerProgressOnLevel(level);
 
-
-
             Table levelButtonTable = new Table();
-            TextButton button = new TextButton(i+ "", skin, "level_text_button");
             // TODO Change button style if the level is unplayable
             if( progressedThisFar ) {
+                TextButton button = new TextButton(i+ "", skin, "level_text_button");
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         observer.playLevel(level);
                     }
                 });
+                levelButtonTable.add(button);
+            } else {
+                ImageButton button = new ImageButton(skin, "lock_button");
+                levelButtonTable.add(button);
             }
-            levelButtonTable.add(button);
             levelButtonTable.row();
 
 
@@ -102,7 +103,7 @@ public class LevelSelectScreen extends AbstractScreen{
             if (i % 5 == 0){
                 rootTable.row();
             }
-            progressedThisFar = progressedThisFar && playerScoreOnLevel > 1;
+            progressedThisFar = progressedThisFar && playerScoreOnLevel > 0;
             i++;
         }
         backButton = new ImageButton(skin, "back_button");

@@ -30,7 +30,7 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
             , List<Word> collectedWords, int score) {
         super(spriteBatch);
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
-        this.stage = new QuizStage(this, collectedWords);
+        this.stage = new QuizStage(this, collectedWords, score);
         this.observer = observer;
         this.level = level;
         this.score = score;
@@ -47,13 +47,14 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
         getSpriteBatch().begin();
         getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
         getSpriteBatch().end();
+        stage.act(delta);
         stage.draw();
     }
 
     @Override
     public void onGuessClick(boolean isChoiceRight) {
         if (isChoiceRight) {
-            observer.levelWon(level, score++);
+            observer.levelWon(level, ++score);
         } else {
             observer.levelWon(level, score);
         }

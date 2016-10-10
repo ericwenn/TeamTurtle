@@ -1,15 +1,11 @@
 package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
-import com.teamturtle.infinityrun.models.sentences.Sentence;
-import com.teamturtle.infinityrun.models.sentences.SentenceLoader;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.models.words.WordImpl;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.DictionaryScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
@@ -20,7 +16,6 @@ import com.teamturtle.infinityrun.screens.StartScreen;
 import com.teamturtle.infinityrun.screens.WordScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
-import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -46,19 +41,6 @@ public class InfinityRun extends Game implements IScreenObserver {
 
 
 
-        WordImpl w = new WordImpl();
-        w.id = "27";
-
-        SentenceLoader sl = new SentenceLoader();
-        List<? extends Sentence> sentences = sl.getSentences(w);
-
-        if (sentences != null) {
-            for( Sentence s : sentences) {
-                Gdx.app.log("InfRun", s.getText());
-            }
-        } else {
-            Gdx.app.log("InfRun", "No words");
-        }
         try {
             changeScreen(ScreenID.MAIN_MENU);
         } catch (Exception e) {
@@ -132,17 +114,19 @@ public class InfinityRun extends Game implements IScreenObserver {
                 newScreen = new DictionaryScreen(getSpriteBatch(), this);
                 break;
 
-            case WORD:
-                Emoji apple = new Emoji("Äpple", "audio/apple.wav", "emoji/00a9.png");
-                newScreen = new WordScreen(getSpriteBatch(), this, apple);
-                break;
-
             default:
                 throw new Exception("Unknown screen enum");
         }
 
         changeScreen(newScreen);
 
+    }
+
+    @Override
+    public void changeScreen(Word word) throws Exception {
+        AbstractScreen newScreen;
+        newScreen = new WordScreen(getSpriteBatch(), this, word);
+        changeScreen(newScreen);
     }
 
     private void changeScreen(AbstractScreen newScreen) {
@@ -158,6 +142,6 @@ public class InfinityRun extends Game implements IScreenObserver {
     }
 
     public enum ScreenID {
-        MAIN_MENU, GAME, LEVELS_MENU, DICTIONARY, WORD
+        MAIN_MENU, GAME, LEVELS_MENU, DICTIONARY
     }
 }
