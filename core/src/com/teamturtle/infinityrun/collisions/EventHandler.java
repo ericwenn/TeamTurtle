@@ -54,26 +54,30 @@ public class EventHandler implements IEventHandler, ContactListener {
         }
 
 
-        // Check emoji
-        if (obj1 instanceof Player && obj2 instanceof Emoji) {
-            mEmojiCollisionListener.onCollision((Player) obj1, (Emoji) obj2);
-            return;
-        } else if(obj1 instanceof Emoji && obj2 instanceof Player) {
-            mEmojiCollisionListener.onCollision((Player) obj2, (Emoji) obj1);
-            return;
+        if (mEmojiCollisionListener != null) {
+            // Check emoji
+            if (obj1 instanceof Player && obj2 instanceof Emoji) {
+                mEmojiCollisionListener.onCollision((Player) obj1, (Emoji) obj2);
+                return;
+            } else if(obj1 instanceof Emoji && obj2 instanceof Player) {
+                mEmojiCollisionListener.onCollision((Player) obj2, (Emoji) obj1);
+                return;
+            }
         }
 
 
 
 
         // Check obstacle
-        if (SensorParser.Type.OBSTACLE.getName().equals(obj1) && obj2 instanceof Player) {
-            mObstacleCollisionHandler.onCollision((Player) obj2);
-            return;
-        }
-        if (SensorParser.Type.OBSTACLE.getName().equals(obj2) && obj1 instanceof Player) {
-            mObstacleCollisionHandler.onCollision((Player) obj1);
-            return;
+        if (mObstacleCollisionHandler != null) {
+            if (SensorParser.Type.OBSTACLE.getName().equals(obj1) && obj2 instanceof Player) {
+                mObstacleCollisionHandler.onCollision((Player) obj2);
+                return;
+            }
+            if (SensorParser.Type.OBSTACLE.getName().equals(obj2) && obj1 instanceof Player) {
+                mObstacleCollisionHandler.onCollision((Player) obj1);
+                return;
+            }
         }
 
 
@@ -95,13 +99,16 @@ public class EventHandler implements IEventHandler, ContactListener {
 
 
         // Check goal
-        if (SensorParser.Type.GOAL.getName().equals(obj1) && obj2 instanceof Player) {
-            mLevelFinishedListener.onLevelFinished();
-            return;
-        }
-        if (SensorParser.Type.GOAL.getName().equals(obj2) && obj1 instanceof Player) {
-            mLevelFinishedListener.onLevelFinished();
-            return;
+        if (mLevelFinishedListener != null) {
+            if (SensorParser.Type.GOAL.getName().equals(obj1) && obj2 instanceof Player) {
+                mLevelFinishedListener.onLevelFinished();
+                return;
+            }
+            if (SensorParser.Type.GOAL.getName().equals(obj2) && obj1 instanceof Player) {
+                mLevelFinishedListener.onLevelFinished();
+                return;
+            }
+
         }
 
 

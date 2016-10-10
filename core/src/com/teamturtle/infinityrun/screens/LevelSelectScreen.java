@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
-import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -124,9 +123,12 @@ public class LevelSelectScreen extends AbstractScreen{
     @Override
     public void render(float dt) {
         super.render(dt);
-        getSpriteBatch().begin();
-        getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
-        getSpriteBatch().end();
-        stage.draw();
+        if (stage != null) {
+
+            getSpriteBatch().begin();
+            getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
+            getSpriteBatch().end();
+            stage.draw();
+        }
     }
 }

@@ -68,6 +68,7 @@ public class GameScreen extends AbstractScreen {
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
     private World world;
+    // TODO remove before publish
     private Box2DDebugRenderer b2dr;
 
     private List<? extends Entity> emojiSprites;
