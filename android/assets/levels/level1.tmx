@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="204">
- <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" spacing="2" margin="1" tilecount="224" columns="16">
-  <image source="tileset.png" trans="ff00ff" width="576" height="480"/>
- </tileset>
- <tileset firstgid="225" name="tileset2" tilewidth="32" tileheight="32" tilecount="224" columns="16">
-  <image source="tileset2.png" width="528" height="448"/>
- </tileset>
- <tileset firstgid="449" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="207">
+ <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="mini_tileset.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="17" name="greentileset" tilewidth="32" tileheight="32" tilecount="52" columns="13">
+  <image source="greentileset.png" width="440" height="131"/>
  </tileset>
  <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJztmd0OwiAMRsf7P5WbPxdeuEfyBuIkHVBaqSXfSU5iNINZ+dYNlwV45BLmFQAvWGel5lYR+QMzYJ0jqcgfmIFR+bsyX+fuhQwC4JmentPa70qZ4rjHsagcbsggcI6kN43wmL+zHALgGU4eUgZSHnozu07YB59/ch7euIWP0jG43MO3nLk0zjvR05fOskCp9TxZmlOT3vq+Jskgd03OCiefa+wrvWjtaVK97dd7qo9oXi+L9eMxgyPqRfUNSe/g7oVTa8Pq+kJ9/5H/92nnkDNOqRZa9xQeM9hK7Rov6QHc8Y6/q/a8tblbj6fGSO/nn1tnbJTSe4WWY60yaF1bCCGEEEIIIYQ2vgGt7Jrx
+   eJztlV2LwjAQRSOKvmrFVy2UfVL8eFTZ//+3NoWGLXFqkpnatOM9cEAKydS0t9cYMEVmigVgKuTOSsh5QOQPaCB3jqQif0ADQ+Vvkfjbd01cQ/6ABjidE9t37zKV4rrZi8rhvP8jAWBQJN00hO38deUQgCmTkgeXAZcHbmarxLnoQb3crQ/rU7gHZ72bnTK/vUZ63w5OL3VlgfLAlJrbNaNPOM9FE31kQgMp70HVyGVvXt//0qRnk+o2bv6oDFKuGpeEIMwQefN7QzpvYy2s20zzJVDnXf+fk3l9/8/EtRxK+rUw3c9qTM9lCoS+8ZIOSN3PdUb5gbmh2bHrqT0qTwfVgdos35xLLDFrfwT7Syi+yKP574y6Jy4juCepVAdq8zyCc471Zt15XgNrcp8vhJqsvxe/nt/wnYQQQgi5/gEnmoos
   </data>
  </layer>
- <objectgroup name="ground" visible="0">
+ <objectgroup name="ground">
   <object id="1" x="0" y="352" height="32"/>
   <object id="50" x="-32" y="352" width="6556.5" height="32"/>
-  <object id="58" x="479.333" y="303.667" width="97" height="16"/>
-  <object id="59" x="640" y="271.333" width="96" height="16.6667"/>
+  <object id="59" x="638" y="256.333" width="96" height="22.6667"/>
   <object id="77" x="1280" y="288" width="193" height="15"/>
   <object id="89" x="1535.5" y="224" width="96" height="15.5"/>
   <object id="104" x="1922" y="288" width="93" height="64"/>
   <object id="106" x="2080" y="222" width="64" height="19"/>
-  <object id="107" x="2337" y="304" width="158" height="18"/>
-  <object id="108" x="2527" y="238" width="129" height="17"/>
-  <object id="109" x="2751.67" y="270.667" width="129" height="16"/>
+  <object id="107" x="2337" y="290" width="158" height="18"/>
+  <object id="108" x="2527" y="224" width="129" height="17"/>
+  <object id="109" x="2751.67" y="256.667" width="129" height="16"/>
   <object id="111" x="2944" y="224" width="161" height="18"/>
-  <object id="124" x="2305" y="304" width="190" height="18"/>
+  <object id="124" x="2305" y="289" width="190" height="18"/>
   <object id="132" x="3615" y="255" width="192" height="32"/>
   <object id="133" x="3807" y="289" width="546" height="32"/>
   <object id="170" x="5567.33" y="288" width="191.333" height="14.6667"/>
@@ -41,8 +37,9 @@
   <object id="186" x="3424.5" y="287.5" width="96" height="17"/>
   <object id="191" x="4353" y="256.5" width="32" height="31.5"/>
   <object id="201" x="5346" y="288" width="94" height="33.5"/>
+  <object id="206" x="480" y="288.667" width="96" height="22.6667"/>
  </objectgroup>
- <objectgroup name="emoji_placeholders">
+ <objectgroup name="emoji_placeholders" visible="0">
   <object id="53" x="640" y="319" width="32" height="32"/>
   <object id="55" x="640" y="192" width="32" height="32"/>
   <object id="73" x="1536" y="320" width="32" height="32"/>
