@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
@@ -28,6 +29,7 @@ import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sprites.Entity;
+import com.teamturtle.infinityrun.sprites.JumpAnimations;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
@@ -91,7 +93,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private Mission activeMission;
     private boolean hasSuccededInAllMissions = true;
 
-    private Texture screenShot;
+    private JumpAnimations mJumpAnimations;
 
     private PlayerData playerData;
 
@@ -111,6 +113,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         collectedWords = new ArrayList<Word>();
 
         playerData = new PlayerData();
+        mJumpAnimations = new JumpAnimations();
     }
 
     @Override
@@ -162,7 +165,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         world.setContactListener(mEventHandler);
 
         activeMission = mMissionHandler.getNextMission();
-        mMissionStage.setMission( activeMission );
+        //mMissionStage.setMission( activeMission );
+        Gdx.app.log("setMissions", "show()");
     }
 
     private void gameUpdate(float delta) {
@@ -175,6 +179,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         }
 
         mPlayerTail.update(delta);
+
+        mJumpAnimations.update(delta);
     }
 
 
@@ -221,11 +227,13 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         tiledMapRenderer.render();
         getSpriteBatch().begin();
 
-        mPlayer.render(getSpriteBatch());
         mPlayerTail.render(getSpriteBatch());
+        mPlayer.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
             entity.render(getSpriteBatch());
         }
+
+        mJumpAnimations.render(getSpriteBatch());
         getSpriteBatch().end();
 
         getCamera().position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
@@ -242,8 +250,10 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             if (touchPos.x > pBtnXMin && touchPos.x < pBtnXMax
                     && touchPos.y > pBtnYMin && touchPos.y < pBtnYMax) {
                 pauseBtnClick();
-            }else{
-                mPlayer.jump();
+            } else {
+                if (mPlayer.tryToJump()) {
+                    mJumpAnimations.createNew(mPlayer.getX() + Player.PLAYER_WIDTH / (InfinityRun.PPM * 2), mPlayer.getY() + Player.PLAYER_HEIGHT / (InfinityRun.PPM * 2));
+                }
             }
         }
 
@@ -356,6 +366,19 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onCollision(Player p, Emoji e) {
                 e.triggerExplode();
+                if (activeMission.getCorrectWord().equals(e.getWordModel())) {
+                    mPlayerTail.setColor(0,1,0);
+                } else {
+                    mPlayerTail.setColor(1,0,0);
+                }
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        mPlayerTail.setColor(1,1,1);
+                    }
+                },2);
+
+
                 if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
                     hasSuccededInAllMissions = false;
                 }
@@ -388,6 +411,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 try {
                     activeMission = mMissionHandler.getNextMission();
                     mMissionStage.setMission(activeMission);
+                    Gdx.app.log("setMissions", "onQuestChanged()");
                 } catch( IndexOutOfBoundsException e) {
 
                 }
