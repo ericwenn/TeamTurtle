@@ -27,9 +27,11 @@ import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.sentences.Sentence;
 import com.teamturtle.infinityrun.models.sentences.SentenceLoader;
 import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Rasmus on 2016-10-02.
@@ -118,7 +120,7 @@ public class WordScreen extends AbstractScreen {
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
         skin.load(Gdx.files.internal("skin/uiskin.json"));
 
-        titleLabel = new Label(word.getText().substring(0, 1).toUpperCase() +
+        titleLabel = new Label(word.getText().substring(0, 1).toUpperCase(Locale.getDefault()) +
                 word.getText().substring(1), new Label.LabelStyle(titleFont, FONT_COLOR));
 
         descriptionTable = new Table();
@@ -171,6 +173,7 @@ public class WordScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    SoundPlayer.playSound("tillbaka", "feedback");
                     observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
                 } catch (Exception e) {
                     e.printStackTrace();

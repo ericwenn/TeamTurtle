@@ -20,10 +20,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import static com.badlogic.gdx.math.MathUtils.random;
@@ -38,7 +40,6 @@ import static com.badlogic.gdx.math.MathUtils.random;
 public class QuizStage extends Stage {
     private Skin skin;
     private IQuizStageListener handler;
-    private Label quizLabel;
     private Emoji emoji;
     private int wordCategory;
     private List<Word> guesses;
@@ -68,7 +69,6 @@ public class QuizStage extends Stage {
         this.handler = handler;
 
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-        quizLabel = new Label("Fråga!", skin);
         wordLoader = new WordLoader();
         wordCategory = collectedWords.get(0).getCategory();
         this.score = score;
@@ -85,6 +85,7 @@ public class QuizStage extends Stage {
         createTableUi(starTable);
         addActor(parentTable);
         Gdx.input.setInputProcessor(this);
+        SoundPlayer.playSound("hararenfraga", "feedback");
     }
 
     private List<Word> getRandomGuesses(List<Word> collectedWords) {
@@ -116,7 +117,7 @@ public class QuizStage extends Stage {
         while (guesses.size() > 0) {
             final int index = random.nextInt((guesses.size() - 1) + 1);
 
-            TextButton button = new TextButton(guesses.get(index).getText().substring(0,1).toUpperCase() +
+            TextButton button = new TextButton(guesses.get(index).getText().substring(0,1).toUpperCase(Locale.getDefault()) +
                     guesses.get(index).getText().substring(1), skin, "text_button");
             final Word word = guesses.get(index);
             button.pad(TEXT_BUTTON_PADDING);

@@ -1,13 +1,15 @@
 package com.teamturtle.infinityrun.collisions;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.teamturtle.infinityrun.map_parsing.SensorParser;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+
+import java.util.Random;
 
 /**
  * Created by ericwenn on 9/25/16.
@@ -55,26 +57,32 @@ public class EventHandler implements IEventHandler, ContactListener {
         }
 
 
-        // Check emoji
-        if (obj1 instanceof Player && obj2 instanceof Emoji) {
-            mEmojiCollisionListener.onCollision((Player) obj1, (Emoji) obj2);
-            return;
-        } else if(obj1 instanceof Emoji && obj2 instanceof Player) {
-            mEmojiCollisionListener.onCollision((Player) obj2, (Emoji) obj1);
-            return;
+        if (mEmojiCollisionListener != null) {
+            // Check emoji
+            if (obj1 instanceof Player && obj2 instanceof Emoji) {
+                mEmojiCollisionListener.onCollision((Player) obj1, (Emoji) obj2);
+                return;
+            } else if(obj1 instanceof Emoji && obj2 instanceof Player) {
+                mEmojiCollisionListener.onCollision((Player) obj2, (Emoji) obj1);
+                return;
+            }
         }
 
 
 
 
         // Check obstacle
-        if (obj1 == SensorParser.Type.OBSTACLE.getName() && obj2 instanceof Player) {
-            mObstacleCollisionHandler.onCollision((Player) obj2);
-            return;
-        }
-        if (obj2 == SensorParser.Type.OBSTACLE.getName() && obj1 instanceof Player) {
-            mObstacleCollisionHandler.onCollision((Player) obj1);
-            return;
+        if (mObstacleCollisionHandler != null) {
+            if (SensorParser.Type.OBSTACLE.getName().equals(obj1) && obj2 instanceof Player) {
+                mObstacleCollisionHandler.onCollision((Player) obj2);
+                SoundPlayer.playSound("banaforlorad", "feedback");
+                return;
+            }
+            if (SensorParser.Type.OBSTACLE.getName().equals(obj2) && obj1 instanceof Player) {
+                mObstacleCollisionHandler.onCollision((Player) obj1);
+                SoundPlayer.playSound("banaforlorad", "feedback");
+                return;
+            }
         }
 
 
@@ -82,11 +90,11 @@ public class EventHandler implements IEventHandler, ContactListener {
 
         if (mQuestChangedListener != null) {
             // Check quest
-            if (obj1 == SensorParser.Type.QUEST.getName() && obj2 instanceof Player) {
+            if (SensorParser.Type.QUEST.getName().equals(obj1) && obj2 instanceof Player) {
                 mQuestChangedListener.onQuestChanged();
                 return;
             }
-            if (obj2 == SensorParser.Type.QUEST.getName() && obj1 instanceof Player) {
+            if (SensorParser.Type.QUEST.getName().equals(obj2) && obj1 instanceof Player) {
                 mQuestChangedListener.onQuestChanged();
                 return;
             }
@@ -96,13 +104,16 @@ public class EventHandler implements IEventHandler, ContactListener {
 
 
         // Check goal
-        if (obj1 == SensorParser.Type.GOAL.getName() && obj2 instanceof Player) {
-            mLevelFinishedListener.onLevelFinished();
-            return;
-        }
-        if (obj2 == SensorParser.Type.GOAL.getName() && obj1 instanceof Player) {
-            mLevelFinishedListener.onLevelFinished();
-            return;
+        if (mLevelFinishedListener != null) {
+            if (SensorParser.Type.GOAL.getName().equals(obj1) && obj2 instanceof Player) {
+                mLevelFinishedListener.onLevelFinished();
+                return;
+            }
+            if (SensorParser.Type.GOAL.getName().equals(obj2) && obj1 instanceof Player) {
+                mLevelFinishedListener.onLevelFinished();
+                return;
+            }
+
         }
 
 
