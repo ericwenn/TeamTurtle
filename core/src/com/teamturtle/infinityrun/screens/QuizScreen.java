@@ -47,6 +47,7 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
         getSpriteBatch().begin();
         getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
         getSpriteBatch().end();
+        stage.act(delta);
         stage.draw();
     }
 

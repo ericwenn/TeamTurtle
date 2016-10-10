@@ -2,10 +2,8 @@ package com.teamturtle.infinityrun.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -16,8 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.teamturtle.infinityrun.AnimatedActor;
-import com.teamturtle.infinityrun.AnimationDrawable;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
@@ -46,10 +42,12 @@ public class QuizStage extends Stage {
     private List<TextButton> guessButtons;
     private WordLoader wordLoader;
     private int score;
-    private Animation starAnimation;
+    private boolean isStarFilled = false;
+    private float stageTime = 0;
 
     //    Components
     private Table parentTable, buttonTable;
+    private Table starTable, animatedStarTable;
     private Texture star, noStar;
 
     private static final float TEXT_BUTTON_PADDING = 5.0f;
@@ -71,12 +69,14 @@ public class QuizStage extends Stage {
         noStar = new Texture("ui/no_star.png");
         TextureRegion starRegion = new TextureRegion(star, 101, 101);
         TextureRegion noStarRegion = new TextureRegion(noStar, 101, 101);
-        starAnimation = new Animation(0.05f, starRegion, noStarRegion);
+
+        starTable = getStarsTable();
+        animatedStarTable = getAnimatedStarsTable();
 
         guesses = getRandomGuesses(collectedWords);
         emoji = new Emoji(guesses.get(0));
         createButtons(guesses);
-        createTableUi();
+        createTableUi(starTable);
         addActor(parentTable);
         Gdx.input.setInputProcessor(this);
     }
@@ -123,13 +123,14 @@ public class QuizStage extends Stage {
         }
     }
 
-    private void createTableUi() {
+    private void createTableUi(Table starTable) {
         parentTable = new Table();
         parentTable.setSize(PARENT_TABLE_WIDTH, PARENT_TABLE_HEIGHT);
         parentTable.setPosition(PARENT_TABLE_POS_X, PARENT_TABLE_POS_Y);
 
 //        parentTable.center().top();
-        parentTable.add(getStarsTable()).center().top();
+        parentTable.add(starTable).center().top();
+        isStarFilled = false;
         parentTable.row();
         addEmojiToTable();
         parentTable.row();
@@ -156,24 +157,51 @@ public class QuizStage extends Stage {
     }
 
     private Table getStarsTable() {
-        Table starTabel = new Table();
-        Group starGroup = new Group();
-        starGroup.addActor(new Image(noStar));
-        starGroup.addActor(new Image(star));
-        AnimatedActor actor = new AnimatedActor(new AnimationDrawable(starAnimation));
+        Table starTable = new Table();
         for(int i = 0; i < score; i++) {
-            starTabel.add(actor);
+            starTable.add(new Image(star));
         }
         for(int i = 0; i < MAX_STARS - score; i++) {
-            starTabel.add(new Image(noStar));
+            starTable.add(new Image(noStar));
         }
-        return starTabel;
+        return starTable;
+    }
+
+    private Table getAnimatedStarsTable() {
+        Table starTable = new Table();
+        for(int i = 0; i <= score; i++) {
+            starTable.add(new Image(star));
+        }
+        for(int i = 0; i < MAX_STARS - score - 1; i++) {
+            starTable.add(new Image(noStar));
+        }
+        return starTable;
     }
 
     @Override
     public void draw() {
         Gdx.input.setInputProcessor(this);
         super.draw();
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        stageTime += delta;
+        if (stageTime > 0.5f) {
+            if (isStarFilled) {
+                getActors().clear();
+                createTableUi(starTable);
+                isStarFilled = false;
+            }
+            else {
+                getActors().clear();
+                createTableUi(animatedStarTable);
+                isStarFilled = true;
+            }
+            addActor(parentTable);
+            stageTime = 0;
+        }
     }
 
     public void hide() {
