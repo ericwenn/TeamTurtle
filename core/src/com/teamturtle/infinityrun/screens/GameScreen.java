@@ -102,7 +102,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);
     public static final Color FAILURE_COLOR = new Color((float) 194/255, (float) 59/255, (float) 34/255, 1);
-    public static final Color NEUTRAL_PLAYER_COLOR = new Color((float) 253/255, (float) 253/255, (float) 150/255, 1);
+    public static final Color NEUTRAL_PLAYER_COLOR = new Color((float) 240/255, (float) 213/255, (float) 0/255, 1);
 
     public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
         super(mSpriteBatch);

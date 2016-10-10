@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="218">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="221">
  <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="mini_tileset.png" width="128" height="128"/>
  </tileset>
  <tileset firstgid="17" name="greentileset" tilewidth="32" tileheight="32" tilecount="52" columns="13">
   <image source="greentileset.png" width="440" height="131"/>
+  <tile id="3">
+   <animation>
+    <frame tileid="8" duration="100"/>
+    <frame tileid="7" duration="100"/>
+    <frame tileid="6" duration="100"/>
+    <frame tileid="5" duration="100"/>
+    <frame tileid="4" duration="100"/>
+    <frame tileid="3" duration="100"/>
+   </animation>
+  </tile>
  </tileset>
  <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJztldFqwzAMRT061tcuY69rIfSpo9set9H2//+qLsS0BLmypOAk6j1woBQsJXauFQKYI0+OBWAujJ0VzgUj8gc8MHaOrCJ/wAO18vcs/N13RfyH/AEPaGZO6by7lymJq64WlcPF8FsCQFUss6mGt/nL5RCAOSPJQ8pAyoM2s62wL+agX36jf9F/Yw3N+tRb0v92jfW5E5q5lMsC5SF6FHrK9M31GBLNuXhiiEx4QPIdtJ1aqIxQGdDMtkvtz+ha6Kaw57LzhRDw1Mhbf25Y+71Gm+jbSP1zPUpqUvudy8g+yGcXpSZ/qT93D3DztQn5s6pxLp7g7njLDJDW+wjXe3rovlzv0vVUjbZnIr3PFOXugdJ8b+7sSykla7eG+haaB3IXrud++T6+JvBMVrVzak7uJ7DPpf5E33t+M2vG3l8IPUnN/ke4JyGEEEKtZ/RmkZ8=
+   eJztldFqwzAMRT061tcu2/NaCH3q6LbHbbT9/7+qCzEtQa4sKTiJeg8cKAVLiZ1rhQDmyJNjAZgLY2eFc8GI/AEPjJ0jq8gf8ECt/D0Lf/ddEf8hf8ADmplTOu/uZUriqqtF5XAx/JYAUBXLbKrhbf5yOQRgzkjykDKQ8qDNbCvsiznol9/oX/TfWEOzPvWW9L9dY33uhGYu5bJAeYgehZ4yfXM9hkRzLp4YIhMekHwHbacWKiNUBjSz7VL7M7oWuinsuex8IQQ8NfLWnxvWfq/RJvo2Uv9cj5Ka1H7nMrIP8tlFqclf6s/dA9x8bUL+rGqciye4O94yA6T1PsL1nh66L9e7dD1Vo+2ZSO8zRbl7oDTfmzv7UkrJ2q2hvoXmgdyF67lfvo+vCTyTVe2cmpP7CexzqT/R957fzJqx9xdCT1Kz/xHuSQghhFDrGcmOkZs=
   </data>
  </layer>
  <objectgroup name="ground">
