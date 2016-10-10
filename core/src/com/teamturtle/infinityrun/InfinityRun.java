@@ -125,8 +125,9 @@ public class InfinityRun extends Game implements IScreenObserver {
             default:
                 throw new Exception("Unknown screen enum");
         }
-
-        changeScreen(newScreen);
+        if (newScreen != null) {
+            changeScreen(newScreen);
+        }
 
     }
 
