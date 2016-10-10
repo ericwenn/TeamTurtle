@@ -258,7 +258,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) {
             Vector2 touchPos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
             touchViewport.unproject(touchPos);
-            System.out.println("x " + touchPos.x + " y " + touchPos.y);
             if (touchPos.x > pBtnXMin && touchPos.x < pBtnXMax
                     && touchPos.y > pBtnYMin && touchPos.y < pBtnYMax) {
                 pauseStage = new PauseStage(this, screenObserver, level);
