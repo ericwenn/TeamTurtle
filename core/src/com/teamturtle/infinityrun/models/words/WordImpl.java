@@ -6,6 +6,7 @@ public class WordImpl implements Word{
     public String category;
     public String filename;
     public String soundUrl;
+    public String article;
 
     public WordImpl() {
     }
@@ -36,6 +37,11 @@ public class WordImpl implements Word{
     @Override
     public int getId() {
         return Integer.parseInt(id);
+    }
+
+    @Override
+    public String getArticle() {
+        return article;
     }
 
     @Override

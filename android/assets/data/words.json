@@ -1,10 +1,11 @@
 {
   "1": {
     "id": "1",
-    "word": "simma",
+    "word": "simmare",
     "category": "2",
     "filename": "1f3ca-1f3fc",
-    "soundUrl": "simma"
+    "soundUrl": "simma",
+	"article": "en"
   },
   "2": {
     "id": "2",
