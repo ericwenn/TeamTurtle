@@ -16,7 +16,7 @@ public class LevelImpl implements Level {
     public LevelImpl(int id, String url, int[] categoryIDs) {
         this.id = id;
         this.url = url;
-        this.categoryIDs = categoryIDs;
+        this.categoryIDs = categoryIDs == null ? null : categoryIDs.clone();
 
     }
 
@@ -37,10 +37,10 @@ public class LevelImpl implements Level {
     }
 
     public int[] getCategoryIDs() {
-        return categoryIDs;
+        return categoryIDs.clone();
     }
 
     public void setCategoryIDs(int[] categoryIDs) {
-        this.categoryIDs = categoryIDs;
+        this.categoryIDs = categoryIDs == null ? null : categoryIDs.clone();
     }
 }

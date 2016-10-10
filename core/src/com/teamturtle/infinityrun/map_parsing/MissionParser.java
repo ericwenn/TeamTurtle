@@ -4,9 +4,9 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.World;
 import com.teamturtle.infinityrun.models.MissionHandler;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,15 +21,13 @@ import java.util.List;
 public class MissionParser {
 
 
-    private final World world;
     private final TiledMap tiledMap;
     private final String layerName;
 
 
     private List<Rectangle> mMissionRectangles = new ArrayList<Rectangle>();
 
-    public MissionParser(World world, TiledMap tiledMap, String layerName) {
-        this.world = world;
+    public MissionParser(TiledMap tiledMap, String layerName) {
         this.tiledMap = tiledMap;
         this.layerName = layerName;
     }
@@ -42,12 +40,7 @@ public class MissionParser {
     }
 
     void sort() {
-        Collections.sort(mMissionRectangles, new Comparator<Rectangle>() {
-            @Override
-            public int compare(Rectangle o1, Rectangle o2) {
-                return (int)(o1.getX() - o2.getX());
-            }
-        });
+        Collections.sort(mMissionRectangles, new RectPositionComparator());
     }
 
 
@@ -65,6 +58,17 @@ public class MissionParser {
         }
 
         return missionHandler;
+    }
+
+    private static class RectPositionComparator implements Comparator<Rectangle>, Serializable {
+
+        private static final long serialVersionUID = 42L; // arbitrary number
+        @Override
+        public int compare(Rectangle o1, Rectangle o2) {
+            return (int)(o1.getX() - o2.getX());
+        }
+
+
     }
 
 }

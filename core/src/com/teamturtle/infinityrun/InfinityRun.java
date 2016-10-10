@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.models.level.Level;
@@ -44,7 +45,7 @@ public class InfinityRun extends Game implements IScreenObserver {
         try {
             changeScreen(ScreenID.MAIN_MENU);
         } catch (Exception e) {
-            // This cannot fail...yet
+            Gdx.app.error("InfinityRun", "Could not change screen", e);
         }
     }
 
@@ -79,7 +80,9 @@ public class InfinityRun extends Game implements IScreenObserver {
 
     @Override
     public void levelWon(Level level, int score) {
-        mPlayerData.setPlayerProgressOnLevel(level, score);
+        if (mPlayerData != null) {
+            mPlayerData.setPlayerProgressOnLevel(level, score);
+        }
         changeScreen(new WonLevelScreen(getSpriteBatch(), this, level, score));
     }
 
@@ -90,7 +93,10 @@ public class InfinityRun extends Game implements IScreenObserver {
 
     @Override
     public void playLevelAfterThis(Level level) {
-        Level nextLevel = levelHandler.getLevel(level.getId() + 1);
+        Level nextLevel = null;
+        if (levelHandler != null) {
+            nextLevel = levelHandler.getLevel(level.getId() + 1);
+        }
         if (nextLevel != null) {
             playLevel(nextLevel);
         }
@@ -98,7 +104,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 
     @Override
     public void changeScreen(ScreenID screen) throws Exception {
-        AbstractScreen newScreen;
+        AbstractScreen newScreen = null;
 
         switch (screen) {
             case MAIN_MENU:
@@ -106,8 +112,10 @@ public class InfinityRun extends Game implements IScreenObserver {
                 break;
 
             case LEVELS_MENU:
-                List<Level> levels = levelHandler.getLevels();
-                newScreen = new LevelSelectScreen(getSpriteBatch(), this, levels, mPlayerData);
+                if (levelHandler != null && mPlayerData != null) {
+                    List<Level> levels = levelHandler.getLevels();
+                    newScreen = new LevelSelectScreen(getSpriteBatch(), this, levels, mPlayerData);
+                }
                 break;
 
             case DICTIONARY:
@@ -117,8 +125,9 @@ public class InfinityRun extends Game implements IScreenObserver {
             default:
                 throw new Exception("Unknown screen enum");
         }
-
-        changeScreen(newScreen);
+        if (newScreen != null) {
+            changeScreen(newScreen);
+        }
 
     }
 
