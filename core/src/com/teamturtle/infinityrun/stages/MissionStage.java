@@ -85,7 +85,6 @@ public class MissionStage extends Stage {
         } else {
             r = SCALE_BY - (SCALE_BY - 1) * index / (float)steps;
         }
-        Gdx.app.log("ScaleFn", "Index: "+index+  ", scale: "+r);
         return r;
     }
 }
