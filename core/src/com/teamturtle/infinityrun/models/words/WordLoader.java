@@ -63,7 +63,7 @@ public class WordLoader {
         });
 
         for (Word word : words) {
-            System.out.println(word.getCategory());
+            //System.out.println(word.getCategory());
         }
     }
 }
