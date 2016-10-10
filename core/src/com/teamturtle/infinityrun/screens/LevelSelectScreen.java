@@ -37,7 +37,6 @@ public class LevelSelectScreen extends AbstractScreen{
     private ImageButton backButton;
     private Texture bg;
 
-    LevelDataHandler handler;
 
     private IScreenObserver observer;
     private final List<Level> levels;
@@ -48,7 +47,6 @@ public class LevelSelectScreen extends AbstractScreen{
         this.observer = observer;
         this.levels = levels;
         this.mPlayerData = playerData;
-        handler = new LevelDataHandler();
     }
 
     @Override
