@@ -41,9 +41,9 @@ public class WordImpl implements Word{
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 7 * hash + (getIconUrl() == null ? 0 : getIconUrl().hashCode());
+        hash = 7 * hash + (getIconUrl().hashCode());
         hash = 7 * hash + (getText() == null ? 0 : getText().hashCode());
-        hash = 7 * hash + (getSoundUrl() == null ? 0 : getSoundUrl().hashCode());
+        hash = 7 * hash + (getSoundUrl().hashCode());
         return hash;
     }
 
