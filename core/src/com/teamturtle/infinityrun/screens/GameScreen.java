@@ -29,6 +29,7 @@ import com.teamturtle.infinityrun.models.MissionHandler;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
+import com.teamturtle.infinityrun.sound.SoundPlayer;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.JumpAnimations;
 import com.teamturtle.infinityrun.sprites.Player;
@@ -163,6 +164,7 @@ public class GameScreen extends AbstractScreen {
         world.setContactListener(mEventHandler);
 
         activeMission = mMissionHandler.getNextMission();
+        SoundPlayer.playSound("kor", "feedback");
         //mMissionStage.setMission( activeMission );
         Gdx.app.log("setMissions", "show()");
     }
