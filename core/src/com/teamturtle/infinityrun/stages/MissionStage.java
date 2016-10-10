@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.Mission;
@@ -23,6 +24,8 @@ public class MissionStage extends Stage {
             TABLE_OFFSET_BOTTOM = 10,
             TABLE_OFFSET_RIGHT = 10;
     private static final String CATCH_PREFIX = "Plocka 1x";
+
+    private static final float SCALE_BY = 1.1f;
     private Skin mSkin;
 
     private Table mMissionTable;
@@ -34,6 +37,8 @@ public class MissionStage extends Stage {
         mMissionTable = new Table(mSkin);
         mMissionTable.setSize(TABLE_WIDTH, TABLE_HEIGHT);
         mMissionTable.setPosition( InfinityRun.WIDTH - TABLE_WIDTH - TABLE_OFFSET_RIGHT, TABLE_OFFSET_BOTTOM);
+        mMissionTable.setTransform(true);
+        mMissionTable.setOrigin( Align.bottomRight);
         
         this.addActor(mMissionTable);
 
@@ -59,8 +64,28 @@ public class MissionStage extends Stage {
         Word correctWord = mission.getCorrectWord();
         if( correctWord != null) {
             changeEmoji(correctWord);
-
         }
 
+        final int[] index = {0};
+        final int steps = 10;
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                mMissionTable.setScale( scaleFn(index[0]++, steps));
+            }
+        }, 0, .1f, steps);
+
+    }
+
+
+    private float scaleFn(int index, int steps) {
+        float r;
+        if (index < steps / 2) {
+            r = 1 + (SCALE_BY - 1) * index * 2 / (float)steps;
+        } else {
+            r = SCALE_BY - (SCALE_BY - 1) * index / (float)steps;
+        }
+        Gdx.app.log("ScaleFn", "Index: "+index+  ", scale: "+r);
+        return r;
     }
 }

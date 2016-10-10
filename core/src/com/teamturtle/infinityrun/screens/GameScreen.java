@@ -153,7 +153,8 @@ public class GameScreen extends AbstractScreen {
         world.setContactListener(mEventHandler);
 
         activeMission = mMissionHandler.getNextMission();
-        mMissionStage.setMission( activeMission );
+        //mMissionStage.setMission( activeMission );
+        Gdx.app.log("setMissions", "show()");
     }
 
     private void gameUpdate(float delta) {
@@ -373,6 +374,7 @@ public class GameScreen extends AbstractScreen {
                 try {
                     activeMission = mMissionHandler.getNextMission();
                     mMissionStage.setMission(activeMission);
+                    Gdx.app.log("setMissions", "onQuestChanged()");
                 } catch( IndexOutOfBoundsException e) {
 
                 }
