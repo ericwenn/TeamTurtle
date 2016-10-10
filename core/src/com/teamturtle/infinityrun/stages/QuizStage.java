@@ -71,8 +71,6 @@ public class QuizStage extends Stage {
         this.score = score;
         star = new Texture("ui/star.png");
         noStar = new Texture("ui/no_star.png");
-        TextureRegion starRegion = new TextureRegion(star, 101, 101);
-        TextureRegion noStarRegion = new TextureRegion(noStar, 101, 101);
 
         starTable = getStarsTable();
         animatedStarTable = getAnimatedStarsTable();
