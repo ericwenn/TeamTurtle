@@ -1,8 +1,10 @@
 package com.teamturtle.infinityrun.map_parsing;
 
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -36,19 +38,41 @@ public class GroundParser implements MapParser {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
-//        Creating ground objects
-        for (MapObject object : tiledMap.getLayers().get(groundLayerName).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / InfinityRun.PPM
-                    , (rect.getY() + rect.getHeight() / 2) / InfinityRun.PPM);
-            body = world.createBody(bdef);
+        for (MapObject object : tiledMap.getLayers().get(groundLayerName).getObjects()) {
+            if (object instanceof RectangleMapObject) {
+                Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            shape.setAsBox(rect.getWidth() / 2 / InfinityRun.PPM
-                    , rect.getHeight() / 2 / InfinityRun.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
+                bdef.type = BodyDef.BodyType.StaticBody;
+                bdef.position.set(((rect.getX() + rect.getWidth() / 2) / InfinityRun.PPM)
+                        , ((rect.getY() + rect.getHeight() / 2) / InfinityRun.PPM));
+                body = world.createBody(bdef);
+
+                shape.setAsBox((rect.getWidth() / 2) / InfinityRun.PPM
+                        , (rect.getHeight() / 2) / InfinityRun.PPM);
+                fdef.shape = shape;
+                body.createFixture(fdef);
+            }
+
+            if (object instanceof PolygonMapObject) {
+
+                Polygon pol = ((PolygonMapObject) object).getPolygon();
+
+                float vertices[] = pol.getTransformedVertices();
+
+                for (int x = 0; x < vertices.length; x++) {
+                    vertices[x] /= InfinityRun.PPM;
+                }
+
+                bdef.type = BodyDef.BodyType.StaticBody;
+                bdef.position.set(((pol.getOriginX()) / InfinityRun.PPM)
+                        , ((pol.getOriginY()) / InfinityRun.PPM));
+                body = world.createBody(bdef);
+
+                shape.set(vertices);
+                fdef.shape = shape;
+                body.createFixture(fdef);
+            }
         }
     }
 
