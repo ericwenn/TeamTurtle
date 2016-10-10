@@ -62,10 +62,13 @@ public class MissionParser {
 
     private static class RectPositionComparator implements Comparator<Rectangle>, Serializable {
 
+        private static final long serialVersionUID = 42L; // arbitrary number
         @Override
         public int compare(Rectangle o1, Rectangle o2) {
             return (int)(o1.getX() - o2.getX());
         }
+
+
     }
 
 }

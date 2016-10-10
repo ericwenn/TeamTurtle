@@ -61,6 +61,9 @@ public class WordLoader {
 
 
     private static class WordCategoryComparator implements Comparator<WordImpl>, Serializable {
+
+        private static final long serialVersionUID = 42L; // arbitrary number
+        
         @Override
         public int compare(WordImpl o1, WordImpl o2) {
             if (o1.getCategory() < o2.getCategory()) {
