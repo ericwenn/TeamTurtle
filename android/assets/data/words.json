@@ -12,832 +12,951 @@
     "word": "lyftkran",
     "category": "3",
     "filename": "1f3d7",
-    "soundUrl": "lyftkran"
+    "soundUrl": "lyftkran",
+	"article": "en"
   },
   "3": {
     "id": "3",
     "word": "hus",
     "category": "4",
     "filename": "1f3e0",
-    "soundUrl": "hus"
+    "soundUrl": "hus",
+	"article": "ett"
   },
   "4": {
     "id": "4",
     "word": "sjukhus",
     "category": "4",
     "filename": "1f3e5",
-    "soundUrl": "sjukhus"
+    "soundUrl": "sjukhus",
+	"article": "ett"
   },
   "5": {
     "id": "5",
     "word": "fabrik",
     "category": "4",
     "filename": "1f3ed",
-    "soundUrl": "fabrik"
+    "soundUrl": "fabrik",
+	"article": "en"
   },
   "6": {
     "id": "6",
     "word": "lampa",
     "category": "5",
     "filename": "1f4a1",
-    "soundUrl": "lampa"
+    "soundUrl": "lampa",
+	"article": "en"
   },
   "7": {
     "id": "7",
     "word": "avf\u00f6ring",
     "category": "6",
     "filename": "1f4a9",
-    "soundUrl": "avforing"
+    "soundUrl": "avforing",
+	"article": "en"
   },
   "8": {
     "id": "8",
     "word": "dator",
     "category": "5",
     "filename": "1f4bb",
-    "soundUrl": "dator"
+    "soundUrl": "dator",
+	"article": "en"
   },
   "9": {
     "id": "9",
     "word": "bok",
     "category": "6",
     "filename": "1f4d6",
-    "soundUrl": "bok"
+    "soundUrl": "bok",
+	"article": "en"
   },
   "10": {
     "id": "10",
     "word": "telefon",
     "category": "5",
     "filename": "1f4de",
-    "soundUrl": "telefon"
+    "soundUrl": "telefon",
+	"article": "en"
   },
   "11": {
     "id": "11",
     "word": "kamera",
     "category": "5",
     "filename": "1f4f7",
-    "soundUrl": "kamera"
+    "soundUrl": "kamera",
+	"article": "en"
   },
   "12": {
     "id": "12",
     "word": "tv",
     "category": "5",
     "filename": "1f4fa",
-    "soundUrl": "tv"
+    "soundUrl": "tv",
+	"article": "en"
   },
   "13": {
     "id": "13",
     "word": "radio",
     "category": "5",
     "filename": "1f4fb",
-    "soundUrl": "radio"
+    "soundUrl": "radio",
+	"article": "en"
   },
   "14": {
     "id": "14",
     "word": "dator",
     "category": "5",
     "filename": "1f5a5",
-    "soundUrl": "dator"
+    "soundUrl": "dator",
+	"article": "en"
   },
   "15": {
     "id": "15",
     "word": "skrivare",
     "category": "5",
     "filename": "1f5a8",
-    "soundUrl": "skrivare"
+    "soundUrl": "skrivare",
+	"article": "en"
   },
   "16": {
     "id": "16",
     "word": "datormus",
     "category": "5",
     "filename": "1f5b1",
-    "soundUrl": "datormus"
+    "soundUrl": "datormus",
+	"article": "en"
   },
   "17": {
     "id": "17",
     "word": "d\u00f6rr",
     "category": "4",
     "filename": "1f6aa",
-    "soundUrl": "dorr"
+    "soundUrl": "dorr",
+	"article": "en"
   },
   "18": {
     "id": "18",
     "word": "cykel",
     "category": "3",
     "filename": "1f6b2",
-    "soundUrl": "cykel"
+    "soundUrl": "cykel",
+	"article": "en"
   },
   "19": {
     "id": "19",
     "word": "toalett",
     "category": "7",
     "filename": "1f6bd",
-    "soundUrl": "toalett"
+    "soundUrl": "toalett",
+	"article": "en"
   },
   "20": {
     "id": "20",
     "word": "flygplan",
     "category": "3",
     "filename": "1f6e9",
-    "soundUrl": "flygplan"
+    "soundUrl": "flygplan",
+	"article": "ett"
   },
   "21": {
     "id": "21",
     "word": "moped",
     "category": "3",
     "filename": "1f6f5",
-    "soundUrl": "moped"
+    "soundUrl": "moped",
+	"article": "en"
   },
   "22": {
     "id": "22",
     "word": "ost",
     "category": "8",
     "filename": "1f9c0",
-    "soundUrl": "ost"
+    "soundUrl": "ost",
+	"article": "en"
   },
   "23": {
     "id": "23",
     "word": "vulkan",
     "category": "10",
     "filename": "1f30b",
-    "soundUrl": "vulkan"
+    "soundUrl": "vulkan",
+	"article": "en"
   },
   "24": {
     "id": "24",
     "word": "blomma",
     "category": "10",
     "filename": "1f33c",
-    "soundUrl": "blomma"
+    "soundUrl": "blomma",
+	"article": "en"
   },
   "25": {
     "id": "25",
-    "word": "majs",
+    "word": "majskolv",
     "category": "8",
     "filename": "1f33d",
-    "soundUrl": "majs"
+    "soundUrl": "majs",
+	"article": "en"
   },
   "26": {
     "id": "26",
     "word": "citron",
     "category": "9",
     "filename": "1f34b",
-    "soundUrl": "citron"
+    "soundUrl": "citron",
+	"article": "en"
   },
   "27": {
     "id": "27",
     "word": "banan",
     "category": "9",
     "filename": "1f34c",
-    "soundUrl": "banan"
+    "soundUrl": "banan",
+	"article": "en"
   },
   "28": {
     "id": "28",
     "word": "ananas",
     "category": "9",
     "filename": "1f34d",
-    "soundUrl": "ananas"
+    "soundUrl": "ananas",
+	"article": "en"
   },
   "29": {
     "id": "29",
     "word": "\u00e4pple",
     "category": "9",
     "filename": "1f34e",
-    "soundUrl": "apple"
+    "soundUrl": "apple",
+	"article": "ett"
   },
   "30": {
     "id": "30",
     "word": "br\u00f6d",
     "category": "8",
     "filename": "1f35e",
-    "soundUrl": "brod"
+    "soundUrl": "brod",
+	"article": "ett"
   },
   "31": {
     "id": "31",
     "word": "kaka",
     "category": "11",
     "filename": "1f36a",
-    "soundUrl": "kaka"
+    "soundUrl": "kaka",
+	"article": "en"
   },
   "32": {
     "id": "32",
     "word": "choklad",
     "category": "11",
     "filename": "1f36b",
-    "soundUrl": "choklad"
+    "soundUrl": "choklad",
+	"article": "en bit"
   },
   "33": {
     "id": "33",
     "word": "klubba",
     "category": "11",
     "filename": "1f36d",
-    "soundUrl": "klubba"
+    "soundUrl": "klubba",
+	"article": "en"
   },
   "34": {
     "id": "34",
     "word": "\u00f6l",
     "category": "12",
     "filename": "1f37a",
-    "soundUrl": "ol"
+    "soundUrl": "ol",
+	"article": "ett glas"
   },
   "35": {
     "id": "35",
     "word": "popcorn",
     "category": "11",
     "filename": "1f37f",
-    "soundUrl": "popcorn"
+    "soundUrl": "popcorn",
+	"article": "ett paket"
   },
   "36": {
     "id": "36",
     "word": "krokodil",
     "category": "1",
     "filename": "1f40a",
-    "soundUrl": "krokodil"
+    "soundUrl": "krokodil",
+	"article": "en"
   },
   "37": {
     "id": "37",
     "word": "val",
     "category": "1",
     "filename": "1f40b",
-    "soundUrl": "val"
+    "soundUrl": "val",
+	"article": "en"
   },
   "38": {
     "id": "38",
     "word": "orm",
     "category": "1",
     "filename": "1f40d",
-    "soundUrl": "orm"
+    "soundUrl": "orm",
+	"article": "en"
   },
   "39": {
     "id": "39",
     "word": "h\u00e4st",
     "category": "1",
     "filename": "1f40e",
-    "soundUrl": "hast"
+    "soundUrl": "hast",
+	"article": "en"
   },
   "40": {
     "id": "40",
     "word": "myra",
     "category": "1",
     "filename": "1f41c",
-    "soundUrl": "myra"
+    "soundUrl": "myra",
+	"article": "en"
   },
   "41": {
     "id": "41",
     "word": "bi",
     "category": "1",
     "filename": "1f41d",
-    "soundUrl": "bi"
+    "soundUrl": "bi",
+	"article": "ett"
   },
   "42": {
     "id": "42",
     "word": "nyckelpiga",
     "category": "1",
     "filename": "1f41e",
-    "soundUrl": "nyckelpiga"
+    "soundUrl": "nyckelpiga",
+	"article": "en"
   },
   "43": {
     "id": "43",
     "word": "fisk",
     "category": "1",
     "filename": "1f41f",
-    "soundUrl": "fisk"
+    "soundUrl": "fisk",
+	"article": "en"
   },
   "44": {
     "id": "44",
     "word": "kamel",
     "category": "1",
     "filename": "1f42b",
-    "soundUrl": "kamel"
+    "soundUrl": "kamel",
+	"article": "en"
   },
   "45": {
     "id": "45",
     "word": "ekorre",
     "category": "1",
     "filename": "1f43f",
-    "soundUrl": "ekorre"
+    "soundUrl": "ekorre",
+	"article": "en"
   },
   "46": {
     "id": "46",
     "word": "vinka",
     "category": "13",
     "filename": "1f44b-1f3fc",
-    "soundUrl": "vinka"
+    "soundUrl": "vinka",
+	"article": ""
   },
   "47": {
     "id": "47",
     "word": "handv\u00e4ska",
     "category": "14",
     "filename": "1f45c",
-    "soundUrl": "handvaska"
+    "soundUrl": "handvaska",
+	"article": "en"
   },
   "48": {
     "id": "48",
     "word": "sko",
     "category": "14",
     "filename": "1f45f",
-    "soundUrl": "sko"
+    "soundUrl": "sko",
+	"article": "en"
   },
   "49": {
     "id": "49",
     "word": "kniv",
     "category": "15",
     "filename": "1f52a",
-    "soundUrl": "kniv"
+    "soundUrl": "kniv",
+	"article": "en"
   },
   "50": {
     "id": "50",
     "word": "penna",
     "category": "15",
     "filename": "1f58a",
-    "soundUrl": "penna"
+    "soundUrl": "penna",
+	"article": "en"
   },
   "51": {
     "id": "51",
     "word": "pensel",
     "category": "15",
     "filename": "1f58c",
-    "soundUrl": "pensel"
+    "soundUrl": "pensel",
+	"article": "en"
   },
   "52": {
     "id": "52",
     "word": "lastbil",
     "category": "3",
     "filename": "1f69b",
-    "soundUrl": "lastbil"
+    "soundUrl": "lastbil",
+	"article": "en"
   },
   "53": {
     "id": "53",
     "word": "traktor",
     "category": "3",
     "filename": "1f69c",
-    "soundUrl": "traktor"
+    "soundUrl": "traktor",
+	"article": "en"
   },
   "54": {
     "id": "54",
     "word": "\u00e4gg",
     "category": "8",
     "filename": "1f95a",
-    "soundUrl": "agg"
+    "soundUrl": "agg",
+	"article": "ett"
   },
   "55": {
     "id": "55",
     "word": "mj\u00f6lk",
     "category": "12",
     "filename": "1f95b",
-    "soundUrl": "mjolk"
+    "soundUrl": "mjolk",
+	"article": "ett paket"
   },
   "56": {
     "id": "56",
     "word": "r\u00e4v",
     "category": "1",
     "filename": "1f98a",
-    "soundUrl": "rav"
+    "soundUrl": "rav",
+	"article": "en"
   },
   "57": {
     "id": "57",
     "word": "fj\u00e4ril",
     "category": "1",
     "filename": "1f98b",
-    "soundUrl": "fjaril"
+    "soundUrl": "fjaril",
+	"article": "en"
   },
   "58": {
     "id": "58",
     "word": "gorilla",
     "category": "1",
     "filename": "1f98d",
-    "soundUrl": "gorilla"
+    "soundUrl": "gorilla",
+	"article": "en"
   },
   "59": {
     "id": "59",
     "word": "nosh\u00f6rning",
     "category": "1",
     "filename": "1f98f",
-    "soundUrl": "noshorning"
+    "soundUrl": "noshorning",
+	"article": "en"
   },
   "60": {
     "id": "60",
     "word": "regn",
     "category": "16",
     "filename": "1f327",
-    "soundUrl": "regn"
+    "soundUrl": "regn",
+	"article": ""
   },
   "61": {
     "id": "61",
     "word": "sn\u00f6",
     "category": "16",
     "filename": "1f328",
-    "soundUrl": "sno"
+    "soundUrl": "sno",
+	"article": ""
   },
   "62": {
     "id": "62",
     "word": "tr\u00e4d",
     "category": "10",
     "filename": "1f333",
-    "soundUrl": "trad"
+    "soundUrl": "trad",
+	"article": "ett"
   },
   "63": {
     "id": "63",
     "word": "vattenmelon",
     "category": "9",
     "filename": "1f349",
-    "soundUrl": "vattenmelon"
+    "soundUrl": "vattenmelon",
+	"article": "en"
   },
   "64": {
     "id": "64",
     "word": "jordgubbe",
     "category": "9",
     "filename": "1f353",
-    "soundUrl": "jordgubbe"
+    "soundUrl": "jordgubbe",
+	"article": "en"
   },
   "65": {
     "id": "65",
     "word": "hamburgare",
     "category": "8",
     "filename": "1f354",
-    "soundUrl": "hamburgare"
+    "soundUrl": "hamburgare",
+	"article": "en"
   },
   "66": {
     "id": "66",
     "word": "pizza",
     "category": "8",
     "filename": "1f355",
-    "soundUrl": "pizza"
+    "soundUrl": "pizza",
+	"article": "en"
   },
   "67": {
     "id": "67",
     "word": "ballong",
     "category": "6",
     "filename": "1f388",
-    "soundUrl": "ballong"
+    "soundUrl": "ballong",
+	"article": "en"
   },
   "68": {
     "id": "68",
     "word": "ryggs\u00e4ck",
     "category": "14",
     "filename": "1f392",
-    "soundUrl": "ryggsack"
+    "soundUrl": "ryggsack",
+	"article": "en"
   },
   "69": {
     "id": "69",
     "word": "mus",
     "category": "1",
     "filename": "1f401",
-    "soundUrl": "mus"
+    "soundUrl": "mus",
+	"article": "en"
   },
   "70": {
     "id": "70",
     "word": "ko",
     "category": "1",
     "filename": "1f404",
-    "soundUrl": "ko"
+    "soundUrl": "ko",
+	"article": "en"
   },
   "71": {
     "id": "71",
     "word": "tiger",
     "category": "1",
     "filename": "1f405",
-    "soundUrl": "tiger"
+    "soundUrl": "tiger",
+	"article": "en"
   },
   "72": {
     "id": "72",
     "word": "kanin",
     "category": "1",
     "filename": "1f407",
-    "soundUrl": "kanin"
+    "soundUrl": "kanin",
+	"article": "en"
   },
   "73": {
     "id": "73",
     "word": "katt",
     "category": "1",
     "filename": "1f408",
-    "soundUrl": "katt"
+    "soundUrl": "katt",
+	"article": "en"
   },
   "74": {
     "id": "74",
     "word": "f\u00e5r",
     "category": "1",
     "filename": "1f411",
-    "soundUrl": "far"
+    "soundUrl": "far",
+	"article": "ett"
   },
   "75": {
     "id": "75",
     "word": "apa",
     "category": "1",
     "filename": "1f412",
-    "soundUrl": "apa"
+    "soundUrl": "apa",
+	"article": "en"
   },
   "76": {
     "id": "76",
     "word": "tupp",
     "category": "1",
     "filename": "1f413",
-    "soundUrl": "tupp"
+    "soundUrl": "tupp",
+	"article": "en"
   },
   "77": {
     "id": "77",
     "word": "h\u00f6na",
     "category": "1",
     "filename": "1f414",
-    "soundUrl": "hona"
+    "soundUrl": "hona",
+	"article": "en"
   },
   "78": {
     "id": "78",
     "word": "hund",
     "category": "1",
     "filename": "1f415",
-    "soundUrl": "hund"
+    "soundUrl": "hund",
+	"article": "en"
   },
   "79": {
     "id": "79",
     "word": "gris",
     "category": "1",
     "filename": "1f416",
-    "soundUrl": "gris"
+    "soundUrl": "gris",
+	"article": "en"
   },
   "80": {
     "id": "80",
     "word": "elefant",
     "category": "1",
     "filename": "1f418",
-    "soundUrl": "elefant"
+    "soundUrl": "elefant",
+	"article": "en"
   },
   "81": {
     "id": "81",
     "word": "bl\u00e4ckfisk",
     "category": "1",
     "filename": "1f419",
-    "soundUrl": "blackfisk"
+    "soundUrl": "blackfisk",
+	"article": "en"
   },
   "82": {
     "id": "82",
     "word": "clownfisk",
     "category": "1",
     "filename": "1f420",
-    "soundUrl": "clownfisk"
+    "soundUrl": "clownfisk",
+	"article": "en"
   },
   "83": {
     "id": "83",
     "word": "sk\u00f6ldpadda",
     "category": "1",
     "filename": "1f422",
-    "soundUrl": "skoldpadda"
+    "soundUrl": "skoldpadda",
+	"article": "en"
   },
   "84": {
     "id": "84",
     "word": "kyckling",
     "category": "1",
     "filename": "1f424",
-    "soundUrl": "kyckling"
+    "soundUrl": "kyckling",
+	"article": "en"
   },
   "85": {
     "id": "85",
     "word": "f\u00e5gel",
     "category": "1",
     "filename": "1f426",
-    "soundUrl": "fagel"
+    "soundUrl": "fagel",
+	"article": "en"
   },
   "86": {
     "id": "86",
     "word": "pingvin",
     "category": "1",
     "filename": "1f427",
-    "soundUrl": "pingvin"
+    "soundUrl": "pingvin",
+	"article": "en"
   },
   "87": {
     "id": "87",
     "word": "groda",
     "category": "1",
     "filename": "1f438",
-    "soundUrl": "groda"
+    "soundUrl": "groda",
+	"article": "en"
   },
   "88": {
     "id": "88",
     "word": "glas\u00f6gon",
     "category": "14",
     "filename": "1f453",
-    "soundUrl": "glasogon"
+    "soundUrl": "glasogon",
+	"article": "ett par"
   },
   "89": {
     "id": "89",
     "word": "t-shirt",
     "category": "14",
     "filename": "1f455",
-    "soundUrl": "t-shirt"
+    "soundUrl": "t-shirt",
+	"article": "en"
   },
   "90": {
     "id": "90",
     "word": "byxor",
     "category": "14",
     "filename": "1f456",
-    "soundUrl": "byxor"
+    "soundUrl": "byxor",
+	"article": "ett par"
   },
   "91": {
     "id": "91",
     "word": "nyckel",
     "category": "15",
     "filename": "1f511",
-    "soundUrl": "nyckel"
+    "soundUrl": "nyckel",
+	"article": "en"
   },
   "92": {
     "id": "92",
     "word": "h\u00e4ngl\u00e5s",
     "category": "15",
     "filename": "1f512",
-    "soundUrl": "hanglas"
+    "soundUrl": "hanglas",
+	"article": "ett"
   },
   "93": {
     "id": "93",
     "word": "eld",
     "category": "10",
     "filename": "1f525",
-    "soundUrl": "eld"
+    "soundUrl": "eld",
+	"article": "en"
   },
   "94": {
     "id": "94",
     "word": "ficklampa",
     "category": "5",
     "filename": "1f526",
-    "soundUrl": "ficklampa"
+    "soundUrl": "ficklampa",
+	"article": "en"
   },
   "95": {
     "id": "95",
     "word": "hammare",
     "category": "15",
     "filename": "1f528",
-    "soundUrl": "hammare"
+    "soundUrl": "hammare",
+	"article": "en"
   },
   "96": {
     "id": "96",
     "word": "spindel",
     "category": "1",
     "filename": "1f577",
-    "soundUrl": "spindel"
+    "soundUrl": "spindel",
+	"article": "en"
   },
   "97": {
     "id": "97",
     "word": "rymdraket",
     "category": "3",
     "filename": "1f680",
-    "soundUrl": "rymdraket"
+    "soundUrl": "rymdraket",
+	"article": "en"
   },
   "98": {
     "id": "98",
     "word": "helikopter",
     "category": "3",
     "filename": "1f681",
-    "soundUrl": "helikopter"
+    "soundUrl": "helikopter",
+	"article": "en"
   },
   "99": {
     "id": "99",
     "word": "lokomotiv",
     "category": "3",
     "filename": "1f682",
-    "soundUrl": "lokomotiv"
+    "soundUrl": "lokomotiv",
+	"article": "ett"
   },
   "100": {
     "id": "100",
     "word": "ambulans",
     "category": "3",
     "filename": "1f691",
-    "soundUrl": "ambulans"
+    "soundUrl": "ambulans",
+	"article": "en"
   },
   "101": {
     "id": "101",
     "word": "brandbil",
     "category": "3",
     "filename": "1f692",
-    "soundUrl": "brandbil"
+    "soundUrl": "brandbil",
+	"article": "en"
   },
   "102": {
     "id": "102",
     "word": "polisbil",
     "category": "3",
     "filename": "1f693",
-    "soundUrl": "polisbil"
+    "soundUrl": "polisbil",
+	"article": "en"
   },
   "103": {
     "id": "103",
     "word": "taxi",
     "category": "3",
     "filename": "1f695",
-    "soundUrl": "taxi"
+    "soundUrl": "taxi",
+	"article": "en"
   },
   "104": {
     "id": "104",
     "word": "bil",
     "category": "3",
     "filename": "1f697",
-    "soundUrl": "bil"
+    "soundUrl": "bil",
+	"article": "en"
   },
   "105": {
     "id": "105",
     "word": "clown",
     "category": "6",
     "filename": "1f921",
-    "soundUrl": "clown"
+    "soundUrl": "clown",
+	"article": "en"
   },
   "106": {
     "id": "106",
     "word": "trumma",
     "category": "17",
     "filename": "1f941",
-    "soundUrl": "trumma"
+    "soundUrl": "trumma",
+	"article": "en"
   },
   "107": {
     "id": "107",
     "word": "morot",
     "category": "8",
     "filename": "1f955",
-    "soundUrl": "morot"
+    "soundUrl": "morot",
+	"article": "en"
   },
   "108": {
     "id": "108",
     "word": "krabba",
     "category": "1",
     "filename": "1f980",
-    "soundUrl": "krabba"
+    "soundUrl": "krabba",
+	"article": "en"
   },
   "109": {
     "id": "109",
     "word": "skorpion",
     "category": "1",
     "filename": "1f982",
-    "soundUrl": "skorpinjon"
+    "soundUrl": "skorpion",
+	"article": "en"
   },
   "110": {
     "id": "110",
     "word": "enh\u00f6rning",
     "category": "1",
     "filename": "1f984",
-    "soundUrl": "enhorning"
+    "soundUrl": "enhorning",
+	"article": "en"
   },
   "111": {
     "id": "111",
     "word": "\u00f6rn",
     "category": "1",
     "filename": "1f985",
-    "soundUrl": "orn"
+    "soundUrl": "orn",
+	"article": "en"
   },
   "112": {
     "id": "112",
     "word": "anka",
     "category": "1",
     "filename": "1f986",
-    "soundUrl": "anka"
+    "soundUrl": "anka",
+	"article": "en"
   },
   "113": {
     "id": "113",
     "word": "fladdermus",
     "category": "1",
     "filename": "1f987",
-    "soundUrl": "fladdermus"
+    "soundUrl": "fladdermus",
+	"article": "en"
   },
   "114": {
     "id": "114",
     "word": "sn\u00f6gubbe",
     "category": "16",
     "filename": "26c4",
-    "soundUrl": "snogubbe"
+    "soundUrl": "snogubbe",
+	"article": "en"
   },
   "115": {
     "id": "115",
     "word": "skridskor",
     "category": "2",
     "filename": "26f8",
-    "soundUrl": "skridskor"
+    "soundUrl": "skridskor",
+	"article": "ett par"
   },
   "116": {
     "id": "116",
     "word": "sol",
     "category": "16",
     "filename": "2600",
-    "soundUrl": "sol"
+    "soundUrl": "sol",
+	"article": "en"
   },
   "117": {
     "id": "117",
     "word": "moln",
     "category": "16",
     "filename": "2601",
-    "soundUrl": "moln"
+    "soundUrl": "moln",
+	"article": "ett"
   },
   "118": {
     "id": "118",
     "word": "paraply",
     "category": "15",
     "filename": "2602",
-    "soundUrl": "paraply"
+    "soundUrl": "paraply",
+	"article": "ett"
   },
   "119": {
     "id": "119",
     "word": "kaffe",
     "category": "12",
     "filename": "2615",
-    "soundUrl": "kaffe"
+    "soundUrl": "kaffe",
+	"article": "en kopp"
   },
   "120": {
     "id": "120",
     "word": "sax",
     "category": "15",
     "filename": "2702",
-    "soundUrl": "sax"
+    "soundUrl": "sax",
+	"article": "en"
   }
 }
