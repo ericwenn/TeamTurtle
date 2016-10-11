@@ -1,25 +1,19 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
-import com.teamturtle.infinityrun.sound.SoundPlayer;
+import com.teamturtle.infinityrun.sound.FeedbackSound;
 
 /**
  * Created by Alfred on 2016-09-22.
@@ -64,7 +58,7 @@ public class StartScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    SoundPlayer.playSound("spela", "feedback");
+                    FeedbackSound.SPELA.play();
                     observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -76,7 +70,7 @@ public class StartScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    SoundPlayer.playSound("ordlista", "feedback");
+                    FeedbackSound.ORDLISTA.play();
                     observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
                 } catch (Exception e) {
                     e.printStackTrace();
