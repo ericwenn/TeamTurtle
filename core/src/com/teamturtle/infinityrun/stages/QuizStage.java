@@ -126,7 +126,7 @@ public class QuizStage extends Stage {
                 public void changed(ChangeEvent event, Actor actor) {
                     if (!word.equals(emoji.getWordModel())) {
                         isWrongGuessed = true;
-                        wrongAnswerSound.play();
+                        wrongAnswerSound.play(0.8f);
                         getActors().clear();
                         showRightWord(starTable);
                         Timer timer = new Timer();
