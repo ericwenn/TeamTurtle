@@ -61,6 +61,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private float mountainsPos1, mountainsPos2;
     private float treePos1, treePos2;
     private float oldCamX;
+    private boolean isSendingToQuiz = false;
     private static final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
 
     private FillViewport mFillViewport;
@@ -206,7 +207,20 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 screenObserver.levelFailed(level);
                 break;
             case WON_GAME:
-                screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
+                gameUpdate(delta);
+                renderWorld();
+                mPlayer.setScale(.9f);
+                mPlayerTail.setScale(.9f);
+                if (!isSendingToQuiz) {
+                    Timer timer = new Timer();
+                    timer.scheduleTask(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
+                        }
+                    }, 1);
+                    isSendingToQuiz = true;
+                }
                 break;
             case PAUSE:
                 renderWorld();

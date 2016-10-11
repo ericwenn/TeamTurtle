@@ -1,6 +1,5 @@
 package com.teamturtle.infinityrun.sprites;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -22,6 +21,7 @@ public class Player extends AbstractEntity {
     private World world;
     private Body b2body;
     private boolean canDoubleJump;
+    private float scale = 1;
     public static final int PLAYER_WIDTH = 16, PLAYER_HEIGHT = 16;
     private static final int COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 150, START_Y = 300;
     private static final float JUMP_IMPULSE = 4.5f;
@@ -51,8 +51,8 @@ public class Player extends AbstractEntity {
             b2body.setLinearVelocity(LINEAR_SPEED_X, b2body.getLinearVelocity().y);
         }
 
-        setPosition(b2body.getPosition().x - PLAYER_WIDTH / 2 / InfinityRun.PPM
-                , b2body.getPosition().y - PLAYER_HEIGHT / 2 / InfinityRun.PPM);
+        setPosition(b2body.getPosition().x - scale * PLAYER_WIDTH / 2 / InfinityRun.PPM
+                , b2body.getPosition().y - scale * PLAYER_HEIGHT / 2 / InfinityRun.PPM);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class Player extends AbstractEntity {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
         shapeRenderer.setColor(this.fillColor);
-        shapeRenderer.circle(getX() + (PLAYER_WIDTH / 2 / InfinityRun.PPM), getY() + (PLAYER_HEIGHT / 2 / InfinityRun.PPM), COLLISION_RADIUS / InfinityRun.PPM, 20);
+        shapeRenderer.circle(getX() + (scale * PLAYER_WIDTH / 2 / InfinityRun.PPM), getY() + (scale * PLAYER_HEIGHT / 2 / InfinityRun.PPM), scale * COLLISION_RADIUS / InfinityRun.PPM, 20);
         shapeRenderer.end();
 
         spriteBatch.begin();
@@ -116,5 +116,9 @@ public class Player extends AbstractEntity {
 
     public void setColor(Color c) {
         this.fillColor = c;
+    }
+
+    public void setScale(float scale) {
+        this.scale = this.scale * scale;
     }
 }
