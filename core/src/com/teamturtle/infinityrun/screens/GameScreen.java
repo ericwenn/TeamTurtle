@@ -218,7 +218,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                         public void run() {
                             screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
                         }
-                    }, 1);
+                    }, 1.5f);
                     isSendingToQuiz = true;
                 }
                 break;
