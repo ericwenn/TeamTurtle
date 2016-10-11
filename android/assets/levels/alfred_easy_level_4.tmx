@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="451">
+ <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="mini_tileset.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="17" name="greentileset" tilewidth="32" tileheight="32" tilecount="52" columns="13">
+  <image source="greentileset.png" width="440" height="131"/>
+  <tile id="3">
+   <animation>
+    <frame tileid="8" duration="100"/>
+    <frame tileid="7" duration="100"/>
+    <frame tileid="6" duration="100"/>
+    <frame tileid="5" duration="100"/>
+    <frame tileid="4" duration="100"/>
+    <frame tileid="3" duration="100"/>
+   </animation>
+  </tile>
+ </tileset>
+ <layer name="graphics" width="225" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt2UsKwjAUheFuwercQnWk+JpVwf0vyxQaqKHpI+Y2l/h/cAaCtCdNAqkWBQAAAAAgRGPydPJK2ggA5NWpCwB/YuicwVkjb8w5NHDXYer1Z/uk7gEAOeHMgVD8FrqeJc+6mfGdFELHILG+NJ1xNXXJmZZ94XufifmeszEpu2wjXC8V35yxZ/Q4CFxT238Nc8do993J5Gyy71LJ1BoUaz7q4nse3DmZ+twnsUbGuN1jOgpd1yqFcjfZeXITvO+SHr92c/ddP4+I95FOO453YK7K+mvosyTteWlo/cTIZWTefOt27R6S3abuu+YzIHpTmXwAudVK+g==
+  </data>
+ </layer>
+ <objectgroup name="ground">
+  <object id="386" x="-3080.42" y="424.886"/>
+  <object id="387" x="0" y="416" width="736" height="64"/>
+  <object id="388" x="736" y="448" width="192" height="32"/>
+  <object id="392" x="768" y="352">
+   <polygon points="0,0 24.1584,23.075 103.174,24.0752 128,0"/>
+  </object>
+  <object id="393" x="2173.95" y="414.152" width="606.511" height="67.6953"/>
+  <object id="394" x="992" y="288">
+   <polygon points="0,0 224,0 196.108,22.5659 20.3784,21.4607"/>
+  </object>
+  <object id="395" x="1280" y="320">
+   <polygon points="0,0 192,0 170.044,23.7224 16.4191,23.7224"/>
+  </object>
+  <object id="396" x="1280" y="192">
+   <polygon points="0,0 224,0 200.99,22.412 16.4191,21.3068"/>
+  </object>
+  <object id="404" x="928" y="416" width="896" height="64"/>
+  <object id="405" x="1824" y="448" width="352" height="32"/>
+  <object id="407" x="1632" y="320">
+   <polygon points="0,0 128,0 104.094,20.4839 19.2846,21.7311"/>
+  </object>
+  <object id="408" x="1856" y="352">
+   <polygon points="0,0 96,0 70.9144,23.4053 18.5323,20.911"/>
+  </object>
+  <object id="409" x="2048" y="352">
+   <polygon points="0,0 96,0 70.9823,23.4053 14.8586,20.911"/>
+  </object>
+  <object id="410" x="2560" y="384" width="96" height="32"/>
+  <object id="411" x="2656" y="352" width="128" height="64"/>
+  <object id="412" x="2784" y="448" width="224" height="32"/>
+  <object id="413" x="2848" y="320">
+   <polygon points="0,0 192,0 166.467,22.9783 15.557,21.7311"/>
+  </object>
+  <object id="415" x="3008" y="416" width="4200.64" height="64"/>
+  <object id="416" x="3200" y="320">
+   <polygon points="0,0 224,0 201.098,21.7311 19.0072,21.7311"/>
+  </object>
+  <object id="417" x="3264" y="224">
+   <polygon points="0,0 160,0 132.109,24.1916 16.1197,21.6972"/>
+  </object>
+  <object id="424" x="3968" y="320">
+   <polygon points="0,0 160,0 136.515,21.7311 16.7842,21.7311"/>
+  </object>
+  <object id="425" x="4256" y="352">
+   <polygon points="0,0 128,0 101.695,27.1469 15.6388,22.1581"/>
+  </object>
+  <object id="426" x="4448" y="352">
+   <polygon points="0,0 160,0 134.19,22.1581 15.7067,20.911"/>
+  </object>
+  <object id="427" x="4416" y="224">
+   <polygon points="0,0 96,0 67.6618,22.1242 16.5268,22.1242"/>
+  </object>
+  <object id="434" x="5088" y="320">
+   <polygon points="0,0 160,0 132.879,23.8216 20.3559,21.7379"/>
+  </object>
+  <object id="435" x="5280" y="192">
+   <polygon points="0,0 224,0 199.267,24.7118 17.9787,21.5862"/>
+  </object>
+  <object id="439" x="5568" y="288">
+   <polygon points="0,0 192,0 166.528,20.3976 16.4968,20.3976"/>
+  </object>
+  <object id="448" x="5664" y="96">
+   <polygon points="0,0 192,0 169.095,22.6053 19.0523,21.1763"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="emoji_placeholders">
+  <object id="399" x="1440" y="256" width="32" height="32"/>
+  <object id="400" x="1472" y="96" width="32" height="32"/>
+  <object id="419" x="3392" y="288" width="32" height="32"/>
+  <object id="420" x="3424" y="160" width="32" height="32"/>
+  <object id="422" x="4416" y="192" width="32" height="32"/>
+  <object id="423" x="4480" y="320" width="32" height="32"/>
+  <object id="449" x="5696" y="224" width="32" height="32"/>
+  <object id="450" x="5728" y="32" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="obstacle">
+  <object id="390" x="736" y="432.003" width="192" height="15.9968"/>
+  <object id="397" x="1088" y="416">
+   <polygon points="0,0 8.37489,-18.122 23.8479,-14.8064 32,0"/>
+  </object>
+  <object id="398" x="1472" y="192">
+   <polygon points="0,0 8.99027,-21.7966 28.8842,-14.0601 32,0"/>
+  </object>
+  <object id="406" x="1824" y="430.966" width="352" height="17.0337"/>
+  <object id="414" x="2784" y="429.719" width="224" height="18.2809"/>
+  <object id="429" x="4192" y="416">
+   <polygon points="0,0 12.2903,-18.1452 29.7511,-13.1564 30.9983,-9.41482 43.4702,-19.3924 59.6837,-16.898 64,0"/>
+  </object>
+  <object id="430" x="4320" y="416">
+   <polygon points="0,0 10.2569,-21.8868 28.9648,-14.4036 32,0"/>
+  </object>
+  <object id="431" x="4448" y="416">
+   <polygon points="0,0 9.47069,-18.1452 25.6842,-13.1564 32,0"/>
+  </object>
+  <object id="432" x="4576" y="416">
+   <polygon points="0,0 12.426,-16.898 26.1452,-13.1564 32,0"/>
+  </object>
+  <object id="447" x="5696" y="416">
+   <polygon points="0,0 11.5557,-18.283 30.5809,-13.7532 32.3928,-7.41149 40.5465,-17.3771 59.5717,-15.5651 64,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="goal">
+  <object id="361" x="6656" y="0" width="32" height="480"/>
+ </objectgroup>
+ <objectgroup name="quest">
+  <object id="334" x="416" y="0" width="32" height="480"/>
+  <object id="385" x="6656" y="0" width="32" height="480"/>
+  <object id="401" x="2240" y="0" width="32" height="480"/>
+  <object id="421" x="3616" y="0" width="32" height="480"/>
+  <object id="433" x="4800" y="0" width="32" height="480"/>
+ </objectgroup>
+</map>
