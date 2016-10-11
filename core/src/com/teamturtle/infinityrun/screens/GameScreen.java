@@ -335,10 +335,13 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         treePos2 += (deltaPosX / TREE_PARALLAX_FACTOR);
 
 //        Makes sure mountains and trees never stops scrolling
-        if (mountainsPos1 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
+        if (mountainsPos1 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2) {
             mountainsPos1 += (mountains.getWidth() * 2) / InfinityRun.PPM;
-        if (mountainsPos2 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
-            mountainsPos2 += (mountains.getWidth() * 2) / InfinityRun.PPM;
+            float tmpPos = mountainsPos1;
+            mountainsPos1 = mountainsPos2;
+            mountainsPos2 = tmpPos;
+        }
+        mountainsPos2 = mountainsPos1 + (mountains.getWidth() / InfinityRun.PPM);
 
         if (treePos1 + trees.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
             treePos1 += (trees.getWidth() * 2) / InfinityRun.PPM;
