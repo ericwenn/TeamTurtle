@@ -24,6 +24,7 @@ public class PlayerTail extends AbstractEntity {
 
     private Color lineColor;
     private float lineWidth = 2f;
+    private float scale = 1;
 
     public PlayerTail(Player player) {
         mPlayer = player;
@@ -35,7 +36,7 @@ public class PlayerTail extends AbstractEntity {
 
     @Override
     public void update(float dt) {
-        addToVertices( mPlayer.getX() + Player.PLAYER_WIDTH / (2 * InfinityRun.PPM), mPlayer.getY() + Player.PLAYER_HEIGHT / (2*InfinityRun.PPM));
+        addToVertices( mPlayer.getX() + scale * Player.PLAYER_WIDTH / (2 * InfinityRun.PPM), mPlayer.getY() + scale * Player.PLAYER_HEIGHT / (2*InfinityRun.PPM));
     }
 
     @Override
@@ -43,7 +44,7 @@ public class PlayerTail extends AbstractEntity {
         spriteBatch.end();
 
 
-        Gdx.gl.glLineWidth(lineWidth);
+        Gdx.gl.glLineWidth(lineWidth * scale);
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -53,9 +54,9 @@ public class PlayerTail extends AbstractEntity {
         Color c2 = new Color(lineColor);
 
 
-        for( int i = 0; i < vertices.length - 2; i = i+2) {
-            c1.a = (vertices.length - i) / (float)vertices.length;
-            c2.a = (vertices.length - i - 1) / (float)vertices.length;
+        for( int i = 0; i < vertices.length * scale - 2; i = i+2) {
+            c1.a = (vertices.length * scale - i) / (float)vertices.length * scale;
+            c2.a = (vertices.length * scale - i - 1) / (float)vertices.length * scale;
             shapeRenderer.line(vertices[i], vertices[i + 1], vertices[i + 2], vertices[i + 3], c1, c2);
         }
         shapeRenderer.end();
@@ -97,5 +98,9 @@ public class PlayerTail extends AbstractEntity {
 
     public void setLineWidth(float width) {
         this.lineWidth = width;
+    }
+
+    public void setScale(float scale) {
+        this.scale = this.scale * scale;
     }
 }
