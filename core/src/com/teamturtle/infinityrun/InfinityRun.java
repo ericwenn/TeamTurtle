@@ -36,15 +36,10 @@ public class InfinityRun extends Game implements IScreenObserver {
 
     @Override
     public void create() {
-
-        FeedbackSound.load();
-
+        
         mPlayerData = new PlayerData();
-
         setSpriteBatch(new SpriteBatch());
         levelHandler = new LevelDataHandler();
-
-
 
         try {
             changeScreen(ScreenID.LOADING_SCREEN);

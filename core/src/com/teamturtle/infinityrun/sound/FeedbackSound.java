@@ -47,6 +47,15 @@ public enum FeedbackSound implements Disposable {
         }
     }
 
+    public static boolean isLoaded() {
+        for (Sound sound : levelSounds) {
+            if (sound == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public void dispose() {
         for (FeedbackSound sound: values()) {
