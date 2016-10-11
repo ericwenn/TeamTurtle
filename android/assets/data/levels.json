@@ -44,7 +44,7 @@
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 8
-	url: levels/level3.tmx
+	url: levels/newMap.tmx
 	categoryIDs: [ 1, 2, 3 ]
 }
 {
