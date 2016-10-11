@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="385">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="391">
  <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="mini_tileset.png" width="128" height="128"/>
  </tileset>
@@ -18,14 +18,11 @@
  </tileset>
  <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt18EKgkAQBmBfobpXUJ2KOlfv/16NUBCVsrrpRn4f/DfF0R13tKoAAAAAAIZ3jlxeci1aEQD/zNxhKj71un5/fy5Tfx7Ab3jsTfakcQ01E0rNmj6z31ykTVNPtfXM2N+gs8gi8dgx/gU390zFtnQBT75ZS8oa9lnnrjWW7KWUWuv6lpF15rWa7rPPmrbtCbnv5y7j3BRzkY7ZRw6RY+SknqzU+8ZKRIplHbkBWYg+1g==
+   eJzt100OgkAMhuG5grLXSdSVRtfi/e9lJ2GlQErH+Yl9n+RbEirtUAwBAAAAAAAAAMp7SsaPvJpWBAD4Z+wdeDE368z793Px/jwAwLNSO6HVrrHsfq97cSfZKzK0KrATSzO1NjO1v0FTL7V9qvFf8DTFi7PxuoPkqEisUMscTQ8tfd5aY8tZ0tSa6ku9jJn3Wvqdlp6uvRNyz+cl41oNzV76Ra6SW9CdwbvkUbE2YutlL33qrZ4tSe8NzZkghJRJlLwBWxJBJA==
   </data>
  </layer>
  <objectgroup name="ground">
   <object id="338" x="-3586.78" y="416.118" width="14373.6" height="63.8825"/>
-  <object id="341" x="992" y="320">
-   <polygon points="0,0 29.7521,22.2471 62.6797,21.2493 96,0"/>
-  </object>
   <object id="351" x="3232" y="352">
    <polygon points="0,0 320,0 298.635,20.8861 20.01,20.8861"/>
   </object>
@@ -61,10 +58,9 @@
   <object id="382" x="6080" y="160">
    <polygon points="0,0 192,0 170.809,22.0534 20.1756,22.0534"/>
   </object>
+  <object id="388" x="864" y="352" width="352" height="64"/>
  </objectgroup>
  <objectgroup name="emoji_placeholders">
-  <object id="335" x="1024" y="384" width="32" height="32"/>
-  <object id="339" x="1024" y="256" width="32" height="32"/>
   <object id="344" x="2368" y="384" width="32" height="32"/>
   <object id="347" x="2368" y="288" width="32" height="32"/>
   <object id="357" x="3808" y="320" width="32" height="32"/>
@@ -73,6 +69,8 @@
   <object id="367" x="5120" y="160" width="32" height="32"/>
   <object id="374" x="6240" y="256" width="32" height="32"/>
   <object id="375" x="6272" y="96" width="32" height="32"/>
+  <object id="389" x="1249" y="341" width="32" height="32"/>
+  <object id="390" x="1248" y="256" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="obstacle">
   <object id="348" x="2142.61" y="414.731">
@@ -107,11 +105,11 @@
   <object id="361" x="6656" y="0" width="32" height="480"/>
  </objectgroup>
  <objectgroup name="quest">
-  <object id="334" x="416" y="0" width="32" height="480"/>
   <object id="340" x="1536" y="0" width="32" height="480"/>
   <object id="350" x="2848" y="0" width="32" height="480"/>
   <object id="360" x="6656" y="0" width="32" height="480"/>
   <object id="363" x="4224" y="0" width="32" height="480"/>
   <object id="373" x="5280" y="0" width="32" height="480"/>
+  <object id="387" x="416" y="0" width="32" height="480"/>
  </objectgroup>
 </map>
