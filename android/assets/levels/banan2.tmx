@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="374">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="404">
  <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="mini_tileset.png" width="128" height="128"/>
  </tileset>
  <tileset firstgid="17" name="greentileset" tilewidth="32" tileheight="32" tilecount="78" columns="13">
-  <image source="greentileset.png" width="440" height="196"/>
+  <image source="greentileset.png" width="440" height="131"/>
   <tile id="3">
    <animation>
     <frame tileid="8" duration="100"/>
@@ -39,12 +39,52 @@
  </layer>
  <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt1jEKgDAQRcEc2Ai24g2MdzZ2sbVwxZ2B1/9mYUsBAAAAAAAAeMcSPQAS2ntt6IidA+lMvTo0x86BVK7f88kN+ln5qxbQWu43uAXtkL5QlSQpcSdlf0KI
+   eJzt2MEKwjAMgOG8qXp3wvCk1qsHne9sghbHMHRllUL3f/CDiMwJC5kTAQAAAAAAAMrqa58AsGIbbVf7JIAG2CxtJX+e9tqh+NkAbZlzr3jTLto947g2t2ctCLsQmHpow6jnH77DdmD3yXYh/wuBr/F8xBkpxfbfSd47MB7fduFV2IdYl6Pzvu2jnBmMz1V6ST9jifefnRP3pVjCu6aXGio0nZOQ+Gz48XrOcb05rPGbibxS1ywREVHLvQDHLVPr
   </data>
  </layer>
- <objectgroup name="ground"/>
- <objectgroup name="emoji_placeholders"/>
- <objectgroup name="obstacle"/>
- <objectgroup name="goal"/>
- <objectgroup name="quest"/>
+ <objectgroup name="ground">
+  <object id="389" x="0" y="384" width="7200" height="96"/>
+  <object id="390" x="928" y="288" width="160" height="96"/>
+  <object id="391" x="1312" y="224" width="96" height="64"/>
+  <object id="392" x="1280" y="352" width="64" height="32"/>
+  <object id="393" x="1376" y="352" width="64" height="32"/>
+  <object id="394" x="1760" y="192" width="64" height="192"/>
+  <object id="395" x="1664" y="320" width="256" height="32"/>
+  <object id="396" x="1728" y="256" width="128" height="32"/>
+  <object id="397" x="1728" y="288" width="128" height="32"/>
+  <object id="398" x="1632" y="352" width="320" height="32"/>
+ </objectgroup>
+ <objectgroup name="emoji_placeholders">
+  <object id="379" x="1376" y="128" width="32" height="32"/>
+  <object id="380" x="960" y="224" width="32" height="32"/>
+  <object id="381" x="1408" y="320" width="32" height="32"/>
+  <object id="382" x="1792" y="96" width="32" height="32"/>
+  <object id="383" x="1920" y="320" width="32" height="32"/>
+  <object id="384" x="1952" y="192" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="obstacle">
+  <object id="399" x="1792" y="192">
+   <polygon points="0,0 14.6667,-32 32,0"/>
+  </object>
+  <object id="400" x="1855.67" y="318.667">
+   <polygon points="0,0 14.6667,-32 32,0"/>
+  </object>
+  <object id="401" x="1344" y="388">
+   <polygon points="0,0 14.6667,-32 32,0"/>
+  </object>
+  <object id="402" x="1025.33" y="290.667">
+   <polygon points="0,0 14.6667,-32 32,0"/>
+  </object>
+  <object id="403" x="896.667" y="385">
+   <polygon points="0,0 14.6667,-32 32,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="goal">
+  <object id="374" x="6496" y="0" width="32" height="480"/>
+ </objectgroup>
+ <objectgroup name="quest">
+  <object id="376" x="608" y="0" width="32" height="480"/>
+  <object id="378" x="1472" y="0" width="32" height="480"/>
+  <object id="385" x="2048" y="0" width="32" height="480"/>
+ </objectgroup>
 </map>
