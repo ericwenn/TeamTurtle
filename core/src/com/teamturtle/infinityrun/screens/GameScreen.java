@@ -117,7 +117,14 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         //TODO: Move WordLoader to Level
         wordLoader = new WordLoader();
-        possibleWords = wordLoader.getWordsFromCategory(1);
+
+        int[] cats = level.getCategoryIDs();
+
+        possibleWords = new ArrayList<Word>();
+
+        for (int i = 0; i < cats.length; i++) {
+            possibleWords.addAll(wordLoader.getWordsFromCategory(cats[i]));
+        }
         collectedWords = new ArrayList<Word>();
 
         playerData = new PlayerData();
