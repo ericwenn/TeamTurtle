@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.stages.pause;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
+import com.teamturtle.infinityrun.sound.FeedbackSound;
 
 /**
  * Created by ostmos on 2016-10-08.
@@ -127,6 +129,7 @@ public class PauseStage extends Stage{
                 if (sequenceState == State.READY.index) {
                     countDownLbl.setText(READY_STR);
                 } else if (sequenceState == State.GO.index) {
+                    FeedbackSound.KOR.play();
                     countDownLbl.setText(GO_STR);
                 } else if (sequenceState == State.RUN_GAME.index) {
                     handler.continueBtnClick();
