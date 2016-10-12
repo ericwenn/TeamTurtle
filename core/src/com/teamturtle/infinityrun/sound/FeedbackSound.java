@@ -30,6 +30,10 @@ public enum FeedbackSound implements Disposable {
         sound.play();
     }
 
+    public void play(float volume) {
+        sound.play(volume);
+    }
+
     public static void playLevelSound(int level) {
         if (level <= LEVEL_AMOUNT) {
             int levelIndex = level - 1;
@@ -47,14 +51,6 @@ public enum FeedbackSound implements Disposable {
         }
     }
 
-    public static boolean isLoaded() {
-        for (Sound sound : levelSounds) {
-            if (sound == null) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     @Override
     public void dispose() {
