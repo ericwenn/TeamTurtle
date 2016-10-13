@@ -151,28 +151,22 @@
   </object>
  </objectgroup>
  <objectgroup name="emoji_placeholders">
-  <object id="248" x="480" y="352" width="32" height="32"/>
   <object id="249" x="800" y="320" width="32" height="32"/>
   <object id="250" x="928" y="192" width="32" height="32"/>
   <object id="255" x="2494" y="32" width="32" height="32"/>
-  <object id="256" x="2526" y="256" width="32" height="32"/>
   <object id="259" x="2366" y="320" width="32" height="32"/>
   <object id="260" x="1631.33" y="286.667" width="32" height="32"/>
   <object id="261" x="1566" y="128" width="32" height="32"/>
-  <object id="262" x="1406" y="288" width="32" height="32"/>
   <object id="296" x="3264" y="320" width="32" height="32"/>
   <object id="297" x="3296" y="96" width="32" height="32"/>
-  <object id="298" x="3457" y="158" width="32" height="32"/>
-  <object id="330" x="4512" y="128" width="32" height="32"/>
   <object id="331" x="4448" y="288" width="32" height="32"/>
   <object id="332" x="4288" y="128" width="32" height="32"/>
   <object id="334" x="5216" y="192" width="32" height="32"/>
   <object id="335" x="5248" y="64" width="32" height="32"/>
-  <object id="336" x="4960" y="96" width="32" height="32"/>
   <object id="351" x="5792" y="288" width="32" height="32"/>
   <object id="352" x="5760" y="192" width="32" height="32"/>
   <object id="353" x="5888" y="128" width="32" height="32"/>
-  <object id="354" x="6656" y="352" width="32" height="32"/>
+  <object id="354" x="6625" y="161" width="32" height="32"/>
   <object id="355" x="6592" y="256" width="32" height="32"/>
   <object id="356" x="6656" y="0" width="32" height="32"/>
  </objectgroup>
