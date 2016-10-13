@@ -133,7 +133,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     @Override
     public void show() {
-        resume();
+        state = State.PLAY;
 
         mMissionStage = new MissionStage();
 
@@ -281,7 +281,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             touchViewport.unproject(touchPos);
             if (touchPos.x > pBtnXMin && touchPos.x < pBtnXMax
                     && touchPos.y > pBtnYMin && touchPos.y < pBtnYMax) {
-                pauseStage = new PauseStage(this, screenObserver, level);
                 pauseBtnClick();
             } else {
                 if (mPlayer.tryToJump()) {
@@ -299,14 +298,13 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     @Override
     public void pause() {
+        pauseStage = new PauseStage(this, screenObserver, level);
         Gdx.input.setInputProcessor(pauseStage);
         state = State.PAUSE;
     }
 
     @Override
     public void resume() {
-        Gdx.input.setInputProcessor(this);
-        state= State.PLAY;
     }
 
     @Override
@@ -466,7 +464,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     @Override
     public void continueBtnClick() {
-        resume();
+        Gdx.input.setInputProcessor(this);
+        state = State.PLAY;
     }
 
     private void pauseBtnClick() {
