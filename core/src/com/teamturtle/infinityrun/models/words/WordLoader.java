@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.teamturtle.infinityrun.PathConstants;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,19 +52,25 @@ public class WordLoader {
     }
 
     private void sortWordByCategory(List<WordImpl> words) {
-        Collections.sort(words, new Comparator<WordImpl>() {
-            @Override
-            public int compare(WordImpl o1, WordImpl o2) {
-                if (o1.getCategory() < o2.getCategory()) {
-                    return -1;
-                }else{
-                    return 1;
-                }
-            }
-        });
+        Collections.sort(words, new WordCategoryComparator());
 
         for (Word word : words) {
-            System.out.println(word.getCategory());
+            //System.out.println(word.getCategory());
+        }
+    }
+
+
+    private static class WordCategoryComparator implements Comparator<WordImpl>, Serializable {
+
+        private static final long serialVersionUID = 42L; // arbitrary number
+        
+        @Override
+        public int compare(WordImpl o1, WordImpl o2) {
+            if (o1.getCategory() < o2.getCategory()) {
+                return -1;
+            }else{
+                return 1;
+            }
         }
     }
 }

@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="169">
- <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="1080" columns="33">
-  <image source="tileset.png" width="528" height="448"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="174">
+ <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="1080" columns="36">
+  <image source="tileset.png" width="576" height="480"/>
  </tileset>
- <tileset firstgid="1081" name="appletile" tilewidth="32" tileheight="32" tilecount="1" columns="1">
-  <image source="appletile.png" width="32" height="32"/>
- </tileset>
- <tileset firstgid="1082" name="tileset32" tilewidth="32" tileheight="32" tilecount="1080" columns="36">
+ <tileset firstgid="1081" name="tileset32" tilewidth="32" tileheight="32" tilecount="1080" columns="36">
   <image source="tileset32.png" width="1152" height="960"/>
  </tileset>
  <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJztl91qgzAYhj3QumvaPOpl9GhXs0EvpcIOutKbKCib0O1ixmiC38dSMZpoEtP1feAl9Sc1iT6JJgkAAAAAAAAA9LPOxwMAAOD/YDLvxzj3x94+AMAwsc4zm9V4AADLAAcBcMtT2saUuQ42WZLssun1gRtMv/9M3tEe0+uEbNec+jHA/oVysMxaB2vy8OhxHH7SNrpt4Iaufy48vBdU/2wc/M3b2PJJ3rF/cnvraT1k3/ochIfu0PkHD4fpumfr4BS25FxJ/s1ZC/fi/HeRg6ae6prOQXg4nzH/hjyU99znO9BScL90fdO559tB6dtr9vcdyCV72ViuhWfRvy+R755+sl9nAweX9LBv/AvLjN3PJWPqp4tU4jk4UT5yP9dgQvbL2fiQb7J8odRUNsr+mn7LfTGPX/Hg5n90z+6t+ae25TkN71+o3LKD7NkblexfpThXKcfuxcELXc/cqQ==
+   eJztl91qgzAYhj3QulvaPOpl9GhXs0EvpcIOutKbKCib0O1ixqAJfh9LxWiiSUzX94GX1J/UJPokmiQAAAAAAAAA0M86Hw8AAID/g8m8H+PcH3v7AADDxDrPbFbjAQAsAxwEwC1PaRtT5jrYZEmyy6bXB24w/f4zeUd7TK8Tsl1z6scA+xfKwTJrHazJw6PHcfhJ2+i2gRu6/rnw8F5Q/bNx8DdvY8snecf+ye2tp/WQfetzEB66Q+cfPBym656tg1PYknMl+TdnLdyL899FDpp6qms6B+HhfMb8G/JQ3nOf70BLwf3S9U3nnm8HpW+v2d93IJfsZWO5Fp5F/75Evnv6yX6dDRxc0sO+8S8sM3Y/l4ypny5SiefgRPnI/VyDCdkvZ+NDvsnyhVJT2Sj7a/ot98U8fsWDm//RPbu35p/aluc0vH+hcssOsmdvVLJ/leJcpRy7Fwcv+3zaJg==
   </data>
  </layer>
  <objectgroup name="obstacles">
@@ -81,7 +78,12 @@
   <object id="147" x="3616" y="32" width="32" height="32"/>
   <object id="148" x="1472" y="64" width="32" height="32"/>
  </objectgroup>
- <objectgroup name="finish">
+ <objectgroup name="goal">
   <object id="143" x="6624" y="-32" width="32" height="448"/>
+ </objectgroup>
+ <objectgroup name="quest">
+  <object id="171" x="3648" y="0" width="32" height="480"/>
+  <object id="172" x="2144" y="0" width="32" height="480"/>
+  <object id="173" x="6272" y="0" width="32" height="480"/>
  </objectgroup>
 </map>

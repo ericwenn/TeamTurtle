@@ -40,7 +40,6 @@ public class LevelDataHandler {
     */
     public List<Level> getLevels() {
         FileHandle file = Gdx.files.internal("data/levels.json");
-        ArrayList<JsonValue> jsonValues = json.fromJson(ArrayList.class, file);
         ArrayList<Level> levels = json.fromJson(ArrayList.class, LevelImpl.class, file.readString());
         return levels;
     }
