@@ -1,14 +1,12 @@
 package com.teamturtle.infinityrun.models.words;
 
-/**
- * Created by ericwenn on 10/2/16.
- */
 public class WordImpl implements Word{
     public String id;
     public String word;
     public String category;
     public String filename;
     public String soundUrl;
+    public String article;
 
     public WordImpl() {
     }
@@ -20,8 +18,10 @@ public class WordImpl implements Word{
 
     @Override
     public String getSoundUrl() {
-//        TODO SUPER DUMB
-        return "audio/apple.wav";
+        if(soundUrl != null)
+            return "audio/" + soundUrl + ".mp3";
+        else
+            return "404";
     }
 
     @Override
@@ -37,6 +37,20 @@ public class WordImpl implements Word{
     @Override
     public int getId() {
         return Integer.parseInt(id);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 7 * hash + (getIconUrl().hashCode());
+        hash = 7 * hash + (getText() == null ? 0 : getText().hashCode());
+        hash = 7 * hash + (getSoundUrl().hashCode());
+        return hash;
+    }
+
+    @Override
+    public String getArticle() {
+        return article;
     }
 
     @Override

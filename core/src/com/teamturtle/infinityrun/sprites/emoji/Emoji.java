@@ -2,6 +2,7 @@ package com.teamturtle.infinityrun.sprites.emoji;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -24,8 +25,9 @@ public class Emoji extends AbstractEntity {
 
     private static final float EXPLOSION_SCALE = 1.3f;
     private static final float EMOJI_SIZE = 32;
-    private  static final int FONT_SIZE = 25;
+    private static final int FONT_SIZE = 25;
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf";
+    private static final Color FONT_COLOR = Color.BLACK;
 
 
     private Word wordModel;
@@ -34,6 +36,7 @@ public class Emoji extends AbstractEntity {
 
     private boolean isExploded = false;
     private Body mBody;
+    private boolean hasSound;
 
     private BitmapFont font;
     private float textLength;
@@ -74,13 +77,21 @@ public class Emoji extends AbstractEntity {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter
                 = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = FONT_SIZE;
+        parameter.color = FONT_COLOR;
         font = generator.generateFont(parameter);
         generator.dispose();
 
         GlyphLayout layout = new GlyphLayout(font, wordModel.getText());
         textLength = layout.width;
 
-        emojiSound = Gdx.audio.newSound(Gdx.files.internal(wordModel.getSoundUrl()));
+        if(!wordModel.getSoundUrl().equals("404")) {
+            emojiSound = Gdx.audio.newSound(Gdx.files.internal(wordModel.getSoundUrl()));
+            hasSound = true;
+        }
+        else
+        {
+            hasSound = false;
+        }
     }
 
     public void setBody(Body body) {
@@ -89,7 +100,8 @@ public class Emoji extends AbstractEntity {
 
     public void triggerExplode() {
         isExploded = true;
-        emojiSound.play();
+        if(hasSound)
+            emojiSound.play();
     }
 
     @Override
@@ -133,7 +145,8 @@ public class Emoji extends AbstractEntity {
     public void dispose() {
         texture.dispose();
         mBody.getWorld().destroyBody(mBody);
-        emojiSound.dispose();
+        if(hasSound)
+            emojiSound.dispose();
         font.dispose();
     }
 

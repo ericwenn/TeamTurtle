@@ -1,11 +1,8 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -28,16 +25,11 @@ import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordImpl;
 import com.teamturtle.infinityrun.models.words.WordLoader;
-import com.teamturtle.infinityrun.sprites.Player;
-import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.sound.FeedbackSound;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Henrik on 2016-10-03.
- */
 public class DictionaryScreen extends AbstractScreen {
 
     private static final String LABEL_BG_URL = "label_bg.png";
@@ -75,6 +67,7 @@ public class DictionaryScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    FeedbackSound.TILLBAKA.play();
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -125,7 +118,7 @@ public class DictionaryScreen extends AbstractScreen {
         stage.addActor(rootTable);
     }
 
-    private Table createGridItem(final Word word, boolean tinted) {
+    private Table createGridItem(final Word word, final boolean tinted) {
         final Table gridItem = new Table();
         Image image = new Image(new Texture(word.getIconUrl()));
         Label label;
@@ -143,7 +136,8 @@ public class DictionaryScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 try {
-                    observer.changeScreen(word);
+                    if(!tinted)
+                        observer.changeScreen(word);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

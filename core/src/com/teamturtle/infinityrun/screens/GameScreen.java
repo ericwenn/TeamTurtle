@@ -2,6 +2,7 @@ package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
@@ -27,10 +29,16 @@ import com.teamturtle.infinityrun.models.MissionHandler;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
+import com.teamturtle.infinityrun.sound.FeedbackSound;
 import com.teamturtle.infinityrun.sprites.Entity;
+import com.teamturtle.infinityrun.sprites.JumpAnimations;
 import com.teamturtle.infinityrun.sprites.Player;
+import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
+import com.teamturtle.infinityrun.stages.pause.IPauseStageHandler;
+import com.teamturtle.infinityrun.stages.pause.PauseButtonStage;
+import com.teamturtle.infinityrun.stages.pause.PauseStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.ArrayList;
@@ -40,30 +48,34 @@ import java.util.List;
  * Created by ericwenn on 9/20/16.
  */
 
-public class GameScreen extends AbstractScreen {
+public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     private enum State {
         PLAY, PAUSE, LOST_GAME, WON_GAME
     }
 
     public static final float GRAVITY = -10;
+    private static final int pBtnXMax = 400, pBtnXMin = 365, pBtnYMax = 240, pBtnYMin = 193;
 
     private Texture bg, mountains, trees;
     private float mountainsPos1, mountainsPos2;
     private float treePos1, treePos2;
     private float oldCamX;
-    private final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
+    private boolean isSendingToQuiz = false;
+    private static final float TREE_PARALLAX_FACTOR = 1.6f, MOUNTAINS_PARALLAX_FACTOR = 1.2f;
 
     private FillViewport mFillViewport;
+    private FillViewport touchViewport;
 
     private Player mPlayer;
-
+    private PlayerTail mPlayerTail;
     private EventHandler mEventHandler;
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
     private World world;
+    // TODO remove before publish
     private Box2DDebugRenderer b2dr;
 
     private List<? extends Entity> emojiSprites;
@@ -71,6 +83,9 @@ public class GameScreen extends AbstractScreen {
 
     private MissionHandler mMissionHandler;
     private MissionStage mMissionStage;
+
+    private PauseStage pauseStage;
+    private PauseButtonStage pauseButtonStage;
 
     private State state;
 
@@ -82,7 +97,13 @@ public class GameScreen extends AbstractScreen {
     private Mission activeMission;
     private boolean hasSuccededInAllMissions = true;
 
+    private JumpAnimations mJumpAnimations;
+
     private PlayerData playerData;
+
+    public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);
+    public static final Color FAILURE_COLOR = new Color((float) 194/255, (float) 59/255, (float) 34/255, 1);
+    public static final Color NEUTRAL_PLAYER_COLOR = new Color((float) 240/255, (float) 213/255, (float) 0/255, 1);
 
     public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
         super(mSpriteBatch);
@@ -90,33 +111,42 @@ public class GameScreen extends AbstractScreen {
 
         this.level = level;
 
-        //Set state
-        state = State.PLAY;
-
         //Load tilemap
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
         tiledMap = tmxMapLoader.load(level.getMapUrl());
 
         //TODO: Move WordLoader to Level
         wordLoader = new WordLoader();
-        possibleWords = wordLoader.getWordsFromCategory(1);
+
+        int[] cats = level.getCategoryIDs();
+
+        possibleWords = new ArrayList<Word>();
+
+        for (int i = 0; i < cats.length; i++) {
+            possibleWords.addAll(wordLoader.getWordsFromCategory(cats[i]));
+        }
         collectedWords = new ArrayList<Word>();
 
         playerData = new PlayerData();
+        mJumpAnimations = new JumpAnimations();
     }
-
 
     @Override
     public void show() {
-        //Change input focus to this stage
-        Gdx.input.setInputProcessor(this);
-
+        state = State.PLAY;
 
         mMissionStage = new MissionStage();
+
+        pauseButtonStage = new PauseButtonStage();
+
+        pauseStage = new PauseStage(this, screenObserver, level);
 
         // FillViewport "letterboxing"
         this.mFillViewport = new FillViewport(InfinityRun.WIDTH / InfinityRun.PPM
                 , InfinityRun.HEIGHT / InfinityRun.PPM);
+
+        //Used to transform touch input position for diffrent screen sizes
+        touchViewport = new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT);
 
         // Init background from file and setup starting positions to have continous background.
         bg = new Texture(PathConstants.BACKGROUND_PATH);
@@ -151,13 +181,23 @@ public class GameScreen extends AbstractScreen {
         world.setContactListener(mEventHandler);
 
         activeMission = mMissionHandler.getNextMission();
-        mMissionStage.setMission( activeMission );
+        FeedbackSound.KOR.play();
+        //mMissionStage.setMission( activeMission );
+        Gdx.app.log("setMissions", "show()");
     }
 
     private void gameUpdate(float delta) {
         handleInput();
         world.step(1 / 60f, 6, 2);
         mPlayer.update(delta);
+
+        for (Entity entity : emojiSprites) {
+            entity.update(delta);
+        }
+
+        mPlayerTail.update(delta);
+
+        mJumpAnimations.update(delta);
     }
 
 
@@ -165,23 +205,41 @@ public class GameScreen extends AbstractScreen {
     public void render(float delta) {
         switch (state) {
             case PLAY:
-                renderWorld(delta);
+                gameUpdate(delta);
+                renderWorld();
                 mMissionStage.draw();
+                pauseButtonStage.draw();
                 break;
             case LOST_GAME:
-                    screenObserver.levelFailed(level);
+                screenObserver.levelFailed(level);
                 break;
             case WON_GAME:
-                //TODO should read some player model
-                    screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
-            case PAUSE:
+                gameUpdate(delta);
+                renderWorld();
+                mPlayer.setScale(.9f);
+                mPlayerTail.setScale(.9f);
+                if (!isSendingToQuiz) {
+                    Timer timer = new Timer();
+                    timer.scheduleTask(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
+                        }
+                    }, 1.5f);
+                    isSendingToQuiz = true;
+                }
                 break;
+            case PAUSE:
+                renderWorld();
+                pauseStage.draw();
+                mMissionStage.draw();
+                break;
+            default:
+                render(delta);
         }
     }
 
-    private void renderWorld(float delta) {
-        gameUpdate(delta);
-
+    private void renderWorld() {
         tiledMapRenderer.setView(getOrthoCam());
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -201,11 +259,13 @@ public class GameScreen extends AbstractScreen {
         tiledMapRenderer.render();
         getSpriteBatch().begin();
 
+        mPlayerTail.render(getSpriteBatch());
         mPlayer.render(getSpriteBatch());
         for (Entity entity : emojiSprites) {
-            entity.update(delta);
             entity.render(getSpriteBatch());
         }
+
+        mJumpAnimations.render(getSpriteBatch());
         getSpriteBatch().end();
 
         getCamera().position.set(mPlayer.getX() + (mFillViewport.getWorldWidth() / 3)
@@ -216,23 +276,35 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void handleInput() {
-        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)))
-            mPlayer.jump();
+        if ((Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))) {
+            Vector2 touchPos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+            touchViewport.unproject(touchPos);
+            if (touchPos.x > pBtnXMin && touchPos.x < pBtnXMax
+                    && touchPos.y > pBtnYMin && touchPos.y < pBtnYMax) {
+                pauseBtnClick();
+            } else {
+                if (mPlayer.tryToJump()) {
+                    mJumpAnimations.createNew(mPlayer.getX() + Player.PLAYER_WIDTH / (InfinityRun.PPM * 2), mPlayer.getY() + Player.PLAYER_HEIGHT / (InfinityRun.PPM * 2));
+                }
+            }
+        }
+
     }
 
     @Override
     public void resize(int width, int height) {
-
+        touchViewport.update(width, height);
     }
 
     @Override
     public void pause() {
-
+        pauseStage = new PauseStage(this, screenObserver, level);
+        Gdx.input.setInputProcessor(pauseStage);
+        state = State.PAUSE;
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
@@ -252,6 +324,7 @@ public class GameScreen extends AbstractScreen {
         }
         mPlayer.dispose();
         bg.dispose();
+        pauseStage.dispose();
     }
 
     public void drawParallaxContent() {
@@ -267,10 +340,13 @@ public class GameScreen extends AbstractScreen {
         treePos2 += (deltaPosX / TREE_PARALLAX_FACTOR);
 
 //        Makes sure mountains and trees never stops scrolling
-        if (mountainsPos1 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
+        if (mountainsPos1 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2) {
             mountainsPos1 += (mountains.getWidth() * 2) / InfinityRun.PPM;
-        if (mountainsPos2 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
-            mountainsPos2 += (mountains.getWidth() * 2) / InfinityRun.PPM;
+            float tmpPos = mountainsPos1;
+            mountainsPos1 = mountainsPos2;
+            mountainsPos2 = tmpPos;
+        }
+        mountainsPos2 = mountainsPos1 + (mountains.getWidth() / InfinityRun.PPM);
 
         if (treePos1 + trees.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
             treePos1 += (trees.getWidth() * 2) / InfinityRun.PPM;
@@ -293,12 +369,13 @@ public class GameScreen extends AbstractScreen {
         world = new World(new Vector2(0, GRAVITY), true);
 
         mPlayer = new Player(world);
+        mPlayerTail = new PlayerTail(mPlayer);
 
         MapParser groundParser = new GroundParser(world, tiledMap, "ground");
         groundParser.parse();
 
 
-        MissionParser missionParser = new MissionParser(world, tiledMap, "quest");
+        MissionParser missionParser = new MissionParser(tiledMap, "quest");
         mMissionHandler = missionParser.getMissionHandler();
 
         MapParser emojiParser = new EmojiParser(world, tiledMap, "emoji_placeholders", mMissionHandler, possibleWords);
@@ -323,6 +400,25 @@ public class GameScreen extends AbstractScreen {
             @Override
             public void onCollision(Player p, Emoji e) {
                 e.triggerExplode();
+                if (activeMission.getCorrectWord().equals(e.getWordModel())) {
+                    mPlayerTail.setColor(SUCCESS_COLOR);
+                    mPlayer.setColor(SUCCESS_COLOR);
+                    mJumpAnimations.setColor(SUCCESS_COLOR);
+                } else {
+                    mPlayerTail.setColor(FAILURE_COLOR);
+                    mPlayer.setColor(FAILURE_COLOR);
+                    mJumpAnimations.setColor(FAILURE_COLOR);
+                }
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        mPlayerTail.setColor(NEUTRAL_PLAYER_COLOR);
+                        mPlayer.setColor(NEUTRAL_PLAYER_COLOR);
+                        mJumpAnimations.setColor(NEUTRAL_PLAYER_COLOR);
+                    }
+                },2);
+
+
                 if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
                     hasSuccededInAllMissions = false;
                 }
@@ -345,6 +441,7 @@ public class GameScreen extends AbstractScreen {
         eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
             @Override
             public void onLevelFinished() {
+                FeedbackSound.DUKLARADEDET.play();
                 state = State.WON_GAME;
             }
         });
@@ -355,6 +452,7 @@ public class GameScreen extends AbstractScreen {
                 try {
                     activeMission = mMissionHandler.getNextMission();
                     mMissionStage.setMission(activeMission);
+                    Gdx.app.log("setMissions", "onQuestChanged()");
                 } catch( IndexOutOfBoundsException e) {
 
                 }
@@ -362,5 +460,15 @@ public class GameScreen extends AbstractScreen {
         });
 
         this.mEventHandler = eventHandler;
+    }
+
+    @Override
+    public void continueBtnClick() {
+        Gdx.input.setInputProcessor(this);
+        state = State.PLAY;
+    }
+
+    private void pauseBtnClick() {
+        pause();
     }
 }
