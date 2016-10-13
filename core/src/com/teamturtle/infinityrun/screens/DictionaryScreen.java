@@ -1,11 +1,8 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -28,12 +25,9 @@ import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordImpl;
 import com.teamturtle.infinityrun.models.words.WordLoader;
-import com.teamturtle.infinityrun.sound.SoundPlayer;
-import com.teamturtle.infinityrun.sprites.Player;
-import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.sound.FeedbackSound;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DictionaryScreen extends AbstractScreen {
@@ -73,7 +67,7 @@ public class DictionaryScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    SoundPlayer.playSound("tillbaka", "feedback");
+                    FeedbackSound.TILLBAKA.play();
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();

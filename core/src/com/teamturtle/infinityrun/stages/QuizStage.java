@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
-import com.teamturtle.infinityrun.sound.SoundPlayer;
+import com.teamturtle.infinityrun.sound.FeedbackSound;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class QuizStage extends Stage {
         createTableUi(starTable);
         addActor(parentTable);
         Gdx.input.setInputProcessor(this);
-        SoundPlayer.playSound("hararenfraga", "feedback");
+        FeedbackSound.HARARENFRAGA.play();
     }
 
     private List<Word> getRandomGuesses(List<Word> collectedWords) {

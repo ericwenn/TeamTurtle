@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="401">
+ <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="mini_tileset.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="17" name="greentileset" tilewidth="32" tileheight="32" tilecount="52" columns="13">
+  <image source="greentileset.png" width="440" height="131"/>
+  <tile id="3">
+   <animation>
+    <frame tileid="8" duration="100"/>
+    <frame tileid="7" duration="100"/>
+    <frame tileid="6" duration="100"/>
+    <frame tileid="5" duration="100"/>
+    <frame tileid="4" duration="100"/>
+    <frame tileid="3" duration="100"/>
+   </animation>
+  </tile>
+ </tileset>
+ <layer name="graphics" width="225" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt10sOgjAUheFuQZlrBzLS6FjZ/768xNzENLWW0gfW/0vOED3QSwFjAAAAAAAAAAAAAOR0lzycTE0bAUDYTrKXDK2LAH/qIDlKbOMeubnvRL28D+meqam5d7r/3arHVqU+z3q9B9cIzVqLudM+Z8nFvNZLYyt1mOms+KI9fN+DPe2BIan3Uuxxp+WViqjRIzRrueZ/yXnEzH7pDiV7qDHDb4TE7Kuped8fryuOuxXu+QvxPWs+pcY1+9an1rptpUdqhsg1JYSUiZU8Ad6aO8s=
+  </data>
+ </layer>
+ <objectgroup name="ground">
+  <object id="338" x="-3586.78" y="416.118" width="14373.6" height="63.8825"/>
+  <object id="385" x="768" y="352" width="96" height="64"/>
+  <object id="386" x="1216" y="288" width="96" height="128"/>
+  <object id="387" x="3424" y="352" width="352" height="64"/>
+  <object id="390" x="2944" y="320">
+   <polygon points="0,0 160,0 133.231,22.0631 22.3282,22.0631"/>
+  </object>
+  <object id="394" x="4576" y="416">
+   <polygon points="0,0 0,-64 96,-64 96,-96 256,-96 256,0"/>
+  </object>
+  <object id="395" x="5664" y="320" width="256" height="96"/>
+  <object id="396" x="5952" y="224">
+   <polygon points="0,0 192,0 165.05,20.5216 20.7418,21.8578"/>
+  </object>
+  <object id="397" x="5950.6" y="352">
+   <polygon points="0,0 225.405,0 195.414,22.1315 25.9995,22.1315"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="emoji_placeholders">
+  <object id="344" x="2144" y="320" width="32" height="32"/>
+  <object id="388" x="3712" y="320" width="32" height="32"/>
+  <object id="389" x="3712" y="256" width="32" height="32"/>
+  <object id="391" x="4854.65" y="231.949" width="32" height="32"/>
+  <object id="393" x="4845.29" y="310.647" width="32" height="32"/>
+  <object id="399" x="6031.9" y="176.034" width="32" height="32"/>
+  <object id="400" x="6063.9" y="307.974" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="obstacle"/>
+ <objectgroup name="goal">
+  <object id="361" x="6656" y="0" width="32" height="480"/>
+ </objectgroup>
+ <objectgroup name="quest">
+  <object id="340" x="1536" y="0" width="32" height="480"/>
+  <object id="350" x="2624" y="0" width="32" height="480"/>
+  <object id="360" x="6656" y="0" width="32" height="480"/>
+  <object id="363" x="4224" y="0" width="32" height="480"/>
+  <object id="373" x="5280" y="0" width="32" height="480"/>
+ </objectgroup>
+</map>
