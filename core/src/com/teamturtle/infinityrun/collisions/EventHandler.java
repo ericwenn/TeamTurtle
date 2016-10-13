@@ -1,5 +1,6 @@
 package com.teamturtle.infinityrun.collisions;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -19,6 +20,7 @@ public class EventHandler implements IEventHandler, ContactListener {
     private ObstacleCollisionListener mObstacleCollisionHandler;
     private LevelFinishedListener mLevelFinishedListener;
     private QuestChangedListener mQuestChangedListener;
+    private GroundCollisionListener mGroundCollisionListener;
 
     public EventHandler() {
     }
@@ -44,6 +46,11 @@ public class EventHandler implements IEventHandler, ContactListener {
         mQuestChangedListener = l;
     }
 
+    @Override
+    public void onCollisionWithGround(GroundCollisionListener l) {
+        mGroundCollisionListener = l;
+    }
+
 
     @Override
     public void beginContact(Contact contact) {
@@ -54,6 +61,16 @@ public class EventHandler implements IEventHandler, ContactListener {
             return;
         }
 
+
+        if (mGroundCollisionListener != null) {
+            if(obj1 instanceof Player && "ground".equals(obj2)) {
+                mGroundCollisionListener.onCollision(contact.getWorldManifold().getNormal().y >= 0 ? HitDirection.DOWNWARDS : HitDirection.UPWARDS);
+
+            } else if( obj2 instanceof Player && "ground".equals(obj1)) {
+                mGroundCollisionListener.onCollision(contact.getWorldManifold().getNormal().y >= 0 ? HitDirection.DOWNWARDS : HitDirection.UPWARDS);
+
+            }
+        }
 
         if (mEmojiCollisionListener != null) {
             // Check emoji
@@ -72,6 +89,7 @@ public class EventHandler implements IEventHandler, ContactListener {
         // Check obstacle
         if (mObstacleCollisionHandler != null) {
             if (SensorParser.Type.OBSTACLE.getName().equals(obj1) && obj2 instanceof Player) {
+
                 mObstacleCollisionHandler.onCollision((Player) obj2);
                 FeedbackSound.BANAFORLORAD.play();
                 return;
@@ -113,6 +131,9 @@ public class EventHandler implements IEventHandler, ContactListener {
             }
 
         }
+
+
+
 
 
 

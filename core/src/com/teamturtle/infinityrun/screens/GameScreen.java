@@ -430,6 +430,14 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         });
 
+        eventHandler.onCollisionWithGround(new IEventHandler.GroundCollisionListener() {
+            @Override
+            public void onCollision(IEventHandler.HitDirection d) {
+                if (d == IEventHandler.HitDirection.DOWNWARDS) {
+                    mPlayer.resetJump();
+                }
+            }
+        });
 
         eventHandler.onCollisionWithObstacle(new IEventHandler.ObstacleCollisionListener() {
             @Override
