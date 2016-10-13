@@ -12,11 +12,13 @@ import com.teamturtle.infinityrun.screens.DictionaryScreen;
 import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
 import com.teamturtle.infinityrun.screens.LevelSelectScreen;
+import com.teamturtle.infinityrun.screens.LoadingScreen;
 import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
 import com.teamturtle.infinityrun.screens.WordScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
+import com.teamturtle.infinityrun.sound.FeedbackSound;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -34,16 +36,13 @@ public class InfinityRun extends Game implements IScreenObserver {
 
     @Override
     public void create() {
-
+        
         mPlayerData = new PlayerData();
-
         setSpriteBatch(new SpriteBatch());
         levelHandler = new LevelDataHandler();
 
-
-
         try {
-            changeScreen(ScreenID.MAIN_MENU);
+            changeScreen(ScreenID.LOADING_SCREEN);
         } catch (Exception e) {
             Gdx.app.error("InfinityRun", "Could not change screen", e);
         }
@@ -122,6 +121,10 @@ public class InfinityRun extends Game implements IScreenObserver {
                 newScreen = new DictionaryScreen(getSpriteBatch(), this);
                 break;
 
+            case LOADING_SCREEN:
+                newScreen = new LoadingScreen(getSpriteBatch(), this);
+                break;
+
             default:
                 throw new Exception("Unknown screen enum");
         }
@@ -154,6 +157,6 @@ public class InfinityRun extends Game implements IScreenObserver {
     }
 
     public enum ScreenID {
-        MAIN_MENU, GAME, LEVELS_MENU, DICTIONARY
+        MAIN_MENU, GAME, LEVELS_MENU, DICTIONARY, LOADING_SCREEN
     }
 }

@@ -29,7 +29,7 @@ import com.teamturtle.infinityrun.models.MissionHandler;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
-import com.teamturtle.infinityrun.sound.SoundPlayer;
+import com.teamturtle.infinityrun.sound.FeedbackSound;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.JumpAnimations;
 import com.teamturtle.infinityrun.sprites.Player;
@@ -117,7 +117,14 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         //TODO: Move WordLoader to Level
         wordLoader = new WordLoader();
-        possibleWords = wordLoader.getWordsFromCategory(1);
+
+        int[] cats = level.getCategoryIDs();
+
+        possibleWords = new ArrayList<Word>();
+
+        for (int i = 0; i < cats.length; i++) {
+            possibleWords.addAll(wordLoader.getWordsFromCategory(cats[i]));
+        }
         collectedWords = new ArrayList<Word>();
 
         playerData = new PlayerData();
@@ -174,7 +181,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         world.setContactListener(mEventHandler);
 
         activeMission = mMissionHandler.getNextMission();
-        SoundPlayer.playSound("kor", "feedback");
+        FeedbackSound.KOR.play();
         //mMissionStage.setMission( activeMission );
         Gdx.app.log("setMissions", "show()");
     }
@@ -335,10 +342,13 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         treePos2 += (deltaPosX / TREE_PARALLAX_FACTOR);
 
 //        Makes sure mountains and trees never stops scrolling
-        if (mountainsPos1 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
+        if (mountainsPos1 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2) {
             mountainsPos1 += (mountains.getWidth() * 2) / InfinityRun.PPM;
-        if (mountainsPos2 + mountains.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
-            mountainsPos2 += (mountains.getWidth() * 2) / InfinityRun.PPM;
+            float tmpPos = mountainsPos1;
+            mountainsPos1 = mountainsPos2;
+            mountainsPos2 = tmpPos;
+        }
+        mountainsPos2 = mountainsPos1 + (mountains.getWidth() / InfinityRun.PPM);
 
         if (treePos1 + trees.getWidth() / InfinityRun.PPM < getOrthoCam().position.x - getOrthoCam().viewportWidth / 2)
             treePos1 += (trees.getWidth() * 2) / InfinityRun.PPM;
@@ -433,7 +443,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
             @Override
             public void onLevelFinished() {
-                SoundPlayer.playSound("duklaradedet", "feedback");
+                FeedbackSound.DUKLARADEDET.play();
                 state = State.WON_GAME;
             }
         });

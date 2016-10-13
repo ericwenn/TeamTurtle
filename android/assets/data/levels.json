@@ -2,32 +2,32 @@
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 1
-	url: levels/banan1.tmx
-	categoryIDs: [ 1, 2, 3 ]
+	url: levels/alfred_easy_level_1.tmx
+	categoryIDs: [ 14, 4, 3 ]
 }
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 2
-	url: levels/banan2.tmx
-	categoryIDs: [ 1, 2, 3 ]
+	url: levels/alfred_easy_level_2.tmx
+	categoryIDs: [ 14, 4, 3 ]
 }
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 3
 	url: levels/alfred_easy_level_3.tmx
-	categoryIDs: [ 1, 2, 3 ]
+	categoryIDs: [ 2, 5, 7, 8 ]
 }
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 4
 	url: levels/alfred_easy_level_4.tmx
-	categoryIDs: [ 1, 2, 3 ]
+	categoryIDs: [ 2, 5, 7, 8 ]
 }
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 5
 	url: levels/alfred_hard_level.tmx
-	categoryIDs: [ 1, 2, 3 ]
+	categoryIDs: [ 1 ]
 }
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
