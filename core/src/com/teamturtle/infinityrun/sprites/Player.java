@@ -38,7 +38,6 @@ public class Player extends AbstractEntity {
 
     public Player(World world) {
         this.world = world;
-        canDoubleJump = true;
 
         setPosition(0, InfinityRun.HEIGHT / 2);
         definePlayer();
