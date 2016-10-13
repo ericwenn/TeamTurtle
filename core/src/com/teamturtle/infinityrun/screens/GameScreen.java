@@ -36,6 +36,7 @@ import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
+import com.teamturtle.infinityrun.stages.ProgressBarStage;
 import com.teamturtle.infinityrun.stages.pause.IPauseStageHandler;
 import com.teamturtle.infinityrun.stages.pause.PauseButtonStage;
 import com.teamturtle.infinityrun.stages.pause.PauseStage;
@@ -83,6 +84,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     private MissionHandler mMissionHandler;
     private MissionStage mMissionStage;
+    private ProgressBarStage mProgressStage;
 
     private PauseStage pauseStage;
     private PauseButtonStage pauseButtonStage;
@@ -180,10 +182,10 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         world.setContactListener(mEventHandler);
 
+        mProgressStage = new ProgressBarStage(tiledMap, mMissionHandler.getmMissions());
+
         activeMission = mMissionHandler.getNextMission();
         FeedbackSound.KOR.play();
-        //mMissionStage.setMission( activeMission );
-        Gdx.app.log("setMissions", "show()");
     }
 
     private void gameUpdate(float delta) {
@@ -198,6 +200,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         mPlayerTail.update(delta);
 
         mJumpAnimations.update(delta);
+        mProgressStage.updatePlayerProgress( mPlayer.getX() * InfinityRun.PPM);
     }
 
 
@@ -209,6 +212,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 renderWorld();
                 mMissionStage.draw();
                 pauseButtonStage.draw();
+                mProgressStage.draw();
                 break;
             case LOST_GAME:
                 screenObserver.levelFailed(level);
@@ -378,6 +382,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         MissionParser missionParser = new MissionParser(tiledMap, "quest");
         mMissionHandler = missionParser.getMissionHandler();
 
+
         MapParser emojiParser = new EmojiParser(world, tiledMap, "emoji_placeholders", mMissionHandler, possibleWords);
         emojiParser.parse();
         emojiSprites = emojiParser.getEntities();
@@ -450,6 +455,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onLevelFinished() {
                 FeedbackSound.DUKLARADEDET.play();
+                Gdx.app.log("LevelFinishedX", Float.toString(mPlayer.getX()));
                 state = State.WON_GAME;
             }
         });
