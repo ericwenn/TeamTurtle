@@ -405,32 +405,37 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onCollision(Player p, Emoji e) {
                 e.triggerExplode();
-                if (activeMission.getCorrectWord().equals(e.getWordModel())) {
-                    mPlayerTail.setColor(SUCCESS_COLOR);
-                    mPlayer.setColor(SUCCESS_COLOR);
-                    mJumpAnimations.setColor(SUCCESS_COLOR);
-                } else {
-                    mPlayerTail.setColor(FAILURE_COLOR);
-                    mPlayer.setColor(FAILURE_COLOR);
-                    mJumpAnimations.setColor(FAILURE_COLOR);
-                }
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        mPlayerTail.setColor(NEUTRAL_PLAYER_COLOR);
-                        mPlayer.setColor(NEUTRAL_PLAYER_COLOR);
-                        mJumpAnimations.setColor(NEUTRAL_PLAYER_COLOR);
+                if (!activeMission.isPassed()) {
+                    activeMission.markPassed();
+
+                    if (activeMission.getCorrectWord().equals(e.getWordModel())) {
+                        mPlayerTail.setColor(SUCCESS_COLOR);
+                        mPlayer.setColor(SUCCESS_COLOR);
+                        mJumpAnimations.setColor(SUCCESS_COLOR);
+                        mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.PASSED);
+                    } else {
+                        mPlayerTail.setColor(FAILURE_COLOR);
+                        mPlayer.setColor(FAILURE_COLOR);
+                        mJumpAnimations.setColor(FAILURE_COLOR);
+                        mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.FAILED);
                     }
-                },2);
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            mPlayerTail.setColor(NEUTRAL_PLAYER_COLOR);
+                            mPlayer.setColor(NEUTRAL_PLAYER_COLOR);
+                            mJumpAnimations.setColor(NEUTRAL_PLAYER_COLOR);
+                        }
+                    },2);
 
 
-                if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
-                    hasSuccededInAllMissions = false;
+                    if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
+                        hasSuccededInAllMissions = false;
+                    }
+
+                    collectedWords.add(e.getWordModel());
+                    playerData.playerCollectedWord(e.getWordModel());
                 }
-
-                //TODO there should only be 1 collection process
-                collectedWords.add(e.getWordModel());
-                playerData.playerCollectedWord(e.getWordModel());
             }
 
         });

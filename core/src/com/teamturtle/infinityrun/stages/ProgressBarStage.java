@@ -1,6 +1,8 @@
 package com.teamturtle.infinityrun.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -15,7 +17,8 @@ import java.util.List;
 public class ProgressBarStage extends Stage {
 
     private List<Mission> missions;
-    private int levelWidth;
+    private float levelWidth;
+    private float startX;
     private ProgressBar mProgressBar;
 
     public enum MissionStatus {
@@ -28,50 +31,66 @@ public class ProgressBarStage extends Stage {
         super(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         this.missions = missions;
 
-        int nHorizontalTiles = (Integer) map.getProperties().get("width");
-        int tileWidth = (Integer) map.getProperties().get("tilewidth");
 
 
-        levelWidth = nHorizontalTiles * tileWidth;
-        Gdx.app.log("LevelWidth", Integer.toString(levelWidth));
+        levelWidth = missions.get( missions.size() - 1).getEndPosition() - missions.get(1).getStartPosition();
+        startX = missions.get(1).getStartPosition();
 
-        float[] progressSteps = new float[missions.size()];
+        float[] beginningMarkers = new float[missions.size()];
+        float[] endingMarkers = new float[missions.size()];
         int index = 0;
         for (Mission m : missions) {
-            progressSteps[index++] = 100 * m.getStartPosition()  / levelWidth;
+            beginningMarkers[index] = InfinityRun.WIDTH * (m.getStartPosition() - startX)  / levelWidth;
+            endingMarkers[index++] = InfinityRun.WIDTH * (m.getEndPosition() - startX)  / levelWidth;
         }
-        mProgressBar = new ProgressBar(progressSteps);
+        mProgressBar = new ProgressBar(beginningMarkers, endingMarkers);
         addActor(mProgressBar);
     }
 
 
     public void updatePlayerProgress(float x) {
         Gdx.app.log("PlayerProgg", "x: " + Float.toString(x) + " levelWidth: "+ levelWidth + " perc: "+ Float.toString(x / levelWidth));
-        mProgressBar.setProgress( x / levelWidth);
+        mProgressBar.setProgress( InfinityRun.WIDTH * (x - startX) / levelWidth);
     }
 
     public void updateMissionStatus(Mission m, MissionStatus status) {
-
+        mProgressBar.setMarkerStatus(missions.indexOf(m), status == MissionStatus.PASSED ? 1 : -1);
     }
 
 
 
 
-    private class ProgressBar extends Actor {
+    private static class ProgressBar extends Actor {
+        private final float[] beginningMarkers;
+        private final float[] endingMarkers;
+        // Initialized as zeros.
+        private int[] markerStatus;
         private ShapeRenderer shapeRenderer;
-        private float[] steps;
         private float progress = 0;
+
+        public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);
+        public static final Color FAILURE_COLOR = new Color((float) 194/255, (float) 59/255, (float) 34/255, 1);
+        public static final Color NEUTRAL_COLOR = new Color((float) 240/255, (float) 213/255, (float) 0/255, 1);
+
 
         private static final int HEIGHT = 20;
 
-        public ProgressBar(float[] steps) {
-            this.steps = steps;
+        public ProgressBar(float[] beginningMarkers, float[] endingMarkers) {
+            this.beginningMarkers = beginningMarkers;
+            this.endingMarkers = endingMarkers;
+            this.markerStatus = new int[endingMarkers.length];
+
             shapeRenderer = new ShapeRenderer();
+            shapeRenderer.setAutoShapeType(true);
         }
 
-        public void setProgress(float progress) {
+        protected void setProgress(float progress) {
             this.progress = progress;
         }
+        protected void setMarkerStatus(int index, int status) {
+            markerStatus[index] = status;
+        }
+
 
         @Override
         public void draw(Batch batch, float parentAlpha) {
@@ -79,8 +98,26 @@ public class ProgressBarStage extends Stage {
 
             batch.end();
 
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.rect(0, 0, InfinityRun.WIDTH * progress, HEIGHT);
+            Gdx.gl.glEnable(GL20.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL20.GL_BLEND_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+
+            for( int i = 0; i < beginningMarkers.length; i++) {
+                Color c;
+                if (markerStatus[i] != 0) {
+                    shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+                    c = markerStatus[i] < 0 ? FAILURE_COLOR : SUCCESS_COLOR;
+                } else {
+                    shapeRenderer.set(ShapeRenderer.ShapeType.Line);
+                    c = NEUTRAL_COLOR;
+                }
+                shapeRenderer.setColor(c);
+                shapeRenderer.rect( beginningMarkers[i], 0, endingMarkers[i] - beginningMarkers[i], HEIGHT);
+            }
+
+            shapeRenderer.setColor(new Color(1,1,1,.5f));
+            shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.rect(0, 0, progress, HEIGHT);
             shapeRenderer.end();
 
             batch.begin();
