@@ -134,4 +134,12 @@ public class LevelSelectScreen extends AbstractScreen{
             stage.draw();
         }
     }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+        skin.dispose();
+        bg.dispose();
+    }
+
 }

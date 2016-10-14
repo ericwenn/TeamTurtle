@@ -79,7 +79,6 @@ public class PauseStage extends Stage{
         table.row();
         table.add(levelsBtn);
         this.addActor(table);
-        Gdx.input.setInputProcessor(this);
     }
 
     private void setUpButtons() {
