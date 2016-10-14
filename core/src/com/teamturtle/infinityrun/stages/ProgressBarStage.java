@@ -101,6 +101,10 @@ public class ProgressBarStage extends Stage {
             Gdx.gl.glBlendFunc(GL20.GL_BLEND_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
+
+            shapeRenderer.setColor(PROGRESS_COLOR);
+            shapeRenderer.rect(0, 0, progress, HEIGHT);
+
             // Fill success or failure missions
             for( int i = 0; i < beginningMarkers.length; i++) {
                 if (markerStatus[i] != 0) {
@@ -118,9 +122,6 @@ public class ProgressBarStage extends Stage {
                 shapeRenderer.rect( beginningMarkers[i], 0, endingMarkers[i] - beginningMarkers[i], HEIGHT);
             }
 
-            shapeRenderer.setColor(PROGRESS_COLOR);
-            shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.rect(0, 0, progress, HEIGHT);
             shapeRenderer.end();
 
             batch.begin();
