@@ -67,10 +67,9 @@ public class ProgressBarStage extends Stage {
         private float progress = 0;
 
         public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);
-        public static final Color SUCCESS_BORDER_COLOR = new Color((float) 40/255, (float) 180/255, (float) 40/255, 1);
         public static final Color FAILURE_COLOR = new Color((float) 194/255, (float) 59/255, (float) 34/255, 1);
-        public static final Color FAILURE_BORDER_COLOR = new Color((float) 180/255, (float) 49/255, (float) 25/255, 1);
-        public static final Color NEUTRAL_COLOR = new Color((float) 240/255, (float) 213/255, (float) 0/255, 1);
+        public static final Color BORDER_COLOR = new Color(0,0,0,0.2f);
+        public static final Color PROGRESS_COLOR = new Color(1,1,1,.6f);
 
 
         private static final int HEIGHT = 20;
@@ -113,18 +112,13 @@ public class ProgressBarStage extends Stage {
 
             // Outline all missions
             shapeRenderer.set(ShapeRenderer.ShapeType.Line);
+            Color c = BORDER_COLOR;
+            shapeRenderer.setColor(c);
             for( int i = 0; i < beginningMarkers.length; i++) {
-                Color c;
-                if (markerStatus[i] != 0) {
-                    c = markerStatus[i] < 0 ? FAILURE_BORDER_COLOR : SUCCESS_BORDER_COLOR;
-                } else {
-                    c = NEUTRAL_COLOR;
-                }
-                shapeRenderer.setColor(c);
                 shapeRenderer.rect( beginningMarkers[i], 0, endingMarkers[i] - beginningMarkers[i], HEIGHT);
             }
 
-            shapeRenderer.setColor(new Color(1,1,1,.5f));
+            shapeRenderer.setColor(PROGRESS_COLOR);
             shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.rect(0, 0, progress, HEIGHT);
             shapeRenderer.end();
