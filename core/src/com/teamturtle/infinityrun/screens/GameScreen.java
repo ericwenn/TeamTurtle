@@ -469,6 +469,9 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onQuestChanged() {
                 try {
+                    if (!activeMission.isPassed()) {
+                        mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.FAILED);
+                    }
                     activeMission = mMissionHandler.getNextMission();
                     mMissionStage.setMission(activeMission);
                     Gdx.app.log("setMissions", "onQuestChanged()");

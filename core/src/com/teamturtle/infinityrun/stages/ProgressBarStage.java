@@ -24,7 +24,6 @@ public class ProgressBarStage extends Stage {
     public enum MissionStatus {
         PASSED,
         FAILED,
-        UNFINISHED
     }
 
     public ProgressBarStage(TiledMap map, List<Mission> missions) {
@@ -49,7 +48,6 @@ public class ProgressBarStage extends Stage {
 
 
     public void updatePlayerProgress(float x) {
-        Gdx.app.log("PlayerProgg", "x: " + Float.toString(x) + " levelWidth: "+ levelWidth + " perc: "+ Float.toString(x / levelWidth));
         mProgressBar.setProgress( InfinityRun.WIDTH * (x - startX) / levelWidth);
     }
 
@@ -69,7 +67,9 @@ public class ProgressBarStage extends Stage {
         private float progress = 0;
 
         public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);
+        public static final Color SUCCESS_BORDER_COLOR = new Color((float) 40/255, (float) 180/255, (float) 40/255, 1);
         public static final Color FAILURE_COLOR = new Color((float) 194/255, (float) 59/255, (float) 34/255, 1);
+        public static final Color FAILURE_BORDER_COLOR = new Color((float) 180/255, (float) 49/255, (float) 25/255, 1);
         public static final Color NEUTRAL_COLOR = new Color((float) 240/255, (float) 213/255, (float) 0/255, 1);
 
 
@@ -100,15 +100,24 @@ public class ProgressBarStage extends Stage {
 
             Gdx.gl.glEnable(GL20.GL_BLEND);
             Gdx.gl.glBlendFunc(GL20.GL_BLEND_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
+            // Fill success or failure missions
+            for( int i = 0; i < beginningMarkers.length; i++) {
+                if (markerStatus[i] != 0) {
+                    Color c = markerStatus[i] < 0 ? FAILURE_COLOR : SUCCESS_COLOR;
+                    shapeRenderer.setColor(c);
+                    shapeRenderer.rect( beginningMarkers[i], 0, endingMarkers[i] - beginningMarkers[i], HEIGHT);
+                }
+            }
+
+            // Outline all missions
+            shapeRenderer.set(ShapeRenderer.ShapeType.Line);
             for( int i = 0; i < beginningMarkers.length; i++) {
                 Color c;
                 if (markerStatus[i] != 0) {
-                    shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-                    c = markerStatus[i] < 0 ? FAILURE_COLOR : SUCCESS_COLOR;
+                    c = markerStatus[i] < 0 ? FAILURE_BORDER_COLOR : SUCCESS_BORDER_COLOR;
                 } else {
-                    shapeRenderer.set(ShapeRenderer.ShapeType.Line);
                     c = NEUTRAL_COLOR;
                 }
                 shapeRenderer.setColor(c);
