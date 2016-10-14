@@ -129,6 +129,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         playerData = new PlayerData();
         mJumpAnimations = new JumpAnimations();
+
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
