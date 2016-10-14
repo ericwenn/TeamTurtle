@@ -460,7 +460,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onLevelFinished() {
                 FeedbackSound.DUKLARADEDET.play();
-                Gdx.app.log("LevelFinishedX", Float.toString(mPlayer.getX()));
                 state = State.WON_GAME;
             }
         });
@@ -474,7 +473,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                     }
                     activeMission = mMissionHandler.getNextMission();
                     mMissionStage.setMission(activeMission);
-                    Gdx.app.log("setMissions", "onQuestChanged()");
                 } catch( IndexOutOfBoundsException e) {
 
                 }
