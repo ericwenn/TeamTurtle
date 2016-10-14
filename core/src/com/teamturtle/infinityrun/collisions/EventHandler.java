@@ -10,6 +10,8 @@ import com.teamturtle.infinityrun.sound.FeedbackSound;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
+import java.util.Random;
+
 /**
  * Created by ericwenn on 9/25/16.
  */
@@ -88,15 +90,22 @@ public class EventHandler implements IEventHandler, ContactListener {
 
         // Check obstacle
         if (mObstacleCollisionHandler != null) {
+            FeedbackSound[] sounds = {FeedbackSound.MISSLYCKANDE1, FeedbackSound.MISSLYCKANDE2,
+                    FeedbackSound.MISSLYCKANDE3, FeedbackSound.MISSLYCKANDE4,
+                    FeedbackSound.MISSLYCKANDE5, FeedbackSound.MISSLYCKANDE6,
+                    FeedbackSound.MISSLYCKANDE7, FeedbackSound.MISSLYCKANDE8,
+                    FeedbackSound.MISSLYCKANDE9, FeedbackSound.MISSLYCKANDE10};
+            Random rand = new Random();
+            int soundId = rand.nextInt(9);
             if (SensorParser.Type.OBSTACLE.getName().equals(obj1) && obj2 instanceof Player) {
 
                 mObstacleCollisionHandler.onCollision((Player) obj2);
-                FeedbackSound.BANAFORLORAD.play();
+                sounds[soundId].play();
                 return;
             }
             if (SensorParser.Type.OBSTACLE.getName().equals(obj2) && obj1 instanceof Player) {
                 mObstacleCollisionHandler.onCollision((Player) obj1);
-                FeedbackSound.BANAFORLORAD.play();
+                sounds[soundId].play();
                 return;
             }
         }
