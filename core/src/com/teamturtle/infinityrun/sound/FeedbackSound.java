@@ -13,7 +13,7 @@ public enum FeedbackSound implements Disposable {
     DUARIMAL("duarimal"), DUDOG("dudog"), DUDOG2("dudog2"), DUKLARADEDET("duklaradedet"),
     FELGISSAT("felgissat"), FRAGA("fraga"), HARARENFRAGA("hararenfraga"),
     KLICKAFORLJUD("klickaforljud"), KOR("kor"), ORDLISTA("ordlista"), RATTGISSAT("rattgissat"),
-    RATTSVARVAR("rattsvarvar"), SNYGGTDAR("snyggtdar"), SPELA("spela"), TILLBAKA("tillbaka"),
+    RATTSVARVAR("rattsvarvar"), SNYGGTDAR("snyggtdar"), SPELA("spela3"), TILLBAKA("tillbaka"),
     VALJBANA("valjbana"),;
 
     private Sound sound;
