@@ -110,7 +110,7 @@ public class ProgressBarStage extends Stage {
                 if (markerStatus[i] != 0) {
                     Color c = markerStatus[i] < 0 ? FAILURE_COLOR : SUCCESS_COLOR;
                     shapeRenderer.setColor(c);
-                    shapeRenderer.rect( beginningMarkers[i], 0, endingMarkers[i] - beginningMarkers[i], HEIGHT);
+                    shapeRenderer.rect( beginningMarkers[i], 0, Math.min(endingMarkers[i] - beginningMarkers[i], progress - beginningMarkers[i]), HEIGHT);
                 }
             }
 
