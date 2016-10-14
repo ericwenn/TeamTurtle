@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
+import com.teamturtle.infinityrun.sound.FeedbackSound;
 
 import java.util.List;
 
@@ -28,6 +29,12 @@ public class WonLevelScreen extends EndLevelScreen{
         if(levels.size() > level.getId()) {
             nextButton = new ImageButton(skin, "next_button");
             nextButton.addListener(new ImageClickListener(observer, level));
+            nextButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    FeedbackSound.NASTABANA.play();
+                }
+            });
             super.getButtonTable().add(nextButton).pad(BUTTON_PADDING);
         }
     }

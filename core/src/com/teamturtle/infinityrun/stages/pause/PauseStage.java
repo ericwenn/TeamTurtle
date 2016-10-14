@@ -88,12 +88,14 @@ public class PauseStage extends Stage{
             public void changed(ChangeEvent event, Actor actor) {
                 removeActors();
                 runCountDownSeq();
+                FeedbackSound.REDO.play();
             }
         });
         retryBtn = new ImageButton(skin, "retry_button");
         retryBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                FeedbackSound.FORSOKIGEN.play();
                 observer.playLevel(level);
             }
         });
@@ -102,6 +104,7 @@ public class PauseStage extends Stage{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    FeedbackSound.BANOR.play();
                     observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();

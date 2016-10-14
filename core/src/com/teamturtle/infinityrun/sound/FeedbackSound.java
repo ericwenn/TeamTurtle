@@ -18,7 +18,9 @@ public enum FeedbackSound implements Disposable {
     MISSLYCKANDE2("detdarkandugorabattre"), MISSLYCKANDE3("duforlorade"),
     MISSLYCKANDE4("duklaradeintebanan"), MISSLYCKANDE5("duklaradeintebanan2"),
     MISSLYCKANDE6("duklaradeintebanan3"), MISSLYCKANDE7("dumisslyckades"),
-    MISSLYCKANDE8("gornyttforsok"), MISSLYCKANDE9("intebra"), MISSLYCKANDE10("vadtrakigt");
+    MISSLYCKANDE8("gornyttforsok"), MISSLYCKANDE9("intebra"), MISSLYCKANDE10("vadtrakigt"),
+    EJUPPLAST("ejupplast"), REDOKOR("redokor"), REDO("redo2"), FORSOKIGEN("forsokigen"),
+    NASTABANA("nastabana");
 
     private Sound sound;
     private static Sound[] levelSounds;
