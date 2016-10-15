@@ -95,7 +95,9 @@ public class MissionStage extends Stage {
 
     public void onEmojiCollision(Color color) {
         emojiLabel.setColor(color);
-        Timer.schedule(disappearTask, 0, SCALE_STEP_SECONDS, SCALE_STEP_COUNT * 2);
+        if (!disappearTask.isScheduled()) {
+            Timer.schedule(disappearTask, 0, SCALE_STEP_SECONDS, SCALE_STEP_COUNT * 2);
+        }
     }
 
     private float scaleDownToZero(int index, float currentScale) {
