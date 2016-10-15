@@ -415,11 +415,13 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                     mPlayerTail.setColor(SUCCESS_COLOR);
                     mPlayer.setColor(SUCCESS_COLOR);
                     mJumpAnimations.setColor(SUCCESS_COLOR);
+                    mMissionStage.onEmojiCollision(SUCCESS_COLOR);
                 } else {
                     failureSound.play();
                     mPlayerTail.setColor(FAILURE_COLOR);
                     mPlayer.setColor(FAILURE_COLOR);
                     mJumpAnimations.setColor(FAILURE_COLOR);
+                    mMissionStage.onEmojiCollision(FAILURE_COLOR);
                 }
                 Timer.schedule(new Timer.Task() {
                     @Override
