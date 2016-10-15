@@ -25,13 +25,13 @@ import com.teamturtle.infinityrun.screens.IScreenObserver;
  */
 public abstract class EndLevelScreen extends AbstractScreen {
 
-    private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 420.0f;
-    private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 50.0f;
-    protected static final float BUTTON_PADDING = 5.0f;
-    private static final float TABLE_PADDING = 30f;
+    private static final int ROOT_TABLE_WIDTH = 600, ROOT_TABLE_HEIGHT = 460;
+    private static final int ROOT_TABLE_POS_X = 100, ROOT_TABLE_POS_Y = 20;
+    private static final int STAR_BOT_PAD = 20;
     private static final int MAX_STARS = 3;
     private static final int STAR_DIMENSION = 70;
-    private static final int STAR_PAD = -35;
+    protected static final int BUTTON_PADDING = 5;
+
 
     private Skin skin;
     private Stage stage;
@@ -108,7 +108,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
         rootTable.add(topLabel);
         rootTable.row();
         buildScoreTable();
-        rootTable.add(scoreTable).padTop(TABLE_PADDING).colspan(7);
+        rootTable.add(scoreTable);
         rootTable.row();
 
         buttonTable = new Table();
@@ -131,7 +131,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
             }
             starTable.add(starImage).size(STAR_DIMENSION);
         }
-        scoreTable.add(starTable).padTop(STAR_PAD).center().colspan(2);
+        scoreTable.add(starTable).center().padBottom(STAR_BOT_PAD).colspan(2);
     }
 
     @Override
