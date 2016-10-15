@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
@@ -24,15 +25,18 @@ import com.teamturtle.infinityrun.screens.IScreenObserver;
  */
 public abstract class EndLevelScreen extends AbstractScreen {
 
-    private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 370.0f;
+    private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 420.0f;
     private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 50.0f;
     protected static final float BUTTON_PADDING = 5.0f;
     private static final float TABLE_PADDING = 30f;
     private static final int MAX_STARS = 3;
+    private static final int STAR_DIMENSION = 70;
+    private static final int STAR_PAD = -35;
 
     private Skin skin;
     private Stage stage;
     private Table rootTable;
+    private Table scoreTable;
     private Table buttonTable;
 
     private ImageButton levelsButton;
@@ -40,18 +44,16 @@ public abstract class EndLevelScreen extends AbstractScreen {
     private Label topLabel;
     private String topLabelStr;
 
-    private Texture bg, uiBg, star, no_star;
+    private Texture bg, star, no_star;
 
     private IScreenObserver observer;
 
     private Level level;
     private int score;
 
-    public EndLevelScreen(SpriteBatch sb, IScreenObserver observer, Texture uiBg
-            , String topLabelStr, Level level, int score) {
+    public EndLevelScreen(SpriteBatch sb, IScreenObserver observer, String topLabelStr, Level level, int score) {
         super(sb);
         this.observer = observer;
-        this.uiBg = uiBg;
         this.topLabelStr = topLabelStr;
         this.level = level;
         this.score = score;
@@ -67,7 +69,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
         no_star = new Texture("ui/no_star.png");
 
         initButtons();
-        initTable();
+        buildRootTable();
     }
 
     @Override
@@ -97,7 +99,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
         });
     }
 
-    private void initTable() {
+    private void buildRootTable() {
         rootTable = new Table();
         rootTable.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
         rootTable.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
@@ -105,22 +107,31 @@ public abstract class EndLevelScreen extends AbstractScreen {
         topLabel = new Label(topLabelStr, skin, "title");
         rootTable.add(topLabel);
         rootTable.row();
-
-        Table starTabel = new Table();
-        for(int i = 0; i < score; i++) {
-            starTabel.add(new Image(star));
-        }
-        for(int i = 0; i < MAX_STARS - score; i++) {
-            starTabel.add(new Image(no_star));
-        }
-        rootTable.add(starTabel).padTop(TABLE_PADDING);
+        buildScoreTable();
+        rootTable.add(scoreTable).padTop(TABLE_PADDING).colspan(7);
         rootTable.row();
 
         buttonTable = new Table();
         buttonTable.add(levelsButton).pad(BUTTON_PADDING);
         buttonTable.add(retryButton).pad(BUTTON_PADDING);
-        rootTable.add(buttonTable).padTop(TABLE_PADDING);
+        rootTable.add(buttonTable).expandY().bottom();
         stage.addActor(rootTable);
+    }
+
+    private void buildScoreTable() {
+        scoreTable = new Table();
+        Table starTable = new Table();
+        Image starImage = new Image();
+        starImage.setScaling(Scaling.fill);
+        for(int i = 0; i < MAX_STARS; i++) {
+            if (i < score) {
+                starImage = new Image(star);
+            }else{
+                starImage = new Image(no_star);
+            }
+            starTable.add(starImage).size(STAR_DIMENSION);
+        }
+        scoreTable.add(starTable).padTop(STAR_PAD).center().colspan(2);
     }
 
     @Override
@@ -128,13 +139,16 @@ public abstract class EndLevelScreen extends AbstractScreen {
         super.render(dt);
         getSpriteBatch().begin();
         getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
-        getSpriteBatch().draw(uiBg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
         getSpriteBatch().end();
         stage.draw();
     }
 
-    public Table getButtonTable() {
+    protected Table getButtonTable() {
         return buttonTable;
+    }
+
+    protected Table getScoreTable() {
+        return scoreTable;
     }
 
     public Skin getSkin() {

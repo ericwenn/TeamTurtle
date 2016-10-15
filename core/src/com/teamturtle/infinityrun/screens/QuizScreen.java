@@ -28,6 +28,7 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     private Level level;
     private int score;
     private Sound rightAnswerSound;
+    private List<Word> collectedWords;
 
     public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level
             , List<Word> collectedWords, int score) {
@@ -37,6 +38,7 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
         this.observer = observer;
         this.level = level;
         this.score = score;
+        this.collectedWords = collectedWords;
         rightAnswerSound = Gdx.audio.newSound(Gdx.files.internal("audio/right_answer.wav"));
     }
 
@@ -60,10 +62,10 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
         if (isChoiceRight) {
             rightAnswerSound.play();
             FeedbackSound.RATTGISSAT.play();
-            observer.levelWon(level, ++score);
+            observer.levelWon(level, collectedWords, collectedWords, ++score);
         } else {
             FeedbackSound.FELGISSAT.play();
-            observer.levelWon(level, score);
+            observer.levelWon(level, collectedWords, collectedWords, score);
         }
     }
 }

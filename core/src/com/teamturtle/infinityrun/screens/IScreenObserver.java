@@ -13,13 +13,14 @@ import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 public interface IScreenObserver {
 
     void changeScreen(InfinityRun.ScreenID id) throws Exception;
+
     void changeScreen(Word word) throws Exception;
 
     void playLevel(Level level);
 
     void levelCompleted(Level level, List<Word> collectedWords, int score);
 
-    void levelWon(Level level, int score);
+    void levelWon(Level level, List<Word> collectedWords, List<Word>newWords, int score);
 
     void levelFailed(Level level);
 
