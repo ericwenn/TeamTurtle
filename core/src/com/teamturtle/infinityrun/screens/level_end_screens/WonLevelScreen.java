@@ -1,7 +1,6 @@
 package com.teamturtle.infinityrun.screens.level_end_screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -44,6 +43,7 @@ public class WonLevelScreen extends EndLevelScreen{
 
         @Override
         public void changed(ChangeEvent event, Actor actor) {
+            FeedbackSound.NASTABANA.play();
             observer.playLevelAfterThis(level);
         }
     }
