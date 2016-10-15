@@ -33,7 +33,6 @@ public abstract class EndLevelScreen extends AbstractScreen {
     private static final int STAR_DIMENSION = 70;
     protected static final int BUTTON_PADDING = 5;
 
-
     private Skin skin;
     private Stage stage;
     private Table rootTable;
@@ -52,7 +51,8 @@ public abstract class EndLevelScreen extends AbstractScreen {
     private Level level;
     private int score;
 
-    public EndLevelScreen(SpriteBatch sb, IScreenObserver observer, String topLabelStr, Level level, int score) {
+    public EndLevelScreen(SpriteBatch sb, IScreenObserver observer, String topLabelStr, Level level
+            , int score) {
         super(sb);
         this.observer = observer;
         this.topLabelStr = topLabelStr;
@@ -104,8 +104,14 @@ public abstract class EndLevelScreen extends AbstractScreen {
 
     private void buildRootTable() {
         rootTable = new Table();
-        rootTable.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
-        rootTable.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
+        //This is tmp
+        if (score != 0) {
+            rootTable.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
+            rootTable.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
+        }else{
+            rootTable.setSize(600, 300);
+            rootTable.setPosition(100, 100);
+        }
         rootTable.center().top();
         topLabel = new Label(topLabelStr, skin, "title");
         rootTable.add(topLabel);
