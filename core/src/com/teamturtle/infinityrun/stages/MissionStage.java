@@ -16,6 +16,8 @@ import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.Mission;
 import com.teamturtle.infinityrun.models.words.Word;
 
+import static com.badlogic.gdx.utils.Timer.schedule;
+
 
 public class MissionStage extends Stage {
 
@@ -33,6 +35,9 @@ public class MissionStage extends Stage {
     private Table mMissionTable;
     private Label emojiLabel;
 
+    private Timer.Task disappearTask;
+    private final int[] index;
+
     public MissionStage() {
         super(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
 
@@ -43,6 +48,14 @@ public class MissionStage extends Stage {
         mMissionTable.setPosition(InfinityRun.WIDTH / 2 - TABLE_WIDTH / 2, TABLE_OFFSET_BOTTOM);
         mMissionTable.setTransform(true);
         mMissionTable.setOrigin(Align.bottom);
+
+        index = new int[]{0};
+        disappearTask = new Timer.Task() {
+            @Override
+            public void run() {
+                mMissionTable.setScale(scaleDownToZero(index[0]++, mMissionTable.getScaleX()));
+            }
+        };
 
         this.addActor(mMissionTable);
 
@@ -63,13 +76,15 @@ public class MissionStage extends Stage {
 
 
     public void setMission(Mission mission) {
+        this.index[0] = 0;
+        disappearTask.cancel();
         Word correctWord = mission.getCorrectWord();
         if (correctWord != null) {
             changeEmoji(correctWord);
         }
 
         final int[] index = {0};
-        Timer.schedule(new Timer.Task() {
+        schedule(new Timer.Task() {
             @Override
             public void run() {
                 mMissionTable.setScale(scaleFn(index[0]++, SCALE_STEP_COUNT));
@@ -80,13 +95,7 @@ public class MissionStage extends Stage {
 
     public void onEmojiCollision(Color color) {
         emojiLabel.setColor(color);
-        final int[] index = {0};
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                mMissionTable.setScale(scaleDownToZero(index[0]++, mMissionTable.getScaleX()));
-            }
-        }, 0, SCALE_STEP_SECONDS, SCALE_STEP_COUNT * 2);
+        Timer.schedule(disappearTask, 0, SCALE_STEP_SECONDS, SCALE_STEP_COUNT * 2);
     }
 
     private float scaleDownToZero(int index, float currentScale) {
@@ -104,5 +113,9 @@ public class MissionStage extends Stage {
             r = SCALE_BY - (SCALE_BY - 1) * index / (float) steps;
         }
         return r;
+    }
+
+    public Timer.Task getDisappearTask() {
+        return disappearTask;
     }
 }
