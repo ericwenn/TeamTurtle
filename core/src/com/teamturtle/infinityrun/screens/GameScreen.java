@@ -92,7 +92,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private State state;
 
     private OrthographicCamera mFixedCamera;
-    private List<Word> possibleWords, collectedWords;
+    private List<Word> possibleWords, discoverdWords, oldWords;
     private WordLoader wordLoader;
     private Sound completedSound, failureSound;
 
@@ -128,7 +128,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         for (int i = 0; i < cats.length; i++) {
             possibleWords.addAll(wordLoader.getWordsFromCategory(cats[i]));
         }
-        collectedWords = new ArrayList<Word>();
+        oldWords = new ArrayList<Word>();
+        discoverdWords = new ArrayList<Word>();
 
         playerData = new PlayerData();
         mJumpAnimations = new JumpAnimations();
@@ -230,7 +231,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                     timer.scheduleTask(new Timer.Task() {
                         @Override
                         public void run() {
-                            screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
+                            screenObserver.levelCompleted(level, oldWords, discoverdWords, hasSuccededInAllMissions ? 2 : 1);
                         }
                     }, 1.5f);
                     isSendingToQuiz = true;
@@ -434,9 +435,14 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                     hasSuccededInAllMissions = false;
                 }
 
-                //TODO there should only be 1 collection process
-                collectedWords.add(e.getWordModel());
-                playerData.playerCollectedWord(e.getWordModel());
+                Word word = e.getWordModel();
+                if (playerData.hasPlayerCollectedWord(word)) {
+                    if(!discoverdWords.contains(word) && !oldWords.contains(word))
+                        oldWords.add(e.getWordModel());
+                }else{
+                    discoverdWords.add(e.getWordModel());
+                    playerData.playerCollectedWord(e.getWordModel());
+                }
             }
 
         });

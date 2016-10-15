@@ -101,6 +101,7 @@ public class DictionaryScreen extends AbstractScreen {
 
         ScrollPane scroller = new ScrollPane(grid);
         scroller.setForceScroll(false, true);
+        scroller.setScrollingDisabled(true, false);
         Table rootTable = new Table();
         rootTable.setFillParent(true);
 
