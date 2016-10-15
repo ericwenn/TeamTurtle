@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Timer;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordImpl;
@@ -42,7 +43,7 @@ public class Emoji extends AbstractEntity {
     private float textLength;
 
     @Deprecated
-    public Emoji(String emojiName, String soundURL, Texture texture){
+    public Emoji(String emojiName, String soundURL, Texture texture) {
         this.texture = texture;
         setup();
     }
@@ -55,8 +56,8 @@ public class Emoji extends AbstractEntity {
         WordLoader wl = new WordLoader();
         Map<String, ? extends Word> words = wl.getWords();
 
-        for(Word word : words.values()){
-            if(word.getText().equals(w.getText()))
+        for (Word word : words.values()) {
+            if (word.getText().equals(w.getText()))
                 w.id = word.getId() + "";
         }
 
@@ -84,12 +85,10 @@ public class Emoji extends AbstractEntity {
         GlyphLayout layout = new GlyphLayout(font, wordModel.getText());
         textLength = layout.width;
 
-        if(!wordModel.getSoundUrl().equals("404")) {
+        if (!wordModel.getSoundUrl().equals("404")) {
             emojiSound = Gdx.audio.newSound(Gdx.files.internal(wordModel.getSoundUrl()));
             hasSound = true;
-        }
-        else
-        {
+        } else {
             hasSound = false;
         }
     }
@@ -100,8 +99,14 @@ public class Emoji extends AbstractEntity {
 
     public void triggerExplode() {
         isExploded = true;
-        if(hasSound)
-            emojiSound.play();
+        if (hasSound) {
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    emojiSound.play();
+                }
+            }, 0.3f);
+        }
     }
 
     @Override
@@ -112,12 +117,12 @@ public class Emoji extends AbstractEntity {
 
     @Override
     public void render(SpriteBatch sb) {
-        if( isExploded ) {
+        if (isExploded) {
             //If the emoji as the same position when it has expended, it will look like it moves to
             //the left, with dx, the emoji will "move" equally to left and right.
-            float dx = ((EMOJI_SIZE * EXPLOSION_SCALE) - (EMOJI_SIZE)) / ( 2 * InfinityRun.PPM);
-            sb.draw( texture, getX() - dx, getY(), EMOJI_SIZE*EXPLOSION_SCALE / InfinityRun.PPM
-                    , EMOJI_SIZE*EXPLOSION_SCALE / InfinityRun.PPM);
+            float dx = ((EMOJI_SIZE * EXPLOSION_SCALE) - (EMOJI_SIZE)) / (2 * InfinityRun.PPM);
+            sb.draw(texture, getX() - dx, getY(), EMOJI_SIZE * EXPLOSION_SCALE / InfinityRun.PPM
+                    , EMOJI_SIZE * EXPLOSION_SCALE / InfinityRun.PPM);
 
             //A scaled projection is created to draw font
             Matrix4 scaledProjection = sb.getProjectionMatrix()
@@ -134,10 +139,11 @@ public class Emoji extends AbstractEntity {
                     .scale(InfinityRun.PPM, InfinityRun.PPM, 0);
             sb.setProjectionMatrix(normalProjection);
         } else {
-            sb.draw( texture, getX(), getY(), EMOJI_SIZE / InfinityRun.PPM, EMOJI_SIZE / InfinityRun.PPM);
+            sb.draw(texture, getX(), getY(), EMOJI_SIZE / InfinityRun.PPM, EMOJI_SIZE / InfinityRun.PPM);
         }
     }
-    public Texture getImage(){
+
+    public Texture getImage() {
         return texture;
     }
 
@@ -145,7 +151,7 @@ public class Emoji extends AbstractEntity {
     public void dispose() {
         texture.dispose();
         mBody.getWorld().destroyBody(mBody);
-        if(hasSound)
+        if (hasSound)
             emojiSound.dispose();
         font.dispose();
     }
