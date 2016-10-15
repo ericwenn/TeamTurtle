@@ -8,7 +8,7 @@
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 2
-	url: levels/alfred_easy_level_2.tmx
+	url: levels/banan2.tmx
 	categoryIDs: [ 14, 4, 3 ]
 }
 {

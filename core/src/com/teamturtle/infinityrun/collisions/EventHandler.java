@@ -1,5 +1,6 @@
 package com.teamturtle.infinityrun.collisions;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -8,6 +9,8 @@ import com.teamturtle.infinityrun.map_parsing.SensorParser;
 import com.teamturtle.infinityrun.sound.FeedbackSound;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+
+import java.util.Random;
 
 /**
  * Created by ericwenn on 9/25/16.
@@ -19,6 +22,7 @@ public class EventHandler implements IEventHandler, ContactListener {
     private ObstacleCollisionListener mObstacleCollisionHandler;
     private LevelFinishedListener mLevelFinishedListener;
     private QuestChangedListener mQuestChangedListener;
+    private GroundCollisionListener mGroundCollisionListener;
 
     public EventHandler() {
     }
@@ -44,6 +48,11 @@ public class EventHandler implements IEventHandler, ContactListener {
         mQuestChangedListener = l;
     }
 
+    @Override
+    public void onCollisionWithGround(GroundCollisionListener l) {
+        mGroundCollisionListener = l;
+    }
+
 
     @Override
     public void beginContact(Contact contact) {
@@ -54,6 +63,16 @@ public class EventHandler implements IEventHandler, ContactListener {
             return;
         }
 
+
+        if (mGroundCollisionListener != null) {
+            if(obj1 instanceof Player && "ground".equals(obj2)) {
+                mGroundCollisionListener.onCollision(contact.getWorldManifold().getNormal().y >= 0 ? HitDirection.DOWNWARDS : HitDirection.UPWARDS);
+
+            } else if( obj2 instanceof Player && "ground".equals(obj1)) {
+                mGroundCollisionListener.onCollision(contact.getWorldManifold().getNormal().y >= 0 ? HitDirection.DOWNWARDS : HitDirection.UPWARDS);
+
+            }
+        }
 
         if (mEmojiCollisionListener != null) {
             // Check emoji
@@ -71,14 +90,22 @@ public class EventHandler implements IEventHandler, ContactListener {
 
         // Check obstacle
         if (mObstacleCollisionHandler != null) {
+            FeedbackSound[] sounds = {FeedbackSound.MISSLYCKANDE1, FeedbackSound.MISSLYCKANDE2,
+                    FeedbackSound.MISSLYCKANDE3, FeedbackSound.MISSLYCKANDE4,
+                    FeedbackSound.MISSLYCKANDE5, FeedbackSound.MISSLYCKANDE6,
+                    FeedbackSound.MISSLYCKANDE7, FeedbackSound.MISSLYCKANDE8,
+                    FeedbackSound.MISSLYCKANDE9, FeedbackSound.MISSLYCKANDE10};
+            Random rand = new Random();
+            int soundId = rand.nextInt(9);
             if (SensorParser.Type.OBSTACLE.getName().equals(obj1) && obj2 instanceof Player) {
+
                 mObstacleCollisionHandler.onCollision((Player) obj2);
-                FeedbackSound.BANAFORLORAD.play();
+                sounds[soundId].play();
                 return;
             }
             if (SensorParser.Type.OBSTACLE.getName().equals(obj2) && obj1 instanceof Player) {
                 mObstacleCollisionHandler.onCollision((Player) obj1);
-                FeedbackSound.BANAFORLORAD.play();
+                sounds[soundId].play();
                 return;
             }
         }
@@ -113,6 +140,9 @@ public class EventHandler implements IEventHandler, ContactListener {
             }
 
         }
+
+
+
 
 
 

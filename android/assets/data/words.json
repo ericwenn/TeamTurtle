@@ -4,7 +4,7 @@
     "word": "simmare",
     "category": "2",
     "filename": "1f3ca-1f3fc",
-    "soundUrl": "simma",
+    "soundUrl": "simmare",
 	"article": "en"
   },
   "2": {
@@ -57,10 +57,10 @@
   },
   "8": {
     "id": "8",
-    "word": "dator",
+    "word": "bärbar dator",
     "category": "5",
     "filename": "1f4bb",
-    "soundUrl": "dator",
+    "soundUrl": "barbardator",
 	"article": "en"
   },
   "9": {
@@ -105,10 +105,10 @@
   },
   "14": {
     "id": "14",
-    "word": "dator",
+    "word": "datorskärm",
     "category": "5",
     "filename": "1f5a5",
-    "soundUrl": "dator",
+    "soundUrl": "datorskarm",
 	"article": "en"
   },
   "15": {
@@ -196,7 +196,7 @@
     "word": "majskolv",
     "category": "8",
     "filename": "1f33d",
-    "soundUrl": "majs",
+    "soundUrl": "majskolv",
 	"article": "en"
   },
   "26": {

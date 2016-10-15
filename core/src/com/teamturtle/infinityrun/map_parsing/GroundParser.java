@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.sprites.Entity;
 
 import java.util.List;
@@ -51,7 +50,7 @@ public class GroundParser implements MapParser {
                 shape.setAsBox((rect.getWidth() / 2) / InfinityRun.PPM
                         , (rect.getHeight() / 2) / InfinityRun.PPM);
                 fdef.shape = shape;
-                body.createFixture(fdef);
+                body.createFixture(fdef).setUserData("ground");
             }
 
             if (object instanceof PolygonMapObject) {
@@ -71,7 +70,7 @@ public class GroundParser implements MapParser {
 
                 shape.set(vertices);
                 fdef.shape = shape;
-                body.createFixture(fdef);
+                body.createFixture(fdef).setUserData("ground");
             }
         }
     }

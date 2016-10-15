@@ -43,6 +43,7 @@ import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by ericwenn on 9/20/16.
@@ -129,6 +130,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         playerData = new PlayerData();
         mJumpAnimations = new JumpAnimations();
+
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -430,6 +433,14 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         });
 
+        eventHandler.onCollisionWithGround(new IEventHandler.GroundCollisionListener() {
+            @Override
+            public void onCollision(IEventHandler.HitDirection d) {
+                if (d == IEventHandler.HitDirection.DOWNWARDS) {
+                    mPlayer.resetJump();
+                }
+            }
+        });
 
         eventHandler.onCollisionWithObstacle(new IEventHandler.ObstacleCollisionListener() {
             @Override
@@ -441,7 +452,12 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
             @Override
             public void onLevelFinished() {
-                FeedbackSound.DUKLARADEDET.play();
+                FeedbackSound[] sounds = {FeedbackSound.MALGANG1,FeedbackSound.MALGANG2,
+                        FeedbackSound.MALGANG3, FeedbackSound.MALGANG4, FeedbackSound.MALGANG5,
+                        FeedbackSound.MALGANG6, FeedbackSound.MALGANG7};
+                Random rand = new Random();
+                int soundId = rand.nextInt(sounds.length-1);
+                sounds[soundId].play();
                 state = State.WON_GAME;
             }
         });
