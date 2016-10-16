@@ -178,8 +178,6 @@ public class Emoji extends AbstractEntity {
         return counter <= COUNTER_MAX;
     }
 
-    public Texture getImage(){
-
     public Texture getImage() {
         return texture;
     }
