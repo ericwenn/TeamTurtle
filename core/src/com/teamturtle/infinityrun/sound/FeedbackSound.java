@@ -29,13 +29,17 @@ public enum FeedbackSound implements Disposable {
     private static final int LEVEL_AMOUNT = 15;
     private static final String URL_PREFIX = "audio/feedback/";
     private static final String URL_SUFFIX = ".mp3";
+    private static boolean musicMuted = false;
+    private static boolean fxMuted = false;
 
     FeedbackSound(String filename) {
         sound = Gdx.audio.newSound(Gdx.files.internal(URL_PREFIX + filename + URL_SUFFIX));
     }
 
     public void play() {
-        sound.play();
+        if (!fxMuted) {
+            sound.play();
+        }
     }
 
     public void play(float volume) {
@@ -43,11 +47,13 @@ public enum FeedbackSound implements Disposable {
     }
 
     public static void playLevelSound(int level) {
-        if (level <= LEVEL_AMOUNT) {
-            int levelIndex = level - 1;
-            levelSounds[levelIndex].play();
-        } else {
-            Gdx.app.error("AUDIO", "Audiofile for level " + level + " not found");
+        if (!fxMuted) {
+            if (level <= LEVEL_AMOUNT) {
+                int levelIndex = level - 1;
+                levelSounds[levelIndex].play();
+            } else {
+                Gdx.app.error("AUDIO", "Audiofile for level " + level + " not found");
+            }
         }
     }
 
@@ -59,6 +65,13 @@ public enum FeedbackSound implements Disposable {
         }
     }
 
+    public static void shiftMusicMute() {
+        musicMuted = musicMuted ? false : true;
+    }
+
+    public static void shiftFxMute() {
+        fxMuted = fxMuted ? false : true;
+    }
 
     @Override
     public void dispose() {

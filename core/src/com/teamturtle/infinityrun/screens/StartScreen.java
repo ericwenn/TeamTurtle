@@ -1,6 +1,8 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -79,8 +81,20 @@ public class StartScreen extends AbstractScreen {
         });
 
         ImageButton musicBtn = new ImageButton(skin, "music_button");
+        musicBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                FeedbackSound.shiftMusicMute();
+            }
+        });
 
         ImageButton fxBtn = new ImageButton(skin, "fx_button");
+        fxBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                FeedbackSound.shiftFxMute();
+            }
+        });
 
         Table rootTabel = new Table();
         rootTabel.setFillParent(true);
