@@ -53,10 +53,6 @@ public class WordLoader {
 
     private void sortWordByCategory(List<WordImpl> words) {
         Collections.sort(words, new WordCategoryComparator());
-
-        for (Word word : words) {
-            //System.out.println(word.getCategory());
-        }
     }
 
 
