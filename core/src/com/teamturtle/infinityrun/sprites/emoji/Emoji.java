@@ -10,6 +10,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordImpl;
@@ -25,7 +30,7 @@ public class Emoji extends AbstractEntity {
 
     private static final float EXPLOSION_SCALE = 1.3f;
     private static final float EMOJI_SIZE = 32;
-    private static final int FONT_SIZE = 25;
+    private static final int FONT_SIZE = 25, COUNTER_MAX = 120, OFFSET_BIG_EMOJI = -25;
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf";
     private static final Color FONT_COLOR = Color.BLACK;
 
@@ -40,6 +45,8 @@ public class Emoji extends AbstractEntity {
 
     private BitmapFont font;
     private float textLength;
+    private Stage fontStage;
+    private int counter;
 
     @Deprecated
     public Emoji(String emojiName, String soundURL, Texture texture){
@@ -92,6 +99,8 @@ public class Emoji extends AbstractEntity {
         {
             hasSound = false;
         }
+        fontStage = new Stage();
+        counter = 0;
     }
 
     public void setBody(Body body) {
@@ -99,9 +108,22 @@ public class Emoji extends AbstractEntity {
     }
 
     public void triggerExplode() {
-        isExploded = true;
-        if(hasSound)
-            emojiSound.play();
+        if(!isExploded) {
+            isExploded = true;
+            if (hasSound)
+                emojiSound.play();
+
+            Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+            Label label = new Label(getName(), skin);
+            label.setColor(FONT_COLOR);
+            Image i = new Image(texture);
+
+            label.setPosition(InfinityRun.WIDTH / 2, InfinityRun.HEIGHT / 2 + i.getHeight());
+            i.setPosition(InfinityRun.WIDTH / 2 + OFFSET_BIG_EMOJI, InfinityRun.HEIGHT / 2);
+
+            fontStage.addActor(label);
+            fontStage.addActor(i);
+        }
     }
 
     @Override
@@ -127,6 +149,8 @@ public class Emoji extends AbstractEntity {
             //Draws font above emoji
             float y = (getY() * InfinityRun.PPM) + EMOJI_SIZE * 2;
             float x = (getX() * InfinityRun.PPM) + (EMOJI_SIZE / 2) - textLength / 2;
+
+
             font.draw(sb, wordModel.getText(), x, y);
 
             //Reset the projection
@@ -137,6 +161,17 @@ public class Emoji extends AbstractEntity {
             sb.draw( texture, getX(), getY(), EMOJI_SIZE / InfinityRun.PPM, EMOJI_SIZE / InfinityRun.PPM);
         }
     }
+
+    public void drawExplodedText(){
+        counter++;
+        if(counter <= COUNTER_MAX)
+            fontStage.draw();
+    }
+
+    public boolean shouldDraw(){
+        return counter <= COUNTER_MAX;
+    }
+
     public Texture getImage(){
         return texture;
     }
@@ -148,6 +183,7 @@ public class Emoji extends AbstractEntity {
         if(hasSound)
             emojiSound.dispose();
         font.dispose();
+        fontStage.dispose();
     }
 
     public String getName() {
@@ -160,5 +196,8 @@ public class Emoji extends AbstractEntity {
 
     public Word getWordModel() {
         return wordModel;
+    }
+    public boolean hasExploded(){
+        return isExploded;
     }
 }

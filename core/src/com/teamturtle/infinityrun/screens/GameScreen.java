@@ -100,6 +100,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private JumpAnimations mJumpAnimations;
 
     private PlayerData playerData;
+    private List<Emoji> drawBigEmojiList;
 
     public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);
     public static final Color FAILURE_COLOR = new Color((float) 194/255, (float) 59/255, (float) 34/255, 1);
@@ -181,6 +182,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         setupEventHandler();
 
         world.setContactListener(mEventHandler);
+        drawBigEmojiList = new ArrayList<Emoji>();
 
         activeMission = mMissionHandler.getNextMission();
         FeedbackSound.KOR.play();
@@ -275,6 +277,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         getCamera().update();
         //Use to show collision rectangles
         //b2dr.render(world, getOrthoCam().combined);
+        drawBigEmojis();
     }
 
     private void handleInput() {
@@ -364,6 +367,21 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         oldCamX = getOrthoCam().position.x;
         getSpriteBatch().end();
+    }
+
+    public void drawBigEmojis() {
+        for (Entity entity : emojiSprites) {
+            Emoji emoji = (Emoji) entity;
+            if(emoji.hasExploded() && emoji.shouldDraw() && !drawBigEmojiList.contains(emoji)) {
+                drawBigEmojiList.add(emoji);
+            }
+        }
+        if(drawBigEmojiList.size() != 0) {
+            drawBigEmojiList.get(0).drawExplodedText();
+            if(!drawBigEmojiList.get(0).shouldDraw()) {
+                drawBigEmojiList.remove(0);
+            }
+        }
     }
 
     private void setUpWorld() {
