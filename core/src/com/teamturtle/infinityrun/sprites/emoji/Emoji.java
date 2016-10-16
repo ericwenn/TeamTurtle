@@ -109,8 +109,6 @@ public class Emoji extends AbstractEntity {
     public void triggerExplode() {
         if(!isExploded) {
             isExploded = true;
-            if (hasSound)
-                emojiSound.play();
 
             Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
             Label label = new Label(getName(), skin);
