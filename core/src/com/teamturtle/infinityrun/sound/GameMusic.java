@@ -48,4 +48,8 @@ public enum GameMusic {
             }
         }
     }
+
+    public static boolean isMusicMuted() {
+        return musicMuted;
+    }
 }

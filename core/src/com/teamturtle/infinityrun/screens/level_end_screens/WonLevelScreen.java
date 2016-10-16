@@ -19,7 +19,7 @@ import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class WonLevelScreen extends EndLevelScreen{
 
         @Override
         public void changed(ChangeEvent event, Actor actor) {
-            FeedbackSound.NASTABANA.play();
+            FxSound.NASTABANA.play();
             observer.playLevelAfterThis(level);
         }
     }
@@ -116,7 +116,9 @@ public class WonLevelScreen extends EndLevelScreen{
             actor.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    emojiSound.play();
+                    if (!FxSound.isFxMuted()) {
+                        emojiSound.play();
+                    }
                 }
             });
             if (i % EMOJI_CELLS_PER_ROW == 0) emojiTable.row();
@@ -130,7 +132,7 @@ public class WonLevelScreen extends EndLevelScreen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.ORDLISTA.play();
+                    FxSound.ORDLISTA.play();
                     observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
                 } catch (Exception e) {
                     e.printStackTrace();

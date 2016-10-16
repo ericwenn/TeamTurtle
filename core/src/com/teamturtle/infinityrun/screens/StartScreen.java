@@ -1,9 +1,6 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.MusicLoader;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sound.GameMusic;
 
 /**
@@ -61,7 +58,7 @@ public class StartScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.SPELA.play();
+                    FxSound.SPELA.play();
                     observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -74,7 +71,7 @@ public class StartScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.ORDLISTA.play();
+                    FxSound.ORDLISTA.play();
                     observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -89,14 +86,22 @@ public class StartScreen extends AbstractScreen {
                 GameMusic.shiftMusicMute();
             }
         });
+        if (GameMusic.isMusicMuted()) {
+            musicBtn.setChecked(true);
+            GameMusic.shiftMusicMute();
+        }
 
         ImageButton fxBtn = new ImageButton(skin, "fx_button");
         fxBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                FeedbackSound.shiftFxMute();
+                FxSound.shiftFxMute();
             }
         });
+        if (FxSound.isFxMuted()) {
+            fxBtn.setChecked(true);
+            FxSound.shiftFxMute();
+        }
 
         Table rootTabel = new Table();
         rootTabel.setFillParent(true);

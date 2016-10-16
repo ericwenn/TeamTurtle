@@ -1,7 +1,6 @@
 package com.teamturtle.infinityrun.stages.pause;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 
 /**
  * Created by ostmos on 2016-10-08.
@@ -91,14 +90,14 @@ public class PauseStage extends Stage{
             public void changed(ChangeEvent event, Actor actor) {
                 removeActors();
                 runCountDownSeq();
-                FeedbackSound.REDO.play();
+                FxSound.REDO.play();
             }
         });
         retryBtn = new ImageButton(skin, "retry_button");
         retryBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                FeedbackSound.FORSOKIGEN.play();
+                FxSound.FORSOKIGEN.play();
                 observer.playLevel(level);
             }
         });
@@ -107,7 +106,7 @@ public class PauseStage extends Stage{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.BANOR.play();
+                    FxSound.BANOR.play();
                     observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -119,7 +118,7 @@ public class PauseStage extends Stage{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.HEM.play();
+                    FxSound.HEM.play();
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -146,7 +145,7 @@ public class PauseStage extends Stage{
                 if (sequenceState == State.READY.index) {
                     countDownLbl.setText(READY_STR);
                 } else if (sequenceState == State.GO.index) {
-                    FeedbackSound.KOR.play();
+                    FxSound.KOR.play();
                     countDownLbl.setText(GO_STR);
                 } else if (sequenceState == State.RUN_GAME.index) {
                     handler.continueBtnClick();

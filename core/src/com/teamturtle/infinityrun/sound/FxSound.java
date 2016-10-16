@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Disposable;
 
-public enum FeedbackSound implements Disposable {
+public enum FxSound implements Disposable {
 
     BANA1("bana1"), BANA2("bana2"), BANA3("bana3"), BANA4("bana4"), BANA5("bana5"),
     BANA6("bana6"), BANA7("bana7"), BANA8("bana8"), BANA9("bana9"), BANA10("bana10"),
@@ -22,7 +22,8 @@ public enum FeedbackSound implements Disposable {
     EJUPPLAST("ejupplast"), REDOKOR("redokor"), REDO("redo2"), FORSOKIGEN("forsokigen"),
     NASTABANA("nastabana"), HEM("hem"), MALGANG1("brajobbat"), MALGANG2("brajobbat2"),
     MALGANG3("duarimal"), MALGANG4("duklaradebanan"), MALGANG5("duklaradedet"),
-    MALGANG6("lostesnyggt"), MALGANG7("snyggtdar");
+    MALGANG6("lostesnyggt"), MALGANG7("snyggtdar"), RIGHT_ANSWER("right_answer"),
+    WRONG_ANSWER("wrong_answer");
 
     private Sound sound;
     private static Sound[] levelSounds;
@@ -31,7 +32,7 @@ public enum FeedbackSound implements Disposable {
     private static final String URL_SUFFIX = ".mp3";
     private static boolean fxMuted = false;
 
-    FeedbackSound(String filename) {
+    FxSound(String filename) {
         sound = Gdx.audio.newSound(Gdx.files.internal(URL_PREFIX + filename + URL_SUFFIX));
     }
 
@@ -42,7 +43,9 @@ public enum FeedbackSound implements Disposable {
     }
 
     public void play(float volume) {
-        sound.play(volume);
+        if (!fxMuted) {
+            sound.play(volume);
+        }
     }
 
     public static void playLevelSound(int level) {
@@ -70,8 +73,12 @@ public enum FeedbackSound implements Disposable {
 
     @Override
     public void dispose() {
-        for (FeedbackSound sound: values()) {
+        for (FxSound sound: values()) {
             sound.dispose();
         }
+    }
+
+    public static boolean isFxMuted() {
+        return fxMuted;
     }
 }
