@@ -29,7 +29,6 @@ public enum FeedbackSound implements Disposable {
     private static final int LEVEL_AMOUNT = 15;
     private static final String URL_PREFIX = "audio/feedback/";
     private static final String URL_SUFFIX = ".mp3";
-    private static boolean musicMuted = false;
     private static boolean fxMuted = false;
 
     FeedbackSound(String filename) {
@@ -63,10 +62,6 @@ public enum FeedbackSound implements Disposable {
         for (int i = 0; i < LEVEL_AMOUNT; i++) {
             levelSounds[i] = values()[i].sound;
         }
-    }
-
-    public static void shiftMusicMute() {
-        musicMuted = musicMuted ? false : true;
     }
 
     public static void shiftFxMute() {

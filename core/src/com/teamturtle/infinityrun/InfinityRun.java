@@ -22,9 +22,9 @@ import com.teamturtle.infinityrun.screens.WordScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
 import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.GameMusic;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InfinityRun extends Game implements IScreenObserver {
@@ -47,6 +47,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 
         try {
             changeScreen(ScreenID.LOADING_SCREEN);
+            GameMusic.THEME_1.playMusicLooping();
         } catch (Exception e) {
             Gdx.app.error("InfinityRun", "Could not change screen", e);
         }
