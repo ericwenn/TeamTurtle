@@ -62,12 +62,12 @@ public class DictionaryScreen extends AbstractScreen {
     }
 
     private void initBackButton() {
-        imageButton = new ImageButton(skin, "back_button");
+        imageButton = new ImageButton(skin, "home_button");
         imageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.TILLBAKA.play();
+                    FeedbackSound.HEM.play();
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();

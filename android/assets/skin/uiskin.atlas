@@ -376,20 +376,20 @@ standard_bg
   rotate: false
   xy: 1, 86
   size: 363, 210
-  split: 17, 22, 16, 13
-  pad: 13, 20, 16, 8
-  orig: 363, 210
-  offset: 0, 0
-  index: 4
-standard_bg
-  rotate: false
-  xy: 1, 86
-  size: 363, 210
   split: 5, 6, 6, 4
   pad: 7, 4, 6, 7
   orig: 363, 210
   offset: 0, 0
   index: 3
+standard_bg
+  rotate: false
+  xy: 1, 86
+  size: 363, 210
+  split: 17, 22, 16, 13
+  pad: 13, 20, 16, 8
+  orig: 363, 210
+  offset: 0, 0
+  index: 4
 selection
   rotate: false
   xy: 1987, 316
