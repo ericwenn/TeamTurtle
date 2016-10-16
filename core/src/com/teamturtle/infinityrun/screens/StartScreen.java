@@ -21,9 +21,8 @@ import com.teamturtle.infinityrun.sound.FeedbackSound;
 
 public class StartScreen extends AbstractScreen {
 
-    private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 370.0f;
-    private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 50.0f;
-    protected static final float BUTTON_PADDING = 5.0f;
+    private static final int BUTTON_OFFSET = -45;
+    private static final int BUTTON_PADDING = 5;
 
     private Texture bg;
     private Stage stage;
@@ -53,8 +52,8 @@ public class StartScreen extends AbstractScreen {
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
         skin.load(Gdx.files.internal("skin/uiskin.json"));
 
-        ImageButton playButton = new ImageButton(skin, "play_button");
-        playButton.addListener(new ChangeListener() {
+        ImageButton playBtn = new ImageButton(skin, "play_button");
+        playBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
@@ -65,8 +64,9 @@ public class StartScreen extends AbstractScreen {
                 }
             }
         });
-        ImageButton dictionaryButton = new ImageButton(skin, "dictionary_button");
-        dictionaryButton.addListener(new ChangeListener() {
+
+        ImageButton dictionaryBtn = new ImageButton(skin, "dictionary_button");
+        dictionaryBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
@@ -78,12 +78,24 @@ public class StartScreen extends AbstractScreen {
             }
         });
 
-        Table rootTabel = new Table().center();
-        rootTabel.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
-        rootTabel.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
-        rootTabel.add(playButton).pad(BUTTON_PADDING);
+        ImageButton musicBtn = new ImageButton(skin, "music_button");
+
+        ImageButton fxBtn = new ImageButton(skin, "fx_button");
+
+        Table rootTabel = new Table();
+        rootTabel.setFillParent(true);
+        Table soundTable = new Table();
+        soundTable.add().width(InfinityRun.WIDTH - fxBtn.getWidth() - musicBtn.getWidth());
+        System.out.println(rootTabel.getWidth());
+        soundTable.add(musicBtn);
+        soundTable.add(fxBtn);
+        rootTabel.add(soundTable);
         rootTabel.row();
-        rootTabel.add(dictionaryButton);
+        Table btnTable = new Table();
+        btnTable.add(playBtn).padTop(BUTTON_OFFSET).padBottom(BUTTON_PADDING);
+        btnTable.row();
+        btnTable.add(dictionaryBtn);
+        rootTabel.add(btnTable).expandY().fillY();
 
         stage.addActor(rootTabel);
     }
