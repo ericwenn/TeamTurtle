@@ -190,7 +190,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         world.setContactListener(mEventHandler);
 
-        mProgressStage = new ProgressBarStage(tiledMap, mMissionHandler.getmMissions());
+        mProgressStage = new ProgressBarStage(tiledMap, mMissionHandler.getMissions());
 
         activeMission = mMissionHandler.getNextMission();
         FeedbackSound.KOR.play();
