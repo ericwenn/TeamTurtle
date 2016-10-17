@@ -14,8 +14,6 @@ public interface IScreenObserver {
 
     void changeScreen(InfinityRun.ScreenID id) throws Exception;
 
-    void changeScreen(Word word) throws Exception;
-
     void playLevel(Level level);
 
     void levelCompleted(Level level, List<Word> oldWords, List<Word> discoveredWords, int score);
