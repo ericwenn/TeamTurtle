@@ -119,15 +119,16 @@ public class Emoji extends AbstractEntity {
     public void triggerExplode() {
         if(!isExploded) {
             isExploded = true;
-        }
-        isExploded = true;
-        if (hasSound) {
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    emojiSound.play();
-                }
-            }, 0.3f);
+
+            isExploded = true;
+            if (hasSound) {
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        emojiSound.play();
+                    }
+                }, 0.3f);
+            }
         }
     }
 
