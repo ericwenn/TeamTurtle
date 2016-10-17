@@ -15,8 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Timer;
-import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.models.words.Word;
@@ -55,7 +53,8 @@ public class WonLevelScreen extends EndLevelScreen{
     private static final String DISCOVERD_LAYER_URL = "ui/discovered.png";
     private static final int LB_PAD = -20;
     private static final int EMOJI_DIMENSION = 70;
-    private static final int EMOJI_CELLS_PER_ROW = 10;
+    private static final int EMOJI_PAD = 3;
+    private static final int EMOJIES_MAX_AMOUNT = 10;
     private static final int SHADOW_OFFSET = 2;
     private static final float SHADOW_SCALE = 1.05f;
 
@@ -103,42 +102,46 @@ public class WonLevelScreen extends EndLevelScreen{
         allWords.addAll(discoveredWords);
         allWords.addAll(oldWords);
         for(int i = 0; i < allWords.size(); i++) {
-            Word word = allWords.get(i);
-            final Sound emojiSound = Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl()));
-            emojiSounds.add(emojiSound);
-            final Emoji emoji = new Emoji(word);
-            final Image emojiImg = new Image(emoji.getTexture());
-            final Image emojiShadow = new Image(emoji.getTexture());
-            emojiShadows.add(emojiShadow);
-            emojiShadow.setColor(Color.BLACK);
-            final Stack stack = new Stack();
-            stack.add(emojiShadow);
-            if (i < discoveredWords.size()) {
-                stack.add(emojiImg);
-                Image emojiTopLayer = new Image(discoverdTopLayer);
-                stack.add(emojiTopLayer);
-            }else{
-                stack.add(emojiImg);
-            }
-            stack.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    emojiSound.play();
-                    emojiLbl.setText(emoji.getName());
-                    for (Image img : emojiShadows) {
-                        img.setScale(0);
-                    }
-                    emojiShadow.setScale(SHADOW_SCALE);
-                    emojiShadow.setPosition(emojiImg.getX()-SHADOW_OFFSET
-                            , emojiImg.getY()-SHADOW_OFFSET);
-                }
-            });
-            if (i % EMOJI_CELLS_PER_ROW == 0) emojiTable.row();
-            emojiTable.add(stack).size(EMOJI_DIMENSION).pad(3f);
+            Stack stack = createEmojiStack(allWords.get(i), i);
+            emojiTable.add(stack).size(EMOJI_DIMENSION).pad(EMOJI_PAD);
+            if (i == EMOJIES_MAX_AMOUNT) return;
         }
         emojiTable.row();
         emojiLbl = new Label("", skin, "title");
         emojiTable.add(emojiLbl).colspan(allWords.size());
+    }
+
+    private Stack createEmojiStack(Word word, int emojiIndex) {
+        final Sound emojiSound = Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl()));
+        emojiSounds.add(emojiSound);
+        final Emoji emoji = new Emoji(word);
+        final Image emojiImg = new Image(emoji.getTexture());
+        final Image emojiShadow = new Image(emoji.getTexture());
+        emojiShadows.add(emojiShadow);
+        emojiShadow.setColor(Color.BLACK);
+        final Stack stack = new Stack();
+        stack.add(emojiShadow);
+        if (emojiIndex < discoveredWords.size()) {
+            stack.add(emojiImg);
+            Image emojiTopLayer = new Image(discoverdTopLayer);
+            stack.add(emojiTopLayer);
+        }else{
+            stack.add(emojiImg);
+        }
+        stack.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                emojiSound.play();
+                emojiLbl.setText(emoji.getName());
+                for (Image img : emojiShadows) {
+                    img.setScale(0);
+                }
+                emojiShadow.setScale(SHADOW_SCALE);
+                emojiShadow.setPosition(emojiImg.getX()-SHADOW_OFFSET
+                        , emojiImg.getY()-SHADOW_OFFSET);
+            }
+        });
+        return stack;
     }
 
     private void updateScoreTable() {
