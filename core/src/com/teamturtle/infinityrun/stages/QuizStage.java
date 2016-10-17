@@ -116,7 +116,7 @@ public class QuizStage extends Stage {
         while (guesses.size() > 0) {
             final int index = random.nextInt((guesses.size() - 1) + 1);
             TextButton button = new TextButton(guesses.get(index).getText().substring(0, 1).toUpperCase(Locale.getDefault()) +
-                    guesses.get(index).getText().substring(1), skin, "quiz_text_button");
+                    guesses.get(index).getText().substring(1), skin, "text_button_black");
             final Word word = guesses.get(index);
             button.pad(TEXT_BUTTON_PADDING);
             button.addListener(new ChangeListener() {
@@ -126,7 +126,7 @@ public class QuizStage extends Stage {
                         isWrongGuessed = true;
                         FxSound.WRONG_ANSWER.play(0.3f);
                         getActors().clear();
-                        showRightWord(starTable);
+                        showRightWord(starTable, word);
                         Timer timer = new Timer();
                         timer.scheduleTask(new Timer.Task() {
                             @Override
@@ -158,7 +158,7 @@ public class QuizStage extends Stage {
         }
     }
 
-    private void showRightWord(Table starTable) {
+    private void showRightWord(Table starTable, Word guessedWord) {
         parentTable = new Table();
         parentTable.setSize(PARENT_TABLE_WIDTH, PARENT_TABLE_HEIGHT);
         parentTable.setPosition(PARENT_TABLE_POS_X, PARENT_TABLE_POS_Y);
@@ -167,7 +167,7 @@ public class QuizStage extends Stage {
         parentTable.row();
         addEmojiToTable();
         parentTable.row();
-        addButtonsToTable(true);
+        addButtonsToTable(true, guessedWord);
         addActor(parentTable);
     }
 
@@ -181,7 +181,7 @@ public class QuizStage extends Stage {
         parentTable.row();
         addEmojiToTable();
         parentTable.row();
-        addButtonsToTable(false);
+        addButtonsToTable(false, null);
     }
 
     private void addEmojiToTable() {
@@ -200,12 +200,18 @@ public class QuizStage extends Stage {
         parentTable.add(emojiTable);
     }
 
-    private void addButtonsToTable(boolean revealAnswer) {
+    private void addButtonsToTable(boolean revealAnswer, Word guessedWord) {
         buttonTable = new Table();
         for (TextButton button : guessButtons) {
-            if (revealAnswer && !button.getText().toString().equalsIgnoreCase(emoji.getWordModel().getText())) {
-                String buttonText = button.getText().toString();
-                button = new TextButton(buttonText, skin, "text_button_red");
+            if (revealAnswer && guessedWord != null) {
+                if (button.getText().toString().equalsIgnoreCase(guessedWord.getText())) {
+                    String buttonText = button.getText().toString();
+                    button = new TextButton(buttonText, skin, "text_button_red");
+                }
+                else if (button.getText().toString().equalsIgnoreCase(emoji.getWordModel().getText())) {
+                    String buttonText = button.getText().toString();
+                    button = new TextButton(buttonText, skin, "quiz_text_button");
+                }
             }
             buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2).width(170).height(60);
         }
