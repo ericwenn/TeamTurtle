@@ -37,7 +37,9 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		down: default-round-down,
 		checked: default-round-down
 	},
-	text_button : {font: large-font, up: text_button_up, down: text_button_down},
+	text_button_black : { font: default-font, up: text_button_up_black, down: text_button_down_black },
+	text_button_red : { font: default-font, up: text_button_up_red, down: text_button_down_red },
+	text_button : { font: large-font, up: text_button_up, down: text_button_down },
 	quiz_text_button: {font: default-font, up: text_button_up, down: text_button_down}
 },
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
