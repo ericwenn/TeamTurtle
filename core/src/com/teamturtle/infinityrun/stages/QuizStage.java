@@ -63,7 +63,9 @@ public class QuizStage extends Stage {
     private static final float ROW_PADDING = 20.0f;
     private static final int MAX_STARS = 3;
 
-    public QuizStage(IQuizStageListener handler, List<Word> collectedWords, int score) {
+    private static final int QUESTION_EMOJI_DIMENSION = 80, STAR_DIMENSION = 70;
+
+    public QuizStage(IQuizStageListener handler, List<? extends Word> collectedWords, int score) {
         super(new FitViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         this.handler = handler;
 
@@ -86,7 +88,7 @@ public class QuizStage extends Stage {
         FxSound.HARARENFRAGA.play();
     }
 
-    private List<Word> getRandomGuesses(List<Word> collectedWords) {
+    private List<Word> getRandomGuesses(List<? extends Word> collectedWords) {
         Random random = new Random();
         List<Word> returnList = new ArrayList<Word>();
         while (returnList.size() < 3) {
@@ -108,7 +110,7 @@ public class QuizStage extends Stage {
         return returnList;
     }
 
-    private void createButtons(final List<Word> guesses) {
+    private void createButtons(final List<? extends Word> guesses) {
         guessButtons = new ArrayList<TextButton>();
         soundButtons = new ArrayList<ImageButton>();
         soundList = new ArrayList<Sound>();
@@ -116,7 +118,7 @@ public class QuizStage extends Stage {
             final int index = random.nextInt((guesses.size() - 1) + 1);
 
             TextButton button = new TextButton(guesses.get(index).getText().substring(0,1).toUpperCase(Locale.getDefault()) +
-                    guesses.get(index).getText().substring(1), skin, "text_button");
+                    guesses.get(index).getText().substring(1), skin, "quiz_text_button");
             final Word word = guesses.get(index);
             button.pad(TEXT_BUTTON_PADDING);
             button.addListener(new ChangeListener() {
@@ -187,19 +189,29 @@ public class QuizStage extends Stage {
     }
 
     private void addEmojiToTable() {
+        Table emojiTable = new Table();
+        emojiTable.padBottom(ROW_PADDING*2).padTop(ROW_PADDING*2);
+        Label fillLabel = new Label(" ", skin);
+
+        emojiTable.add(fillLabel).width(25);
         Image emojiImage = new Image(emoji.getTexture());
         emojiImage.setScaling(Scaling.fit);
-        parentTable.add(emojiImage);
+        emojiTable.add(emojiImage).width(QUESTION_EMOJI_DIMENSION).height(QUESTION_EMOJI_DIMENSION);
+        Label questionLabel = new Label("?", skin);
+        questionLabel.setFontScale(1.7f);
+        emojiTable.add(questionLabel).width(25).padLeft(ROW_PADDING/4);
+
+        parentTable.add(emojiTable);
     }
 
     private void addButtonsToTable() {
         buttonTable = new Table();
         for (TextButton button : guessButtons) {
-            buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
+            buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2).width(170).height(60);
         }
         buttonTable.row();
         for(ImageButton button : soundButtons)
-            buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2);
+            buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2).width(60).height(60);
         parentTable.add(buttonTable);
 
     }
@@ -207,10 +219,10 @@ public class QuizStage extends Stage {
     private Table getStarsTable() {
         Table starTable = new Table();
         for(int i = 0; i < score; i++) {
-            starTable.add(new Image(star));
+            starTable.add(new Image(star)).width(STAR_DIMENSION).height(STAR_DIMENSION);
         }
         for(int i = 0; i < MAX_STARS - score; i++) {
-            starTable.add(new Image(noStar));
+            starTable.add(new Image(noStar)).width(STAR_DIMENSION).height(STAR_DIMENSION);
         }
         return starTable;
     }
@@ -218,10 +230,10 @@ public class QuizStage extends Stage {
     private Table getAnimatedStarsTable() {
         Table starTable = new Table();
         for(int i = 0; i <= score; i++) {
-            starTable.add(new Image(star));
+            starTable.add(new Image(star)).width(STAR_DIMENSION).height(STAR_DIMENSION);
         }
         for(int i = 0; i < MAX_STARS - score - 1; i++) {
-            starTable.add(new Image(noStar));
+            starTable.add(new Image(noStar)).width(STAR_DIMENSION).height(STAR_DIMENSION);
         }
         return starTable;
     }

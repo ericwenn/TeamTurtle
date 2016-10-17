@@ -49,7 +49,7 @@ public class WonLevelScreen extends EndLevelScreen{
     }
 
     private static final String LB_LEVEL_LOST = "Bana klarad";
-    private static final String LB_WORDS_COLLECTED = "Ord sammlade: ";
+    private static final String LB_WORDS_COLLECTED = "Ord samlade: ";
     private static final String DISCOVERD_LAYER_URL = "ui/discovered.png";
     private static final int EMOJI_DIMENSION = 70;
     private static final int DICTIONARY_BTN_PADDING = 20;

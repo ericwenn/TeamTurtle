@@ -29,8 +29,7 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     private int score;
     private List<Word> collectedWords, oldWords, discoveredWords;
 
-    public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level
-            , List<Word> oldWords, List<Word> discoveredWords, int score) {
+    public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level, List<Word> oldWords, List<Word> discoveredWords, int score) {
         super(spriteBatch);
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
         collectedWords = new ArrayList<Word>();
