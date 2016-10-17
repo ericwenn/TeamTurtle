@@ -9,12 +9,20 @@ public enum FeedbackSound implements Disposable {
     BANA1("bana1"), BANA2("bana2"), BANA3("bana3"), BANA4("bana4"), BANA5("bana5"),
     BANA6("bana6"), BANA7("bana7"), BANA8("bana8"), BANA9("bana9"), BANA10("bana10"),
     BANA11("bana11"), BANA12("bana12"), BANA13("bana13"), BANA14("bana14"), BANA15("bana15"),
-    BANA16("bana16"), BANAFORLORAD("banaforlorad"), BANOR("banor"), BRAJOBBAT("brajobbat"),
+    BANA16("bana16"), BANOR("banor"), BRAJOBBAT("brajobbat"),
     DUARIMAL("duarimal"), DUDOG("dudog"), DUDOG2("dudog2"), DUKLARADEDET("duklaradedet"),
     FELGISSAT("felgissat"), FRAGA("fraga"), HARARENFRAGA("hararenfraga"),
     KLICKAFORLJUD("klickaforljud"), KOR("kor"), ORDLISTA("ordlista"), RATTGISSAT("rattgissat"),
-    RATTSVARVAR("rattsvarvar"), SNYGGTDAR("snyggtdar"), SPELA("spela"), TILLBAKA("tillbaka"),
-    VALJBANA("valjbana"),;
+    RATTSVARVAR("rattsvarvar"), SNYGGTDAR("snyggtdar"), SPELA("spela3"), TILLBAKA("tillbaka"),
+    VALJBANA("valjbana"), MISSLYCKANDE1("battrelyckanastagang"),
+    MISSLYCKANDE2("detdarkandugorabattre"), MISSLYCKANDE3("duforlorade"),
+    MISSLYCKANDE4("duklaradeintebanan"), MISSLYCKANDE5("duklaradeintebanan2"),
+    MISSLYCKANDE6("duklaradeintebanan3"), MISSLYCKANDE7("dumisslyckades"),
+    MISSLYCKANDE8("gornyttforsok"), MISSLYCKANDE9("intebra"), MISSLYCKANDE10("vadtrakigt"),
+    EJUPPLAST("ejupplast"), REDOKOR("redokor"), REDO("redo2"), FORSOKIGEN("forsokigen"),
+    NASTABANA("nastabana"), HEM("hem"), MALGANG1("brajobbat"), MALGANG2("brajobbat2"),
+    MALGANG3("duarimal"), MALGANG4("duklaradebanan"), MALGANG5("duklaradedet"),
+    MALGANG6("lostesnyggt"), MALGANG7("snyggtdar");
 
     private Sound sound;
     private static Sound[] levelSounds;
