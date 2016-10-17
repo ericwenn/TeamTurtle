@@ -49,7 +49,8 @@ public class QuizStage extends Stage {
     private WordLoader wordLoader;
     private int score;
     private boolean isStarFilled = false;
-    private boolean isWrongGuessed = false;
+    private boolean delayStarted = false;
+    private boolean didGuessRight = false;
     private float stageTime = 0;
 
     //    Components
@@ -122,21 +123,22 @@ public class QuizStage extends Stage {
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    if (!word.equals(emoji.getWordModel())) {
-                        isWrongGuessed = true;
+                    delayStarted = true;
+                    didGuessRight = word.equals(emoji.getWordModel());
+                    if (didGuessRight)
+                        FxSound.RIGHT_ANSWER.play(0.3f);
+                    else
                         FxSound.WRONG_ANSWER.play(0.3f);
-                        getActors().clear();
-                        showRightWord(starTable, word);
-                        Timer timer = new Timer();
-                        timer.scheduleTask(new Timer.Task() {
-                            @Override
-                            public void run() {
-                                handler.onGuessClick(word.equals(emoji.getWordModel()));
-                            }
-                        }, 2.5f);
-                    } else {
-                        handler.onGuessClick(word.equals(emoji.getWordModel()));
-                    }
+                    getActors().clear();
+                    showRightWord(starTable, word);
+                    Timer timer = new Timer();
+                    timer.scheduleTask(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            handler.onGuessClick(word.equals(emoji.getWordModel()));
+                        }
+                    }, 2.5f);
+
                 }
             });
             guessButtons.add(button);
@@ -148,7 +150,7 @@ public class QuizStage extends Stage {
             soundList.add(Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl())));
             soundButton.addListener(new ClickListener() {
                 @Override
-                public void clicked(InputEvent event, float x, float y){
+                public void clicked(InputEvent event, float x, float y) {
                     if (!FxSound.isFxMuted()) {
                         soundList.get(i).play();
                     }
@@ -204,11 +206,10 @@ public class QuizStage extends Stage {
         buttonTable = new Table();
         for (TextButton button : guessButtons) {
             if (revealAnswer && guessedWord != null) {
-                if (button.getText().toString().equalsIgnoreCase(guessedWord.getText())) {
+                if (!didGuessRight && button.getText().toString().equalsIgnoreCase(guessedWord.getText())) {
                     String buttonText = button.getText().toString();
                     button = new TextButton(buttonText, skin, "text_button_red");
-                }
-                else if (button.getText().toString().equalsIgnoreCase(emoji.getWordModel().getText())) {
+                } else if (button.getText().toString().equalsIgnoreCase(emoji.getWordModel().getText())) {
                     String buttonText = button.getText().toString();
                     button = new TextButton(buttonText, skin, "quiz_text_button");
                 }
@@ -254,7 +255,7 @@ public class QuizStage extends Stage {
     public void act(float delta) {
         super.act(delta);
         stageTime += delta;
-        if (!isWrongGuessed) {
+        if (!delayStarted) {
             if (stageTime > 0.5f) {
                 getActors().clear();
                 if (isStarFilled) {
