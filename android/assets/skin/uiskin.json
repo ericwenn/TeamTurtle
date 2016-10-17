@@ -53,8 +53,8 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	sound_button: {imageUp: sound_up, imageDown: sound_down},
 	pause_button: {imageUp: pause_up, imageDown: pause_down},
 	continue_button: {imageUp: continue_up, imageDown: continue_down},
-	music_button: {imageUp: music_up, imageDown: music_down},
-	fx_button: {imageUp: fx_up, imageDown: fx_down},
+	music_button: {imageUp: music_up, imageChecked: music_down},
+	fx_button: {imageUp: fx_up, imageChecked: fx_down},
 	home_button: {imageUp: home_up, imageDown: home_down}
 },
 com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {

@@ -2,7 +2,6 @@ package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -30,7 +29,7 @@ import com.teamturtle.infinityrun.models.MissionHandler;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.JumpAnimations;
 import com.teamturtle.infinityrun.sprites.Player;
@@ -96,7 +95,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private OrthographicCamera mFixedCamera;
     private List<Word> possibleWords, discoverdWords, oldWords;
     private WordLoader wordLoader;
-    private Sound completedSound, failureSound;
 
     private Level level;
     private Mission activeMission;
@@ -135,8 +133,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         playerData = new PlayerData();
         mJumpAnimations = new JumpAnimations();
-        completedSound = Gdx.audio.newSound(Gdx.files.internal("audio/right_answer.wav"));
-        failureSound = Gdx.audio.newSound(Gdx.files.internal("audio/wrong_answer.wav"));
 
         Gdx.input.setInputProcessor(this);
     }
@@ -193,7 +189,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         mProgressStage = new ProgressBarStage(tiledMap, mMissionHandler.getMissions());
 
         activeMission = mMissionHandler.getNextMission();
-        FeedbackSound.KOR.play();
+
+        FxSound.KOR.play();
     }
 
     private void gameUpdate(float delta) {
@@ -334,8 +331,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         for (Entity ent : emojiSprites) {
             ent.dispose();
         }
-        completedSound.dispose();
-        failureSound.dispose();
         mPlayer.dispose();
         bg.dispose();
         pauseStage.dispose();
@@ -415,17 +410,19 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onCollision(Player p, Emoji e) {
                 e.triggerExplode();
+
                 if (!activeMission.isPassed()) {
                     activeMission.markPassed();
 
                     if (activeMission.getCorrectWord().equals(e.getWordModel())) {
-                        completedSound.play();
+                        FxSound.RIGHT_ANSWER.play(0.1f);
                         mPlayerTail.setColor(SUCCESS_COLOR);
                         mPlayer.setColor(SUCCESS_COLOR);
                         mJumpAnimations.setColor(SUCCESS_COLOR);
                         mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.PASSED);
                         mMissionStage.onEmojiCollision(SUCCESS_COLOR);
                     } else {
+                        FxSound.WRONG_ANSWER.play(0.3f);
                         mPlayerTail.setColor(FAILURE_COLOR);
                         mPlayer.setColor(FAILURE_COLOR);
                         mJumpAnimations.setColor(FAILURE_COLOR);
@@ -477,9 +474,9 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
             @Override
             public void onLevelFinished() {
-                FeedbackSound[] sounds = {FeedbackSound.MALGANG1,FeedbackSound.MALGANG2,
-                        FeedbackSound.MALGANG3, FeedbackSound.MALGANG4, FeedbackSound.MALGANG5,
-                        FeedbackSound.MALGANG6, FeedbackSound.MALGANG7};
+                FxSound[] sounds = {FxSound.MALGANG1, FxSound.MALGANG2,
+                        FxSound.MALGANG3, FxSound.MALGANG4, FxSound.MALGANG5,
+                        FxSound.MALGANG6, FxSound.MALGANG7};
                 Random rand = new Random();
                 int soundId = rand.nextInt(sounds.length-1);
                 sounds[soundId].play();
