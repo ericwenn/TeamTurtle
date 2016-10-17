@@ -17,7 +17,7 @@ public enum GameMusic {
 
     GameMusic(String musicName) {
         this.music = Gdx.audio.newMusic(Gdx.files.internal(URL_PREFIX + musicName + URL_SUFFIX));
-        this.music.setVolume(0.1f);
+        this.music.setVolume(0.015f);
     }
 
     public void playMusicLooping() {
