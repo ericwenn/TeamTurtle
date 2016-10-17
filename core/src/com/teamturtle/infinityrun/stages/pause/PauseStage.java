@@ -45,6 +45,7 @@ public class PauseStage extends Stage{
     private ImageButton continueBtn;
     private ImageButton retryBtn;
     private ImageButton levelsBtn;
+    private ImageButton homeBtn;
     private Label countDownLbl;
 
     private IPauseStageHandler handler;
@@ -77,9 +78,10 @@ public class PauseStage extends Stage{
         table.row();
         table.add(retryBtn).padBottom(ROW_PAD);
         table.row();
-        table.add(levelsBtn);
+        table.add(levelsBtn).padBottom(ROW_PAD);
+        table.row();
+        table.add(homeBtn);
         this.addActor(table);
-        Gdx.input.setInputProcessor(this);
     }
 
     private void setUpButtons() {
@@ -89,12 +91,14 @@ public class PauseStage extends Stage{
             public void changed(ChangeEvent event, Actor actor) {
                 removeActors();
                 runCountDownSeq();
+                FeedbackSound.REDO.play();
             }
         });
         retryBtn = new ImageButton(skin, "retry_button");
         retryBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                FeedbackSound.FORSOKIGEN.play();
                 observer.playLevel(level);
             }
         });
@@ -103,7 +107,20 @@ public class PauseStage extends Stage{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    FeedbackSound.BANOR.play();
                     observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        homeBtn = new ImageButton(skin, "home_button");
+        homeBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                try {
+                    FeedbackSound.HEM.play();
+                    observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

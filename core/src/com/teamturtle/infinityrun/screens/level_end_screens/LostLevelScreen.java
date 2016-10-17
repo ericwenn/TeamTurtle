@@ -10,9 +10,9 @@ import com.teamturtle.infinityrun.screens.IScreenObserver;
  */
 public class LostLevelScreen extends EndLevelScreen {
 
-    private static final String LB_LEVEL_LOST = "Bana förlorad";
+    private static final String LB_LEVEL_LOST = "Du misslyckades";
 
     public LostLevelScreen(SpriteBatch sb, IScreenObserver observer, Level level) {
-        super(sb, observer, new Texture("ui/ui_bg.png"), LB_LEVEL_LOST, level, 0);
+        super(sb, observer, LB_LEVEL_LOST, level, 0);
     }
 }
