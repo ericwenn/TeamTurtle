@@ -382,13 +382,19 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             Emoji emoji = (Emoji) entity;
             if(emoji.hasExploded() && emoji.shouldDraw() && !drawBigEmojiList.contains(emoji)) {
                 drawBigEmojiList.add(emoji);
+                emoji.setStartY(mPlayer.getY());
             }
         }
+        /*
         if(drawBigEmojiList.size() != 0) {
             drawBigEmojiList.get(0).drawExplodedText();
             if(!drawBigEmojiList.get(0).shouldDraw()) {
                 drawBigEmojiList.remove(0);
             }
+        }
+        */
+        for(Emoji emoji : drawBigEmojiList){
+            emoji.drawExplodedText();
         }
     }
 
