@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="658">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="660">
  <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="mini_tileset.png" width="128" height="128"/>
  </tileset>
@@ -52,7 +52,7 @@
  </layer>
  <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJztWctuAjEMzP9/Tc8L0nKkHKoe9tCWnylITWW541d2E6B4pFHpsomT4LHjZFdK2SWTyWTyl69O3nqcybG/9zNzpH72xYf5wik4tpaxtvS3Zk08z/4bEzaQr6O1/Aj0uRh9fF74RXg22kX159X6JNjT5k7Xy2untuOItE/0w9Ufz+DzKHANWn7B9YO0tLVNSZsezVjjiELSoJTbdszWTJgavD/Mwuee0PSA9HYsct6M+D6yOToeWRqcwRhoPEDz5fuvify99kfXNDU4Flr+2IKt/qpp0JN/kB9Ke836Hdfx1WatAav95ee7nmsxgTZ87K06qTGUapDHsNTgWFRf71H3rvk9uc4idR8F9V2ksQpUf55Iuy3m4Z0DaqOth3TegOJr1XTVIIpnrWudaAON8Y/Qt6fuk3Sn+ZqVW0+lT87rhZrXeZyp/4+qKRI2WnXiOfddo0Fp36jdDeyVd9bEgrofjZyLIs320iWvUaXcuxQ5r2YObMNhRVtaF2j+GYmX/F3a9yHYr1QP8ufIf5byVxPS/YMnl0r1l/dclNeXW4LWq5nb/Bh1/qHVA/U7vl/Z4oyG5ixtDyf5u1a7TeBZBFoe1bSOzkijNk9Fn3MrjyW+V352Ru92vXy78IXwHbxDz/da6qLIPZjWl3S/bGlDOq/wrhG6w7DsUFtWXEExBo3ZM+fk45H7BvK3W507H4Tn6E4AMTpu6veRNbTsRLSj9ZUafF7e257Fo7/ouF+KvR9oteMdr9VXpJ/k9vwGJwza9Q==
+   eJztWU1vwjAMzf//NZxbpHJkHKYdetjgzwykZbK856+0DTD8pKex0sRJ8LPjZCyljMlkMpn85ZuT9x5nsu/v/crsqZ998WG6cgiOrWWsLf0tWRPPs//GhA3k62gtPwN9zkYfX1eeCS9Gu6j+vFofBHva3Ol6ee3UdhyR9ontcPPHC/jcC1yDll9w/SAtrW1T0qZHM9Y4opA0KOW2kdmaCFODj4dJ+LwlND0gvR2LnDcjvo9s9o5HlgYnMAYaD9B8+f5rIH9v/dE1TQ32hZY/1mCrv2oa9OQf5IfSXrN+x3V8s1lrwGp//vluy7UYQBs+9lad1BhKNchjWGqwL6qvb1H3Lvk9uc4idR8F9V2ksQpUf55IuzXm4Z0DaqOth3TegOJr1XTVIIpnrWudaAON8c/Qt6fuk3Sn+ZqVW09lm5y3FWpe53Gm/t+rpkjYaNWJ59x3iQalfaN2N7BX3lkSC+p+NHIuijTr1WU0d/IaVWo/FzmvZg5sw2FBW1oXaP4ZiZf8Xdr3IdivVA/y58h/5vJXE9L9gyeXSvWX91yU15drgtarmdv86HX+odUD9Tu+X1njjIbmLG0PJ/m7VrsN4FkEWh7VtI7OSKM2T0WfcyuPJb5XfnVG73a9fL9yR/gB3qHney11UeQeTOtLul+2tCGdV3jXCN1hWHaoLSuuoBiDxuyZc/L5yH0D+du9zp0PwnN0J4AYHTf1+8gaWnYi2tH6Sg2+Lh9tz+LRX3Tcu2LvB1rteMdr9RXpJ7k+vwGXI94z
   </data>
  </layer>
  <objectgroup name="ground">
@@ -133,6 +133,7 @@
   <object id="655" x="5216" y="96" width="32" height="96"/>
   <object id="656" x="4128" y="352" width="3072" height="128"/>
   <object id="657" x="4064" y="0" width="3136" height="96"/>
+  <object id="658" x="4352" y="288" width="128" height="32"/>
  </objectgroup>
  <objectgroup name="emoji_placeholders">
   <object id="502" x="1760" y="256" width="32" height="32"/>
@@ -142,7 +143,7 @@
   <object id="609" x="2880" y="224" width="32" height="32"/>
   <object id="611" x="2848" y="352" width="32" height="32"/>
   <object id="614" x="3424" y="416" width="32" height="32"/>
-  <object id="615" x="3552" y="128" width="32" height="32"/>
+  <object id="615" x="3584" y="128" width="32" height="32"/>
   <object id="616" x="3584" y="224" width="32" height="32"/>
   <object id="621" x="4640" y="128" width="32" height="32"/>
   <object id="622" x="5024" y="256" width="32" height="32"/>
