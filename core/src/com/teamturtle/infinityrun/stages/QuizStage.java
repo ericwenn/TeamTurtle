@@ -137,7 +137,7 @@ public class QuizStage extends Stage {
                         public void run() {
                             handler.onGuessClick(word.equals(emoji.getWordModel()));
                         }
-                    }, 2.5f);
+                    }, 1.7f);
 
                 }
             });
