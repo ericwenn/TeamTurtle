@@ -131,7 +131,9 @@ public class WonLevelScreen extends EndLevelScreen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 emojiSound.play();
-                emojiLbl.setText(emoji.getName());
+                String emojiStr = emoji.getName();
+                emojiStr = emojiStr.substring(0, 1).toUpperCase() + emojiStr.substring(1);
+                emojiLbl.setText(emojiStr);
                 for (Image img : emojiShadows) {
                     img.setScale(0);
                 }
