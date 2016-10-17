@@ -1,4 +1,4 @@
-package com.teamturtle.infinityrun.screens;
+package com.teamturtle.infinityrun.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -27,6 +27,7 @@ import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.sentences.Sentence;
 import com.teamturtle.infinityrun.models.sentences.SentenceLoader;
 import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.screens.IScreenObserver;
 import com.teamturtle.infinityrun.sound.FxSound;
 
 import java.util.ArrayList;
@@ -37,15 +38,13 @@ import java.util.Locale;
  * Created by Rasmus on 2016-10-02.
  */
 
-public class WordScreen extends AbstractScreen {
+public class WordStage extends Stage {
 
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf", BACK_BUTTON_URL = "back_button";
     private static final int TITLE_SIZE = 50, DESCRIPTION_SIZE = 25, TABLE_WIDTH = 650,
     TABLE_HEIGHT = 400, TABLE_X = 75, TABLE_Y = 50, SENTENCE_LENGTH = 45;
     private static final Color FONT_COLOR = Color.WHITE, TABLE_COLOR = Color.GRAY;
 
-    private Texture bg;
-    private Stage stage;
     private BitmapFont titleFont, descriptionFont;
     private Table table;
     private Table descriptionTable;
@@ -54,25 +53,20 @@ public class WordScreen extends AbstractScreen {
     private Label titleLabel;
     private Image image;
     private List<String> descriptionList;
-    private Word word;
     private Sound sound;
     private Boolean hasSound;
+    private boolean goBack;
 
-    private IScreenObserver observer;
-
-    public WordScreen(SpriteBatch sb, IScreenObserver observer, Word word){
-        super(sb);
-        this.observer = observer;
-
-        this.bg = new Texture(PathConstants.BACKGROUND_PATH);
-        this.stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
-        this.word = word;
+    public WordStage(Word word){
+        super(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         if(word.getSoundUrl() != null) {
             sound = Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl()));
             hasSound = true;
         }
         else
             hasSound = false;
+
+        goBack = false;
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_URL));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter
@@ -96,15 +90,7 @@ public class WordScreen extends AbstractScreen {
         } else {
             Gdx.app.log("InfRun", "No words");
         }
-    }
 
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void buildStage() {
         table = new Table();
         table.setSize(TABLE_WIDTH, TABLE_HEIGHT);
         table.setPosition(TABLE_X, TABLE_Y);
@@ -174,7 +160,7 @@ public class WordScreen extends AbstractScreen {
             public void changed(ChangeEvent event, Actor actor) {
                 try {
                     FxSound.TILLBAKA.play();
-                    observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
+                    goBack = true;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -188,41 +174,11 @@ public class WordScreen extends AbstractScreen {
         table.add(descriptionTable).left().padLeft(40).top();
         table.row().padTop(25);
         table.add(returnButton).colspan(2).left();
-        stage.addActor(table);
-        Gdx.input.setInputProcessor(stage);
+        addActor(table);
+        Gdx.input.setInputProcessor(this);
     }
 
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-
-        getSpriteBatch().begin();
-
-        getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(),
-                getViewport().getScreenHeight() / InfinityRun.PPM);
-
-        getSpriteBatch().end();
-
-        stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
+    public boolean shouldGoBack() {
+        return goBack;
     }
 }

@@ -15,7 +15,6 @@ import com.teamturtle.infinityrun.screens.LevelSelectScreen;
 import com.teamturtle.infinityrun.screens.LoadingScreen;
 import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
-import com.teamturtle.infinityrun.screens.WordScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
 import com.teamturtle.infinityrun.sound.GameMusic;
@@ -133,13 +132,6 @@ public class InfinityRun extends Game implements IScreenObserver {
             changeScreen(newScreen);
         }
 
-    }
-
-    @Override
-    public void changeScreen(Word word) throws Exception {
-        AbstractScreen newScreen;
-        newScreen = new WordScreen(getSpriteBatch(), this, word);
-        changeScreen(newScreen);
     }
 
     private void changeScreen(AbstractScreen newScreen) {
