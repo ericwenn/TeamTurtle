@@ -191,12 +191,15 @@ public class QuizStage extends Stage {
     private void addEmojiToTable() {
         Table emojiTable = new Table();
         emojiTable.padBottom(ROW_PADDING*2).padTop(ROW_PADDING*2);
+        Label fillLabel = new Label(" ", skin);
+
+        emojiTable.add(fillLabel).width(25);
         Image emojiImage = new Image(emoji.getTexture());
         emojiImage.setScaling(Scaling.fit);
         emojiTable.add(emojiImage).width(QUESTION_EMOJI_DIMENSION).height(QUESTION_EMOJI_DIMENSION);
         Label questionLabel = new Label("?", skin);
         questionLabel.setFontScale(1.7f);
-        emojiTable.add(questionLabel).padLeft(ROW_PADDING/4);
+        emojiTable.add(questionLabel).width(25).padLeft(ROW_PADDING/4);
 
         parentTable.add(emojiTable);
     }
