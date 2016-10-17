@@ -49,9 +49,8 @@ public class WonLevelScreen extends EndLevelScreen{
     }
 
     private static final String LB_LEVEL_LOST = "Bana klarad";
-    private static final String LB_WORDS_COLLECTED = "Ord samlade: ";
     private static final String DISCOVERD_LAYER_URL = "ui/discovered.png";
-    private static final int LB_PAD = -20;
+    private static final int LB_PAD = 20;
     private static final int EMOJI_DIMENSION = 70;
     private static final int EMOJI_PAD = 3;
     private static final int EMOJIES_MAX_AMOUNT = 10;
@@ -107,7 +106,7 @@ public class WonLevelScreen extends EndLevelScreen{
             if (i == EMOJIES_MAX_AMOUNT) return;
         }
         emojiTable.row();
-        emojiLbl = new Label("", skin, "title");
+        emojiLbl = new Label("", skin);
         emojiTable.add(emojiLbl).colspan(allWords.size());
     }
 
@@ -146,10 +145,7 @@ public class WonLevelScreen extends EndLevelScreen{
 
     private void updateScoreTable() {
         getScoreTable().row();
-        Label wordsCollectedLb = new Label(LB_WORDS_COLLECTED, skin, "title");
-        getScoreTable().add(wordsCollectedLb).padTop(LB_PAD);
-        getScoreTable().row();
-        getScoreTable().add(emojiTable);
+        getScoreTable().add(emojiTable).padTop(LB_PAD);
     }
 
     @Override
