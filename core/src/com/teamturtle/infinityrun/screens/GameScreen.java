@@ -240,8 +240,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 break;
             case PAUSE:
                 renderWorld();
-                pauseStage.draw();
                 mMissionStage.draw();
+                pauseStage.draw();
                 break;
             default:
                 render(delta);
