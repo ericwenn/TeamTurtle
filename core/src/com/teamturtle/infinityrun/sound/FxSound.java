@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.sound;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -25,27 +26,28 @@ public enum FxSound implements Disposable {
     MALGANG6("lostesnyggt"), MALGANG7("snyggtdar"), RIGHT_ANSWER("right_answer"),
     WRONG_ANSWER("wrong_answer");
 
-    private Sound sound;
     private static Sound[] levelSounds;
     private static final int LEVEL_AMOUNT = 15;
+    private static final int DEFAULT_VOLUME = 1;
     private static final String URL_PREFIX = "audio/feedback/";
     private static final String URL_SUFFIX = ".mp3";
     private static boolean fxMuted = false;
+    private static AssetManager assetManager = new AssetManager();
+    private String url;
 
-    FxSound(String filename) {
-        sound = Gdx.audio.newSound(Gdx.files.internal(URL_PREFIX + filename + URL_SUFFIX));
-    }
-
-    public void play() {
-        if (!fxMuted) {
-            sound.play();
-        }
+    FxSound(String url) {
+        this.url = URL_PREFIX + url + URL_SUFFIX;
     }
 
     public void play(float volume) {
         if (!fxMuted) {
+            Sound sound = assetManager.get(url, Sound.class);
             sound.play(volume);
         }
+    }
+
+    public void play() {
+        play(DEFAULT_VOLUME);
     }
 
     public static void playLevelSound(int level) {
@@ -60,10 +62,15 @@ public enum FxSound implements Disposable {
     }
 
     public static void load() {
-        values();
+        for (FxSound fxSound : values()) {
+            assetManager.load(fxSound.url, Sound.class);
+        }
+    }
+
+    private static void initLevelAudioArray() {
         levelSounds = new Sound[LEVEL_AMOUNT];
         for (int i = 0; i < LEVEL_AMOUNT; i++) {
-            levelSounds[i] = values()[i].sound;
+            levelSounds[i] = assetManager.get(values()[i].url, Sound.class);
         }
     }
 
@@ -76,6 +83,12 @@ public enum FxSound implements Disposable {
         for (FxSound sound: values()) {
             sound.dispose();
         }
+        assetManager.dispose();
+    }
+
+    public static boolean updateLoading() {
+        if (assetManager.update()) initLevelAudioArray();
+        return assetManager.update();
     }
 
     public static boolean isFxMuted() {

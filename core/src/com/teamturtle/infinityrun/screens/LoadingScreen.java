@@ -65,16 +65,7 @@ public class LoadingScreen extends AbstractScreen {
     }
 
     private void startLoading() {
-        loadingDone = false;
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                FxSound.load();
-                loadingDone = true;
-                return;
-            }
-        });
-        thread.start();
+        FxSound.load();
     }
 
     private void setUpLoadingAnimation() {
@@ -95,7 +86,7 @@ public class LoadingScreen extends AbstractScreen {
     @Override
     public void render(float dt) {
         super.render(dt);
-        if (loadingDone) {
+        if (FxSound.updateLoading()) {
             try {
                 observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
             } catch (Exception e) {
