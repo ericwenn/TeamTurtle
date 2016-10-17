@@ -16,6 +16,8 @@ public class MissionImpl implements Mission {
 
     private Random mRandomizer = new Random();
 
+    private boolean isPassed = false;
+
     private float startX;
     private float endX;
 
@@ -58,5 +60,14 @@ public class MissionImpl implements Mission {
         int correctWordIndex = mRandomizer.nextInt(nWords);
 
         mCorrectWord = mWords.get( correctWordIndex );
+    }
+
+    @Override
+    public void markPassed() {
+        isPassed = true;
+    }
+
+    public boolean isPassed() {
+        return isPassed;
     }
 }

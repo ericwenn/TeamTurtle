@@ -23,7 +23,7 @@ public class MissionStage extends Stage {
 
     private static final int TABLE_WIDTH = 200,
             TABLE_HEIGHT = 50,
-            TABLE_OFFSET_BOTTOM = 10,
+            TABLE_OFFSET_BOTTOM = 20,
             TABLE_OFFSET_RIGHT = 10;
     private static final String CATCH_PREFIX = "Plocka ";
 
