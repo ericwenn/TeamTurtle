@@ -22,4 +22,8 @@ public interface Mission {
     void addWord(Word word);
 
     void decideCorrectWord();
+
+    void markPassed();
+
+    boolean isPassed();
 }

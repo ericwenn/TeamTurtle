@@ -1,7 +1,5 @@
 package com.teamturtle.infinityrun.models;
 
-import com.badlogic.gdx.Gdx;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +31,11 @@ public class MissionHandler {
         Mission nextMission = mMissions.get(iteratorIndex);
         iteratorIndex++;
         return nextMission;
+    }
+
+
+    public List<Mission> getmMissions() {
+        return mMissions;
     }
 
 }
