@@ -34,8 +34,8 @@ public class MissionHandler {
     }
 
 
-    public List<Mission> getmMissions() {
-        return mMissions;
+    public List<Mission> getMissions() {
+        return new ArrayList<Mission>(mMissions);
     }
 
 }
