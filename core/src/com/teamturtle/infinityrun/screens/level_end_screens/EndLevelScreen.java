@@ -19,7 +19,7 @@ import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.screens.AbstractScreen;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 
 /**
  * Created by Henrik on 2016-10-02.
@@ -85,7 +85,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.BANOR.play();
+                    FxSound.BANOR.play();
                     observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -96,7 +96,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
         retryButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                FeedbackSound.FORSOKIGEN.play();
+                FxSound.FORSOKIGEN.play();
                 observer.playLevel(level);
             }
         });

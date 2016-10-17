@@ -21,6 +21,7 @@ import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordImpl;
 import com.teamturtle.infinityrun.models.words.WordLoader;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.AbstractEntity;
 
 import java.util.Map;
@@ -122,19 +123,23 @@ public class Emoji extends AbstractEntity {
     }
 
     public void triggerExplode() {
+
         if(!isExploded) {
             isExploded = true;
-
-            isExploded = true;
-            if (hasSound) {
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        emojiSound.play();
-                    }
-                }, 0.3f);
+            if (!FxSound.isFxMuted()) {
+                if (hasSound) {
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            if (!FxSound.isFxMuted()) {
+                                emojiSound.play();
+                            }
+                        }
+                    }, 0.3f);
+                }
             }
         }
+
     }
 
     @Override

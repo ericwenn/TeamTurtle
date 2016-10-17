@@ -23,9 +23,9 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.models.words.WordImpl;
 import com.teamturtle.infinityrun.models.words.WordLoader;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
+import com.teamturtle.infinityrun.stages.WordStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -40,10 +40,12 @@ public class DictionaryScreen extends AbstractScreen {
     private static final float GRID_COLUMN_WIDTH = 4;
 
     private Stage stage;
+    private WordStage wordStage;
     private IScreenObserver observer;
     private Skin skin;
     private Texture bg;
     private ImageButton imageButton;
+    private boolean isDictionaryScreen;
 
     public DictionaryScreen(final SpriteBatch spriteBatch, IScreenObserver observer) {
         super(spriteBatch);
@@ -59,6 +61,7 @@ public class DictionaryScreen extends AbstractScreen {
         initBackButton();
         initGridTable();
 
+        isDictionaryScreen = true;
     }
 
     private void initBackButton() {
@@ -67,7 +70,7 @@ public class DictionaryScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.HEM.play();
+                    FxSound.HEM.play();
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -85,7 +88,7 @@ public class DictionaryScreen extends AbstractScreen {
         Table grid = new Table();
 
         int collectedWordsAmount = 0;
-        List<WordImpl> allWords = wordLoader.getAllWords();
+        List<Word> allWords = wordLoader.getAllWords();
         for(int i = 0; i < allWords.size(); i++){
             Word word = allWords.get(i);
             if (playerData.hasPlayerCollectedWord(word)) {
@@ -137,8 +140,10 @@ public class DictionaryScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 try {
-                    if(!tinted)
-                        observer.changeScreen(word);
+                    if(!tinted) {
+                        wordStage = new WordStage(word);
+                        isDictionaryScreen = false;
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -148,17 +153,29 @@ public class DictionaryScreen extends AbstractScreen {
     }
 
     @Override
-    public void buildStage() {
+    public void buildStage()
+    {
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float dt) {
         super.render(dt);
-        stage.act(dt);
         getSpriteBatch().begin();
         getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
         getSpriteBatch().end();
-        stage.draw();
+
+        if(isDictionaryScreen) {
+            stage.act(dt);
+            stage.draw();
+        }
+        else if(wordStage.shouldGoBack()) {
+            isDictionaryScreen = true;
+            Gdx.input.setInputProcessor(stage);
+        }
+        else {
+            wordStage.act(dt);
+            wordStage.draw();
+        }
     }
 }

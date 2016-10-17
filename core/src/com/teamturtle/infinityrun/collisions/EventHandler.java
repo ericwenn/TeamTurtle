@@ -1,12 +1,11 @@
 package com.teamturtle.infinityrun.collisions;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.teamturtle.infinityrun.map_parsing.SensorParser;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
@@ -90,11 +89,11 @@ public class EventHandler implements IEventHandler, ContactListener {
 
         // Check obstacle
         if (mObstacleCollisionHandler != null) {
-            FeedbackSound[] sounds = {FeedbackSound.MISSLYCKANDE1, FeedbackSound.MISSLYCKANDE2,
-                    FeedbackSound.MISSLYCKANDE3, FeedbackSound.MISSLYCKANDE4,
-                    FeedbackSound.MISSLYCKANDE5, FeedbackSound.MISSLYCKANDE6,
-                    FeedbackSound.MISSLYCKANDE7, FeedbackSound.MISSLYCKANDE8,
-                    FeedbackSound.MISSLYCKANDE9, FeedbackSound.MISSLYCKANDE10};
+            FxSound[] sounds = {FxSound.MISSLYCKANDE1, FxSound.MISSLYCKANDE2,
+                    FxSound.MISSLYCKANDE3, FxSound.MISSLYCKANDE4,
+                    FxSound.MISSLYCKANDE5, FxSound.MISSLYCKANDE6,
+                    FxSound.MISSLYCKANDE7, FxSound.MISSLYCKANDE8,
+                    FxSound.MISSLYCKANDE9, FxSound.MISSLYCKANDE10};
             Random rand = new Random();
             int soundId = rand.nextInt(9);
             if (SensorParser.Type.OBSTACLE.getName().equals(obj1) && obj2 instanceof Player) {

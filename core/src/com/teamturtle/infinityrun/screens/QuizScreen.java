@@ -1,13 +1,12 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.stages.IQuizStageListener;
 import com.teamturtle.infinityrun.stages.QuizStage;
 
@@ -28,11 +27,9 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     private IScreenObserver observer;
     private Level level;
     private int score;
-    private Sound rightAnswerSound;
     private List<Word> collectedWords, oldWords, discoveredWords;
 
-    public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level
-            , List<Word> oldWords, List<Word> discoveredWords, int score) {
+    public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level, List<Word> oldWords, List<Word> discoveredWords, int score) {
         super(spriteBatch);
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
         collectedWords = new ArrayList<Word>();
@@ -44,7 +41,6 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
         this.score = score;
         this.oldWords = oldWords;
         this.discoveredWords = discoveredWords;
-        rightAnswerSound = Gdx.audio.newSound(Gdx.files.internal("audio/right_answer.wav"));
     }
 
     @Override
@@ -65,11 +61,10 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     @Override
     public void onGuessClick(boolean isChoiceRight) {
         if (isChoiceRight) {
-            rightAnswerSound.play();
-            FeedbackSound.RATTGISSAT.play();
+            FxSound.RATTGISSAT.play();
             observer.levelWon(level, oldWords, discoveredWords, ++score);
         } else {
-            FeedbackSound.FELGISSAT.play();
+            FxSound.FELGISSAT.play();
             observer.levelWon(level, oldWords, discoveredWords, score);
         }
     }

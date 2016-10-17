@@ -2,7 +2,6 @@ package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -30,13 +29,14 @@ import com.teamturtle.infinityrun.models.MissionHandler;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.JumpAnimations;
 import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
+import com.teamturtle.infinityrun.stages.ProgressBarStage;
 import com.teamturtle.infinityrun.stages.pause.IPauseStageHandler;
 import com.teamturtle.infinityrun.stages.pause.PauseButtonStage;
 import com.teamturtle.infinityrun.stages.pause.PauseStage;
@@ -85,6 +85,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     private MissionHandler mMissionHandler;
     private MissionStage mMissionStage;
+    private ProgressBarStage mProgressStage;
 
     private PauseStage pauseStage;
     private PauseButtonStage pauseButtonStage;
@@ -94,7 +95,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private OrthographicCamera mFixedCamera;
     private List<Word> possibleWords, discoverdWords, oldWords;
     private WordLoader wordLoader;
-    private Sound completedSound, failureSound;
 
     private Level level;
     private Mission activeMission;
@@ -134,8 +134,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         playerData = new PlayerData();
         mJumpAnimations = new JumpAnimations();
-        completedSound = Gdx.audio.newSound(Gdx.files.internal("audio/right_answer.wav"));
-        failureSound = Gdx.audio.newSound(Gdx.files.internal("audio/wrong_answer.wav"));
 
         Gdx.input.setInputProcessor(this);
     }
@@ -190,10 +188,11 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         world.setContactListener(mEventHandler);
         drawBigEmojiList = new ArrayList<Emoji>();
 
+        mProgressStage = new ProgressBarStage(tiledMap, mMissionHandler.getMissions());
+
         activeMission = mMissionHandler.getNextMission();
-        FeedbackSound.KOR.play();
-        //mMissionStage.setMission( activeMission );
-        Gdx.app.log("setMissions", "show()");
+
+        FxSound.KOR.play();
     }
 
     private void gameUpdate(float delta) {
@@ -208,6 +207,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         mPlayerTail.update(delta);
 
         mJumpAnimations.update(delta);
+        mProgressStage.updatePlayerProgress( mPlayer.getX() * InfinityRun.PPM);
     }
 
 
@@ -219,6 +219,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 renderWorld();
                 mMissionStage.draw();
                 pauseButtonStage.draw();
+                mProgressStage.draw();
                 break;
             case LOST_GAME:
                 screenObserver.levelFailed(level);
@@ -241,8 +242,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 break;
             case PAUSE:
                 renderWorld();
-                pauseStage.draw();
                 mMissionStage.draw();
+                pauseStage.draw();
                 break;
             default:
                 render(delta);
@@ -333,8 +334,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         for (Entity ent : emojiSprites) {
             ent.dispose();
         }
-        completedSound.dispose();
-        failureSound.dispose();
         mPlayer.dispose();
         bg.dispose();
         pauseStage.dispose();
@@ -412,6 +411,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         MissionParser missionParser = new MissionParser(tiledMap, "quest");
         mMissionHandler = missionParser.getMissionHandler();
 
+
         MapParser emojiParser = new EmojiParser(world, tiledMap, "emoji_placeholders", mMissionHandler, possibleWords);
         emojiParser.parse();
         emojiSprites = emojiParser.getEntities();
@@ -434,32 +434,38 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onCollision(Player p, Emoji e) {
                 e.triggerExplode();
-                if (activeMission.getCorrectWord().equals(e.getWordModel())) {
-                    completedSound.play();
-                    mPlayerTail.setColor(SUCCESS_COLOR);
-                    mPlayer.setColor(SUCCESS_COLOR);
-                    mJumpAnimations.setColor(SUCCESS_COLOR);
-                    mMissionStage.onEmojiCollision(SUCCESS_COLOR);
-                } else {
-                    failureSound.play();
-                    mPlayerTail.setColor(FAILURE_COLOR);
-                    mPlayer.setColor(FAILURE_COLOR);
-                    mJumpAnimations.setColor(FAILURE_COLOR);
-                    mMissionStage.onEmojiCollision(FAILURE_COLOR);
-                }
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        mPlayerTail.setColor(NEUTRAL_PLAYER_COLOR);
-                        mPlayer.setColor(NEUTRAL_PLAYER_COLOR);
-                        mJumpAnimations.setColor(NEUTRAL_PLAYER_COLOR);
+
+                if (!activeMission.isPassed()) {
+                    activeMission.markPassed();
+
+                    if (activeMission.getCorrectWord().equals(e.getWordModel())) {
+                        FxSound.RIGHT_ANSWER.play(0.1f);
+                        mPlayerTail.setColor(SUCCESS_COLOR);
+                        mPlayer.setColor(SUCCESS_COLOR);
+                        mJumpAnimations.setColor(SUCCESS_COLOR);
+                        mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.PASSED);
+                        mMissionStage.onEmojiCollision(SUCCESS_COLOR);
+                    } else {
+                        FxSound.WRONG_ANSWER.play(0.3f);
+                        mPlayerTail.setColor(FAILURE_COLOR);
+                        mPlayer.setColor(FAILURE_COLOR);
+                        mJumpAnimations.setColor(FAILURE_COLOR);
+                        mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.FAILED);
+                        mMissionStage.onEmojiCollision(FAILURE_COLOR);
                     }
-                },2);
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            mPlayerTail.setColor(NEUTRAL_PLAYER_COLOR);
+                            mPlayer.setColor(NEUTRAL_PLAYER_COLOR);
+                            mJumpAnimations.setColor(NEUTRAL_PLAYER_COLOR);
+                        }
+                    },2);
 
 
-                if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
-                    hasSuccededInAllMissions = false;
-                }
+                    if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
+                        hasSuccededInAllMissions = false;
+                    }
 
                 Word word = e.getWordModel();
                 if (playerData.hasPlayerCollectedWord(word)) {
@@ -471,7 +477,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 }
             }
 
-        });
+        }});
 
         eventHandler.onCollisionWithGround(new IEventHandler.GroundCollisionListener() {
             @Override
@@ -492,9 +498,9 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
             @Override
             public void onLevelFinished() {
-                FeedbackSound[] sounds = {FeedbackSound.MALGANG1,FeedbackSound.MALGANG2,
-                        FeedbackSound.MALGANG3, FeedbackSound.MALGANG4, FeedbackSound.MALGANG5,
-                        FeedbackSound.MALGANG6, FeedbackSound.MALGANG7};
+                FxSound[] sounds = {FxSound.MALGANG1, FxSound.MALGANG2,
+                        FxSound.MALGANG3, FxSound.MALGANG4, FxSound.MALGANG5,
+                        FxSound.MALGANG6, FxSound.MALGANG7};
                 Random rand = new Random();
                 int soundId = rand.nextInt(sounds.length-1);
                 sounds[soundId].play();
@@ -506,9 +512,11 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onQuestChanged() {
                 try {
+                    if (!activeMission.isPassed()) {
+                        mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.FAILED);
+                    }
                     activeMission = mMissionHandler.getNextMission();
                     mMissionStage.setMission(activeMission);
-                    Gdx.app.log("setMissions", "onQuestChanged()");
                 } catch( IndexOutOfBoundsException e) {
 
                 }
