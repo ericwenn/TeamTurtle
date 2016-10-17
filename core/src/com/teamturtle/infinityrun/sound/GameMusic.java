@@ -44,7 +44,7 @@ public enum GameMusic {
             }
         }else{
             for (GameMusic gameMusic : values()) {
-                gameMusic.music.setVolume(0.1f);
+                gameMusic.music.setVolume(0.03f);
             }
         }
     }

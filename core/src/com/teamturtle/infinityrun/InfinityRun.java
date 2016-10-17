@@ -108,18 +108,6 @@ public class InfinityRun extends Game implements IScreenObserver {
 
         switch (screen) {
             case MAIN_MENU:
-                /*ArrayList<Word> words = new ArrayList<Word>();
-                WordLoader loader = new WordLoader();
-                List<Word> catWords = loader.getWordsFromCategory(1);
-                for(int i = 0; i < 4; i++) {
-                    words.add(catWords.get(i));
-                }
-                List<Word> lol = new ArrayList<Word>();
-                List<Word> xd = loader.getWordsFromCategory(3);
-                for(int i = 0; i < 8; i++) {
-                    lol.add(xd.get(i));
-                }
-                newScreen = new WonLevelScreen(getSpriteBatch(), this, new LevelImpl(), words, lol, 2);*/
                 newScreen = new StartScreen(getSpriteBatch(), this);
                 break;
 
