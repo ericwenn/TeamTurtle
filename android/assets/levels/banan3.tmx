@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="620">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="658">
  <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="mini_tileset.png" width="128" height="128"/>
  </tileset>
@@ -52,7 +52,7 @@
  </layer>
  <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJztWstugzAQ9P9/Tc5JpHBMOFQ9cGiTnylIcbVy92nANGRGGgkR2DWw4/Wuc0opnUAQBMFf3pzcepxg2+/9zmypn3Py4TLyGBwbvv3/JGCDi3XuXX4FbA6Gje+Rd8KHcV9Uf16tA8CEKR4fzHErlBq04rfUD6elpX1K2pQYmS8AgOIiHK8JTQ+c3q5Jzpve2Jd8bj0fAfuGlj+WYG28ahr05B9Od9JaM/9W6njymWvA7H94/tbyXQD7Ro71NereOTVQqbPadRzVHaexDK7+7Ml9SzwH1qIABzrHv4JtT90n6U7LlVZu7RNyHrAOanXi6fvO0aC0btT2Bs7KNXPmgrwejfRFOc1Cl/tDN+Pe3FuxdBLpwZTXUttd0K5UD5bnubw2pL+akPYfPLn0nvh35O2LlvUlsD1a9T+4eCtjrKx1lujR0JylreGkeNdqtyNzLgItj2pa53qkUZ990p8ZbMea/1d4+DHyQPjJXEP7ezV1UWQfTLNFfVq6sMbN5T2J3B6G5Yf6suYVbo7hxux5ZvD1WMYGF29b/VejE85zewIco+OmcR95h5afiHY0W9Dg+zLa31ubHv1Fx31I9nqg1o93vJatiB1wef4AjVmALg==
+   eJztWctuAjEMzP9/Tc8L0nKkHKoe9tCWnylITWW541d2E6B4pFHpsomT4LHjZFdK2SWTyWTyl69O3nqcybG/9zNzpH72xYf5wik4tpaxtvS3Zk08z/4bEzaQr6O1/Aj0uRh9fF74RXg22kX159X6JNjT5k7Xy2untuOItE/0w9Ufz+DzKHANWn7B9YO0tLVNSZsezVjjiELSoJTbdszWTJgavD/Mwuee0PSA9HYsct6M+D6yOToeWRqcwRhoPEDz5fuvify99kfXNDU4Flr+2IKt/qpp0JN/kB9Ke836Hdfx1WatAav95ee7nmsxgTZ87K06qTGUapDHsNTgWFRf71H3rvk9uc4idR8F9V2ksQpUf55Iuy3m4Z0DaqOth3TegOJr1XTVIIpnrWudaAON8Y/Qt6fuk3Sn+ZqVW0+lT87rhZrXeZyp/4+qKRI2WnXiOfddo0Fp36jdDeyVd9bEgrofjZyLIs320iWvUaXcuxQ5r2YObMNhRVtaF2j+GYmX/F3a9yHYr1QP8ufIf5byVxPS/YMnl0r1l/dclNeXW4LWq5nb/Bh1/qHVA/U7vl/Z4oyG5ixtDyf5u1a7TeBZBFoe1bSOzkijNk9Fn3MrjyW+V352Ru92vXy78IXwHbxDz/da6qLIPZjWl3S/bGlDOq/wrhG6w7DsUFtWXEExBo3ZM+fk45H7BvK3W507H4Tn6E4AMTpu6veRNbTsRLSj9ZUafF7e257Fo7/ouF+KvR9oteMdr9VXpJ/k9vwGJwza9Q==
   </data>
  </layer>
  <objectgroup name="ground">
@@ -111,7 +111,28 @@
   <object id="591" x="3552" y="0" width="512" height="96"/>
   <object id="592" x="3232" y="0" width="320" height="64"/>
   <object id="598" x="0" y="0" width="3232" height="96"/>
-  <object id="599" x="826.667" y="-173.333"/>
+  <object id="631" x="4352" y="96" width="352" height="32"/>
+  <object id="633" x="4640" y="160" width="32" height="96"/>
+  <object id="634" x="4512" y="192" width="128" height="64"/>
+  <object id="635" x="4352" y="192" width="128" height="64"/>
+  <object id="636" x="4352" y="128" width="32" height="64"/>
+  <object id="637" x="4736" y="288" width="64" height="64"/>
+  <object id="638" x="4736" y="224" width="128" height="32"/>
+  <object id="640" x="4768" y="96" width="128" height="96"/>
+  <object id="641" x="4960" y="128" width="224" height="32"/>
+  <object id="642" x="5152" y="160" width="32" height="96"/>
+  <object id="643" x="5024" y="160" width="32" height="32"/>
+  <object id="644" x="4928" y="224" width="192" height="32"/>
+  <object id="646" x="5056" y="256" width="64" height="64"/>
+  <object id="647" x="4896" y="256" width="96" height="64"/>
+  <object id="648" x="4864" y="288" width="32" height="32"/>
+  <object id="651" x="5152" y="288" width="224" height="32"/>
+  <object id="652" x="5216" y="192" width="192" height="64"/>
+  <object id="653" x="5280" y="160" width="128" height="32"/>
+  <object id="654" x="5376" y="96" width="32" height="64"/>
+  <object id="655" x="5216" y="96" width="32" height="96"/>
+  <object id="656" x="4128" y="352" width="3072" height="128"/>
+  <object id="657" x="4064" y="0" width="3136" height="96"/>
  </objectgroup>
  <objectgroup name="emoji_placeholders">
   <object id="502" x="1760" y="256" width="32" height="32"/>
@@ -123,6 +144,11 @@
   <object id="614" x="3424" y="416" width="32" height="32"/>
   <object id="615" x="3552" y="128" width="32" height="32"/>
   <object id="616" x="3584" y="224" width="32" height="32"/>
+  <object id="621" x="4640" y="128" width="32" height="32"/>
+  <object id="622" x="5024" y="256" width="32" height="32"/>
+  <object id="623" x="4640" y="256" width="32" height="32"/>
+  <object id="626" x="5120" y="160" width="32" height="32"/>
+  <object id="629" x="5216" y="256" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="obstacle">
   <object id="509" x="736" y="402" width="94" height="14"/>
@@ -166,5 +192,7 @@
   <object id="537" x="1952" y="0" width="32" height="480"/>
   <object id="612" x="2912" y="0" width="32" height="480"/>
   <object id="617" x="3616" y="0" width="32" height="480"/>
+  <object id="624" x="4672" y="0" width="32" height="480"/>
+  <object id="630" x="5248" y="0" width="32" height="480"/>
  </objectgroup>
 </map>
