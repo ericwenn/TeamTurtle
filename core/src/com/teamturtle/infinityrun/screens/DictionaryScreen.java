@@ -23,9 +23,8 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.models.words.WordImpl;
 import com.teamturtle.infinityrun.models.words.WordLoader;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -67,7 +66,7 @@ public class DictionaryScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.HEM.play();
+                    FxSound.HEM.play();
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -85,7 +84,7 @@ public class DictionaryScreen extends AbstractScreen {
         Table grid = new Table();
 
         int collectedWordsAmount = 0;
-        List<WordImpl> allWords = wordLoader.getAllWords();
+        List<Word> allWords = wordLoader.getAllWords();
         for(int i = 0; i < allWords.size(); i++){
             Word word = allWords.get(i);
             if (playerData.hasPlayerCollectedWord(word)) {

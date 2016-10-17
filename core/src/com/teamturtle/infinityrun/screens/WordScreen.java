@@ -27,7 +27,7 @@ import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.sentences.Sentence;
 import com.teamturtle.infinityrun.models.sentences.SentenceLoader;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,7 +163,7 @@ public class WordScreen extends AbstractScreen {
         soundButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(hasSound)
+                if(hasSound && !FxSound.isFxMuted())
                     sound.play();
             }
         });
@@ -173,7 +173,7 @@ public class WordScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.TILLBAKA.play();
+                    FxSound.TILLBAKA.play();
                     observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
                 } catch (Exception e) {
                     e.printStackTrace();

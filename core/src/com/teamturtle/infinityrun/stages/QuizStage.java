@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 import java.util.ArrayList;
@@ -51,7 +51,6 @@ public class QuizStage extends Stage {
     private boolean isStarFilled = false;
     private boolean isWrongGuessed = false;
     private float stageTime = 0;
-    private Sound wrongAnswerSound;
 
     //    Components
     private Table parentTable, buttonTable;
@@ -76,7 +75,6 @@ public class QuizStage extends Stage {
         this.score = score;
         star = new Texture("ui/star.png");
         noStar = new Texture("ui/no_star.png");
-        wrongAnswerSound = Gdx.audio.newSound(Gdx.files.internal("audio/wrong_answer.wav"));
 
         starTable = getStarsTable();
         animatedStarTable = getAnimatedStarsTable();
@@ -87,7 +85,7 @@ public class QuizStage extends Stage {
         createTableUi(starTable);
         addActor(parentTable);
         Gdx.input.setInputProcessor(this);
-        FeedbackSound.HARARENFRAGA.play();
+        FxSound.HARARENFRAGA.play();
     }
 
     private List<Word> getRandomGuesses(List<? extends Word> collectedWords) {
@@ -126,7 +124,7 @@ public class QuizStage extends Stage {
                 public void changed(ChangeEvent event, Actor actor) {
                     if (!word.equals(emoji.getWordModel())) {
                         isWrongGuessed = true;
-                        wrongAnswerSound.play();
+                        FxSound.WRONG_ANSWER.play();
                         getActors().clear();
                         showRightWord(starTable);
                         Timer timer = new Timer();
@@ -150,8 +148,10 @@ public class QuizStage extends Stage {
             soundList.add(Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl())));
             soundButton.addListener(new ClickListener() {
                 @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    soundList.get(i).play();
+                public void clicked(InputEvent event, float x, float y){
+                    if (!FxSound.isFxMuted()) {
+                        soundList.get(i).play();
+                    }
                 }
             });
             soundButtons.add(soundButton);
