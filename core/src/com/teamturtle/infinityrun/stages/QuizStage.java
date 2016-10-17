@@ -124,7 +124,7 @@ public class QuizStage extends Stage {
                 public void changed(ChangeEvent event, Actor actor) {
                     if (!word.equals(emoji.getWordModel())) {
                         isWrongGuessed = true;
-                        FxSound.WRONG_ANSWER.play();
+                        FxSound.WRONG_ANSWER.play(0.3f);
                         getActors().clear();
                         showRightWord(starTable);
                         Timer timer = new Timer();
