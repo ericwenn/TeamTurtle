@@ -168,8 +168,17 @@ public class Emoji extends AbstractEntity {
 
     public void drawExplodedText(){
         counter++;
-        if(counter <= COUNTER_MAX)
+        if(counter <= COUNTER_MAX) {
+            fontStage.getActors().get(1).setSize(128 + counter / 2, 128 + counter / 2);
+            float r = fontStage.getActors().get(1).getColor().r;
+            float g = fontStage.getActors().get(1).getColor().g;
+            float b = fontStage.getActors().get(1).getColor().b;
+            fontStage.getActors().get(1).setColor(r, g, b, 1 - (counter / 120f));
+            //fontStage.getActors().get(0).setY(fontStage.getActors().get(0).getY() +
+                    //(fontStage.getActors().get(1).getHeight() - 128) / 16f);
+            fontStage.getActors().get(0).setColor(0, 0, 0, 1 - (counter / 120f));
             fontStage.draw();
+        }
     }
 
     public boolean shouldDraw(){
