@@ -2,6 +2,7 @@ package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -43,6 +44,7 @@ import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by ericwenn on 9/20/16.
@@ -90,8 +92,9 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private State state;
 
     private OrthographicCamera mFixedCamera;
-    private List<Word> possibleWords, collectedWords;
+    private List<Word> possibleWords, discoverdWords, oldWords;
     private WordLoader wordLoader;
+    private Sound completedSound, failureSound;
 
     private Level level;
     private Mission activeMission;
@@ -125,10 +128,13 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         for (int i = 0; i < cats.length; i++) {
             possibleWords.addAll(wordLoader.getWordsFromCategory(cats[i]));
         }
-        collectedWords = new ArrayList<Word>();
+        oldWords = new ArrayList<Word>();
+        discoverdWords = new ArrayList<Word>();
 
         playerData = new PlayerData();
         mJumpAnimations = new JumpAnimations();
+        completedSound = Gdx.audio.newSound(Gdx.files.internal("audio/right_answer.wav"));
+        failureSound = Gdx.audio.newSound(Gdx.files.internal("audio/wrong_answer.wav"));
 
         Gdx.input.setInputProcessor(this);
     }
@@ -225,7 +231,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                     timer.scheduleTask(new Timer.Task() {
                         @Override
                         public void run() {
-                            screenObserver.levelCompleted(level, collectedWords, hasSuccededInAllMissions ? 2 : 1);
+                            screenObserver.levelCompleted(level, oldWords, discoverdWords, hasSuccededInAllMissions ? 2 : 1);
                         }
                     }, 1.5f);
                     isSendingToQuiz = true;
@@ -324,6 +330,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         for (Entity ent : emojiSprites) {
             ent.dispose();
         }
+        completedSound.dispose();
+        failureSound.dispose();
         mPlayer.dispose();
         bg.dispose();
         pauseStage.dispose();
@@ -403,13 +411,17 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             public void onCollision(Player p, Emoji e) {
                 e.triggerExplode();
                 if (activeMission.getCorrectWord().equals(e.getWordModel())) {
+                    completedSound.play();
                     mPlayerTail.setColor(SUCCESS_COLOR);
                     mPlayer.setColor(SUCCESS_COLOR);
                     mJumpAnimations.setColor(SUCCESS_COLOR);
+                    mMissionStage.onEmojiCollision(SUCCESS_COLOR);
                 } else {
+                    failureSound.play();
                     mPlayerTail.setColor(FAILURE_COLOR);
                     mPlayer.setColor(FAILURE_COLOR);
                     mJumpAnimations.setColor(FAILURE_COLOR);
+                    mMissionStage.onEmojiCollision(FAILURE_COLOR);
                 }
                 Timer.schedule(new Timer.Task() {
                     @Override
@@ -425,9 +437,14 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                     hasSuccededInAllMissions = false;
                 }
 
-                //TODO there should only be 1 collection process
-                collectedWords.add(e.getWordModel());
-                playerData.playerCollectedWord(e.getWordModel());
+                Word word = e.getWordModel();
+                if (playerData.hasPlayerCollectedWord(word)) {
+                    if(!discoverdWords.contains(word) && !oldWords.contains(word))
+                        oldWords.add(e.getWordModel());
+                }else{
+                    discoverdWords.add(e.getWordModel());
+                    playerData.playerCollectedWord(e.getWordModel());
+                }
             }
 
         });
@@ -451,7 +468,12 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
             @Override
             public void onLevelFinished() {
-                FeedbackSound.DUKLARADEDET.play();
+                FeedbackSound[] sounds = {FeedbackSound.MALGANG1,FeedbackSound.MALGANG2,
+                        FeedbackSound.MALGANG3, FeedbackSound.MALGANG4, FeedbackSound.MALGANG5,
+                        FeedbackSound.MALGANG6, FeedbackSound.MALGANG7};
+                Random rand = new Random();
+                int soundId = rand.nextInt(sounds.length-1);
+                sounds[soundId].play();
                 state = State.WON_GAME;
             }
         });
