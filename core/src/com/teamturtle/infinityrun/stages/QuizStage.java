@@ -100,8 +100,7 @@ public class QuizStage extends Stage {
                     returnList.add(collectedWords.get(index));
                 }
                 collectedWords.remove(index);
-            }
-            else {
+            } else {
                 List<Word> wordsFromCategory = wordLoader.getWordsFromCategory(wordCategory);
                 int index = random.nextInt((wordsFromCategory.size() - 1) + 1);
                 if (!returnList.contains(wordsFromCategory.get(index))) {
@@ -118,8 +117,7 @@ public class QuizStage extends Stage {
         soundList = new ArrayList<Sound>();
         while (guesses.size() > 0) {
             final int index = random.nextInt((guesses.size() - 1) + 1);
-
-            TextButton button = new TextButton(guesses.get(index).getText().substring(0,1).toUpperCase(Locale.getDefault()) +
+            TextButton button = new TextButton(guesses.get(index).getText().substring(0, 1).toUpperCase(Locale.getDefault()) +
                     guesses.get(index).getText().substring(1), skin, "quiz_text_button");
             final Word word = guesses.get(index);
             button.pad(TEXT_BUTTON_PADDING);
@@ -138,8 +136,7 @@ public class QuizStage extends Stage {
                                 handler.onGuessClick(word.equals(emoji.getWordModel()));
                             }
                         }, 2.5f);
-                    }
-                    else {
+                    } else {
                         handler.onGuessClick(word.equals(emoji.getWordModel()));
                     }
                 }
@@ -153,7 +150,7 @@ public class QuizStage extends Stage {
             soundList.add(Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl())));
             soundButton.addListener(new ClickListener() {
                 @Override
-                public void clicked(InputEvent event, float x, float y){
+                public void clicked(InputEvent event, float x, float y) {
                     soundList.get(i).play();
                 }
             });
@@ -170,8 +167,7 @@ public class QuizStage extends Stage {
         parentTable.row();
         addEmojiToTable();
         parentTable.row();
-        Label label = new Label("Rätt ord: " + emoji.getWordModel().getText(), skin);
-        parentTable.add(label);
+        addButtonsToTable(true);
         addActor(parentTable);
     }
 
@@ -185,12 +181,12 @@ public class QuizStage extends Stage {
         parentTable.row();
         addEmojiToTable();
         parentTable.row();
-        addButtonsToTable();
+        addButtonsToTable(false);
     }
 
     private void addEmojiToTable() {
         Table emojiTable = new Table();
-        emojiTable.padBottom(ROW_PADDING*2).padTop(ROW_PADDING*2);
+        emojiTable.padBottom(ROW_PADDING * 2).padTop(ROW_PADDING * 2);
         Label fillLabel = new Label(" ", skin);
 
         emojiTable.add(fillLabel).width(25);
@@ -199,18 +195,22 @@ public class QuizStage extends Stage {
         emojiTable.add(emojiImage).width(QUESTION_EMOJI_DIMENSION).height(QUESTION_EMOJI_DIMENSION);
         Label questionLabel = new Label("?", skin);
         questionLabel.setFontScale(1.7f);
-        emojiTable.add(questionLabel).width(25).padLeft(ROW_PADDING/4);
+        emojiTable.add(questionLabel).width(25).padLeft(ROW_PADDING / 4);
 
         parentTable.add(emojiTable);
     }
 
-    private void addButtonsToTable() {
+    private void addButtonsToTable(boolean revealAnswer) {
         buttonTable = new Table();
         for (TextButton button : guessButtons) {
+            if (revealAnswer && !button.getText().toString().equalsIgnoreCase(emoji.getWordModel().getText())) {
+                String buttonText = button.getText().toString();
+                button = new TextButton(buttonText, skin, "text_button_red");
+            }
             buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2).width(170).height(60);
         }
         buttonTable.row();
-        for(ImageButton button : soundButtons)
+        for (ImageButton button : soundButtons)
             buttonTable.add(button).padRight(ROW_PADDING / 2).padLeft(ROW_PADDING / 2).width(60).height(60);
         parentTable.add(buttonTable);
 
@@ -218,10 +218,10 @@ public class QuizStage extends Stage {
 
     private Table getStarsTable() {
         Table starTable = new Table();
-        for(int i = 0; i < score; i++) {
+        for (int i = 0; i < score; i++) {
             starTable.add(new Image(star)).width(STAR_DIMENSION).height(STAR_DIMENSION);
         }
-        for(int i = 0; i < MAX_STARS - score; i++) {
+        for (int i = 0; i < MAX_STARS - score; i++) {
             starTable.add(new Image(noStar)).width(STAR_DIMENSION).height(STAR_DIMENSION);
         }
         return starTable;
@@ -229,10 +229,10 @@ public class QuizStage extends Stage {
 
     private Table getAnimatedStarsTable() {
         Table starTable = new Table();
-        for(int i = 0; i <= score; i++) {
+        for (int i = 0; i <= score; i++) {
             starTable.add(new Image(star)).width(STAR_DIMENSION).height(STAR_DIMENSION);
         }
-        for(int i = 0; i < MAX_STARS - score - 1; i++) {
+        for (int i = 0; i < MAX_STARS - score - 1; i++) {
             starTable.add(new Image(noStar)).width(STAR_DIMENSION).height(STAR_DIMENSION);
         }
         return starTable;
@@ -254,8 +254,7 @@ public class QuizStage extends Stage {
                 if (isStarFilled) {
                     createTableUi(starTable);
                     isStarFilled = false;
-                }
-                else {
+                } else {
                     createTableUi(animatedStarTable);
                     isStarFilled = true;
                 }
