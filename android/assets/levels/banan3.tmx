@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="619">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="620">
  <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="mini_tileset.png" width="128" height="128"/>
  </tileset>
@@ -52,7 +52,7 @@
  </layer>
  <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJztmsFqwzAMhvX+T7NzW0iO2w5jhx2y9WVWU8w8YTuSLNu0+X/4ILiO7KT5kaL2TERnAAAA4KC8gV1GfycSLQ7rzL6v4A60rxP5+ocEMTTjFi6KvULQ941r5niUch6sycOn2vO0HtyE+4AgrqVw3FM1D/aqNffyID+GIA+FHPfTEWv+9PAgV21OKcZCeQ9aGF1LQI+h+Kz36qtY34G0tWhJUp965dLa+qhFoZzCs96rV9AjtsQnlhq1Jb95ehY6nqw+kfR9WzxYyoMtHrTK4zcJ1KLPqbXh3Nhb2fOJpgfD56axV2XcXh6U5i+Jh7UevAiuGxqjUf2PXL/lyj57pf8e9OjRxDWCj94F83Jrhn1JvKFVqwct68Zz4r0g6tsHA/t4vW9wPm68JHxm5kS/fdFf7Zj2CtJxK5sgVrrmSXh9JBxrpRTTshY/ZzPGAY8Bzzm5XDLrvxprYTzkwNw+c2jE+7MaavKKNftZAfOo1YYzkPpPCq8FSvUAODa/WNxoiw==
+   eJztWstugzAQ9P9/Tc5JpHBMOFQ9cGiTnylIcbVy92nANGRGGgkR2DWw4/Wuc0opnUAQBMFf3pzcepxg2+/9zmypn3Py4TLyGBwbvv3/JGCDi3XuXX4FbA6Gje+Rd8KHcV9Uf16tA8CEKR4fzHErlBq04rfUD6elpX1K2pQYmS8AgOIiHK8JTQ+c3q5Jzpve2Jd8bj0fAfuGlj+WYG28ahr05B9Od9JaM/9W6njymWvA7H94/tbyXQD7Ro71NereOTVQqbPadRzVHaexDK7+7Ml9SzwH1qIABzrHv4JtT90n6U7LlVZu7RNyHrAOanXi6fvO0aC0btT2Bs7KNXPmgrwejfRFOc1Cl/tDN+Pe3FuxdBLpwZTXUttd0K5UD5bnubw2pL+akPYfPLn0nvh35O2LlvUlsD1a9T+4eCtjrKx1lujR0JylreGkeNdqtyNzLgItj2pa53qkUZ990p8ZbMea/1d4+DHyQPjJXEP7ezV1UWQfTLNFfVq6sMbN5T2J3B6G5Yf6suYVbo7hxux5ZvD1WMYGF29b/VejE85zewIco+OmcR95h5afiHY0W9Dg+zLa31ubHv1Fx31I9nqg1o93vJatiB1wef4AjVmALg==
   </data>
  </layer>
  <objectgroup name="ground">
@@ -112,8 +112,6 @@
   <object id="592" x="3232" y="0" width="320" height="64"/>
   <object id="598" x="0" y="0" width="3232" height="96"/>
   <object id="599" x="826.667" y="-173.333"/>
-  <object id="601" x="4128" y="352" width="352" height="128"/>
-  <object id="603" x="4064" y="0" width="416" height="96"/>
  </objectgroup>
  <objectgroup name="emoji_placeholders">
   <object id="502" x="1760" y="256" width="32" height="32"/>
