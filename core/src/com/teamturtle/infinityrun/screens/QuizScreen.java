@@ -61,7 +61,6 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     @Override
     public void onGuessClick(boolean isChoiceRight) {
         if (isChoiceRight) {
-            FxSound.RIGHT_ANSWER.play();
             FxSound.RATTGISSAT.play();
             observer.levelWon(level, oldWords, discoveredWords, ++score);
         } else {
