@@ -37,6 +37,7 @@ import com.teamturtle.infinityrun.sprites.Player;
 import com.teamturtle.infinityrun.sprites.PlayerTail;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 import com.teamturtle.infinityrun.stages.MissionStage;
+import com.teamturtle.infinityrun.stages.ProgressBarStage;
 import com.teamturtle.infinityrun.stages.pause.IPauseStageHandler;
 import com.teamturtle.infinityrun.stages.pause.PauseButtonStage;
 import com.teamturtle.infinityrun.stages.pause.PauseStage;
@@ -85,6 +86,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     private MissionHandler mMissionHandler;
     private MissionStage mMissionStage;
+    private ProgressBarStage mProgressStage;
 
     private PauseStage pauseStage;
     private PauseButtonStage pauseButtonStage;
@@ -188,10 +190,10 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         world.setContactListener(mEventHandler);
 
+        mProgressStage = new ProgressBarStage(tiledMap, mMissionHandler.getmMissions());
+
         activeMission = mMissionHandler.getNextMission();
         FeedbackSound.KOR.play();
-        //mMissionStage.setMission( activeMission );
-        Gdx.app.log("setMissions", "show()");
     }
 
     private void gameUpdate(float delta) {
@@ -206,6 +208,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         mPlayerTail.update(delta);
 
         mJumpAnimations.update(delta);
+        mProgressStage.updatePlayerProgress( mPlayer.getX() * InfinityRun.PPM);
     }
 
 
@@ -217,6 +220,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 renderWorld();
                 mMissionStage.draw();
                 pauseButtonStage.draw();
+                mProgressStage.draw();
                 break;
             case LOST_GAME:
                 screenObserver.levelFailed(level);
@@ -388,6 +392,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         MissionParser missionParser = new MissionParser(tiledMap, "quest");
         mMissionHandler = missionParser.getMissionHandler();
 
+
         MapParser emojiParser = new EmojiParser(world, tiledMap, "emoji_placeholders", mMissionHandler, possibleWords);
         emojiParser.parse();
         emojiSprites = emojiParser.getEntities();
@@ -410,32 +415,36 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onCollision(Player p, Emoji e) {
                 e.triggerExplode();
-                if (activeMission.getCorrectWord().equals(e.getWordModel())) {
-                    completedSound.play();
-                    mPlayerTail.setColor(SUCCESS_COLOR);
-                    mPlayer.setColor(SUCCESS_COLOR);
-                    mJumpAnimations.setColor(SUCCESS_COLOR);
-                    mMissionStage.onEmojiCollision(SUCCESS_COLOR);
-                } else {
-                    failureSound.play();
-                    mPlayerTail.setColor(FAILURE_COLOR);
-                    mPlayer.setColor(FAILURE_COLOR);
-                    mJumpAnimations.setColor(FAILURE_COLOR);
-                    mMissionStage.onEmojiCollision(FAILURE_COLOR);
-                }
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        mPlayerTail.setColor(NEUTRAL_PLAYER_COLOR);
-                        mPlayer.setColor(NEUTRAL_PLAYER_COLOR);
-                        mJumpAnimations.setColor(NEUTRAL_PLAYER_COLOR);
+                if (!activeMission.isPassed()) {
+                    activeMission.markPassed();
+
+                    if (activeMission.getCorrectWord().equals(e.getWordModel())) {
+                        completedSound.play();
+                        mPlayerTail.setColor(SUCCESS_COLOR);
+                        mPlayer.setColor(SUCCESS_COLOR);
+                        mJumpAnimations.setColor(SUCCESS_COLOR);
+                        mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.PASSED);
+                        mMissionStage.onEmojiCollision(SUCCESS_COLOR);
+                    } else {
+                        mPlayerTail.setColor(FAILURE_COLOR);
+                        mPlayer.setColor(FAILURE_COLOR);
+                        mJumpAnimations.setColor(FAILURE_COLOR);
+                        mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.FAILED);
+                        mMissionStage.onEmojiCollision(FAILURE_COLOR);
                     }
-                },2);
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            mPlayerTail.setColor(NEUTRAL_PLAYER_COLOR);
+                            mPlayer.setColor(NEUTRAL_PLAYER_COLOR);
+                            mJumpAnimations.setColor(NEUTRAL_PLAYER_COLOR);
+                        }
+                    },2);
 
 
-                if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
-                    hasSuccededInAllMissions = false;
-                }
+                    if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
+                        hasSuccededInAllMissions = false;
+                    }
 
                 Word word = e.getWordModel();
                 if (playerData.hasPlayerCollectedWord(word)) {
@@ -447,7 +456,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 }
             }
 
-        });
+        }});
 
         eventHandler.onCollisionWithGround(new IEventHandler.GroundCollisionListener() {
             @Override
@@ -482,9 +491,11 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onQuestChanged() {
                 try {
+                    if (!activeMission.isPassed()) {
+                        mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.FAILED);
+                    }
                     activeMission = mMissionHandler.getNextMission();
                     mMissionStage.setMission(activeMission);
-                    Gdx.app.log("setMissions", "onQuestChanged()");
                 } catch( IndexOutOfBoundsException e) {
 
                 }
