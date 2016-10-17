@@ -111,12 +111,12 @@ public class LevelSelectScreen extends AbstractScreen{
             progressedThisFar = progressedThisFar && playerScoreOnLevel > 0;
             i++;
         }
-        backButton = new ImageButton(skin, "back_button");
+        backButton = new ImageButton(skin, "home_button");
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.TILLBAKA.play();
+                    FeedbackSound.HEM.play();
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();

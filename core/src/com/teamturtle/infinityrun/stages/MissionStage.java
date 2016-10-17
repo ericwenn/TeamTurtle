@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -15,13 +16,14 @@ import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.Mission;
 import com.teamturtle.infinityrun.models.words.Word;
 
+import static com.badlogic.gdx.utils.Timer.schedule;
 
 
 public class MissionStage extends Stage {
 
     private static final int TABLE_WIDTH = 200,
             TABLE_HEIGHT = 50,
-            TABLE_OFFSET_BOTTOM = 10,
+            TABLE_OFFSET_BOTTOM = 20,
             TABLE_OFFSET_RIGHT = 10;
     private static final String CATCH_PREFIX = "Plocka ";
 
@@ -31,17 +33,30 @@ public class MissionStage extends Stage {
     private Skin mSkin;
 
     private Table mMissionTable;
+    private Label emojiLabel;
+
+    private Timer.Task disappearTask;
+    private final int[] index;
+
     public MissionStage() {
-        super( new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
+        super(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
 
 
         mSkin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         mMissionTable = new Table(mSkin);
         mMissionTable.setSize(TABLE_WIDTH, TABLE_HEIGHT);
-        mMissionTable.setPosition( InfinityRun.WIDTH / 2 - TABLE_WIDTH / 2, TABLE_OFFSET_BOTTOM);
+        mMissionTable.setPosition(InfinityRun.WIDTH / 2 - TABLE_WIDTH / 2, TABLE_OFFSET_BOTTOM);
         mMissionTable.setTransform(true);
-        mMissionTable.setOrigin( Align.bottom);
-        
+        mMissionTable.setOrigin(Align.bottom);
+
+        index = new int[]{0};
+        disappearTask = new Timer.Task() {
+            @Override
+            public void run() {
+                mMissionTable.setScale(scaleDownToZero(index[0]++, mMissionTable.getScaleX()));
+            }
+        };
+
         this.addActor(mMissionTable);
 
     }
@@ -50,7 +65,7 @@ public class MissionStage extends Stage {
     private void changeEmoji(Word emojiModel) {
         mMissionTable.clearChildren();
 
-        Label emojiLabel = new Label( CATCH_PREFIX + emojiModel.getArticle() + " " + emojiModel.getText(), mSkin);
+        emojiLabel = new Label(CATCH_PREFIX + emojiModel.getArticle() + " " + emojiModel.getText(), mSkin);
         mMissionTable.add(emojiLabel).height(50).expandX().align(Align.right).padRight(10);
 
         Image emojiImage = new Image(new Texture(Gdx.files.internal(emojiModel.getIconUrl())));
@@ -60,31 +75,49 @@ public class MissionStage extends Stage {
     }
 
 
-
     public void setMission(Mission mission) {
+        this.index[0] = 0;
+        disappearTask.cancel();
         Word correctWord = mission.getCorrectWord();
-        if( correctWord != null) {
+        if (correctWord != null) {
             changeEmoji(correctWord);
         }
 
         final int[] index = {0};
-        Timer.schedule(new Timer.Task() {
+        schedule(new Timer.Task() {
             @Override
             public void run() {
-                mMissionTable.setScale( scaleFn(index[0]++, SCALE_STEP_COUNT));
+                mMissionTable.setScale(scaleFn(index[0]++, SCALE_STEP_COUNT));
             }
         }, 0, SCALE_STEP_SECONDS, SCALE_STEP_COUNT);
 
     }
 
+    public void onEmojiCollision(Color color) {
+        emojiLabel.setColor(color);
+        if (!disappearTask.isScheduled()) {
+            Timer.schedule(disappearTask, 0, SCALE_STEP_SECONDS, SCALE_STEP_COUNT * 2);
+        }
+    }
+
+    private float scaleDownToZero(int index, float currentScale) {
+        if (index < 100) {
+            return currentScale;
+        }
+        return currentScale * 0.9f;
+    }
 
     private float scaleFn(int index, int steps) {
         float r;
         if (index < steps / 2) {
-            r = 1 + (SCALE_BY - 1) * index * 2 / (float)steps;
+            r = 1 + (SCALE_BY - 1) * index * 2 / (float) steps;
         } else {
-            r = SCALE_BY - (SCALE_BY - 1) * index / (float)steps;
+            r = SCALE_BY - (SCALE_BY - 1) * index / (float) steps;
         }
         return r;
+    }
+
+    public Timer.Task getDisappearTask() {
+        return disappearTask;
     }
 }

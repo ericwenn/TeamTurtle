@@ -45,6 +45,7 @@ public class PauseStage extends Stage{
     private ImageButton continueBtn;
     private ImageButton retryBtn;
     private ImageButton levelsBtn;
+    private ImageButton homeBtn;
     private Label countDownLbl;
 
     private IPauseStageHandler handler;
@@ -77,7 +78,9 @@ public class PauseStage extends Stage{
         table.row();
         table.add(retryBtn).padBottom(ROW_PAD);
         table.row();
-        table.add(levelsBtn);
+        table.add(levelsBtn).padBottom(ROW_PAD);
+        table.row();
+        table.add(homeBtn);
         this.addActor(table);
     }
 
@@ -106,6 +109,18 @@ public class PauseStage extends Stage{
                 try {
                     FeedbackSound.BANOR.play();
                     observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        homeBtn = new ImageButton(skin, "home_button");
+        homeBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                try {
+                    FeedbackSound.HEM.play();
+                    observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

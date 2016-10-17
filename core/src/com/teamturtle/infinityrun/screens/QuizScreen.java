@@ -11,6 +11,7 @@ import com.teamturtle.infinityrun.sound.FeedbackSound;
 import com.teamturtle.infinityrun.stages.IQuizStageListener;
 import com.teamturtle.infinityrun.stages.QuizStage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,15 +29,20 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     private Level level;
     private int score;
     private Sound rightAnswerSound;
+    private List<Word> collectedWords, oldWords, discoveredWords;
 
-    public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level
-            , List<Word> collectedWords, int score) {
+    public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level, List<Word> oldWords, List<Word> discoveredWords, int score) {
         super(spriteBatch);
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
+        collectedWords = new ArrayList<Word>();
+        collectedWords.addAll(oldWords);
+        collectedWords.addAll(discoveredWords);
         this.stage = new QuizStage(this, collectedWords, score);
         this.observer = observer;
         this.level = level;
         this.score = score;
+        this.oldWords = oldWords;
+        this.discoveredWords = discoveredWords;
         rightAnswerSound = Gdx.audio.newSound(Gdx.files.internal("audio/right_answer.wav"));
     }
 
@@ -60,10 +66,10 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
         if (isChoiceRight) {
             rightAnswerSound.play();
             FeedbackSound.RATTGISSAT.play();
-            observer.levelWon(level, ++score);
+            observer.levelWon(level, oldWords, discoveredWords, ++score);
         } else {
             FeedbackSound.FELGISSAT.play();
-            observer.levelWon(level, score);
+            observer.levelWon(level, oldWords, discoveredWords, score);
         }
     }
 }
