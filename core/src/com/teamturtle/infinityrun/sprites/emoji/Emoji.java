@@ -100,6 +100,16 @@ public class Emoji extends AbstractEntity {
         }
         fontStage = new Stage();
         counter = 0;
+        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        Label label = new Label(getName(), skin);
+        label.setColor(FONT_COLOR);
+        Image i = new Image(texture);
+
+        label.setPosition(InfinityRun.WIDTH / 2, InfinityRun.HEIGHT / 2 + i.getHeight());
+        i.setPosition(InfinityRun.WIDTH / 2 + OFFSET_BIG_EMOJI, InfinityRun.HEIGHT / 2);
+
+        fontStage.addActor(label);
+        fontStage.addActor(i);
     }
 
     public void setBody(Body body) {
@@ -109,17 +119,6 @@ public class Emoji extends AbstractEntity {
     public void triggerExplode() {
         if(!isExploded) {
             isExploded = true;
-
-            Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-            Label label = new Label(getName(), skin);
-            label.setColor(FONT_COLOR);
-            Image i = new Image(texture);
-
-            label.setPosition(InfinityRun.WIDTH / 2, InfinityRun.HEIGHT / 2 + i.getHeight());
-            i.setPosition(InfinityRun.WIDTH / 2 + OFFSET_BIG_EMOJI, InfinityRun.HEIGHT / 2);
-
-            fontStage.addActor(label);
-            fontStage.addActor(i);
         }
         isExploded = true;
         if (hasSound) {
