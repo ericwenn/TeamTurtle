@@ -171,9 +171,6 @@ public class WordStage extends Stage {
     }
     public void dispose(){
         super.dispose();
-        titleFont.dispose();
-        descriptionFont.dispose();
-        skin.dispose();
         sound.dispose();
     }
 }
