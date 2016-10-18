@@ -73,7 +73,6 @@ public class EmojiParser implements MapParser {
             Mission mission = missionHandler.getMissionAtPosition( rect.getX() );
             List<Mission> missions = missionHandler.getMissions();
             Word word;
-            Gdx.app.log("EMojiParser", "missionIndex: "+missions.indexOf(mission));
             if (missions.indexOf(mission) == 0) {
                 do {
                     word = wordRandomizer.getNext();

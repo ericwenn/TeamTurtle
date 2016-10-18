@@ -105,7 +105,6 @@ public class GroundParser implements MapParser {
         int boxHeight = 1;
         int boxWidth = levelBoxWidth * levelNHorizontal;
 
-        Gdx.app.log("Roof", "boxWidth: " + levelBoxHeight + " boxHeight: "+ levelBoxWidth + " nHorizontal: "+ levelNHorizontal + " nVertical: "+levelNVertical + " boxY: "+boxY + " boxWidth: "+boxWidth);
 
         Rectangle roofRect = new Rectangle(boxX, boxY, boxWidth, boxHeight);
         bdef.type = BodyDef.BodyType.StaticBody;
