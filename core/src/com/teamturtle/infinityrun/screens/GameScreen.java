@@ -522,7 +522,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onQuestChanged() {
                 try {
-                    System.out.println(activeMission.isPassed());
                     if (!activeMission.isPassed()) {
                         mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.FAILED);
                         boolean isFirstMission = mMissionHandler.getMissions().indexOf(activeMission) == 0;
@@ -534,6 +533,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                     mMissionStage.setMission(activeMission);
                 } catch (IndexOutOfBoundsException e) {
                     Gdx.app.error("GameScreen", "IndexOutOfBoundsException: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });

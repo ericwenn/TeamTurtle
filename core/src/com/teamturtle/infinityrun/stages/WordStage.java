@@ -88,7 +88,7 @@ public class WordStage extends Stage {
         map.setColor(TABLE_COLOR);
         map.fill();
         table.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(map))));
-        
+
         Skin skin = new Skin();
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
         skin.load(Gdx.files.internal("skin/uiskin.json"));

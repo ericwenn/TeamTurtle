@@ -79,6 +79,9 @@ public class MissionStage extends Stage {
     public void setMission(Mission mission) {
         this.index[0] = 0;
         disappearTask.cancel();
+        if (mission == null) {
+            return;
+        }
         Word correctWord = mission.getCorrectWord();
         if (correctWord != null) {
             changeEmoji(correctWord);

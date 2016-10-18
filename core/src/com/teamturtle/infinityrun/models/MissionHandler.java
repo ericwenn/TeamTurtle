@@ -28,9 +28,12 @@ public class MissionHandler {
 
 
     public Mission getNextMission() throws IndexOutOfBoundsException {
-        Mission nextMission = mMissions.get(iteratorIndex);
-        iteratorIndex++;
-        return nextMission;
+        if (iteratorIndex < mMissions.size()) {
+            Mission nextMission = mMissions.get(iteratorIndex);
+            iteratorIndex++;
+            return nextMission;
+        }
+        return null;
     }
 
 
