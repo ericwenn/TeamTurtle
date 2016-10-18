@@ -143,6 +143,7 @@ public class LevelSelectScreen extends AbstractScreen{
 
     @Override
     public void dispose() {
+        super.dispose();
         stage.dispose();
         skin.dispose();
         bg.dispose();
