@@ -94,6 +94,7 @@ public enum FxSound implements Disposable {
             sound.dispose();
         }
         lastPlayedSound.dispose();
+        assetManager.clear();
         assetManager.dispose();
     }
 

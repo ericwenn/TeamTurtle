@@ -280,7 +280,7 @@ public class QuizStage extends Stage {
         skin.dispose();
         star.dispose();
         noStar.dispose();
-        emoji.getTexture().dispose();
+        emoji.dispose();
         super.dispose();
     }
 }

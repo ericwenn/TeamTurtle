@@ -151,7 +151,8 @@ public class Emoji extends AbstractEntity {
     @Override
     public void dispose() {
         texture.dispose();
-        mBody.getWorld().destroyBody(mBody);
+        if (mBody != null)
+            mBody.getWorld().destroyBody(mBody);
         if (hasSound)
             emojiSound.dispose();
         font.dispose();
