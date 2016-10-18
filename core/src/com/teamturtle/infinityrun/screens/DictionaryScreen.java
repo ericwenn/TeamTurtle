@@ -34,6 +34,7 @@ import java.util.List;
 public class DictionaryScreen extends AbstractScreen {
 
     private static final String LABEL_BG_URL = "label_bg.png";
+    private static final String LINE_IMAGE_URL = "ui/line.png";
     private static final String LABEL_TEXT = "Ord hittade:";
     private static final String LABEL_UNKNOWN = "???";
     private static final float ROW_PAD = 20f;
@@ -44,7 +45,7 @@ public class DictionaryScreen extends AbstractScreen {
     private WordStage wordStage;
     private IScreenObserver observer;
     private Skin skin;
-    private Texture bg;
+    private Texture bg, line;
     private ImageButton imageButton;
     private boolean isDictionaryScreen;
 
@@ -54,6 +55,7 @@ public class DictionaryScreen extends AbstractScreen {
         stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
 
         bg = new Texture(PathConstants.BACKGROUND_PATH);
+        line = new Texture(LINE_IMAGE_URL);
 
         skin = new Skin();
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
@@ -100,8 +102,11 @@ public class DictionaryScreen extends AbstractScreen {
             if (categoryBefore != currentCategory) {
                 grid.row();
                 String category = categoryLoader.getCategoryName(word.getCategory());
-                Label label = new Label(category, skin);
-                grid.add(label).colspan(GRID_COLUMN_WIDTH).pad(ROW_PAD);
+                Label label = new Label(category, skin, "text-black");
+                grid.add(label).colspan(GRID_COLUMN_WIDTH);
+                Image lineImg = new Image(line);
+                grid.row();
+                grid.add(lineImg).colspan(GRID_COLUMN_WIDTH).pad(ROW_PAD);
                 grid.row();
                 columnCount = 0;
             } else if (columnCount % GRID_COLUMN_WIDTH == 0) {
@@ -144,9 +149,9 @@ public class DictionaryScreen extends AbstractScreen {
         Label label;
         if (tinted) {
             image.setColor(Color.BLACK);
-            label = new Label(LABEL_UNKNOWN, skin);
+            label = new Label(LABEL_UNKNOWN, skin, "text-black");
         }else{
-            label = new Label(word.getText(), skin);
+            label = new Label(word.getText(), skin, "text-black");
         }
         gridItem.add(image);
         gridItem.row();
