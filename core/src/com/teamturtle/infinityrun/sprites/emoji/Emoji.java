@@ -32,9 +32,9 @@ import java.util.Map;
  */
 public class Emoji extends AbstractEntity {
 
-    private static final float EXPLOSION_SCALE = 1.3f;
     private static final float EMOJI_SIZE = 32;
-    private static final int FONT_SIZE = 25, COUNTER_MAX = 120, OFFSET_TEXT = 30;
+    private static final int FONT_SIZE = 25, COUNTER_MAX = 120, OFFSET_TEXT = 30, X_OFFSET = 140,
+        FADING_Y_POS = 300;
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf";
     private static final Color FONT_COLOR = Color.BLACK;
 
@@ -110,10 +110,8 @@ public class Emoji extends AbstractEntity {
         Image i = new Image(texture);
         i.setSize(EMOJI_SIZE, EMOJI_SIZE);
 
-        //label.setPosition(InfinityRun.WIDTH / 2, InfinityRun.HEIGHT / 2 + i.getHeight());
-        //i.setPosition(InfinityRun.WIDTH / 2 + OFFSET_BIG_EMOJI, InfinityRun.HEIGHT / 2);
-        i.setPosition(140, 0);
-        label.setPosition(140 + (EMOJI_SIZE / 2) - textLength / 2, 0);
+        i.setPosition(X_OFFSET, 0);
+        label.setPosition(X_OFFSET + (EMOJI_SIZE / 2) - textLength / 2, 0);
 
         fontStage.addActor(i);
         fontStage.addActor(label);
@@ -151,30 +149,7 @@ public class Emoji extends AbstractEntity {
 
     @Override
     public void render(SpriteBatch sb) {
-        if (isExploded) {
-/*
-            //If the emoji as the same position when it has expended, it will look like it moves to
-            //the left, with dx, the emoji will "move" equally to left and right.
-            float dx = ((EMOJI_SIZE * EXPLOSION_SCALE) - (EMOJI_SIZE)) / (2 * InfinityRun.PPM);
-            sb.draw(texture, getX() - dx, getY(), EMOJI_SIZE * EXPLOSION_SCALE / InfinityRun.PPM
-                    , EMOJI_SIZE * EXPLOSION_SCALE / InfinityRun.PPM);
-
-            //A scaled projection is created to draw font
-            Matrix4 scaledProjection = sb.getProjectionMatrix()
-                    .scale(1 / (InfinityRun.PPM), 1 / (InfinityRun.PPM), 0);
-            sb.setProjectionMatrix(scaledProjection);
-
-            //Draws font above emoji
-            float y = (getY() * InfinityRun.PPM) + EMOJI_SIZE * 2;
-            float x = (getX() * InfinityRun.PPM) + (EMOJI_SIZE / 2) - textLength / 2;
-            font.draw(sb, wordModel.getText(), x, y);
-
-            //Reset the projection
-            Matrix4 normalProjection = sb.getProjectionMatrix()
-                    .scale(InfinityRun.PPM, InfinityRun.PPM, 0);
-            sb.setProjectionMatrix(normalProjection);
-            */
-        } else {
+        if(!isExploded) {
             sb.draw(texture, getX(), getY(), EMOJI_SIZE / InfinityRun.PPM, EMOJI_SIZE / InfinityRun.PPM);
         }
     }
@@ -185,13 +160,12 @@ public class Emoji extends AbstractEntity {
             for(Actor actor : fontStage.getActors()) {
                 actor.setY(actor.getY() + distanceToTop / COUNTER_MAX);
             }
-
-            if(fontStage.getActors().get(1).getY() >= 300) {
+            if(fontStage.getActors().get(1).getY() >= FADING_Y_POS) {
                 float r = fontStage.getActors().get(0).getColor().r;
                 float g = fontStage.getActors().get(0).getColor().g;
                 float b = fontStage.getActors().get(0).getColor().b;
-                fontStage.getActors().get(0).setColor(r, g, b, 1 - (counter / 120f));
-                fontStage.getActors().get(1).setColor(0, 0, 0, 1 - (counter / 120f));
+                fontStage.getActors().get(0).setColor(r, g, b, 1 - (counter / COUNTER_MAX));
+                fontStage.getActors().get(1).setColor(0, 0, 0, 1 - (counter / COUNTER_MAX));
             }
             fontStage.draw();
         }

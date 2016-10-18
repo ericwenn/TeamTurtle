@@ -2,297 +2,453 @@
   "1": {
     "sentences" : [
       {
-        "text":"Jag gillar att [simma]."
+        "text":"En simmare"
       },
       {
-        "text":"Jag kan [simma] 100 meter."
+        "text":"Flera simmare"
       },
       {
-        "text":"[Simma] g\u00f6r man i vattnet."
+        "text":"Simmare är i vatten."
       }
     ]
   },
   "2": {
     "sentences" : [
       {
-        "text":"Mannen jobbar med att k\u00f6ra [lyftkran]."
+        "text":"En kran"
+      },
+      {
+        "text":"Flera kranar"
+      },
+      {
+        "text":"Mannen jobbar med att k\u00f6ra lyftkran."
       }
     ]
   },
   "3": {
     "sentences" : [
       {
-        "text":"Jag bor i ett litet [hus]."
+        "text":"Ett hus"
       },
       {
-        "text":"Jag kan [simma] 100 meter."
+        "text":"Flera hus"
       },
       {
-        "text":"[Simma] g\u00f6r man i vattnet."
+        "text":"Hus bor man i"
       }
     ]
   },
   "4": {
     "sentences" : [
       {
-        "text":"Jag m\u00e5dde illa s\u00e5 jag \u00e5kte till ett [sjukhus]."
+        "text":"Ett sjukhus"
+      },
+      {
+        "text":"Flera sjukhus"
+      },
+      {
+        "text":"Jag m\u00e5dde illa s\u00e5 jag \u00e5kte till ett sjukhus."
       }
     ]
   },
   "5": {
     "sentences" : [
       {
-        "text" : "Kvinnan jobbade p\u00e5 en [fabrik]."
+        "text":"En fabrik"
+      },
+      {
+        "text":"Flera fabriker"
+      },
+      {
+        "text" : "Kvinnan jobbade p\u00e5 en fabrik."
       }
     ]
   },
   "6": {
     "sentences" : [
       {
-        "text":"T\u00e4nd [lampan]!"
+        "text":"En lampa"
       },
       {
-        "text":"En [lampa] kan lysa v\u00e4ldigt starkt."
+        "text":"Flera lampor"
+      },
+      {
+        "text":"En lampa kan lysa v\u00e4ldigt starkt."
       }
     ]
   },
   "7": {
     "sentences" : [
       {
-        "text":"Det luktar som [bajs]."
+        "text":"En bajs/bajskorv"
+      },
+      {
+        "text":"Flera bajskorvar"
+      },
+      {
+        "text":"Bajs luktar äckligt"
       }
     ]
   },
   "8": {
     "sentences" : [
       {
-        "text":"Jag skriver p\u00e5 [datorn]."
+        "text":"En dator"
       },
       {
-        "text":"Jag ska k\u00f6pa en ny [dator]."
+        "text":"Flera datorer"
       },
       {
-        "text":"[Simma] g\u00f6r man i vattnet."
+        "text":"Jag skriver p\u00e5 datorn."
       }
     ]
   },
   "9": {
     "sentences" : [
       {
-        "text":"L\u00e4s en [bok] ist\u00e4llet."
+        "text":"En bok"
       },
       {
-        "text":"Jag tycker om att l\u00e4sa [b\u00f6cker]."
+        "text":"Flera böcker"
+      },
+      {
+        "text":"Jag tycker om att l\u00e4sa b\u00f6cker."
       }
     ]
   },
   "10": {
     "sentences" : [
       {
-        "text":"Min [telefon] ringer."
+        "text":"En telefon"
       },
       {
-        "text":"Jag k\u00f6pte precis en ny [telefon]."
+        "text":"Flera telefoner"
+      },
+      {
+        "text":"Min telefon ringer."
       }
     ]
   },
   "11": {
     "sentences" : [
       {
-        "text":"Ta ett kort med min [kamera]."
+        "text":"En kamera"
+      },
+      {
+        "text":"Flera kameror"
+      },
+      {
+        "text":"Ta ett kort med min kamera."
       }
     ]
   },
   "12": {
     "sentences" : [
       {
-        "text":"Nu ska jag se p\u00e5 [TV]."
+        "text":"En TV/TV-apparat"
+      },
+      {
+        "text":"Flera TV-apparater"
+      },
+      {
+        "text":"Nu ska jag se p\u00e5 TV."
       }
     ]
   },
   "13": {
     "sentences" : [
       {
-        "text":"Jag lyssnar ofta p\u00e5 [radio] i bilen."
+        "text":"En radio"
+      },
+      {
+        "text":"Flera radior"
+      },
+      {
+        "text":"Jag lyssnar ofta p\u00e5 radio i bilen."
       }
     ]
   },
   "14": {
     "sentences" : [
       {
-        "text":"Min [dator] st\u00e5r p\u00e5 skrivbordet."
+        "text":"En datorskärm"
+      },
+      {
+        "text":"Flera datorskärmar"
+      },
+      {
+        "text":"Min datorskärm st\u00e5r p\u00e5 skrivbordet."
       }
     ]
   },
   "15": {
     "sentences" : [
       {
-        "text":"Skriv ut dokumentet i [skrivaren]."
+        "text":"En skrivare"
+      },
+      {
+        "text":"Flera skrivare"
+      },
+      {
+        "text":"Skriv ut dokumentet i skrivaren."
       }
     ]
   },
   "16": {
     "sentences" : [
       {
-        "text":"F\u00f6r att styra datorn anv\u00e4nder man en [datormus]."
+        "text":"En datormus"
+      },
+      {
+        "text":"Flera datormöss"
+      },
+      {
+        "text":"F\u00f6r att styra datorn anv\u00e4nder man en datormus."
       }
     ]
   },
   "17": {
     "sentences" : [
       {
-        "text":"St\u00e4ng [d\u00f6rren]."
+        "text":"En dörr"
       },
       {
-        "text":"Hon gick in i en [d\u00f6rr] och fick ett bl\u00e5m\u00e4rke i pannan."
+        "text":"Flera dörrar"
+      },
+      {
+        "text":"St\u00e4ng d\u00f6rren."
       }
     ]
   },
   "18": {
     "sentences" : [
       {
-        "text":"Anna fick en ny [cykel]."
+        "text":"En cykel"
       },
       {
-        "text":"Han har flera [cyklar]."
+        "text":"Flera cyklar"
+      },
+      {
+        "text":"Anna fick en ny cykel."
       }
     ]
   },
   "19": {
     "sentences" : [
       {
-        "text":"Gl\u00f6m inte att spola p\u00e5 [toaletten]."
+        "text":"En toalett"
+      },
+      {
+        "text":"Flera toaletter"
+      },
+      {
+        "text":"Gl\u00f6m inte att spola p\u00e5 toaletten."
       }
     ]
   },
   "20": {
     "sentences" : [
       {
-        "text":"Pojken gillade [flygplan]."
+        "text":"Ett flygplan"
       },
       {
-        "text":"En pilot jobbar med att flyga [flygplan]."
+        "text":"Flera flygplan"
+      },
+      {
+        "text":"En pilot jobbar med att flyga flygplan."
       }
     ]
   },
   "21": {
     "sentences" : [
       {
-        "text":"Han satt kvar p\u00e5 sin [moped] och \u00e5t korv."
+        "text":"En moped"
+      },
+      {
+        "text":"Flera mopeder"
+      },
+      {
+        "text":"Han satt kvar p\u00e5 sin moped och \u00e5t korv."
       }
     ]
   },
   "22": {
     "sentences" : [
       {
-        "text":"Henrik \u00e4lskar [ost]."
+        "text":"En ost"
+      },
+      {
+        "text":"Flera ostar"
+      },
+      {
+        "text":"Henrik \u00e4lskar ost."
       }
     ]
   },
   "23": {
     "sentences" : [
       {
-        "text":"[Vulkanen] sprutade massor av lava."
+        "text":"En vulkan"
+      },
+      {
+        "text":"Flera vulkaner"
+      },
+      {
+        "text":"Vulkanen sprutade massor av lava."
       }
     ]
   },
   "24": {
     "sentences" : [
       {
-        "text":"Hon fick en [blomma] och blev genast glad igen."
+        "text":"En blomma"
+      },
+      {
+        "text":"Flera blommor"
+      },
+      {
+        "text":"Hon fick en blomma och blev genast glad igen."
       }
     ]
   },
   "25": {
     "sentences" : [
       {
-        "text":"Att odla [majs] kan vara sv\u00e5rt."
+        "text":"En majskolv"
       },
       {
-        "text":"Olivia \u00e4lskar att \u00e4ta |majs]."
+        "text":"Flera majskolvar"
+      },
+      {
+        "text":"Att odla majs kan vara sv\u00e5rt."
       }
     ]
   },
   "26": {
     "sentences" : [
       {
-        "text":"[Citronen] var v\u00e4ldigt sur."
+        "text":"En citron"
+      },
+      {
+        "text":"Flera citroner"
+      },
+      {
+        "text":"Citronen var v\u00e4ldigt sur."
       }
     ]
   },
   "27": {
     "sentences" : [
       {
-        "text": "Daniel \u00e4lskar [banan]."
+        "text":"En banan"
       },
       {
-        "text": "Han \u00e4ter flera [bananer] varje dag."
+        "text":"Flera bananer"
+      },
+      {
+        "text": "Daniel \u00e4lskar bananer."
       }
     ]
   },
   "28": {
     "sentences" : [
       {
-        "text": "Han var inte n\u00f6jd med sin [ananas]."
+        "text":"En ananas"
       },
       {
-        "text": "Henrik ville ha en annan [ananas]."
+        "text":"Flera ananaser"
+      },
+      {
+        "text": "Han var inte n\u00f6jd med sin ananas."
       }
     ]
   },
   "29": {
     "sentences" : [
       {
-        "text": "Att \u00e4ta [\u00e4pple] \u00e4r bra f\u00f6r magen."
+        "text":"Ett äpple"
       },
       {
-        "text": "Han \u00e4lskar r\u00f6da [\u00e4pplen]."
+        "text":"Flera äpplen"
+      },
+      {
+        "text": "Att \u00e4ta \u00e4pple \u00e4r bra f\u00f6r magen."
       }
     ]
   },
   "30": {
     "sentences" : [
       {
-        "text": "Min mammas [br\u00f6d] \u00e4r godast."
+        "text":"Ett bröd"
       },
       {
-        "text": "Jag vill ha ett [br\u00f6d]. "
+        "text":"Flera bröd"
+      },
+      {
+        "text": "Min mammas br\u00f6d \u00e4r godast."
       }
     ]
   },
   "31": {
     "sentences" : [
       {
-        "text": "Att baka [kaka] \u00e4r mysigt."
+        "text":"En kaka"
+      },
+      {
+        "text":"Flera kakor"
+      },
+      {
+        "text": "Att baka kaka \u00e4r mysigt."
       }
     ]
   },
   "32": {
     "sentences" : [
       {
-        "text": "[Choklad] \u00e4r s\u00e5 gott!"
+        "text":"En choklad/chokladkaka"
+      },
+      {
+        "text":"Flera chokladkakor"
+      },
+      {
+        "text": "Choklad \u00e4r s\u00e5 gott!"
       }
     ]
   },
   "33": {
     "sentences" : [
       {
-        "text": "Hon gick runt med en [klubba] i munnen."
+        "text":"En klubba"
       },
       {
-        "text": "En [klubba] vill jag ha."
+        "text":"Flera klubbor"
+      },
+      {
+        "text": "Hon gick runt med en klubba i munnen."
       }
     ]
   },
   "34": {
     "sentences" : [
       {
-        "text": "Han drack s\u00e5 mycket [\u00f6l] att han inte kunde g\u00e5 hem."
+        "text":"Ett öl/glas öl"
+      },
+      {
+        "text":"Flera öl"
+      },
+      {
+        "text": "Han drack s\u00e5 mycket \u00f6l att han inte kunde g\u00e5 hem."
       }
     ]
   },
   "35": {
     "sentences" : [
+      {
+        "text":"Ett popcorn"
+      },
+      {
+        "text":"Flera popcorn"
+      },
       {
         "text": "[Popcorn] \u00e4r b\u00e4st p\u00e5 bio."
       }
@@ -301,7 +457,13 @@
   "36": {
     "sentences" : [
       {
-        "text": "Om du \u00e5ker till Indien kanske du kan tr\u00e4ffa p\u00e5 en [krokodil]."
+        "text":"En krokodil"
+      },
+      {
+        "text":"Flera krokodiler"
+      },
+      {
+        "text": "Om du \u00e5ker till Indien kanske du kan tr\u00e4ffa p\u00e5 en krokodil."
       }
     ]
   },
