@@ -522,18 +522,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         this.mEventHandler = eventHandler;
     }
-
-    private void stopFailureSounds() {
-        FxSound[] sounds = {FxSound.MISSLYCKANDE1, FxSound.MISSLYCKANDE2,
-                FxSound.MISSLYCKANDE3, FxSound.MISSLYCKANDE4,
-                FxSound.MISSLYCKANDE5, FxSound.MISSLYCKANDE6,
-                FxSound.MISSLYCKANDE7, FxSound.MISSLYCKANDE8,
-                FxSound.MISSLYCKANDE9, FxSound.MISSLYCKANDE10};
-        for (FxSound sound : sounds) {
-            FxSound.getSound(sound).stop();
-        }
-    }
-
+    
     @Override
     public void continueBtnClick() {
         Gdx.input.setInputProcessor(this);
