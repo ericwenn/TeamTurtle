@@ -84,24 +84,14 @@ public class StartScreen extends AbstractScreen {
         });
 
         ImageButton musicBtn = new ImageButton(skin, "music_button");
-        musicBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                GameMusic.shiftMusicMute();
-            }
-        });
+        musicBtn.addListener(new ShiftMusicButtonListener());
         if (GameMusic.isMusicMuted()) {
             musicBtn.setChecked(true);
             GameMusic.shiftMusicMute();
         }
 
         ImageButton fxBtn = new ImageButton(skin, "fx_button");
-        fxBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                FxSound.shiftFxMute();
-            }
-        });
+        fxBtn.addListener(new ShiftFxButtonListener());
         if (FxSound.isFxMuted()) {
             fxBtn.setChecked(true);
             FxSound.shiftFxMute();
@@ -167,5 +157,22 @@ public class StartScreen extends AbstractScreen {
     @Override
     public void hide() {
 
+    }
+
+
+    protected static class ShiftFxButtonListener extends ChangeListener {
+
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            FxSound.shiftFxMute();
+        }
+    }
+
+
+    protected static class ShiftMusicButtonListener extends ChangeListener {
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            GameMusic.shiftMusicMute();
+        }
     }
 }
