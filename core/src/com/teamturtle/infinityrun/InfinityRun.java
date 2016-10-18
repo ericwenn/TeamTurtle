@@ -3,7 +3,10 @@ package com.teamturtle.infinityrun;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.teamturtle.infinityrun.loading.LoadingStage;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.models.words.Word;
@@ -32,16 +35,26 @@ public class InfinityRun extends Game implements IScreenObserver {
     private SpriteBatch mSpriteBatch;
     private PlayerData mPlayerData;
     private LevelDataHandler levelHandler;
+    private AssetManager assetManager;
 
     @Override
     public void create() {
-        
-        mPlayerData = new PlayerData();
         setSpriteBatch(new SpriteBatch());
+        assetManager = new AssetManager();
+        mPlayerData = new PlayerData();
         levelHandler = new LevelDataHandler();
 
+
+        assetManager.load(LoadingStage.TURTLE_URL, Texture.class);
+        assetManager.load(LoadingStage.BG_URL, Texture.class);
+        assetManager.finishLoading();
+
+
+        com.teamturtle.infinityrun.loading.LoadingScreen loadScreen = new com.teamturtle.infinityrun.loading.LoadingScreen( getSpriteBatch(), assetManager);
+        changeScreen(loadScreen);
+
         try {
-            changeScreen(ScreenID.LOADING_SCREEN);
+            //changeScreen(ScreenID.LOADING_SCREEN);
             GameMusic.THEME_1.playMusicLooping();
         } catch (Exception e) {
             Gdx.app.error("InfinityRun", "Could not change screen", e);
