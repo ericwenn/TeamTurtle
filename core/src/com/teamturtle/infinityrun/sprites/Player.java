@@ -1,7 +1,10 @@
 package com.teamturtle.infinityrun.sprites;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -31,6 +34,9 @@ public class Player extends AbstractEntity {
     private static final float IMPULSE_X = 0.1f;
 
     private ShapeRenderer shapeRenderer;
+    private TextureRegion neutralTexture;
+    private TextureRegion failTexture;
+    private TextureRegion successTexture;
     private Color fillColor;
 
 
@@ -43,6 +49,9 @@ public class Player extends AbstractEntity {
         definePlayer();
 
         this.shapeRenderer = new ShapeRenderer();
+        this.neutralTexture = new TextureRegion(new Texture("player_sprite_neutral.png"), 0, 0, 32, 32);
+        this.failTexture = new TextureRegion(new Texture("player_sprite_fail.png"), 0, 0, 32, 32);
+        this.successTexture = new TextureRegion(new Texture("player_sprite_success.png"), 0, 0, 32, 32);
         this.setColor(GameScreen.NEUTRAL_PLAYER_COLOR);
     }
 
@@ -59,15 +68,21 @@ public class Player extends AbstractEntity {
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        spriteBatch.end();
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
-        shapeRenderer.setColor(this.fillColor);
-        shapeRenderer.circle(getX() + (scale * PLAYER_WIDTH / 2 / InfinityRun.PPM), getY() + (scale * PLAYER_HEIGHT / 2 / InfinityRun.PPM), scale * COLLISION_RADIUS / InfinityRun.PPM, 20);
-        shapeRenderer.end();
+        TextureRegion currentTexture = neutralTexture;
 
-        spriteBatch.begin();
+        if (this.fillColor.equals(GameScreen.FAILURE_COLOR)){
+            currentTexture = failTexture;
+        }else if (this.fillColor.equals(GameScreen.SUCCESS_COLOR)){
+            currentTexture = successTexture;
+        }
+
+        spriteBatch.draw(
+                currentTexture,
+                getX(),
+                getY(),
+                scale * PLAYER_WIDTH / InfinityRun.PPM,
+                scale * PLAYER_HEIGHT / InfinityRun.PPM);
     }
 
     @Override
@@ -122,6 +137,7 @@ public class Player extends AbstractEntity {
     public void resetJump() {
         jumpsLeft = 2;
     }
+
     public void setScale(float scale) {
         this.scale = this.scale * scale;
     }
