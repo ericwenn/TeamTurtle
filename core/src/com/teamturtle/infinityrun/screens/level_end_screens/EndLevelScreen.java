@@ -31,7 +31,8 @@ public abstract class EndLevelScreen extends AbstractScreen {
     private static final int STAR_BOT_PAD = 20;
     private static final int MAX_STARS = 3;
     private static final int STAR_DIMENSION = 70;
-    protected static final int BUTTON_PADDING = 5;
+    private static final int TOP_LABEL_PAD = 40;
+    protected static final int BUTTON_PAD = 5;
 
     private Skin skin;
     private Stage stage;
@@ -85,6 +86,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    FxSound.getLastPlayedSound().stop();
                     FxSound.BANOR.play();
                     observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
                 } catch (Exception e) {
@@ -96,6 +98,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
         retryButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                FxSound.getLastPlayedSound().stop();
                 FxSound.FORSOKIGEN.play();
                 observer.playLevel(level);
             }
@@ -108,21 +111,21 @@ public abstract class EndLevelScreen extends AbstractScreen {
         if (score != 0) {
             rootTable.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
             rootTable.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
-        }else{
+        } else {
             rootTable.setSize(600, 300);
             rootTable.setPosition(100, 100);
         }
         rootTable.center().top();
         topLabel = new Label(topLabelStr, skin, "title");
-        rootTable.add(topLabel);
+        rootTable.add(topLabel).padTop(TOP_LABEL_PAD);
         rootTable.row();
         buildScoreTable();
         rootTable.add(scoreTable);
         rootTable.row();
 
         buttonTable = new Table();
-        buttonTable.add(levelsButton).pad(BUTTON_PADDING);
-        buttonTable.add(retryButton).pad(BUTTON_PADDING);
+        buttonTable.add(levelsButton).pad(BUTTON_PAD);
+        buttonTable.add(retryButton).pad(BUTTON_PAD);
         rootTable.add(buttonTable).expandY().bottom();
         stage.addActor(rootTable);
     }
@@ -132,10 +135,10 @@ public abstract class EndLevelScreen extends AbstractScreen {
         Table starTable = new Table();
         Image starImage = new Image();
         starImage.setScaling(Scaling.fill);
-        for(int i = 0; i < MAX_STARS; i++) {
+        for (int i = 0; i < MAX_STARS; i++) {
             if (i < score) {
                 starImage = new Image(star);
-            }else{
+            } else {
                 starImage = new Image(no_star);
             }
             starTable.add(starImage).size(STAR_DIMENSION);
