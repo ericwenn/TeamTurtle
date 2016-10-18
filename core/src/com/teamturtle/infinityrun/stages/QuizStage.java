@@ -86,6 +86,7 @@ public class QuizStage extends Stage {
         createTableUi(starTable);
         addActor(parentTable);
         Gdx.input.setInputProcessor(this);
+        FxSound.getLastPlayedSound().stop();
         FxSound.HARARENFRAGA.play();
     }
 
@@ -129,8 +130,7 @@ public class QuizStage extends Stage {
                     if (didGuessRight) {
                         FxSound.RIGHT_ANSWER.play(0.3f);
                         showRightWord(animatedStarTable, word);
-                    }
-                    else {
+                    } else {
                         FxSound.WRONG_ANSWER.play(0.3f);
                         showRightWord(starTable, word);
                     }

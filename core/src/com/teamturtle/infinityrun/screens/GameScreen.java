@@ -105,9 +105,9 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private PlayerData playerData;
     private List<Emoji> drawBigEmojiList;
 
-    public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);
-    public static final Color FAILURE_COLOR = new Color((float) 194/255, (float) 59/255, (float) 34/255, 1);
-    public static final Color NEUTRAL_PLAYER_COLOR = new Color((float) 240/255, (float) 213/255, (float) 0/255, 1);
+    public static final Color SUCCESS_COLOR = new Color((float) 50 / 255, (float) 205 / 255, (float) 50 / 255, 1);
+    public static final Color FAILURE_COLOR = new Color((float) 194 / 255, (float) 59 / 255, (float) 34 / 255, 1);
+    public static final Color NEUTRAL_PLAYER_COLOR = new Color((float) 240 / 255, (float) 213 / 255, (float) 0 / 255, 1);
 
     public GameScreen(SpriteBatch mSpriteBatch, IScreenObserver screenObserver, Level level) {
         super(mSpriteBatch);
@@ -191,8 +191,12 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         mProgressStage = new ProgressBarStage(tiledMap, mMissionHandler.getMissions());
 
         activeMission = mMissionHandler.getNextMission();
-
-        FxSound.KOR.play();
+        new Timer().scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                FxSound.KOR.play();
+            }
+        }, 0.6f);
     }
 
     private void gameUpdate(float delta) {
@@ -207,7 +211,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         mPlayerTail.update(delta);
 
         mJumpAnimations.update(delta);
-        mProgressStage.updatePlayerProgress( mPlayer.getX() * InfinityRun.PPM);
+        mProgressStage.updatePlayerProgress(mPlayer.getX() * InfinityRun.PPM);
     }
 
 
@@ -379,12 +383,12 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     public void drawBigEmojis() {
         for (Entity entity : emojiSprites) {
             Emoji emoji = (Emoji) entity;
-            if(emoji.hasExploded() && emoji.shouldDraw() && !drawBigEmojiList.contains(emoji)) {
+            if (emoji.hasExploded() && emoji.shouldDraw() && !drawBigEmojiList.contains(emoji)) {
                 drawBigEmojiList.add(emoji);
                 emoji.setStartY(mPlayer.getY());
             }
         }
-        for(Emoji emoji : drawBigEmojiList){
+        for (Emoji emoji : drawBigEmojiList) {
             emoji.drawExplodedText();
         }
     }
@@ -452,24 +456,25 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                             mPlayer.setColor(NEUTRAL_PLAYER_COLOR);
                             mJumpAnimations.setColor(NEUTRAL_PLAYER_COLOR);
                         }
-                    },2);
+                    }, 2);
 
 
                     if (!activeMission.getCorrectWord().equals(e.getWordModel()) && hasSuccededInAllMissions) {
                         hasSuccededInAllMissions = false;
                     }
 
-                Word word = e.getWordModel();
-                if (playerData.hasPlayerCollectedWord(word)) {
-                    if(!discoverdWords.contains(word) && !oldWords.contains(word))
-                        oldWords.add(e.getWordModel());
-                }else{
-                    discoverdWords.add(e.getWordModel());
-                    playerData.playerCollectedWord(e.getWordModel());
+                    Word word = e.getWordModel();
+                    if (playerData.hasPlayerCollectedWord(word)) {
+                        if (!discoverdWords.contains(word) && !oldWords.contains(word))
+                            oldWords.add(e.getWordModel());
+                    } else {
+                        discoverdWords.add(e.getWordModel());
+                        playerData.playerCollectedWord(e.getWordModel());
+                    }
                 }
-            }
 
-        }});
+            }
+        });
 
         eventHandler.onCollisionWithGround(new IEventHandler.GroundCollisionListener() {
             @Override
@@ -494,7 +499,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                         FxSound.MALGANG3, FxSound.MALGANG4, FxSound.MALGANG5,
                         FxSound.MALGANG6, FxSound.MALGANG7};
                 Random rand = new Random();
-                int soundId = rand.nextInt(sounds.length-1);
+                int soundId = rand.nextInt(sounds.length - 1);
                 sounds[soundId].play();
                 state = State.WON_GAME;
             }
@@ -513,7 +518,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                     }
                     activeMission = mMissionHandler.getNextMission();
                     mMissionStage.setMission(activeMission);
-                } catch( IndexOutOfBoundsException e) {
+                } catch (IndexOutOfBoundsException e) {
 
                 }
             }
@@ -521,7 +526,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         this.mEventHandler = eventHandler;
     }
-
+    
     @Override
     public void continueBtnClick() {
         Gdx.input.setInputProcessor(this);
