@@ -161,6 +161,7 @@ public class WordStage extends Stage {
                 try {
                     FxSound.TILLBAKA.play();
                     goBack = true;
+                    dispose();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -180,5 +181,12 @@ public class WordStage extends Stage {
 
     public boolean shouldGoBack() {
         return goBack;
+    }
+    public void dispose(){
+        super.dispose();
+        titleFont.dispose();
+        descriptionFont.dispose();
+        skin.dispose();
+        sound.dispose();
     }
 }
