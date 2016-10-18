@@ -40,6 +40,8 @@ public class DictionaryScreen extends AbstractScreen {
     private static final float ROW_PAD = 20f;
     private static final float PAD_SCROLL = 5f;
     private static final int GRID_COLUMN_WIDTH = 4;
+    private static final int CATEGORY_ONE_OFFSET = -8;
+    private static final int CATEGORY_ONE = 1;
 
     private Stage stage;
     private WordStage wordStage;
@@ -103,7 +105,12 @@ public class DictionaryScreen extends AbstractScreen {
                 grid.row();
                 String category = categoryLoader.getCategoryName(word.getCategory());
                 Label label = new Label(category, skin, "text-black");
-                grid.add(label).colspan(GRID_COLUMN_WIDTH);
+                if (currentCategory == CATEGORY_ONE) {
+                    grid.add(label).colspan(GRID_COLUMN_WIDTH).padTop(CATEGORY_ONE_OFFSET);
+                }else{
+                    grid.add(label).colspan(GRID_COLUMN_WIDTH).padTop(ROW_PAD);
+
+                }
                 Image lineImg = new Image(line);
                 grid.row();
                 grid.add(lineImg).colspan(GRID_COLUMN_WIDTH).pad(ROW_PAD);
