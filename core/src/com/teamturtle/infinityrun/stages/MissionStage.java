@@ -57,7 +57,7 @@ public class MissionStage extends Stage {
             }
         };
 
-        this.addActor(mMissionTable);
+        this.addActor(mMissionTable.align(Align.center));
 
     }
 
@@ -65,12 +65,14 @@ public class MissionStage extends Stage {
     private void changeEmoji(Word emojiModel) {
         mMissionTable.clearChildren();
 
+        Table table = new Table(mSkin);
         emojiLabel = new Label(CATCH_PREFIX + emojiModel.getArticle() + " " + emojiModel.getText(), mSkin);
-        mMissionTable.add(emojiLabel).height(50).expandX().align(Align.right).padRight(10);
-
         Image emojiImage = new Image(new Texture(Gdx.files.internal(emojiModel.getIconUrl())));
         emojiImage.setScaling(Scaling.fit);
-        mMissionTable.add(emojiImage).height(40).width(40).align(Align.center);
+        table.add(emojiLabel).height(50).expandX().padRight(10);
+        table.add(emojiImage).height(40).width(40);
+
+        mMissionTable.add(table).align(Align.center);
 
     }
 
@@ -82,7 +84,6 @@ public class MissionStage extends Stage {
         if (correctWord != null) {
             changeEmoji(correctWord);
         }
-
         final int[] index = {0};
         schedule(new Timer.Task() {
             @Override
@@ -90,7 +91,6 @@ public class MissionStage extends Stage {
                 mMissionTable.setScale(scaleFn(index[0]++, SCALE_STEP_COUNT));
             }
         }, 0, SCALE_STEP_SECONDS, SCALE_STEP_COUNT);
-
     }
 
     public void onEmojiCollision(Color color) {
@@ -115,9 +115,5 @@ public class MissionStage extends Stage {
             r = SCALE_BY - (SCALE_BY - 1) * index / (float) steps;
         }
         return r;
-    }
-
-    public Timer.Task getDisappearTask() {
-        return disappearTask;
     }
 }
