@@ -1,6 +1,5 @@
 package com.teamturtle.infinityrun.map_parsing;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -28,11 +27,11 @@ import java.util.List;
 public class EmojiParser implements MapParser {
     private final World world;
     private final TiledMap tiledMap;
-    private String emojiPlaceholderName;
-    private MissionHandler missionHandler;
-    private WordRandomizer wordRandomizer;
+    private final String emojiPlaceholderName;
+    private final MissionHandler missionHandler;
+    private final WordRandomizer wordRandomizer;
 
-    private List<Emoji> emojis = new ArrayList<Emoji>();
+    private final List<Emoji> emojis = new ArrayList<Emoji>();
 
 
     public EmojiParser(World world, TiledMap tiledMap, String emojiPlaceholderName, MissionHandler missionHandler, List<Word> possibleWords) {

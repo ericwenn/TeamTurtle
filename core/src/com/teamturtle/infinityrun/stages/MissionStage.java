@@ -21,21 +21,20 @@ import static com.badlogic.gdx.utils.Timer.schedule;
 
 public class MissionStage extends Stage {
 
-    private static final int TABLE_WIDTH = 200,
-            TABLE_HEIGHT = 50,
-            TABLE_OFFSET_BOTTOM = 20,
-            TABLE_OFFSET_RIGHT = 10;
+    private static final int TABLE_WIDTH = 200;
+    private static final int TABLE_HEIGHT = 50;
+    private static final int TABLE_OFFSET_BOTTOM = 20;
     private static final String CATCH_PREFIX = "Plocka ";
 
     private static final float SCALE_BY = 1.2f;
     private static final int SCALE_STEP_COUNT = 100;
     private static final float SCALE_STEP_SECONDS = .01f;
-    private Skin mSkin;
+    private final Skin mSkin;
 
-    private Table mMissionTable;
+    private final Table mMissionTable;
     private Label emojiLabel;
 
-    private Timer.Task disappearTask;
+    private final Timer.Task disappearTask;
     private final int[] index;
 
     public MissionStage() {
@@ -80,6 +79,9 @@ public class MissionStage extends Stage {
     public void setMission(Mission mission) {
         this.index[0] = 0;
         disappearTask.cancel();
+        if (mission == null) {
+            return;
+        }
         Word correctWord = mission.getCorrectWord();
         if (correctWord != null) {
             changeEmoji(correctWord);

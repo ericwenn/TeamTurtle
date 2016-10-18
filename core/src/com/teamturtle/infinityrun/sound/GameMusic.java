@@ -37,7 +37,7 @@ public enum GameMusic {
     }
 
     public static void shiftMusicMute() {
-        musicMuted = musicMuted ? false : true;
+        musicMuted = !musicMuted;
         if (musicMuted) {
             for(GameMusic gameMusic : values()) {
                 gameMusic.music.setVolume(0);

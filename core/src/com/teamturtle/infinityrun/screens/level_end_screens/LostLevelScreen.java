@@ -1,6 +1,5 @@
 package com.teamturtle.infinityrun.screens.level_end_screens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.screens.IScreenObserver;

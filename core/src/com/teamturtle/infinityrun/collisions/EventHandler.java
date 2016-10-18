@@ -135,7 +135,6 @@ public class EventHandler implements IEventHandler, ContactListener {
             }
             if (SensorParser.Type.GOAL.getName().equals(obj2) && obj1 instanceof Player) {
                 mLevelFinishedListener.onLevelFinished();
-                return;
             }
 
         }

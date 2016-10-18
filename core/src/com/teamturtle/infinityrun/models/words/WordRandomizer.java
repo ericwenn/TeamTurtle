@@ -8,8 +8,8 @@ import java.util.Random;
  */
 public class WordRandomizer {
 
-    private List<Word> possibleWords;
-    private Random mRandomizer = new Random();
+    private final List<Word> possibleWords;
+    private final Random mRandomizer = new Random();
 
     public WordRandomizer(List<Word> possibleWords) {
         this.possibleWords = possibleWords;

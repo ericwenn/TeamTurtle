@@ -34,13 +34,12 @@ public class LevelSelectScreen extends AbstractScreen{
     private Stage stage;
     private Skin skin;
     private Table rootTable;
-    private ImageButton backButton;
     private Texture bg;
 
 
-    private IScreenObserver observer;
+    private final IScreenObserver observer;
     private final List<Level> levels;
-    private PlayerData mPlayerData;
+    private final PlayerData mPlayerData;
 
     public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer, List<Level> levels, PlayerData playerData) {
         super(spriteBatch);
@@ -106,7 +105,7 @@ public class LevelSelectScreen extends AbstractScreen{
             progressedThisFar = progressedThisFar && playerScoreOnLevel > 0;
             i++;
         }
-        backButton = new ImageButton(skin, "home_button");
+        ImageButton backButton = new ImageButton(skin, "home_button");
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

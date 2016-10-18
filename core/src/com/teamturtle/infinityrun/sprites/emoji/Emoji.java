@@ -8,24 +8,18 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.models.words.WordImpl;
-import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.AbstractEntity;
-
-import java.util.Map;
 
 /**
  * Created by Henrik on 2016-09-21.
@@ -48,34 +42,9 @@ public class Emoji extends AbstractEntity {
     private boolean hasSound;
 
     private BitmapFont font;
-    private float textLength;
     private Stage fontStage;
     private int counter;
     private float distanceToTop;
-
-    @Deprecated
-    public Emoji(String emojiName, String soundURL, Texture texture) {
-        this.texture = texture;
-        setup();
-    }
-
-    public Emoji(String emojiName, String soundUrl, String iconUrl) {
-        WordImpl w = new WordImpl();
-        w.word = emojiName;
-        w.filename = iconUrl;
-        w.soundUrl = soundUrl;
-        WordLoader wl = new WordLoader();
-        Map<String, ? extends Word> words = wl.getWords();
-
-        for(Word word : words.values()){
-            if(word.getText().equals(w.getText()))
-                w.id = word.getId() + "";
-        }
-
-        wordModel = w;
-
-        setup();
-    }
 
     public Emoji(Word word) {
         wordModel = word;
@@ -94,7 +63,7 @@ public class Emoji extends AbstractEntity {
         generator.dispose();
 
         GlyphLayout layout = new GlyphLayout(font, wordModel.getText());
-        textLength = layout.width;
+        float textLength = layout.width;
 
         if (!wordModel.getSoundUrl().equals("404")) {
             emojiSound = Gdx.audio.newSound(Gdx.files.internal(wordModel.getSoundUrl()));
