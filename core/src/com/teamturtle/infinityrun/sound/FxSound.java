@@ -26,7 +26,7 @@ public enum FxSound implements Disposable {
     MALGANG6("lostesnyggt"), MALGANG7("snyggtdar"), RIGHT_ANSWER("right_answer"),
     WRONG_ANSWER("wrong_answer");
 
-    private static Sound[] levelSounds;
+    private static Sound[] levelSounds, failureSounds;
     private static final int LEVEL_AMOUNT = 15;
     private static final int DEFAULT_VOLUME = 1;
     private static final String URL_PREFIX = "audio/feedback/";
@@ -74,8 +74,16 @@ public enum FxSound implements Disposable {
         }
     }
 
+    private static void initFailureAudioArray() {
+        failureSounds = new Sound[10];
+    }
+
     public static void shiftFxMute() {
         fxMuted = fxMuted ? false : true;
+    }
+
+    public static Sound getSound(FxSound fxSound) {
+        return assetManager.get(fxSound.url, Sound.class);
     }
 
     @Override
