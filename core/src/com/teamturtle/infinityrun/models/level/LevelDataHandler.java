@@ -14,9 +14,12 @@ import java.util.List;
 public class LevelDataHandler {
 
     private Json json;
+    private ArrayList<Level> levels;
 
     public LevelDataHandler() {
         json = new Json();
+        FileHandle file = Gdx.files.internal("data/levels.json");
+        levels = json.fromJson(ArrayList.class, LevelImpl.class, file.readString());
     }
 
     /**
@@ -39,13 +42,11 @@ public class LevelDataHandler {
     }
     */
     public List<Level> getLevels() {
-        FileHandle file = Gdx.files.internal("data/levels.json");
-        ArrayList<Level> levels = json.fromJson(ArrayList.class, LevelImpl.class, file.readString());
         return levels;
     }
 
     public Level getLevel(int id) {
-        for (Level level : getLevels()) {
+        for (Level level : levels) {
             if (level.getId() == id) {
                 return level;
             }

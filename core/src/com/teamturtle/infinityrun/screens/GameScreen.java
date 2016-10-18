@@ -2,7 +2,6 @@ package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -30,7 +29,7 @@ import com.teamturtle.infinityrun.models.MissionHandler;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.JumpAnimations;
 import com.teamturtle.infinityrun.sprites.Player;
@@ -96,7 +95,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private OrthographicCamera mFixedCamera;
     private List<Word> possibleWords, discoverdWords, oldWords;
     private WordLoader wordLoader;
-    private Sound completedSound, failureSound;
 
     private Level level;
     private Mission activeMission;
@@ -105,6 +103,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private JumpAnimations mJumpAnimations;
 
     private PlayerData playerData;
+    private List<Emoji> drawBigEmojiList;
 
     public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);
     public static final Color FAILURE_COLOR = new Color((float) 194/255, (float) 59/255, (float) 34/255, 1);
@@ -135,8 +134,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         playerData = new PlayerData();
         mJumpAnimations = new JumpAnimations();
-        completedSound = Gdx.audio.newSound(Gdx.files.internal("audio/right_answer.wav"));
-        failureSound = Gdx.audio.newSound(Gdx.files.internal("audio/wrong_answer.wav"));
 
         Gdx.input.setInputProcessor(this);
     }
@@ -189,11 +186,13 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         setupEventHandler();
 
         world.setContactListener(mEventHandler);
+        drawBigEmojiList = new ArrayList<Emoji>();
 
         mProgressStage = new ProgressBarStage(tiledMap, mMissionHandler.getMissions());
 
         activeMission = mMissionHandler.getNextMission();
-        FeedbackSound.KOR.play();
+
+        FxSound.KOR.play();
     }
 
     private void gameUpdate(float delta) {
@@ -243,8 +242,8 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 break;
             case PAUSE:
                 renderWorld();
-                pauseStage.draw();
                 mMissionStage.draw();
+                pauseStage.draw();
                 break;
             default:
                 render(delta);
@@ -285,6 +284,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         getCamera().update();
         //Use to show collision rectangles
         //b2dr.render(world, getOrthoCam().combined);
+        drawBigEmojis();
     }
 
     private void handleInput() {
@@ -334,8 +334,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         for (Entity ent : emojiSprites) {
             ent.dispose();
         }
-        completedSound.dispose();
-        failureSound.dispose();
         mPlayer.dispose();
         bg.dispose();
         pauseStage.dispose();
@@ -378,6 +376,27 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         getSpriteBatch().end();
     }
 
+    public void drawBigEmojis() {
+        for (Entity entity : emojiSprites) {
+            Emoji emoji = (Emoji) entity;
+            if(emoji.hasExploded() && emoji.shouldDraw() && !drawBigEmojiList.contains(emoji)) {
+                drawBigEmojiList.add(emoji);
+                emoji.setStartY(mPlayer.getY());
+            }
+        }
+        /*
+        if(drawBigEmojiList.size() != 0) {
+            drawBigEmojiList.get(0).drawExplodedText();
+            if(!drawBigEmojiList.get(0).shouldDraw()) {
+                drawBigEmojiList.remove(0);
+            }
+        }
+        */
+        for(Emoji emoji : drawBigEmojiList){
+            emoji.drawExplodedText();
+        }
+    }
+
     private void setUpWorld() {
         // Setup world with regular gravity, and sleeping bodies
         world = new World(new Vector2(0, GRAVITY), true);
@@ -415,17 +434,19 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
             @Override
             public void onCollision(Player p, Emoji e) {
                 e.triggerExplode();
+
                 if (!activeMission.isPassed()) {
                     activeMission.markPassed();
 
                     if (activeMission.getCorrectWord().equals(e.getWordModel())) {
-                        completedSound.play();
+                        FxSound.RIGHT_ANSWER.play(0.1f);
                         mPlayerTail.setColor(SUCCESS_COLOR);
                         mPlayer.setColor(SUCCESS_COLOR);
                         mJumpAnimations.setColor(SUCCESS_COLOR);
                         mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.PASSED);
                         mMissionStage.onEmojiCollision(SUCCESS_COLOR);
                     } else {
+                        FxSound.WRONG_ANSWER.play(0.3f);
                         mPlayerTail.setColor(FAILURE_COLOR);
                         mPlayer.setColor(FAILURE_COLOR);
                         mJumpAnimations.setColor(FAILURE_COLOR);
@@ -477,9 +498,9 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         eventHandler.onLevelFinished(new IEventHandler.LevelFinishedListener() {
             @Override
             public void onLevelFinished() {
-                FeedbackSound[] sounds = {FeedbackSound.MALGANG1,FeedbackSound.MALGANG2,
-                        FeedbackSound.MALGANG3, FeedbackSound.MALGANG4, FeedbackSound.MALGANG5,
-                        FeedbackSound.MALGANG6, FeedbackSound.MALGANG7};
+                FxSound[] sounds = {FxSound.MALGANG1, FxSound.MALGANG2,
+                        FxSound.MALGANG3, FxSound.MALGANG4, FxSound.MALGANG5,
+                        FxSound.MALGANG6, FxSound.MALGANG7};
                 Random rand = new Random();
                 int soundId = rand.nextInt(sounds.length-1);
                 sounds[soundId].play();

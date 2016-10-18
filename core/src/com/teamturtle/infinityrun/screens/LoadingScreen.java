@@ -5,14 +5,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 
 /**
  * Created by Henrik on 2016-10-11.
@@ -66,16 +65,7 @@ public class LoadingScreen extends AbstractScreen {
     }
 
     private void startLoading() {
-        loadingDone = false;
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                FeedbackSound.load();
-                loadingDone = true;
-                return;
-            }
-        });
-        thread.start();
+        FxSound.load();
     }
 
     private void setUpLoadingAnimation() {
@@ -96,7 +86,7 @@ public class LoadingScreen extends AbstractScreen {
     @Override
     public void render(float dt) {
         super.render(dt);
-        if (loadingDone) {
+        if (FxSound.updateLoading()) {
             try {
                 observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
             } catch (Exception e) {

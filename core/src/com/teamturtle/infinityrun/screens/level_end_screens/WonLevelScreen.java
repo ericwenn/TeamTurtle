@@ -2,6 +2,7 @@ package com.teamturtle.infinityrun.screens.level_end_screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -14,12 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 import java.util.ArrayList;
@@ -43,27 +43,30 @@ public class WonLevelScreen extends EndLevelScreen{
 
         @Override
         public void changed(ChangeEvent event, Actor actor) {
-            FeedbackSound.NASTABANA.play();
+            FxSound.NASTABANA.play();
             observer.playLevelAfterThis(level);
         }
     }
 
     private static final String LB_LEVEL_LOST = "Bana klarad";
-    private static final String LB_WORDS_COLLECTED = "Ord samlade: ";
     private static final String DISCOVERD_LAYER_URL = "ui/discovered.png";
+    private static final int LB_PAD = 20;
     private static final int EMOJI_DIMENSION = 70;
-    private static final int DICTIONARY_BTN_PADDING = 20;
-    private static final int EMOJI_CELLS_PER_ROW = 7;
+    private static final int EMOJI_PAD = 3;
+    private static final int EMOJIES_MAX_AMOUNT = 10;
+    private static final int SHADOW_OFFSET = 2;
+    private static final float SHADOW_SCALE = 1.05f;
 
     private Skin skin;
     private Table emojiTable;
-    private ImageButton dictionaryBtn;
     private Level level;
     private IScreenObserver observer;
     private List<Word> oldWords, discoveredWords;
     //TODO should be replaced with assetmanager
     private List<Sound> emojiSounds;
     private Texture discoverdTopLayer;
+    private Label emojiLbl;
+    private List<Image> emojiShadows;
 
     public WonLevelScreen(SpriteBatch sb, IScreenObserver observer, Level level
             , List<Word> oldWords, List<Word> discoveredWords, int score) {
@@ -78,7 +81,6 @@ public class WonLevelScreen extends EndLevelScreen{
         emojiSounds = new ArrayList<Sound>();
 
         createEmojiesTable();
-        createDictionaryButton();
         updateButtonTable();
         updateScoreTable();
     }
@@ -95,57 +97,57 @@ public class WonLevelScreen extends EndLevelScreen{
     private void createEmojiesTable() {
         emojiTable = new Table();
         final List<Word> allWords = new ArrayList<Word>();
+        emojiShadows = new ArrayList<Image>();
         allWords.addAll(discoveredWords);
         allWords.addAll(oldWords);
         for(int i = 0; i < allWords.size(); i++) {
-            Word word = allWords.get(i);
-            final Sound emojiSound = Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl()));
-            emojiSounds.add(emojiSound);
-            final Emoji emoji = new Emoji(word);
-            final Image emojiImg = new Image(emoji.getTexture());
-            final Actor actor;
-            if (i < discoveredWords.size()) {
-                Stack stack = new Stack();
-                stack.add(emojiImg);
-                Image emojiTopLayer = new Image(discoverdTopLayer);
-                stack.add(emojiTopLayer);
-                actor = stack;
-            }else{
-                actor = emojiImg;
-            }
-            actor.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    emojiSound.play();
-                }
-            });
-            if (i % EMOJI_CELLS_PER_ROW == 0) emojiTable.row();
-            emojiTable.add(actor).size(EMOJI_DIMENSION);
+            Stack stack = createEmojiStack(allWords.get(i), i);
+            emojiTable.add(stack).size(EMOJI_DIMENSION).pad(EMOJI_PAD);
+            if (i == EMOJIES_MAX_AMOUNT) return;
         }
+        emojiTable.row();
+        emojiLbl = new Label("", skin);
+        emojiTable.add(emojiLbl).colspan(allWords.size());
     }
 
-    private void createDictionaryButton() {
-        dictionaryBtn = new ImageButton(skin, "dictionary_button");
-        dictionaryBtn.addListener(new ChangeListener() {
+    private Stack createEmojiStack(Word word, int emojiIndex) {
+        final Sound emojiSound = Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl()));
+        emojiSounds.add(emojiSound);
+        final Emoji emoji = new Emoji(word);
+        final Image emojiImg = new Image(emoji.getTexture());
+        final Image emojiShadow = new Image(emoji.getTexture());
+        emojiShadows.add(emojiShadow);
+        emojiShadow.setColor(Color.BLACK);
+        final Stack stack = new Stack();
+        stack.add(emojiShadow);
+        if (emojiIndex < discoveredWords.size()) {
+            stack.add(emojiImg);
+            Image emojiTopLayer = new Image(discoverdTopLayer);
+            stack.add(emojiTopLayer);
+        }else{
+            stack.add(emojiImg);
+        }
+        stack.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                try {
-                    FeedbackSound.ORDLISTA.play();
-                    observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
-                } catch (Exception e) {
-                    e.printStackTrace();
+            public void clicked(InputEvent event, float x, float y) {
+                emojiSound.play();
+                String emojiStr = emoji.getName();
+                emojiStr = emojiStr.substring(0, 1).toUpperCase() + emojiStr.substring(1);
+                emojiLbl.setText(emojiStr);
+                for (Image img : emojiShadows) {
+                    img.setScale(0);
                 }
+                emojiShadow.setScale(SHADOW_SCALE);
+                emojiShadow.setPosition(emojiImg.getX()-SHADOW_OFFSET
+                        , emojiImg.getY()-SHADOW_OFFSET);
             }
         });
+        return stack;
     }
 
     private void updateScoreTable() {
         getScoreTable().row();
-        Label wordsCollectedLb = new Label(LB_WORDS_COLLECTED, skin);
-        getScoreTable().add(wordsCollectedLb);
-        getScoreTable().row();
-        getScoreTable().add(emojiTable);
-        getScoreTable().add(dictionaryBtn).padLeft(DICTIONARY_BTN_PADDING);
+        getScoreTable().add(emojiTable).padTop(LB_PAD);
     }
 
     @Override

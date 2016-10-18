@@ -37,7 +37,9 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		down: default-round-down,
 		checked: default-round-down
 	},
-	text_button : {font: large-font, up: text_button_up, down: text_button_down},
+	text_button_black : { font: default-font, up: text_button_up_black, down: text_button_down_black },
+	text_button_red : { font: default-font, up: text_button_up_red, down: text_button_down_red },
+	text_button : { font: large-font, up: text_button_up, down: text_button_down },
 	quiz_text_button: {font: default-font, up: text_button_up, down: text_button_down}
 },
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
@@ -53,8 +55,8 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	sound_button: {imageUp: sound_up, imageDown: sound_down},
 	pause_button: {imageUp: pause_up, imageDown: pause_down},
 	continue_button: {imageUp: continue_up, imageDown: continue_down},
-	music_button: {imageUp: music_up, imageDown: music_down},
-	fx_button: {imageUp: fx_up, imageDown: fx_down},
+	music_button: {imageUp: music_up, imageChecked: music_down},
+	fx_button: {imageUp: fx_up, imageChecked: fx_down},
 	home_button: {imageUp: home_up, imageDown: home_down}
 },
 com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {

@@ -15,9 +15,9 @@ import com.teamturtle.infinityrun.screens.LevelSelectScreen;
 import com.teamturtle.infinityrun.screens.LoadingScreen;
 import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
-import com.teamturtle.infinityrun.screens.WordScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
+import com.teamturtle.infinityrun.sound.GameMusic;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -42,6 +42,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 
         try {
             changeScreen(ScreenID.LOADING_SCREEN);
+            GameMusic.THEME_1.playMusicLooping();
         } catch (Exception e) {
             Gdx.app.error("InfinityRun", "Could not change screen", e);
         }
@@ -106,18 +107,6 @@ public class InfinityRun extends Game implements IScreenObserver {
 
         switch (screen) {
             case MAIN_MENU:
-                /*ArrayList<Word> words = new ArrayList<Word>();
-                WordLoader loader = new WordLoader();
-                List<Word> catWords = loader.getWordsFromCategory(1);
-                for(int i = 0; i < 4; i++) {
-                    words.add(catWords.get(i));
-                }
-                List<Word> lol = new ArrayList<Word>();
-                List<Word> xd = loader.getWordsFromCategory(3);
-                for(int i = 0; i < 8; i++) {
-                    lol.add(xd.get(i));
-                }
-                newScreen = new WonLevelScreen(getSpriteBatch(), this, new LevelImpl(), words, lol, 2);*/
                 newScreen = new StartScreen(getSpriteBatch(), this);
                 break;
 
@@ -143,13 +132,6 @@ public class InfinityRun extends Game implements IScreenObserver {
             changeScreen(newScreen);
         }
 
-    }
-
-    @Override
-    public void changeScreen(Word word) throws Exception {
-        AbstractScreen newScreen;
-        newScreen = new WordScreen(getSpriteBatch(), this, word);
-        changeScreen(newScreen);
     }
 
     private void changeScreen(AbstractScreen newScreen) {
