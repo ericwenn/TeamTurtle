@@ -191,8 +191,12 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         mProgressStage = new ProgressBarStage(tiledMap, mMissionHandler.getMissions());
 
         activeMission = mMissionHandler.getNextMission();
-
-        FxSound.KOR.play();
+        new Timer().scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                FxSound.KOR.play();
+            }
+        }, 0.6f);
     }
 
     private void gameUpdate(float delta) {
