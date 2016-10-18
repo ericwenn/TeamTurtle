@@ -83,12 +83,7 @@ public class LevelSelectScreen extends AbstractScreen{
                 levelButtonTable.add(button);
             } else {
                 ImageButton button = new ImageButton(skin, "lock_button");
-                button.addListener(new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent event, Actor actor) {
-                        FxSound.EJUPPLAST.play();
-                    }
-                });
+                button.addListener( new CantPlayButtonListener());
                 levelButtonTable.add(button);
             }
             levelButtonTable.row();
@@ -143,9 +138,25 @@ public class LevelSelectScreen extends AbstractScreen{
 
     @Override
     public void dispose() {
-        stage.dispose();
-        skin.dispose();
-        bg.dispose();
+        if (stage != null) {
+            stage.dispose();
+        }
+        if (skin != null) {
+            skin.dispose();
+        }
+
+        if (bg != null) {
+            bg.dispose();
+
+        }
+    }
+
+
+    private static class CantPlayButtonListener extends ChangeListener {
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            FxSound.EJUPPLAST.play();
+        }
     }
 
 }

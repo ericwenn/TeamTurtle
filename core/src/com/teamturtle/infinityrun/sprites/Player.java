@@ -23,7 +23,6 @@ public class Player extends AbstractEntity {
 
     private World world;
     private Body b2body;
-    private boolean canDoubleJump;
     private float scale = 1;
     public static final int PLAYER_WIDTH = 16, PLAYER_HEIGHT = 16;
     private static final int COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 150, START_Y = 300;
@@ -33,7 +32,6 @@ public class Player extends AbstractEntity {
     private static final float LINEAR_SPEED_X = 2.5799992f;
     private static final float IMPULSE_X = 0.1f;
 
-    private ShapeRenderer shapeRenderer;
     private TextureRegion neutralTexture;
     private TextureRegion failTexture;
     private TextureRegion successTexture;
@@ -48,7 +46,6 @@ public class Player extends AbstractEntity {
         setPosition(0, InfinityRun.HEIGHT / 2);
         definePlayer();
 
-        this.shapeRenderer = new ShapeRenderer();
         this.neutralTexture = new TextureRegion(new Texture("player_sprite_neutral.png"), 0, 0, 32, 32);
         this.failTexture = new TextureRegion(new Texture("player_sprite_fail.png"), 0, 0, 32, 32);
         this.successTexture = new TextureRegion(new Texture("player_sprite_success.png"), 0, 0, 32, 32);

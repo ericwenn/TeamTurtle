@@ -24,6 +24,7 @@ import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Henrik on 2016-10-02.
@@ -133,7 +134,7 @@ public class WonLevelScreen extends EndLevelScreen{
             public void clicked(InputEvent event, float x, float y) {
                 emojiSound.play();
                 String emojiStr = emoji.getName();
-                emojiStr = emojiStr.substring(0, 1).toUpperCase() + emojiStr.substring(1);
+                emojiStr = emojiStr.substring(0, 1).toUpperCase(Locale.getDefault()) + emojiStr.substring(1);
                 emojiLbl.setText(emojiStr);
                 for (Image img : emojiShadows) {
                     img.setScale(0);
