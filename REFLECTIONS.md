@@ -30,3 +30,17 @@ Cons:
 Decisions:
 - Endast dela ut de 6 första (eftersom vi är 6 personer) user storiesen och sedan plockar man det nästa prioriterade om man bir klar med sin.
 - Konkreta krav på innehållet, specifikt banorna. I denna sprinten sa vi endast, gör banor, men det var inte nerbrutet i delmål.
+
+
+
+# Sprint 5 (13/10)
+Pros:
++ Endast dela upp de 6 första user storiesen under sprint planning. Hade man tid över var det bara att fortsätta med nästa, istället för att man blev arbetslös.
++ Fortsatt bra velocity och effort.
++ Små konkreta user stories. Lätta att uppskatta effort.
+
+Cons:
+- Om en pull request på GitHub är approvad av alla, kan vem som helst merge:a den och inte endast den som skapade PR:n.
+- Fler team-medlemmar bör godkänna/neka en PR, så det går snabbare från det att PR:n skapas till den kan mergas.
+- Fortsatt inga tester.
+
