@@ -68,6 +68,7 @@ public class PlayerTail extends AbstractEntity {
 
     @Override
     public void dispose() {
+        mPlayer.dispose();
         shapeRenderer.dispose();
     }
 

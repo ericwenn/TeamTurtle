@@ -46,21 +46,17 @@ public class Emoji extends AbstractEntity {
     private int counter;
     private float distanceToTop;
 
-    public Emoji(Word word) {
+    private Skin skin;
+
+    public Emoji(Word word, BitmapFont font, Skin skin) {
         wordModel = word;
+        this.font = font;
+        this.skin = skin;
         setup();
     }
 
     private void setup() {
         texture = new Texture(wordModel.getIconUrl());
-        //Create font
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_URL));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter
-                = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = FONT_SIZE;
-        parameter.color = FONT_COLOR;
-        font = generator.generateFont(parameter);
-        generator.dispose();
 
         GlyphLayout layout = new GlyphLayout(font, wordModel.getText());
         float textLength = layout.width;
@@ -73,7 +69,7 @@ public class Emoji extends AbstractEntity {
         }
         fontStage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         counter = 0;
-        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+
         Label label = new Label(getName(), skin);
         label.setColor(FONT_COLOR);
         Image i = new Image(texture);
@@ -151,10 +147,11 @@ public class Emoji extends AbstractEntity {
     @Override
     public void dispose() {
         texture.dispose();
-        mBody.getWorld().destroyBody(mBody);
+        if (mBody != null)
+            mBody.getWorld().destroyBody(mBody);
         if (hasSound)
             emojiSound.dispose();
-        font.dispose();
+        //font.dispose();
         fontStage.dispose();
     }
 

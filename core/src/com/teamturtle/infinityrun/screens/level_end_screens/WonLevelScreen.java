@@ -21,6 +21,7 @@ import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
 import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.sprites.emoji.EmojiFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +117,7 @@ public class WonLevelScreen extends EndLevelScreen{
     private Stack createEmojiStack(Word word, int emojiIndex) {
         final Sound emojiSound = Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl()));
         emojiSounds.add(emojiSound);
-        final Emoji emoji = new Emoji(word);
+        final Emoji emoji = EmojiFactory.getInstance().getEmoji(word);
         final Image emojiImg = new Image(emoji.getTexture());
         final Image emojiShadow = new Image(emoji.getTexture());
         emojiShadows.add(emojiShadow);

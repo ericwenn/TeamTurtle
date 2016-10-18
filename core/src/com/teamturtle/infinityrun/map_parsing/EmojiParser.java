@@ -17,6 +17,7 @@ import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordRandomizer;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.sprites.emoji.EmojiFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +90,7 @@ public class EmojiParser implements MapParser {
 
 
 
-            Emoji emoji = new Emoji(word);
+            Emoji emoji = EmojiFactory.getInstance().getEmoji(word);
             emoji.setBody( body );
             fixture.setUserData(emoji);
             emojis.add(emoji);

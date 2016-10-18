@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -78,7 +77,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     private World world;
     // TODO remove before publish
-    private Box2DDebugRenderer b2dr;
+//    private Box2DDebugRenderer b2dr;
 
     private List<? extends Entity> emojiSprites;
     private final IScreenObserver screenObserver;
@@ -177,7 +176,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 0);
 
         // TODO Remove this before production
-        b2dr = new Box2DDebugRenderer();
+//        b2dr = new Box2DDebugRenderer();
 
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / InfinityRun.PPM);
 
@@ -341,12 +340,16 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         for (Entity ent : emojiSprites) {
             ent.dispose();
         }
-        b2dr.dispose();
+//        b2dr.dispose();
         tiledMapRenderer.dispose();
+
         mPlayer.dispose();
+        mPlayerTail.dispose();
+
         bg.dispose();
         mountains.dispose();
         trees.dispose();
+
         world.dispose();
         pauseStage.dispose();
         mProgressStage.dispose();

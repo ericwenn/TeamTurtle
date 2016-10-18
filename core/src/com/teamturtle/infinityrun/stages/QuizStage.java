@@ -22,6 +22,7 @@ import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.sprites.emoji.EmojiFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class QuizStage extends Stage {
         animatedStarTable = getAnimatedStarsTable();
 
         List<Word> guesses = getRandomGuesses(collectedWords);
-        emoji = new Emoji(guesses.get(0));
+        emoji = EmojiFactory.getInstance().getEmoji(guesses.get(0));
         createButtons(guesses);
         createTableUi(starTable);
         addActor(parentTable);
@@ -280,6 +281,7 @@ public class QuizStage extends Stage {
         skin.dispose();
         star.dispose();
         noStar.dispose();
+        emoji.dispose();
         super.dispose();
     }
 }
