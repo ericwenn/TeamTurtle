@@ -86,6 +86,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
+                    FxSound.getLastPlayedSound().stop();
                     FxSound.BANOR.play();
                     observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
                 } catch (Exception e) {
@@ -97,6 +98,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
         retryButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                FxSound.getLastPlayedSound().stop();
                 FxSound.FORSOKIGEN.play();
                 observer.playLevel(level);
             }
@@ -109,7 +111,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
         if (score != 0) {
             rootTable.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
             rootTable.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
-        }else{
+        } else {
             rootTable.setSize(600, 300);
             rootTable.setPosition(100, 100);
         }
@@ -133,10 +135,10 @@ public abstract class EndLevelScreen extends AbstractScreen {
         Table starTable = new Table();
         Image starImage = new Image();
         starImage.setScaling(Scaling.fill);
-        for(int i = 0; i < MAX_STARS; i++) {
+        for (int i = 0; i < MAX_STARS; i++) {
             if (i < score) {
                 starImage = new Image(star);
-            }else{
+            } else {
                 starImage = new Image(no_star);
             }
             starTable.add(starImage).size(STAR_DIMENSION);

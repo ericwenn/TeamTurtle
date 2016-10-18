@@ -134,7 +134,6 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
         playerData = new PlayerData();
         mJumpAnimations = new JumpAnimations();
-        stopFailureSounds();
 
         Gdx.input.setInputProcessor(this);
     }

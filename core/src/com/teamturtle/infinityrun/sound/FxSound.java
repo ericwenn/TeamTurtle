@@ -26,7 +26,8 @@ public enum FxSound implements Disposable {
     MALGANG6("lostesnyggt"), MALGANG7("snyggtdar"), RIGHT_ANSWER("right_answer"),
     WRONG_ANSWER("wrong_answer");
 
-    private static Sound[] levelSounds, failureSounds;
+    private static Sound[] levelSounds;
+    private static Sound lastPlayedSound;
     private static final int LEVEL_AMOUNT = 15;
     private static final int DEFAULT_VOLUME = 1;
     private static final String URL_PREFIX = "audio/feedback/";
@@ -43,6 +44,7 @@ public enum FxSound implements Disposable {
         if (!fxMuted) {
             Sound sound = assetManager.get(url, Sound.class);
             sound.play(volume);
+            setLastPlayedSound(sound);
         }
     }
 
@@ -67,15 +69,19 @@ public enum FxSound implements Disposable {
         }
     }
 
+    private static void setLastPlayedSound(Sound sound) {
+        lastPlayedSound = sound;
+    }
+
+    public static Sound getLastPlayedSound() {
+        return lastPlayedSound;
+    }
+
     private static void initLevelAudioArray() {
         levelSounds = new Sound[LEVEL_AMOUNT];
         for (int i = 0; i < LEVEL_AMOUNT; i++) {
             levelSounds[i] = assetManager.get(values()[i].url, Sound.class);
         }
-    }
-
-    private static void initFailureAudioArray() {
-        failureSounds = new Sound[10];
     }
 
     public static void shiftFxMute() {
@@ -88,7 +94,7 @@ public enum FxSound implements Disposable {
 
     @Override
     public void dispose() {
-        for (FxSound sound: values()) {
+        for (FxSound sound : values()) {
             sound.dispose();
         }
         assetManager.dispose();
