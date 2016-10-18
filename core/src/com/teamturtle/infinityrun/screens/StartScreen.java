@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -24,6 +26,8 @@ public class StartScreen extends AbstractScreen {
 
     private static final int BUTTON_OFFSET = -45;
     private static final int BUTTON_PADDING = 5;
+    private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 400.0f;
+    private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 50.0f;
 
     private Texture bg;
     private Stage stage;
@@ -107,13 +111,16 @@ public class StartScreen extends AbstractScreen {
         rootTabel.setFillParent(true);
         Table soundTable = new Table();
         soundTable.add().width(InfinityRun.WIDTH - fxBtn.getWidth() - musicBtn.getWidth());
-        System.out.println(rootTabel.getWidth());
         soundTable.add(musicBtn);
         soundTable.add(fxBtn);
         rootTabel.add(soundTable);
+
+
         rootTabel.row();
         Table btnTable = new Table();
-        btnTable.add(playBtn).padTop(BUTTON_OFFSET).padBottom(BUTTON_PADDING);
+        btnTable.add(new Image(new TextureRegion(new Texture("ordhoppet_logo_600_txt.png"), 600, 129))).padTop(-40).padBottom(20);
+        btnTable.row();
+        btnTable.add(playBtn).padBottom(BUTTON_PADDING);
         btnTable.row();
         btnTable.add(dictionaryBtn);
         rootTabel.add(btnTable).expandY().fillY();
