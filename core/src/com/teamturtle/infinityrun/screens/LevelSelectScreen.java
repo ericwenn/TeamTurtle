@@ -138,6 +138,7 @@ public class LevelSelectScreen extends AbstractScreen{
 
     @Override
     public void dispose() {
+        super.dispose();
         if (stage != null) {
             stage.dispose();
         }
