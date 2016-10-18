@@ -31,7 +31,8 @@ public abstract class EndLevelScreen extends AbstractScreen {
     private static final int STAR_BOT_PAD = 20;
     private static final int MAX_STARS = 3;
     private static final int STAR_DIMENSION = 70;
-    protected static final int BUTTON_PADDING = 5;
+    private static final int TOP_LABEL_PAD = 40;
+    protected static final int BUTTON_PAD = 5;
 
     private Skin skin;
     private Stage stage;
@@ -114,15 +115,15 @@ public abstract class EndLevelScreen extends AbstractScreen {
         }
         rootTable.center().top();
         topLabel = new Label(topLabelStr, skin, "title");
-        rootTable.add(topLabel);
+        rootTable.add(topLabel).padTop(TOP_LABEL_PAD);
         rootTable.row();
         buildScoreTable();
         rootTable.add(scoreTable);
         rootTable.row();
 
         buttonTable = new Table();
-        buttonTable.add(levelsButton).pad(BUTTON_PADDING);
-        buttonTable.add(retryButton).pad(BUTTON_PADDING);
+        buttonTable.add(levelsButton).pad(BUTTON_PAD);
+        buttonTable.add(retryButton).pad(BUTTON_PAD);
         rootTable.add(buttonTable).expandY().bottom();
         stage.addActor(rootTable);
     }

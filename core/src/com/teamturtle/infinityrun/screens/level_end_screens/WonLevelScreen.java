@@ -90,7 +90,7 @@ public class WonLevelScreen extends EndLevelScreen{
         if(levels.size() > level.getId()) {
             ImageButton nextButton = new ImageButton(skin, "next_button");
             nextButton.addListener(new ImageClickListener(observer, level));
-            super.getButtonTable().add(nextButton).pad(BUTTON_PADDING);
+            super.getButtonTable().add(nextButton).pad(BUTTON_PAD);
         }
     }
 
