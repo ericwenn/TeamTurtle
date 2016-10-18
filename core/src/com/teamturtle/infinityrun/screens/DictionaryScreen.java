@@ -36,9 +36,9 @@ public class DictionaryScreen extends AbstractScreen {
     private static final String LABEL_BG_URL = "label_bg.png";
     private static final String LABEL_TEXT = "Ord hittade:";
     private static final String LABEL_UNKNOWN = "???";
-    private static final float PAD_ROW = 20f;
+    private static final float ROW_PAD = 20f;
     private static final float PAD_SCROLL = 5f;
-    private static final float GRID_COLUMN_WIDTH = 4;
+    private static final int GRID_COLUMN_WIDTH = 4;
 
     private Stage stage;
     private WordStage wordStage;
@@ -91,21 +91,30 @@ public class DictionaryScreen extends AbstractScreen {
 
         int collectedWordsAmount = 0;
         List<Word> allWords = wordLoader.getAllWords();
-        String categoryName = categoryLoader.getCategoryName(allWords.get(0).getId());
+        int categoryBefore = 0;
+        int columnCount = 0;
         for(int i = 0; i < allWords.size(); i++){
             Word word = allWords.get(i);
-            String currentCategoryName = categoryLoader.getCategoryName(word.getId());
-            if (!categoryName.equals(currentCategoryName)) {
-
+            columnCount++;
+            int currentCategory = word.getCategory();
+            if (categoryBefore != currentCategory) {
+                grid.row();
+                String category = categoryLoader.getCategoryName(word.getCategory());
+                Label label = new Label(category, skin);
+                grid.add(label).colspan(GRID_COLUMN_WIDTH).pad(ROW_PAD);
+                grid.row();
+                columnCount = 0;
+            } else if (columnCount % GRID_COLUMN_WIDTH == 0) {
+                grid.row().padTop(ROW_PAD);
             }
+
+            categoryBefore = word.getCategory();
+
             if (playerData.hasPlayerCollectedWord(word)) {
                 grid.add(createGridItem(word, false));
                 collectedWordsAmount++;
             }else{
                 grid.add(createGridItem(word, true));
-            }
-            if ((i+1) % GRID_COLUMN_WIDTH == 0) {
-                grid.row().padTop(PAD_ROW);
             }
         }
 
