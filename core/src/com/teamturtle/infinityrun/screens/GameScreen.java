@@ -56,7 +56,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         PLAY, PAUSE, LOST_GAME, WON_GAME
     }
 
-    public static final float GRAVITY = -10;
+    private static final float GRAVITY = -10;
     private static final int pBtnXMax = 400, pBtnXMin = 365, pBtnYMax = 240, pBtnYMin = 193;
 
     private Texture bg, mountains, trees;
@@ -73,7 +73,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private PlayerTail mPlayerTail;
     private EventHandler mEventHandler;
 
-    private TiledMap tiledMap;
+    private final TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
 
     private World world;
@@ -81,7 +81,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private Box2DDebugRenderer b2dr;
 
     private List<? extends Entity> emojiSprites;
-    private IScreenObserver screenObserver;
+    private final IScreenObserver screenObserver;
 
     private MissionHandler mMissionHandler;
     private MissionStage mMissionStage;
@@ -93,16 +93,18 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
     private State state;
 
     private OrthographicCamera mFixedCamera;
-    private List<Word> possibleWords, discoverdWords, oldWords;
-    private WordLoader wordLoader;
+    private final List<Word> possibleWords;
+    private final List<Word> discoverdWords;
+    private final List<Word> oldWords;
+    private final WordLoader wordLoader;
 
-    private Level level;
+    private final Level level;
     private Mission activeMission;
     private boolean hasSuccededInAllMissions = true;
 
-    private JumpAnimations mJumpAnimations;
+    private final JumpAnimations mJumpAnimations;
 
-    private PlayerData playerData;
+    private final PlayerData playerData;
     private List<Emoji> drawBigEmojiList;
 
     public static final Color SUCCESS_COLOR = new Color((float) 50 / 255, (float) 205 / 255, (float) 50 / 255, 1);
@@ -354,7 +356,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     }
 
-    public void drawParallaxContent() {
+    private void drawParallaxContent() {
         getSpriteBatch().begin();
 //        Gets how much screen scrolled since last render()
         float deltaPosX = getOrthoCam().position.x - oldCamX;
@@ -391,7 +393,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
         getSpriteBatch().end();
     }
 
-    public void drawBigEmojis() {
+    private void drawBigEmojis() {
         for (Entity entity : emojiSprites) {
             Emoji emoji = (Emoji) entity;
             if (emoji.hasExploded() && emoji.shouldDraw() && !drawBigEmojiList.contains(emoji)) {

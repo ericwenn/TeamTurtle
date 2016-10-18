@@ -57,11 +57,12 @@ public class WonLevelScreen extends EndLevelScreen{
     private static final int SHADOW_OFFSET = 2;
     private static final float SHADOW_SCALE = 1.05f;
 
-    private Skin skin;
+    private final Skin skin;
     private Table emojiTable;
-    private Level level;
-    private IScreenObserver observer;
-    private List<Word> oldWords, discoveredWords;
+    private final Level level;
+    private final IScreenObserver observer;
+    private final List<Word> oldWords;
+    private final List<Word> discoveredWords;
     //TODO should be replaced with assetmanager
     private List<Sound> emojiSounds;
     private Texture discoverdTopLayer;

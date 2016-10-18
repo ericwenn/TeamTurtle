@@ -16,10 +16,10 @@ import java.util.List;
 
 public class ProgressBarStage extends Stage {
 
-    private List<Mission> missions;
+    private final List<Mission> missions;
     private float levelWidth;
-    private float startX;
-    private ProgressBar mProgressBar;
+    private final float startX;
+    private final ProgressBar mProgressBar;
 
     public enum MissionStatus {
         PASSED,
@@ -65,8 +65,8 @@ public class ProgressBarStage extends Stage {
         private final float[] beginningMarkers;
         private final float[] endingMarkers;
         // Initialized as zeros.
-        private int[] markerStatus;
-        private ShapeRenderer shapeRenderer;
+        private final int[] markerStatus;
+        private final ShapeRenderer shapeRenderer;
         private float progress = 0;
 
         public static final Color SUCCESS_COLOR = new Color((float) 50/255, (float) 205/255, (float) 50/255, 1);

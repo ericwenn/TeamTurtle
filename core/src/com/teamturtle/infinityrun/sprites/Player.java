@@ -2,10 +2,8 @@ package com.teamturtle.infinityrun.sprites;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -21,7 +19,7 @@ import com.teamturtle.infinityrun.screens.GameScreen;
  */
 public class Player extends AbstractEntity {
 
-    private World world;
+    private final World world;
     private Body b2body;
     private boolean canDoubleJump;
     private float scale = 1;
@@ -33,10 +31,9 @@ public class Player extends AbstractEntity {
     private static final float LINEAR_SPEED_X = 2.5799992f;
     private static final float IMPULSE_X = 0.1f;
 
-    private ShapeRenderer shapeRenderer;
-    private TextureRegion neutralTexture;
-    private TextureRegion failTexture;
-    private TextureRegion successTexture;
+    private final TextureRegion neutralTexture;
+    private final TextureRegion failTexture;
+    private final TextureRegion successTexture;
     private Color fillColor;
 
 
@@ -48,7 +45,6 @@ public class Player extends AbstractEntity {
         setPosition(0, InfinityRun.HEIGHT / 2);
         definePlayer();
 
-        this.shapeRenderer = new ShapeRenderer();
         this.neutralTexture = new TextureRegion(new Texture("player_sprite_neutral.png"), 0, 0, 32, 32);
         this.failTexture = new TextureRegion(new Texture("player_sprite_fail.png"), 0, 0, 32, 32);
         this.successTexture = new TextureRegion(new Texture("player_sprite_success.png"), 0, 0, 32, 32);

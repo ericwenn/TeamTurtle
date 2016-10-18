@@ -21,8 +21,8 @@ public class JumpAnimations extends AbstractEntity {
     private static final int CIRCLE_ANIMATION_STEPS = 30;
     private static final int CIRCLE_SEGMENTS = 20;
 
-    private ShapeRenderer shapeRenderer;
-    private List<JumpAnimation> mAnimations;
+    private final ShapeRenderer shapeRenderer;
+    private final List<JumpAnimation> mAnimations;
     private Color circleColor;
 
     public JumpAnimations() {

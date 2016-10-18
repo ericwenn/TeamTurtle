@@ -41,7 +41,7 @@ public class LoadingScreen extends AbstractScreen {
     private boolean loadingDone;
 
     private Stage stage;
-    private IScreenObserver observer;
+    private final IScreenObserver observer;
 
     public LoadingScreen(SpriteBatch sb, IScreenObserver observer) {
         super(sb);

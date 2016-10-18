@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class MissionHandler {
 
-    private List<Mission> mMissions = new ArrayList<Mission>();
+    private final List<Mission> mMissions = new ArrayList<Mission>();
     private int iteratorIndex = 0;
 
     public void addMission(float startX, float endX) {

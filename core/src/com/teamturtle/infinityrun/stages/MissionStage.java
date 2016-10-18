@@ -30,12 +30,12 @@ public class MissionStage extends Stage {
     private static final float SCALE_BY = 1.2f;
     private static final int SCALE_STEP_COUNT = 100;
     private static final float SCALE_STEP_SECONDS = .01f;
-    private Skin mSkin;
+    private final Skin mSkin;
 
-    private Table mMissionTable;
+    private final Table mMissionTable;
     private Label emojiLabel;
 
-    private Timer.Task disappearTask;
+    private final Timer.Task disappearTask;
     private final int[] index;
 
     public MissionStage() {

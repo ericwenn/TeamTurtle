@@ -19,11 +19,11 @@ public class PlayerData {
     private static final String WORDS_COLLECTED_FILE = "words_collected.json";
     private static final String LEVEL_PROGRESS_FILE = "level_progress.json";
 
-    private FileHandle mWordsCollectedFile;
-    private List<Integer> mWordsCollected;
+    private final FileHandle mWordsCollectedFile;
+    private final List<Integer> mWordsCollected;
 
-    private FileHandle mLevelProgressFile;
-    private Map<String,Integer> mLevelProgress;
+    private final FileHandle mLevelProgressFile;
+    private final Map<String,Integer> mLevelProgress;
 
     public PlayerData() {
 
