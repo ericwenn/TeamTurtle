@@ -14,7 +14,7 @@
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 3
-	url: levels/banan3.tmx
+	url: levels/alfred_easy_level_3.tmx
 	categoryIDs: [ 2, 5, 7, 8 ]
 }
 {
@@ -26,25 +26,25 @@
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 5
-	url: levels/alfred_hard_level.tmx
+	url: levels/banan2.tmx
 	categoryIDs: [ 1 ]
 }
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 6
-	url: levels/banan1.tmx
+	url: levels/banan3.tmx
 	categoryIDs: [ 1, 2, 3 ]
 }
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 7
-	url: levels/banan2.tmx
+	url: levels/banan1.tmx
 	categoryIDs: [ 1, 2, 3 ]
 }
 {
 	class: com.teamturtle.infinityrun.models.level.LevelImpl
 	id: 8
-	url: levels/banan3.tmx
+	url: levels/alfred_hard_level.tmx
 	categoryIDs: [ 1, 2, 3 ]
 }
 {
