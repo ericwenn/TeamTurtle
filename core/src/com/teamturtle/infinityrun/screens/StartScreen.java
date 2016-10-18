@@ -24,12 +24,9 @@ import com.teamturtle.infinityrun.sound.GameMusic;
 
 public class StartScreen extends AbstractScreen {
 
-    private static final int BUTTON_OFFSET = -45;
     private static final int BUTTON_PADDING = 5;
-    private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 400.0f;
-    private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 50.0f;
 
-    private Texture bg;
+    private Texture bg, ordHoppet;
     private Stage stage;
 
     private IScreenObserver observer;
@@ -40,6 +37,8 @@ public class StartScreen extends AbstractScreen {
         this.observer = observer;
 
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
+        this.ordHoppet = new Texture("ordhoppet_logo_600_txt.png");
+
         this.stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
     }
 
@@ -118,7 +117,7 @@ public class StartScreen extends AbstractScreen {
 
         rootTabel.row();
         Table btnTable = new Table();
-        btnTable.add(new Image(new TextureRegion(new Texture("ordhoppet_logo_600_txt.png"), 600, 129))).padTop(-40).padBottom(20);
+        btnTable.add(new Image(new TextureRegion(ordHoppet, 600, 129))).padTop(-40).padBottom(20);
         btnTable.row();
         btnTable.add(playBtn).padBottom(BUTTON_PADDING);
         btnTable.row();
@@ -139,6 +138,12 @@ public class StartScreen extends AbstractScreen {
         getSpriteBatch().end();
 
         stage.draw();
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+        bg.dispose();
     }
 
     @Override
