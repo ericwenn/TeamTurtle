@@ -10,6 +10,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.utils.Timer;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
@@ -27,7 +34,7 @@ public class Emoji extends AbstractEntity {
 
     private static final float EXPLOSION_SCALE = 1.3f;
     private static final float EMOJI_SIZE = 32;
-    private static final int FONT_SIZE = 25;
+    private static final int FONT_SIZE = 25, COUNTER_MAX = 120, OFFSET_TEXT = 30;
     private static final String FONT_URL = "fonts/Boogaloo-Regular.ttf";
     private static final Color FONT_COLOR = Color.BLACK;
 
@@ -42,6 +49,9 @@ public class Emoji extends AbstractEntity {
 
     private BitmapFont font;
     private float textLength;
+    private Stage fontStage;
+    private int counter;
+    private float distanceToTop;
 
     @Deprecated
     public Emoji(String emojiName, String soundURL, Texture texture) {
@@ -57,8 +67,8 @@ public class Emoji extends AbstractEntity {
         WordLoader wl = new WordLoader();
         Map<String, ? extends Word> words = wl.getWords();
 
-        for (Word word : words.values()) {
-            if (word.getText().equals(w.getText()))
+        for(Word word : words.values()){
+            if(word.getText().equals(w.getText()))
                 w.id = word.getId() + "";
         }
 
@@ -87,12 +97,26 @@ public class Emoji extends AbstractEntity {
         textLength = layout.width;
 
         if (!wordModel.getSoundUrl().equals("404")) {
-            System.out.println("Audio created");
             emojiSound = Gdx.audio.newSound(Gdx.files.internal(wordModel.getSoundUrl()));
             hasSound = true;
         } else {
             hasSound = false;
         }
+        fontStage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
+        counter = 0;
+        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        Label label = new Label(getName(), skin);
+        label.setColor(FONT_COLOR);
+        Image i = new Image(texture);
+        i.setSize(EMOJI_SIZE, EMOJI_SIZE);
+
+        //label.setPosition(InfinityRun.WIDTH / 2, InfinityRun.HEIGHT / 2 + i.getHeight());
+        //i.setPosition(InfinityRun.WIDTH / 2 + OFFSET_BIG_EMOJI, InfinityRun.HEIGHT / 2);
+        i.setPosition(140, 0);
+        label.setPosition(140 + (EMOJI_SIZE / 2) - textLength / 2, 0);
+
+        fontStage.addActor(i);
+        fontStage.addActor(label);
     }
 
     public void setBody(Body body) {
@@ -100,19 +124,23 @@ public class Emoji extends AbstractEntity {
     }
 
     public void triggerExplode() {
-        isExploded = true;
-        if(!FxSound.isFxMuted()){
-            if (hasSound) {
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        if (!FxSound.isFxMuted()) {
-                            emojiSound.play();
+
+        if(!isExploded) {
+            isExploded = true;
+            if (!FxSound.isFxMuted()) {
+                if (hasSound) {
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            if (!FxSound.isFxMuted()) {
+                                emojiSound.play();
+                            }
                         }
-                    }
-                }, 0.3f);
+                    }, 0.3f);
+                }
             }
         }
+
     }
 
     @Override
@@ -124,6 +152,7 @@ public class Emoji extends AbstractEntity {
     @Override
     public void render(SpriteBatch sb) {
         if (isExploded) {
+/*
             //If the emoji as the same position when it has expended, it will look like it moves to
             //the left, with dx, the emoji will "move" equally to left and right.
             float dx = ((EMOJI_SIZE * EXPLOSION_SCALE) - (EMOJI_SIZE)) / (2 * InfinityRun.PPM);
@@ -144,9 +173,32 @@ public class Emoji extends AbstractEntity {
             Matrix4 normalProjection = sb.getProjectionMatrix()
                     .scale(InfinityRun.PPM, InfinityRun.PPM, 0);
             sb.setProjectionMatrix(normalProjection);
+            */
         } else {
             sb.draw(texture, getX(), getY(), EMOJI_SIZE / InfinityRun.PPM, EMOJI_SIZE / InfinityRun.PPM);
         }
+    }
+
+    public void drawExplodedText(){
+        counter++;
+        if(counter <= COUNTER_MAX) {
+            for(Actor actor : fontStage.getActors()) {
+                actor.setY(actor.getY() + distanceToTop / COUNTER_MAX);
+            }
+
+            if(fontStage.getActors().get(1).getY() >= 300) {
+                float r = fontStage.getActors().get(0).getColor().r;
+                float g = fontStage.getActors().get(0).getColor().g;
+                float b = fontStage.getActors().get(0).getColor().b;
+                fontStage.getActors().get(0).setColor(r, g, b, 1 - (counter / 120f));
+                fontStage.getActors().get(1).setColor(0, 0, 0, 1 - (counter / 120f));
+            }
+            fontStage.draw();
+        }
+    }
+
+    public boolean shouldDraw(){
+        return counter <= COUNTER_MAX;
     }
 
     public Texture getImage() {
@@ -160,6 +212,17 @@ public class Emoji extends AbstractEntity {
         if (hasSound)
             emojiSound.dispose();
         font.dispose();
+        fontStage.dispose();
+    }
+
+    public void setStartY(float y){
+        y *= InfinityRun.PPM;
+        for(Actor actor : fontStage.getActors()) {
+            actor.setY(y);
+            if(actor.getClass() == Label.class)
+                actor.setY(actor.getY() + OFFSET_TEXT);
+        }
+        distanceToTop = InfinityRun.HEIGHT - y;
     }
 
     public String getName() {
@@ -172,5 +235,8 @@ public class Emoji extends AbstractEntity {
 
     public Word getWordModel() {
         return wordModel;
+    }
+    public boolean hasExploded(){
+        return isExploded;
     }
 }
