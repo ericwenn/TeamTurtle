@@ -3,8 +3,8 @@
  <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="mini_tileset.png" width="128" height="128"/>
  </tileset>
- <tileset firstgid="17" name="greentileset" tilewidth="32" tileheight="32" tilecount="52" columns="13">
-  <image source="greentileset.png" width="440" height="131"/>
+ <tileset firstgid="17" name="greentileset" tilewidth="32" tileheight="32" tilecount="78" columns="13">
+  <image source="greentileset.png" width="440" height="196"/>
   <tile id="3">
    <animation>
     <frame tileid="8" duration="100"/>
@@ -16,9 +16,15 @@
    </animation>
   </tile>
  </tileset>
+ <tileset firstgid="95" name="hand" tilewidth="32" tileheight="32" tilecount="24" columns="4">
+  <image source="hand.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="119" name="hand" tilewidth="32" tileheight="32" tilecount="16" columns="4">
+  <image source="hand.png" width="128" height="128"/>
+ </tileset>
  <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt10sOgjAUheFuQZlrBzLS6FjZ/768xNzENLWW0gfW/0vOED3QSwFjAAAAAAAAAAAAAOR0lzycTE0bAUDYTrKXDK2LAH/qIDlKbOMeubnvRL28D+meqam5d7r/3arHVqU+z3q9B9cIzVqLudM+Z8nFvNZLYyt1mOms+KI9fN+DPe2BIan3Uuxxp+WViqjRIzRrueZ/yXnEzH7pDiV7qDHDb4TE7Kuped8fryuOuxXu+QvxPWs+pcY1+9an1rptpUdqhsg1JYSUiZU8Ad6aO8s=
+   eJztl1ELgjAURv0L5Xv5UE9FPVc/pqCgoN4LCgrqh3cjBiFruek2tXPgwB6mfrrrdSYJAAAAAAAAAAA0naN4spi/FFeaMQC4cRYvFvPX4kYzBgA3ruLNYv5W3GnGAFUyE+c5F1ET+eMuPizm78WDZgwAcemIXTGNHQTgT+mJfTGLnKNq8nuituyHVM9Uhuyd+WvHylFXXL9nbX0Hy2CqtRh1p/KMxHHyXi9lFijDC1UrOlUO3f9gm3qgCdd3qehxA/tIXgiRw1RrVdW/zX0UqX3fGXzmUAwrOIeJIn3V1c/+OClx3NRzziao+9Z8M8Qz+5Un1LrVJYeracE1RUQ/ZuITbfVGDw==
   </data>
  </layer>
  <objectgroup name="ground">
