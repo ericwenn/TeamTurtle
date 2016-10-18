@@ -506,6 +506,10 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                 try {
                     if (!activeMission.isPassed()) {
                         mProgressStage.updateMissionStatus(activeMission, ProgressBarStage.MissionStatus.FAILED);
+
+                        if (hasSuccededInAllMissions) {
+                            hasSuccededInAllMissions = false;
+                        }
                     }
                     activeMission = mMissionHandler.getNextMission();
                     mMissionStage.setMission(activeMission);
