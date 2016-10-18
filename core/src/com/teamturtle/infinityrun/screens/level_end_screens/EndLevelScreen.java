@@ -1,6 +1,7 @@
 package com.teamturtle.infinityrun.screens.level_end_screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -115,6 +116,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
         }
         rootTable.center().top();
         topLabel = new Label(topLabelStr, skin, "title");
+        topLabel.setColor(Color.BLACK);
         rootTable.add(topLabel).padTop(TOP_LABEL_PAD);
         rootTable.row();
         buildScoreTable();

@@ -2,6 +2,7 @@ package com.teamturtle.infinityrun.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -198,8 +199,8 @@ public class QuizStage extends Stage {
         Image emojiImage = new Image(emoji.getTexture());
         emojiImage.setScaling(Scaling.fit);
         emojiTable.add(emojiImage).width(QUESTION_EMOJI_DIMENSION).height(QUESTION_EMOJI_DIMENSION);
-        Label questionLabel = new Label("?", skin);
-        questionLabel.setFontScale(1.7f);
+        Label questionLabel = new Label("?", skin, "text-large");
+        questionLabel.setFontScale(1.4f);
         emojiTable.add(questionLabel).width(25).padLeft(ROW_PADDING / 4);
 
         parentTable.add(emojiTable);

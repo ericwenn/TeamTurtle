@@ -107,6 +107,7 @@ public class WonLevelScreen extends EndLevelScreen{
         }
         emojiTable.row();
         emojiLbl = new Label("", skin);
+        emojiLbl.setColor(Color.BLACK.BLACK);
         emojiTable.add(emojiLbl).colspan(allWords.size());
     }
 
