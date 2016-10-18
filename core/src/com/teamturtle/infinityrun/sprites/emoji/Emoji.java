@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.utils.Timer;
 import com.teamturtle.infinityrun.InfinityRun;
@@ -101,7 +102,7 @@ public class Emoji extends AbstractEntity {
         } else {
             hasSound = false;
         }
-        fontStage = new Stage();
+        fontStage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         counter = 0;
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         Label label = new Label(getName(), skin);
