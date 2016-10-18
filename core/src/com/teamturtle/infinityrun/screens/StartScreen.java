@@ -144,6 +144,7 @@ public class StartScreen extends AbstractScreen {
     public void dispose() {
         stage.dispose();
         bg.dispose();
+        ordHoppet.dispose();
     }
 
     @Override
