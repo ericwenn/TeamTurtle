@@ -1,5 +1,6 @@
 package com.teamturtle.infinityrun.map_parsing;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -38,6 +39,13 @@ public class GroundParser implements MapParser {
         FixtureDef fdef = new FixtureDef();
         Body body;
 
+
+        createRoof();
+
+
+
+
+
         for (MapObject object : tiledMap.getLayers().get(groundLayerName).getObjects()) {
             if (object instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -74,6 +82,44 @@ public class GroundParser implements MapParser {
             }
         }
     }
+
+
+    /**
+     * Create a "roof" so user cant jump over the height of the map
+     */
+    private void createRoof() {
+
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fdef = new FixtureDef();
+        Body body;
+
+
+        int levelBoxWidth = (Integer) tiledMap.getProperties().get("tilewidth");
+        int levelBoxHeight = (Integer) tiledMap.getProperties().get("tileheight");
+        int levelNHorizontal = (Integer) tiledMap.getProperties().get("width");
+        int levelNVertical = (Integer) tiledMap.getProperties().get("height");
+
+        int boxX = 0;
+        int boxY = levelBoxHeight * levelNVertical - 1;
+        int boxHeight = 1;
+        int boxWidth = levelBoxWidth * levelNHorizontal;
+
+        Gdx.app.log("Roof", "boxWidth: " + levelBoxHeight + " boxHeight: "+ levelBoxWidth + " nHorizontal: "+ levelNHorizontal + " nVertical: "+levelNVertical + " boxY: "+boxY + " boxWidth: "+boxWidth);
+
+        Rectangle roofRect = new Rectangle(boxX, boxY, boxWidth, boxHeight);
+        bdef.type = BodyDef.BodyType.StaticBody;
+        bdef.position.set(((roofRect.getX() + roofRect.getWidth() / 2) / InfinityRun.PPM)
+                , ((roofRect.getY() + roofRect.getHeight() / 2) / InfinityRun.PPM));
+        body = world.createBody(bdef);
+
+        shape.setAsBox((roofRect.getWidth() / 2) / InfinityRun.PPM
+                , (roofRect.getHeight() / 2) / InfinityRun.PPM);
+        fdef.shape = shape;
+        body.createFixture(fdef).setUserData("ground");
+    }
+
+
 
     @Override
     public List<? extends Entity> getEntities() {
