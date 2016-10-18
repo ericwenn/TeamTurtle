@@ -26,10 +26,11 @@ public class StartScreen extends AbstractScreen {
 
     private static final int BUTTON_PADDING = 5;
 
-    private Texture bg, ordHoppet;
-    private Stage stage;
+    private final Texture bg;
+    private final Texture ordHoppet;
+    private final Stage stage;
 
-    private IScreenObserver observer;
+    private final IScreenObserver observer;
 
     public StartScreen(SpriteBatch sb, IScreenObserver observer){
         super(sb);

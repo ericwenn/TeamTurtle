@@ -11,15 +11,15 @@ import java.util.Random;
  */
 public class MissionImpl implements Mission {
 
-    private List<Word> mWords = new ArrayList<Word>();
+    private final List<Word> mWords = new ArrayList<Word>();
     private Word mCorrectWord = null;
 
-    private Random mRandomizer = new Random();
+    private final Random mRandomizer = new Random();
 
     private boolean isPassed = false;
 
-    private float startX;
-    private float endX;
+    private final float startX;
+    private final float endX;
 
     public MissionImpl(float startX, float endX) {
         this.startX = startX;
