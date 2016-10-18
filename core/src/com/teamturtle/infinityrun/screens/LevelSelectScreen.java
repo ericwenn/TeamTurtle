@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -76,7 +76,7 @@ public class LevelSelectScreen extends AbstractScreen{
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
-                        FeedbackSound.playLevelSound(level.getId());
+                        FxSound.playLevelSound(level.getId());
                         observer.playLevel(level);
                     }
                 });
@@ -86,7 +86,7 @@ public class LevelSelectScreen extends AbstractScreen{
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
-                        FeedbackSound.EJUPPLAST.play();
+                        FxSound.EJUPPLAST.play();
                     }
                 });
                 levelButtonTable.add(button);
@@ -116,7 +116,7 @@ public class LevelSelectScreen extends AbstractScreen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.HEM.play();
+                    FxSound.HEM.play();
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
