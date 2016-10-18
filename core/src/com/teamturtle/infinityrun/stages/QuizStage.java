@@ -125,12 +125,15 @@ public class QuizStage extends Stage {
                 public void changed(ChangeEvent event, Actor actor) {
                     delayStarted = true;
                     didGuessRight = word.equals(emoji.getWordModel());
-                    if (didGuessRight)
-                        FxSound.RIGHT_ANSWER.play(0.3f);
-                    else
-                        FxSound.WRONG_ANSWER.play(0.3f);
                     getActors().clear();
-                    showRightWord(starTable, word);
+                    if (didGuessRight) {
+                        FxSound.RIGHT_ANSWER.play(0.3f);
+                        showRightWord(animatedStarTable, word);
+                    }
+                    else {
+                        FxSound.WRONG_ANSWER.play(0.3f);
+                        showRightWord(starTable, word);
+                    }
                     Timer timer = new Timer();
                     timer.scheduleTask(new Timer.Task() {
                         @Override
