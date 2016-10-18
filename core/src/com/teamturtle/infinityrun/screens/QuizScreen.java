@@ -68,4 +68,11 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
             observer.levelWon(level, oldWords, discoveredWords, score);
         }
     }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+        bg.dispose();
+        super.dispose();
+    }
 }
