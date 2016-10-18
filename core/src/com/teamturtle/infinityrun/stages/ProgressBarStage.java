@@ -55,8 +55,11 @@ public class ProgressBarStage extends Stage {
         mProgressBar.setMarkerStatus(missions.indexOf(m), status == MissionStatus.PASSED ? 1 : -1);
     }
 
-
-
+    @Override
+    public void dispose() {
+        super.dispose();
+        mProgressBar.dispose();
+    }
 
     private static class ProgressBar extends Actor {
         private final float[] beginningMarkers;
@@ -125,6 +128,10 @@ public class ProgressBarStage extends Stage {
             shapeRenderer.end();
 
             batch.begin();
+        }
+
+        public void dispose() {
+            shapeRenderer.dispose();
         }
     }
 }

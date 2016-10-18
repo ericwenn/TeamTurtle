@@ -335,12 +335,23 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
 
     @Override
     public void dispose() {
+        super.dispose();
         for (Entity ent : emojiSprites) {
             ent.dispose();
         }
+        b2dr.dispose();
+        tiledMapRenderer.dispose();
         mPlayer.dispose();
         bg.dispose();
+        mountains.dispose();
+        trees.dispose();
+        world.dispose();
         pauseStage.dispose();
+        mProgressStage.dispose();
+        mMissionStage.dispose();
+        tiledMap.dispose();
+        pauseButtonStage.dispose();
+
     }
 
     public void drawParallaxContent() {

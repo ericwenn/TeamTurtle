@@ -1,0 +1,48 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 1705764 Realtime: 3756384
+
+** MEMINFO in pid 17767 [com.teamturtle.infinityrun] **
+                   Pss  Private  Private  SwapPss     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------
+  Native Heap     4796     4788        0        0    90112    54455    35656
+  Dalvik Heap     6926     6868        0        0    10923     6554     4369
+ Dalvik Other     1385     1384        0      192                           
+        Stack      232      232        0      132                           
+       Ashmem      979      976        0        0                           
+      Gfx dev   635462   412012        0        0                           
+    Other dev        4        0        4        0                           
+     .so mmap      761      192      208      144                           
+    .dex mmap       56        0       56        4                           
+    .oat mmap     1203        0        0        0                           
+    .art mmap      707      388      136      109                           
+   Other mmap        2        0        0        4                           
+   EGL mtrack    33936    33936        0        0                           
+      Unknown      318      312        0      292                           
+        TOTAL   687644   461088      404      877   101035    61009    40025
+ 
+ App Summary
+                       Pss(KB)
+                        ------
+           Java Heap:     7392
+         Native Heap:     4788
+                Code:      456
+               Stack:      232
+            Graphics:   445948
+       Private Other:     2676
+              System:   226152
+ 
+               TOTAL:   687644       TOTAL SWAP PSS:      877
+ 
+ Objects
+               Views:        5         ViewRootImpl:        1
+         AppContexts:        4           Activities:        1
+              Assets:        2        AssetManagers:        2
+       Local Binders:       16        Proxy Binders:       16
+       Parcel memory:        5         Parcel count:       22
+    Death Recipients:        0      OpenSSL Sockets:        0
+ 
+ SQL
+         MEMORY_USED:        0
+  PAGECACHE_OVERFLOW:        0          MALLOC_SIZE:        0
+ 

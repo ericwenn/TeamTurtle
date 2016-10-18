@@ -116,4 +116,10 @@ public class MissionStage extends Stage {
         }
         return r;
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        mSkin.dispose();
+    }
 }
