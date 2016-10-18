@@ -37,8 +37,9 @@ public class DictionaryScreen extends AbstractScreen {
     private static final String LINE_IMAGE_URL = "ui/line.png";
     private static final String LABEL_TEXT = "Ord hittade:";
     private static final String LABEL_UNKNOWN = "???";
-    private static final float ROW_PAD = 20f;
-    private static final float PAD_SCROLL = 5f;
+    private static final int ROW_PAD = 20;
+    private static final int CATEGORY_PAD = 20;
+    private static final int PAD_SCROLL = 5;
     private static final int GRID_COLUMN_WIDTH = 4;
     private static final int CATEGORY_ONE_OFFSET = -8;
     private static final int CATEGORY_ONE = 1;
@@ -108,7 +109,7 @@ public class DictionaryScreen extends AbstractScreen {
                 if (currentCategory == CATEGORY_ONE) {
                     grid.add(label).colspan(GRID_COLUMN_WIDTH).padTop(CATEGORY_ONE_OFFSET);
                 }else{
-                    grid.add(label).colspan(GRID_COLUMN_WIDTH).padTop(ROW_PAD);
+                    grid.add(label).colspan(GRID_COLUMN_WIDTH).padTop(CATEGORY_PAD);
 
                 }
                 Image lineImg = new Image(line);
