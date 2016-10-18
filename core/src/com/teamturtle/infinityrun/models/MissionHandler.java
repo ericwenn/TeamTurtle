@@ -1,7 +1,5 @@
 package com.teamturtle.infinityrun.models;
 
-import com.badlogic.gdx.Gdx;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +9,7 @@ import java.util.List;
  */
 public class MissionHandler {
 
-    private List<Mission> mMissions = new ArrayList<Mission>();
+    private final List<Mission> mMissions = new ArrayList<Mission>();
     private int iteratorIndex = 0;
 
     public void addMission(float startX, float endX) {
@@ -30,9 +28,17 @@ public class MissionHandler {
 
 
     public Mission getNextMission() throws IndexOutOfBoundsException {
-        Mission nextMission = mMissions.get(iteratorIndex);
-        iteratorIndex++;
-        return nextMission;
+        if (iteratorIndex < mMissions.size()) {
+            Mission nextMission = mMissions.get(iteratorIndex);
+            iteratorIndex++;
+            return nextMission;
+        }
+        return null;
+    }
+
+
+    public List<Mission> getMissions() {
+        return new ArrayList<Mission>(mMissions);
     }
 
 }

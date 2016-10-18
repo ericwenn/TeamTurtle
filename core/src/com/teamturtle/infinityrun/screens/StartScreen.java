@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -13,7 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
+import com.teamturtle.infinityrun.sound.GameMusic;
 
 /**
  * Created by Alfred on 2016-09-22.
@@ -21,14 +24,13 @@ import com.teamturtle.infinityrun.sound.FeedbackSound;
 
 public class StartScreen extends AbstractScreen {
 
-    private static final float ROOT_TABLE_WIDTH = 600.0f, ROOT_TABLE_HEIGHT = 370.0f;
-    private static final float ROOT_TABLE_POS_X = 100.0f, ROOT_TABLE_POS_Y = 50.0f;
-    protected static final float BUTTON_PADDING = 5.0f;
+    private static final int BUTTON_PADDING = 5;
 
-    private Texture bg;
-    private Stage stage;
+    private final Texture bg;
+    private final Texture ordHoppet;
+    private final Stage stage;
 
-    private IScreenObserver observer;
+    private final IScreenObserver observer;
 
     public StartScreen(SpriteBatch sb, IScreenObserver observer){
         super(sb);
@@ -36,6 +38,8 @@ public class StartScreen extends AbstractScreen {
         this.observer = observer;
 
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
+        this.ordHoppet = new Texture("ordhoppet_logo_600_txt.png");
+
         this.stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
     }
 
@@ -53,24 +57,25 @@ public class StartScreen extends AbstractScreen {
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
         skin.load(Gdx.files.internal("skin/uiskin.json"));
 
-        ImageButton playButton = new ImageButton(skin, "play_button");
-        playButton.addListener(new ChangeListener() {
+        ImageButton playBtn = new ImageButton(skin, "play_button");
+        playBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.SPELA.play();
+                    FxSound.SPELA.play();
                     observer.changeScreen(InfinityRun.ScreenID.LEVELS_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-        ImageButton dictionaryButton = new ImageButton(skin, "dictionary_button");
-        dictionaryButton.addListener(new ChangeListener() {
+
+        ImageButton dictionaryBtn = new ImageButton(skin, "dictionary_button");
+        dictionaryBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.ORDLISTA.play();
+                    FxSound.ORDLISTA.play();
                     observer.changeScreen(InfinityRun.ScreenID.DICTIONARY);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -78,12 +83,37 @@ public class StartScreen extends AbstractScreen {
             }
         });
 
-        Table rootTabel = new Table().center();
-        rootTabel.setPosition(ROOT_TABLE_POS_X, ROOT_TABLE_POS_Y);
-        rootTabel.setSize(ROOT_TABLE_WIDTH, ROOT_TABLE_HEIGHT);
-        rootTabel.add(playButton).pad(BUTTON_PADDING);
+        ImageButton musicBtn = new ImageButton(skin, "music_button");
+        musicBtn.addListener(new ShiftMusicButtonListener());
+        if (GameMusic.isMusicMuted()) {
+            musicBtn.setChecked(true);
+            GameMusic.shiftMusicMute();
+        }
+
+        ImageButton fxBtn = new ImageButton(skin, "fx_button");
+        fxBtn.addListener(new ShiftFxButtonListener());
+        if (FxSound.isFxMuted()) {
+            fxBtn.setChecked(true);
+            FxSound.shiftFxMute();
+        }
+
+        Table rootTabel = new Table();
+        rootTabel.setFillParent(true);
+        Table soundTable = new Table();
+        soundTable.add().width(InfinityRun.WIDTH - fxBtn.getWidth() - musicBtn.getWidth());
+        soundTable.add(musicBtn);
+        soundTable.add(fxBtn);
+        rootTabel.add(soundTable);
+
+
         rootTabel.row();
-        rootTabel.add(dictionaryButton);
+        Table btnTable = new Table();
+        btnTable.add(new Image(new TextureRegion(ordHoppet, 600, 129))).padTop(-40).padBottom(20);
+        btnTable.row();
+        btnTable.add(playBtn).padBottom(BUTTON_PADDING);
+        btnTable.row();
+        btnTable.add(dictionaryBtn);
+        rootTabel.add(btnTable).expandY().fillY();
 
         stage.addActor(rootTabel);
     }
@@ -99,6 +129,14 @@ public class StartScreen extends AbstractScreen {
         getSpriteBatch().end();
 
         stage.draw();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        stage.dispose();
+        bg.dispose();
+        ordHoppet.dispose();
     }
 
     @Override
@@ -119,5 +157,22 @@ public class StartScreen extends AbstractScreen {
     @Override
     public void hide() {
 
+    }
+
+
+    protected static class ShiftFxButtonListener extends ChangeListener {
+
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            FxSound.shiftFxMute();
+        }
+    }
+
+
+    protected static class ShiftMusicButtonListener extends ChangeListener {
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            GameMusic.shiftMusicMute();
+        }
     }
 }

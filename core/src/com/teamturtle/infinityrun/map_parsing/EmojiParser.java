@@ -14,9 +14,9 @@ import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.Mission;
 import com.teamturtle.infinityrun.models.MissionHandler;
 import com.teamturtle.infinityrun.models.words.Word;
+import com.teamturtle.infinityrun.models.words.WordRandomizer;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
-import com.teamturtle.infinityrun.models.words.WordRandomizer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +27,11 @@ import java.util.List;
 public class EmojiParser implements MapParser {
     private final World world;
     private final TiledMap tiledMap;
-    private String emojiPlaceholderName;
-    private MissionHandler missionHandler;
-    private WordRandomizer wordRandomizer;
+    private final String emojiPlaceholderName;
+    private final MissionHandler missionHandler;
+    private final WordRandomizer wordRandomizer;
 
-    private List<Emoji> emojis = new ArrayList<Emoji>();
+    private final List<Emoji> emojis = new ArrayList<Emoji>();
 
 
     public EmojiParser(World world, TiledMap tiledMap, String emojiPlaceholderName, MissionHandler missionHandler, List<Word> possibleWords) {
@@ -50,6 +50,9 @@ public class EmojiParser implements MapParser {
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
+
+
+
         for(MapObject object : tiledMap.getLayers().get(emojiPlaceholderName).getObjects().getByType(RectangleMapObject.class)){
 
             Rectangle rect =((RectangleMapObject) object).getRectangle();
@@ -67,14 +70,24 @@ public class EmojiParser implements MapParser {
 
 
             Mission mission = missionHandler.getMissionAtPosition( rect.getX() );
-
+            List<Mission> missions = missionHandler.getMissions();
             Word word;
-            do {
-                word = wordRandomizer.getNext();
-            } while (mission.haveWord(word));
+            if (missions.indexOf(mission) == 0) {
+                do {
+                    word = wordRandomizer.getNext();
+                } while (mission.haveWord(word));
+            } else {
+                Mission lastMission = missions.get(missions.indexOf(mission) - 1);
+                do {
+                    word = wordRandomizer.getNext();
+                } while (mission.haveWord(word) || lastMission.haveWord(word));
+            }
+
 
             mission.addWord(word);
             mission.decideCorrectWord();
+
+
 
             Emoji emoji = new Emoji(word);
             emoji.setBody( body );

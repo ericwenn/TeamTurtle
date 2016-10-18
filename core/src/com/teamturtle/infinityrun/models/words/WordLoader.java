@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 public class WordLoader {
-    private HashMap<String, Word> wordMap;
+    private final HashMap<String, Word> wordMap;
 
     public WordLoader() {
         FileHandle file = Gdx.files.internal(PathConstants.WORD_JSON_PATH);
@@ -42,30 +42,26 @@ public class WordLoader {
         return returnList;
     }
 
-    public ArrayList<WordImpl> getAllWords() {
-        ArrayList<WordImpl> allWordsList = new ArrayList<WordImpl>();
+    public ArrayList<Word> getAllWords() {
+        ArrayList<Word> allWordsList = new ArrayList<Word>();
         for (Word word : wordMap.values()) {
-            allWordsList.add((WordImpl)word);
+            allWordsList.add(word);
         }
         sortWordByCategory(allWordsList);
         return allWordsList;
     }
 
-    private void sortWordByCategory(List<WordImpl> words) {
+    private void sortWordByCategory(List<Word> words) {
         Collections.sort(words, new WordCategoryComparator());
-
-        for (Word word : words) {
-            //System.out.println(word.getCategory());
-        }
     }
 
 
-    private static class WordCategoryComparator implements Comparator<WordImpl>, Serializable {
+    private static class WordCategoryComparator implements Comparator<Word>, Serializable {
 
         private static final long serialVersionUID = 42L; // arbitrary number
         
         @Override
-        public int compare(WordImpl o1, WordImpl o2) {
+        public int compare(Word o1, Word o2) {
             if (o1.getCategory() < o2.getCategory()) {
                 return -1;
             }else{

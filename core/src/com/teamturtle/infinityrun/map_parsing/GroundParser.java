@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.teamturtle.infinityrun.InfinityRun;
-import com.teamturtle.infinityrun.screens.GameScreen;
 import com.teamturtle.infinityrun.sprites.Entity;
 
 import java.util.List;
@@ -39,6 +38,13 @@ public class GroundParser implements MapParser {
         FixtureDef fdef = new FixtureDef();
         Body body;
 
+
+        createRoof();
+
+
+
+
+
         for (MapObject object : tiledMap.getLayers().get(groundLayerName).getObjects()) {
             if (object instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -51,7 +57,7 @@ public class GroundParser implements MapParser {
                 shape.setAsBox((rect.getWidth() / 2) / InfinityRun.PPM
                         , (rect.getHeight() / 2) / InfinityRun.PPM);
                 fdef.shape = shape;
-                body.createFixture(fdef);
+                body.createFixture(fdef).setUserData("ground");
             }
 
             if (object instanceof PolygonMapObject) {
@@ -71,10 +77,47 @@ public class GroundParser implements MapParser {
 
                 shape.set(vertices);
                 fdef.shape = shape;
-                body.createFixture(fdef);
+                body.createFixture(fdef).setUserData("ground");
             }
         }
     }
+
+
+    /**
+     * Create a "roof" so user cant jump over the height of the map
+     */
+    private void createRoof() {
+
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fdef = new FixtureDef();
+        Body body;
+
+
+        int levelBoxWidth = (Integer) tiledMap.getProperties().get("tilewidth");
+        int levelBoxHeight = (Integer) tiledMap.getProperties().get("tileheight");
+        int levelNHorizontal = (Integer) tiledMap.getProperties().get("width");
+        int levelNVertical = (Integer) tiledMap.getProperties().get("height");
+
+        int boxX = 0;
+        int boxY = levelBoxHeight * levelNVertical - 1;
+        int boxHeight = 1;
+        int boxWidth = levelBoxWidth * levelNHorizontal;
+
+
+        Rectangle roofRect = new Rectangle(boxX, boxY, boxWidth, boxHeight);
+        bdef.type = BodyDef.BodyType.StaticBody;
+        bdef.position.set(((roofRect.getX() + roofRect.getWidth() / 2) / InfinityRun.PPM)
+                , ((roofRect.getY() + roofRect.getHeight() / 2) / InfinityRun.PPM));
+        body = world.createBody(bdef);
+
+        shape.setAsBox((roofRect.getWidth() / 2) / InfinityRun.PPM
+                , (roofRect.getHeight() / 2) / InfinityRun.PPM);
+        fdef.shape = shape;
+        body.createFixture(fdef).setUserData("ground");
+    }
+
+
 
     @Override
     public List<? extends Entity> getEntities() {

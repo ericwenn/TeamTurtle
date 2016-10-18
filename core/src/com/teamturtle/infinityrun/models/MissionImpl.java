@@ -11,13 +11,15 @@ import java.util.Random;
  */
 public class MissionImpl implements Mission {
 
-    private List<Word> mWords = new ArrayList<Word>();
+    private final List<Word> mWords = new ArrayList<Word>();
     private Word mCorrectWord = null;
 
-    private Random mRandomizer = new Random();
+    private final Random mRandomizer = new Random();
 
-    private float startX;
-    private float endX;
+    private boolean isPassed = false;
+
+    private final float startX;
+    private final float endX;
 
     public MissionImpl(float startX, float endX) {
         this.startX = startX;
@@ -58,5 +60,14 @@ public class MissionImpl implements Mission {
         int correctWordIndex = mRandomizer.nextInt(nWords);
 
         mCorrectWord = mWords.get( correctWordIndex );
+    }
+
+    @Override
+    public void markPassed() {
+        isPassed = true;
+    }
+
+    public boolean isPassed() {
+        return isPassed;
     }
 }

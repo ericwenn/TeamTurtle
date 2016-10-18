@@ -15,10 +15,9 @@ import com.teamturtle.infinityrun.screens.LevelSelectScreen;
 import com.teamturtle.infinityrun.screens.LoadingScreen;
 import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
-import com.teamturtle.infinityrun.screens.WordScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.GameMusic;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -43,6 +42,7 @@ public class InfinityRun extends Game implements IScreenObserver {
 
         try {
             changeScreen(ScreenID.LOADING_SCREEN);
+            GameMusic.THEME_1.playMusicLooping();
         } catch (Exception e) {
             Gdx.app.error("InfinityRun", "Could not change screen", e);
         }
@@ -67,22 +67,22 @@ public class InfinityRun extends Game implements IScreenObserver {
     }
 
     @Override
-    public void levelCompleted(Level level, List<Word> collectedWords, int score) {
+    public void levelCompleted(Level level, List<Word> oldWords, List<Word> discoveredWords, int score) {
         if (score > 0) {
-            if (collectedWords.size() > 0) {
-                changeScreen(new QuizScreen(getSpriteBatch(), this, level, collectedWords, score));
-            } else levelWon(level, score);
+            if (oldWords.size() > 0 || discoveredWords.size() > 0) {
+                changeScreen(new QuizScreen(getSpriteBatch(), this, level, oldWords, discoveredWords, score));
+            } else levelWon(level, oldWords, discoveredWords, score);
         } else {
             levelFailed(level);
         }
     }
 
     @Override
-    public void levelWon(Level level, int score) {
+    public void levelWon(Level level, List<Word> collectedWords, List<Word> newWords, int score) {
         if (mPlayerData != null) {
             mPlayerData.setPlayerProgressOnLevel(level, score);
         }
-        changeScreen(new WonLevelScreen(getSpriteBatch(), this, level, score));
+        changeScreen(new WonLevelScreen(getSpriteBatch(), this, level, collectedWords, newWords, score));
     }
 
     @Override
@@ -132,13 +132,6 @@ public class InfinityRun extends Game implements IScreenObserver {
             changeScreen(newScreen);
         }
 
-    }
-
-    @Override
-    public void changeScreen(Word word) throws Exception {
-        AbstractScreen newScreen;
-        newScreen = new WordScreen(getSpriteBatch(), this, word);
-        changeScreen(newScreen);
     }
 
     private void changeScreen(AbstractScreen newScreen) {

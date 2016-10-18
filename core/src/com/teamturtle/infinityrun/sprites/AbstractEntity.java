@@ -4,7 +4,8 @@ package com.teamturtle.infinityrun.sprites;
  * Created by ericwenn on 9/27/16.
  */
 public abstract class AbstractEntity implements Entity {
-    float x,y;
+    private float x;
+    private float y;
 
     public float getX() {
         return x;

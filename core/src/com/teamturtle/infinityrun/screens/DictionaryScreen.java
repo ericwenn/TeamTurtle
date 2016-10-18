@@ -22,10 +22,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
+import com.teamturtle.infinityrun.models.category.CategoryLoader;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.models.words.WordImpl;
 import com.teamturtle.infinityrun.models.words.WordLoader;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
+import com.teamturtle.infinityrun.stages.WordStage;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -33,17 +34,24 @@ import java.util.List;
 public class DictionaryScreen extends AbstractScreen {
 
     private static final String LABEL_BG_URL = "label_bg.png";
+    private static final String LINE_IMAGE_URL = "ui/line.png";
     private static final String LABEL_TEXT = "Ord hittade:";
     private static final String LABEL_UNKNOWN = "???";
-    private static final float PAD_ROW = 20f;
-    private static final float PAD_SCROLL = 5f;
-    private static final float GRID_COLUMN_WIDTH = 4;
+    private static final int ROW_PAD = 20;
+    private static final int CATEGORY_PAD = 20;
+    private static final int PAD_SCROLL = 5;
+    private static final int GRID_COLUMN_WIDTH = 4;
+    private static final int CATEGORY_ONE_OFFSET = -8;
+    private static final int CATEGORY_ONE = 1;
 
-    private Stage stage;
-    private IScreenObserver observer;
-    private Skin skin;
-    private Texture bg;
+    private final Stage stage;
+    private WordStage wordStage;
+    private final IScreenObserver observer;
+    private final Skin skin;
+    private final Texture bg;
+    private final Texture line;
     private ImageButton imageButton;
+    private boolean isDictionaryScreen;
 
     public DictionaryScreen(final SpriteBatch spriteBatch, IScreenObserver observer) {
         super(spriteBatch);
@@ -51,6 +59,7 @@ public class DictionaryScreen extends AbstractScreen {
         stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
 
         bg = new Texture(PathConstants.BACKGROUND_PATH);
+        line = new Texture(LINE_IMAGE_URL);
 
         skin = new Skin();
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
@@ -59,15 +68,16 @@ public class DictionaryScreen extends AbstractScreen {
         initBackButton();
         initGridTable();
 
+        isDictionaryScreen = true;
     }
 
     private void initBackButton() {
-        imageButton = new ImageButton(skin, "back_button");
+        imageButton = new ImageButton(skin, "home_button");
         imageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.TILLBAKA.play();
+                    FxSound.HEM.play();
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -80,27 +90,51 @@ public class DictionaryScreen extends AbstractScreen {
 
     private void initGridTable() {
         WordLoader wordLoader = new WordLoader();
+        CategoryLoader categoryLoader = new CategoryLoader();
         PlayerData playerData = new PlayerData();
 
         Table grid = new Table();
 
         int collectedWordsAmount = 0;
-        List<WordImpl> allWords = wordLoader.getAllWords();
+        List<Word> allWords = wordLoader.getAllWords();
+        int categoryBefore = 0;
+        int columnCount = 0;
         for(int i = 0; i < allWords.size(); i++){
             Word word = allWords.get(i);
+            columnCount++;
+            int currentCategory = word.getCategory();
+            if (categoryBefore != currentCategory) {
+                grid.row();
+                String category = categoryLoader.getCategoryName(word.getCategory());
+                Label label = new Label(category, skin, "text-black");
+                if (currentCategory == CATEGORY_ONE) {
+                    grid.add(label).colspan(GRID_COLUMN_WIDTH).padTop(CATEGORY_ONE_OFFSET);
+                }else{
+                    grid.add(label).colspan(GRID_COLUMN_WIDTH).padTop(CATEGORY_PAD);
+
+                }
+                Image lineImg = new Image(line);
+                grid.row();
+                grid.add(lineImg).colspan(GRID_COLUMN_WIDTH).pad(ROW_PAD);
+                grid.row();
+                columnCount = 0;
+            } else if (columnCount % GRID_COLUMN_WIDTH == 0) {
+                grid.row().padTop(ROW_PAD);
+            }
+
+            categoryBefore = word.getCategory();
+
             if (playerData.hasPlayerCollectedWord(word)) {
                 grid.add(createGridItem(word, false));
                 collectedWordsAmount++;
             }else{
                 grid.add(createGridItem(word, true));
             }
-            if ((i+1) % GRID_COLUMN_WIDTH == 0) {
-                grid.row().padTop(PAD_ROW);
-            }
         }
 
         ScrollPane scroller = new ScrollPane(grid);
         scroller.setForceScroll(false, true);
+        scroller.setScrollingDisabled(true, false);
         Table rootTable = new Table();
         rootTable.setFillParent(true);
 
@@ -124,9 +158,9 @@ public class DictionaryScreen extends AbstractScreen {
         Label label;
         if (tinted) {
             image.setColor(Color.BLACK);
-            label = new Label(LABEL_UNKNOWN, skin);
+            label = new Label(LABEL_UNKNOWN, skin, "text-black");
         }else{
-            label = new Label(word.getText(), skin);
+            label = new Label(word.getText(), skin, "text-black");
         }
         gridItem.add(image);
         gridItem.row();
@@ -136,8 +170,10 @@ public class DictionaryScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 try {
-                    if(!tinted)
-                        observer.changeScreen(word);
+                    if(!tinted) {
+                        wordStage = new WordStage(word);
+                        isDictionaryScreen = false;
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -147,17 +183,41 @@ public class DictionaryScreen extends AbstractScreen {
     }
 
     @Override
-    public void buildStage() {
+    public void buildStage()
+    {
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(float dt) {
         super.render(dt);
-        stage.act(dt);
         getSpriteBatch().begin();
         getSpriteBatch().draw(bg, 0, 0, getViewport().getWorldWidth(), getViewport().getWorldHeight());
         getSpriteBatch().end();
-        stage.draw();
+
+        if(isDictionaryScreen) {
+            stage.act(dt);
+            stage.draw();
+        }
+        else if(wordStage.shouldGoBack()) {
+            isDictionaryScreen = true;
+            Gdx.input.setInputProcessor(stage);
+        }
+        else {
+            wordStage.act(dt);
+            wordStage.draw();
+        }
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (wordStage != null) {
+            wordStage.dispose();
+        }
+        stage.dispose();
+        skin.dispose();
+        bg.dispose();
+        line.dispose();
     }
 }

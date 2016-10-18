@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
 import java.util.List;
@@ -34,13 +34,12 @@ public class LevelSelectScreen extends AbstractScreen{
     private Stage stage;
     private Skin skin;
     private Table rootTable;
-    private ImageButton backButton;
     private Texture bg;
 
 
-    private IScreenObserver observer;
+    private final IScreenObserver observer;
     private final List<Level> levels;
-    private PlayerData mPlayerData;
+    private final PlayerData mPlayerData;
 
     public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer, List<Level> levels, PlayerData playerData) {
         super(spriteBatch);
@@ -76,13 +75,14 @@ public class LevelSelectScreen extends AbstractScreen{
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
-                        FeedbackSound.playLevelSound(level.getId());
+                        FxSound.playLevelSound(level.getId());
                         observer.playLevel(level);
                     }
                 });
                 levelButtonTable.add(button);
             } else {
                 ImageButton button = new ImageButton(skin, "lock_button");
+                button.addListener( new CantPlayButtonListener());
                 levelButtonTable.add(button);
             }
             levelButtonTable.row();
@@ -105,12 +105,12 @@ public class LevelSelectScreen extends AbstractScreen{
             progressedThisFar = progressedThisFar && playerScoreOnLevel > 0;
             i++;
         }
-        backButton = new ImageButton(skin, "back_button");
+        ImageButton backButton = new ImageButton(skin, "home_button");
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    FeedbackSound.TILLBAKA.play();
+                    FxSound.HEM.play();
                     observer.changeScreen(InfinityRun.ScreenID.MAIN_MENU);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -134,4 +134,29 @@ public class LevelSelectScreen extends AbstractScreen{
             stage.draw();
         }
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (stage != null) {
+            stage.dispose();
+        }
+        if (skin != null) {
+            skin.dispose();
+        }
+
+        if (bg != null) {
+            bg.dispose();
+
+        }
+    }
+
+
+    private static class CantPlayButtonListener extends ChangeListener {
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            FxSound.EJUPPLAST.play();
+        }
+    }
+
 }

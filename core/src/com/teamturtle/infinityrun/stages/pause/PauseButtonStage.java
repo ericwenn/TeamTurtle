@@ -13,7 +13,6 @@ import com.teamturtle.infinityrun.InfinityRun;
 public class PauseButtonStage extends Stage {
 
     private static final String IMAGE_URL = "ui/pause_button.png";
-    private Image pauseButton;
     private Texture btnTexture;
 
     public PauseButtonStage() {
@@ -23,7 +22,7 @@ public class PauseButtonStage extends Stage {
 
     private void setUpButton() {
         btnTexture = new Texture(IMAGE_URL);
-        pauseButton = new Image(btnTexture);
+        Image pauseButton = new Image(btnTexture);
         Table table = new Table();
         table.setSize((InfinityRun.WIDTH * 2) - pauseButton.getWidth()
                 , (InfinityRun.HEIGHT * 2) - pauseButton.getHeight());

@@ -25,21 +25,21 @@ public class MissionParser {
     private final String layerName;
 
 
-    private List<Rectangle> mMissionRectangles = new ArrayList<Rectangle>();
+    private final List<Rectangle> mMissionRectangles = new ArrayList<Rectangle>();
 
     public MissionParser(TiledMap tiledMap, String layerName) {
         this.tiledMap = tiledMap;
         this.layerName = layerName;
     }
 
-    void parse() {
+    private void parse() {
         for (MapObject object : tiledMap.getLayers().get(layerName).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             mMissionRectangles.add(rect);
         }
     }
 
-    void sort() {
+    private void sort() {
         Collections.sort(mMissionRectangles, new RectPositionComparator());
     }
 

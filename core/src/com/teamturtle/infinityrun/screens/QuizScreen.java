@@ -1,16 +1,16 @@
 package com.teamturtle.infinityrun.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.teamturtle.infinityrun.PathConstants;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.sound.FeedbackSound;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.stages.IQuizStageListener;
 import com.teamturtle.infinityrun.stages.QuizStage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,22 +22,26 @@ import java.util.List;
 
 public class QuizScreen extends AbstractScreen implements IQuizStageListener {
 
-    private Texture bg;
-    private QuizStage stage;
-    private IScreenObserver observer;
-    private Level level;
+    private final Texture bg;
+    private final QuizStage stage;
+    private final IScreenObserver observer;
+    private final Level level;
     private int score;
-    private Sound rightAnswerSound;
+    private final List<Word> oldWords;
+    private final List<Word> discoveredWords;
 
-    public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level
-            , List<Word> collectedWords, int score) {
+    public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level, List<Word> oldWords, List<Word> discoveredWords, int score) {
         super(spriteBatch);
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
+        List<Word> collectedWords = new ArrayList<Word>();
+        collectedWords.addAll(oldWords);
+        collectedWords.addAll(discoveredWords);
         this.stage = new QuizStage(this, collectedWords, score);
         this.observer = observer;
         this.level = level;
         this.score = score;
-        rightAnswerSound = Gdx.audio.newSound(Gdx.files.internal("audio/right_answer.wav"));
+        this.oldWords = oldWords;
+        this.discoveredWords = discoveredWords;
     }
 
     @Override
@@ -58,12 +62,18 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
     @Override
     public void onGuessClick(boolean isChoiceRight) {
         if (isChoiceRight) {
-            rightAnswerSound.play();
-            FeedbackSound.RATTGISSAT.play();
-            observer.levelWon(level, ++score);
+            FxSound.RATTGISSAT.play();
+            observer.levelWon(level, oldWords, discoveredWords, ++score);
         } else {
-            FeedbackSound.FELGISSAT.play();
-            observer.levelWon(level, score);
+            FxSound.FELGISSAT.play();
+            observer.levelWon(level, oldWords, discoveredWords, score);
         }
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+        bg.dispose();
+        super.dispose();
     }
 }

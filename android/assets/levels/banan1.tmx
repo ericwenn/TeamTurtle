@@ -36,7 +36,7 @@
  </layer>
  <layer name="graphics" width="225" height="15">
   <data encoding="base64" compression="zlib">
-   eJztWdtOwzAMzS9weYYKxBNjXCcBA5b//ypi0YjUc9q6cZK285HOS6PFzuXYjmeMQlEOt7UdUChOGGeO5y0vKvuiWC4+HD9b7iv7sjS8O163bOq6olDMDqViC+jwwfErow1J+NytebsL2Be8J6l1jr+DmtvqYK516pXRvE0B9qUhvpWsc0Czknql4sqpwOdGoMT5SeZ01WAXcE/vHTeOr4424M787RWnzunTUel3H5z11vHR/OcD4CXiExrPodu+eJA7VlDxtRSoWkg12EUYL0MNgv427felIszjHDZMO2FsicUX2GeIY5agH5uKb8dDz3jq/NLgavAunyuzA9Zg7Nzm+s7ACOMLhznvqyU4Bn069/m+T4dcYHtDMYZT46xRg5K9D2uG70audyJ17mvr51iCqVhabbdGDQ6B0wu2RkaDpd9+OXuwYd5Pzf82oFQPaooGqTWVqmuWqMHUs+Ks2ZoyeVC6B4rnHlNHjXnHAaiadmq9agly/cHA5zumnoi9lak59sS3lPhaQoNUfInx2Rz36aQI/T7f84Q1b5E93A+EMRsQj9dYQ8zXkrYlaQmmzun71y+M37wZWoOcOaYytI171lLk9OCgD3KTibsBe3gc/zcRO6eSa/CM+VLCNvQdfxAPE+eyBKXOmbMX1N0otZ8x27U4Nw2OufenpsGhfaxN1eAxfwHbv46p
+   eJztWclOAzEMzS+wnGEE5UQpayWgQPP/X0UsJiLjOjPjxEm6+EnvMlFjZ3m24xqjUNTDbWsHFIoTxpnjec+Lxr4oDhcfjp89N419OTS8O1737Nq6olDsHWrFFtDhg+NXQRuS8Llb8/YQsC94T3LrHH8HNbe1wb7WqVdG8zYF2JeO+FazzgHNSuqViitTWAjabwmfG4ES5yeZ01WDQ8A9vXdcOr462oBr87dXnDpnTEe1331w1ivHR/OfD4CXiE9ovETOGIsHKbGCAyq+1gJVC6kGhwjjZahB0N+y/36oCPM4hx3TThhbYvEF9hnimCXox1Lx7bgdGc+dXxpcDd6Vc0UcuXUU1mDs3Eq/M6TqwTC+cFjyvlqCczCmc5/vx3TIBbY3FWM4Nc4xalCy92HN9N0o9U6kzv3Y+jmWYC5SaruW795j1OAUOL1ga2Q0WPvtV7IHG+b93PxvA+K3c6ouUjRIrYm7rlr+Smow1efcfiFnzdaMa3BhZPKgdA8Uzz2njprzjgNQNW1qvWoJcv3BwOc7p56IvZWpOTbEt5z4WkODVHyJ8dns9umkCP0+3/OENa+QPdwPhDEbEI+3WEPM15q2JWkJ5s7p+9cvjN+8GVqDnDlSGdrGPWspcnpw0Ae5KcT1hD08jv+biJ1TzTV4xnypYRv6jj+I28S5LEGpc+bsBXU3au1nzHYr7psG59z7U9Pg1D62pmpwl7/h2Y/J
   </data>
  </layer>
  <objectgroup name="ground">
@@ -151,28 +151,22 @@
   </object>
  </objectgroup>
  <objectgroup name="emoji_placeholders">
-  <object id="248" x="480" y="352" width="32" height="32"/>
   <object id="249" x="800" y="320" width="32" height="32"/>
   <object id="250" x="928" y="192" width="32" height="32"/>
   <object id="255" x="2494" y="32" width="32" height="32"/>
-  <object id="256" x="2526" y="256" width="32" height="32"/>
   <object id="259" x="2366" y="320" width="32" height="32"/>
   <object id="260" x="1631.33" y="286.667" width="32" height="32"/>
   <object id="261" x="1566" y="128" width="32" height="32"/>
-  <object id="262" x="1406" y="288" width="32" height="32"/>
   <object id="296" x="3264" y="320" width="32" height="32"/>
   <object id="297" x="3296" y="96" width="32" height="32"/>
-  <object id="298" x="3457" y="158" width="32" height="32"/>
-  <object id="330" x="4512" y="128" width="32" height="32"/>
   <object id="331" x="4448" y="288" width="32" height="32"/>
-  <object id="332" x="4288" y="128" width="32" height="32"/>
+  <object id="332" x="4480" y="128" width="32" height="32"/>
   <object id="334" x="5216" y="192" width="32" height="32"/>
   <object id="335" x="5248" y="64" width="32" height="32"/>
-  <object id="336" x="4960" y="96" width="32" height="32"/>
   <object id="351" x="5792" y="288" width="32" height="32"/>
   <object id="352" x="5760" y="192" width="32" height="32"/>
   <object id="353" x="5888" y="128" width="32" height="32"/>
-  <object id="354" x="6656" y="352" width="32" height="32"/>
+  <object id="354" x="6625" y="161" width="32" height="32"/>
   <object id="355" x="6592" y="256" width="32" height="32"/>
   <object id="356" x="6656" y="0" width="32" height="32"/>
  </objectgroup>

@@ -1,8 +1,9 @@
 package com.teamturtle.infinityrun.sprites;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -18,9 +19,8 @@ import com.teamturtle.infinityrun.screens.GameScreen;
  */
 public class Player extends AbstractEntity {
 
-    private World world;
+    private final World world;
     private Body b2body;
-    private boolean canDoubleJump;
     private float scale = 1;
     public static final int PLAYER_WIDTH = 16, PLAYER_HEIGHT = 16;
     private static final int COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 150, START_Y = 300;
@@ -30,8 +30,13 @@ public class Player extends AbstractEntity {
     private static final float LINEAR_SPEED_X = 2.5799992f;
     private static final float IMPULSE_X = 0.1f;
 
-    private ShapeRenderer shapeRenderer;
+    private final TextureRegion neutralTexture;
+    private final TextureRegion failTexture;
+    private final TextureRegion successTexture;
     private Color fillColor;
+
+
+    private int jumpsLeft = 2;
 
     public Player(World world) {
         this.world = world;
@@ -39,7 +44,9 @@ public class Player extends AbstractEntity {
         setPosition(0, InfinityRun.HEIGHT / 2);
         definePlayer();
 
-        this.shapeRenderer = new ShapeRenderer();
+        this.neutralTexture = new TextureRegion(new Texture("player_sprite_neutral.png"), 0, 0, 32, 32);
+        this.failTexture = new TextureRegion(new Texture("player_sprite_fail.png"), 0, 0, 32, 32);
+        this.successTexture = new TextureRegion(new Texture("player_sprite_success.png"), 0, 0, 32, 32);
         this.setColor(GameScreen.NEUTRAL_PLAYER_COLOR);
     }
 
@@ -56,15 +63,21 @@ public class Player extends AbstractEntity {
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        spriteBatch.end();
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
-        shapeRenderer.setColor(this.fillColor);
-        shapeRenderer.circle(getX() + (scale * PLAYER_WIDTH / 2 / InfinityRun.PPM), getY() + (scale * PLAYER_HEIGHT / 2 / InfinityRun.PPM), scale * COLLISION_RADIUS / InfinityRun.PPM, 20);
-        shapeRenderer.end();
+        TextureRegion currentTexture = neutralTexture;
 
-        spriteBatch.begin();
+        if (this.fillColor.equals(GameScreen.FAILURE_COLOR)){
+            currentTexture = failTexture;
+        }else if (this.fillColor.equals(GameScreen.SUCCESS_COLOR)){
+            currentTexture = successTexture;
+        }
+
+        spriteBatch.draw(
+                currentTexture,
+                getX(),
+                getY(),
+                scale * PLAYER_WIDTH / InfinityRun.PPM,
+                scale * PLAYER_HEIGHT / InfinityRun.PPM);
     }
 
     @Override
@@ -90,11 +103,10 @@ public class Player extends AbstractEntity {
 
     public boolean tryToJump(){
         float jumpStrength = 0;
-        if (Math.abs(b2body.getLinearVelocity().y) < 0.0001) {
+        if (jumpsLeft == 2) {
             jumpStrength = JUMP_IMPULSE;
-            canDoubleJump = true;
-        }
-        else if(canDoubleJump){
+            jumpsLeft--;
+        } else if(jumpsLeft == 1){
             if(b2body.getLinearVelocity().y <= 0) {
                 b2body.setLinearVelocity(b2body.getLinearVelocity().x, 0);
             }
@@ -103,7 +115,7 @@ public class Player extends AbstractEntity {
                         b2body.getLinearVelocity().y / 2);
             }
             jumpStrength = JUMP_IMPULSE;
-            canDoubleJump = false;
+            jumpsLeft--;
         }
         b2body.applyLinearImpulse(new Vector2(0, jumpStrength), b2body.getWorldCenter(), true);
         return Math.abs(jumpStrength - JUMP_IMPULSE) < 0.001;
@@ -115,6 +127,10 @@ public class Player extends AbstractEntity {
 
     public void setColor(Color c) {
         this.fillColor = c;
+    }
+
+    public void resetJump() {
+        jumpsLeft = 2;
     }
 
     public void setScale(float scale) {

@@ -13,9 +13,9 @@ import java.util.List;
  * Created by ericwenn on 10/5/16.
  */
 public class SentenceLoader {
-    private HashMap<String, SentenceList> sentenceMap;
-    private Json mJson;
-    private FileHandle mFile;
+    private final HashMap<String, SentenceList> sentenceMap;
+    private final Json mJson;
+    private final FileHandle mFile;
 
     public SentenceLoader() {
         mFile = Gdx.files.internal(PathConstants.SENTENCE_JSON_PATH);

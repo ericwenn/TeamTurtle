@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="15" tilewidth="32" tileheight="32" nextobjectid="160">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="15" tilewidth="32" tileheight="32" nextobjectid="182">
  <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="mini_tileset.png" trans="ff00ff" width="128" height="128"/>
  </tileset>
+ <tileset firstgid="17" name="greentileset" tilewidth="32" tileheight="32" tilecount="78" columns="13">
+  <image source="greentileset.png" trans="ff00ff" width="440" height="196"/>
+ </tileset>
  <layer name="graphics" width="300" height="15">
   <data encoding="base64" compression="zlib">
-   eJztmcsKAjEMRUfBlQv//2/dCIqMTB43baaeAwWxSUwfk96p2wYqrq8GANAd6hUAdOFmbNl4Xj9r7KN40f4s1fH/kegeUe1tGAP6aH2Ua8x+8XOfncAWW7eqGh45NyrOFLX+stpn7az9lvFF5jU679XxP/2PPqvwrsUoMr/70KdjQvWcX78aWrQX6nu5bDw0zbmZVa+OGKVXRtUztR6L+nt1hEpPqfDWq+x8K8bvwZKf9/toLh3J1KtLoK1M1dmNJnjD/6g9sJ6/GU2wt85d9dUvqnRSZP4r1ugon6i/x95il+23jC8yr9V6Wa2noj4rUvUMVu+JDGfKFQBgj9l1TH0GRP099go9M1vvzORXXl3zHQVaArjTAVifru/Mav2lslf1W8Z3truIVZn9LMA6oKsAQE2X+6vRdM0L/o8nQhMJRA==
+   eJztmd0OwiAMhfcK6r2aTB9i8/3fy90Yl0WkpT8UOF/SZMlKYcC67jBNQIvrZvfagwAAgI1H5j7yVRm5eQUA8Fk2WzP2EsajtN+3S/kfY/+LuwjvS7GOPyIle0RzbwMf5toDAOZorjH2S5uUrFtpfVESt9Qk45E+H+UbefTX8KPcp85XyteinqPOl7SeWwnXWnDWwrP+kfT71B8OCc6+lcaNUIuOqrPMk24dcdrsImiPmqZtLPKVxrupnXes8qNG/9H0K66fp37FPZeQrrv0+bh1E2XeUzFzfVnUcN5I8tWZaZLvYgtYfbtRE3zBOWoMPPT2X/tekq9uTLsL+vrg+R85mn5F8e1Vv6KiXU+VtukRi3dwbzXyVQ7oV2OBeQVUIuarFLXzWGv61d43kn7lHV9Cqc7UO7XOJVvKVwCAsekhX1n+M7eoX1nXU9b6FdBH4x2JsGY95CsvrHQWnB0CQAP5ik4U/cqbyPoSGIs3hRB1ag==
   </data>
  </layer>
  <objectgroup name="quest">
   <object id="1" x="192" y="0" width="32" height="480"/>
-  <object id="29" x="2080" y="0" width="32" height="480"/>
-  <object id="103" x="4768" y="0" width="32" height="480"/>
-  <object id="152" x="9024" y="0" width="32" height="480"/>
+  <object id="29" x="2400" y="-1" width="32" height="480"/>
+  <object id="103" x="5151" y="-83" width="32" height="562"/>
+  <object id="152" x="9024" y="-53" width="32" height="533"/>
  </objectgroup>
  <objectgroup name="ground">
   <object id="4" x="0" y="224" width="416" height="32"/>
@@ -111,29 +114,50 @@
   <object id="158" x="8832" y="255" width="768" height="14"/>
  </objectgroup>
  <objectgroup name="obstacle">
-  <object id="3" x="576" y="128" width="32" height="32"/>
-  <object id="12" x="1056" y="160" width="128" height="32"/>
-  <object id="33" x="2176" y="96" width="32" height="32"/>
-  <object id="34" x="2176" y="224" width="32" height="32"/>
-  <object id="45" x="2656" y="0" width="64" height="64"/>
-  <object id="62" x="3104" y="416" width="32" height="32"/>
-  <object id="63" x="3168" y="352" width="32" height="32"/>
-  <object id="64" x="2880" y="224" width="32" height="32"/>
-  <object id="93" x="4384" y="160" width="64" height="32"/>
+  <object id="45" x="2656" y="-56" width="64" height="120"/>
   <object id="107" x="5024" y="160" width="64" height="96"/>
-  <object id="115" x="5536" y="160" width="32" height="32"/>
-  <object id="121" x="6048" y="96" width="32" height="32"/>
-  <object id="131" x="6656" y="96" width="32" height="32"/>
   <object id="154" x="-2" y="474" width="9602" height="6"/>
-  <object id="159" x="8960" y="224" width="32" height="32"/>
+  <object id="161" x="8961" y="256">
+   <polygon points="0,0 12,-23 31,-2"/>
+  </object>
+  <object id="163" x="6657" y="129">
+   <polygon points="0,0 13,-22 32,0"/>
+  </object>
+  <object id="165" x="6049" y="129">
+   <polygon points="0,0 15,-24 30,-1"/>
+  </object>
+  <object id="169" x="5538" y="190">
+   <polygon points="0,0 16,-22 29,1"/>
+  </object>
+  <object id="172" x="4385" y="192">
+   <polygon points="0,0 15,-23 31,-1"/>
+  </object>
+  <object id="173" x="4447" y="193">
+   <polygon points="0,0 -17,-23 -31,-2"/>
+  </object>
+  <object id="174" x="2882" y="256">
+   <polygon points="0,0 14,-23 31,0"/>
+  </object>
+  <object id="175" x="3106" y="450">
+   <polygon points="0,0 11,-26 29,-1"/>
+  </object>
+  <object id="178" x="2177" y="129">
+   <polygon points="0,0 14,-26 32,-2"/>
+  </object>
+  <object id="179" x="2176" y="256">
+   <polygon points="0,0 15,-24 32,-2"/>
+  </object>
+  <object id="180" x="578" y="161">
+   <polygon points="0,0 14,-25 32,-1"/>
+  </object>
  </objectgroup>
  <objectgroup name="goal">
-  <object id="153" x="9312" y="0" width="32" height="480"/>
+  <object id="153" x="9122" y="-40" width="32" height="521"/>
  </objectgroup>
  <objectgroup name="emoji_placeholders">
-  <object id="25" x="1952" y="160" width="32" height="32"/>
-  <object id="26" x="1952" y="32" width="32" height="32"/>
-  <object id="27" x="1952" y="288" width="32" height="32"/>
+  <object id="25" x="1951" y="160" width="32" height="32"/>
+  <object id="26" x="1951" y="32" width="32" height="32"/>
+  <object id="27" x="1950" y="287" width="32" height="32"/>
   <object id="98" x="4608" y="31" width="32" height="32"/>
   <object id="99" x="4607" y="160" width="32" height="32"/>
   <object id="100" x="4608" y="288" width="32" height="32"/>
