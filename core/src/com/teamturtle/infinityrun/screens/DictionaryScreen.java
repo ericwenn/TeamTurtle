@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.PathConstants;
+import com.teamturtle.infinityrun.models.category.CategoryLoader;
 import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sound.FxSound;
@@ -83,14 +84,20 @@ public class DictionaryScreen extends AbstractScreen {
 
     private void initGridTable() {
         WordLoader wordLoader = new WordLoader();
+        CategoryLoader categoryLoader = new CategoryLoader();
         PlayerData playerData = new PlayerData();
 
         Table grid = new Table();
 
         int collectedWordsAmount = 0;
         List<Word> allWords = wordLoader.getAllWords();
+        String categoryName = categoryLoader.getCategoryName(allWords.get(0).getId());
         for(int i = 0; i < allWords.size(); i++){
             Word word = allWords.get(i);
+            String currentCategoryName = categoryLoader.getCategoryName(word.getId());
+            if (!categoryName.equals(currentCategoryName)) {
+
+            }
             if (playerData.hasPlayerCollectedWord(word)) {
                 grid.add(createGridItem(word, false));
                 collectedWordsAmount++;

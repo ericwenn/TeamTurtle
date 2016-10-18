@@ -1,0 +1,87 @@
+[
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 1
+    categoryName: Djur
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 2
+    categoryName: Sport
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 3
+    categoryName: Fordon och maskiner
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 4
+    categoryName: Byggnader
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 5
+    categoryName: Teknik
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 6
+    categoryName: Random
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 7
+    categoryName: Möbler
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 8
+    categoryName: Mat
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 9
+    categoryName: Frukt
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 10
+    categoryName: Natur
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 11
+    categoryName: Godis/Kakor
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 12
+    categoryName: Dryck
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 13
+    categoryName: Verb
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 14
+    categoryName: Kläder
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 15
+    categoryName: Verktyg/Redskap
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 16
+    categoryName: Väder
+  }
+  {
+    class: com.teamturtle.infinityrun.models.category.CategoryImpl
+    id: 17
+    categoryName: Musikinstrument
+  }
+]
