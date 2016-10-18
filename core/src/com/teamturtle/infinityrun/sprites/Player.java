@@ -21,7 +21,6 @@ public class Player extends AbstractEntity {
 
     private final World world;
     private Body b2body;
-    private boolean canDoubleJump;
     private float scale = 1;
     public static final int PLAYER_WIDTH = 16, PLAYER_HEIGHT = 16;
     private static final int COLLISION_RADIUS = PLAYER_WIDTH / 2, START_X = 150, START_Y = 300;

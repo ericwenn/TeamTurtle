@@ -38,8 +38,6 @@ public class LoadingScreen extends AbstractScreen {
     private TextureRegion[][] tmpRegions;
     private float stateTime;
 
-    private boolean loadingDone;
-
     private Stage stage;
     private final IScreenObserver observer;
 

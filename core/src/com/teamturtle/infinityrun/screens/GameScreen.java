@@ -533,7 +533,7 @@ public class GameScreen extends AbstractScreen implements IPauseStageHandler {
                     activeMission = mMissionHandler.getNextMission();
                     mMissionStage.setMission(activeMission);
                 } catch (IndexOutOfBoundsException e) {
-
+                    Gdx.app.error("GameScreen", "IndexOutOfBoundsException: " + e.getMessage());
                 }
             }
         });

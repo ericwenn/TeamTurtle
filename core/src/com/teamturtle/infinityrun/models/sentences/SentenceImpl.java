@@ -6,9 +6,6 @@ package com.teamturtle.infinityrun.models.sentences;
 public class SentenceImpl implements Sentence {
     private String text = null;
 
-    public SentenceImpl() {
-    }
-
     public void setText(String text) {
         this.text = text;
     }

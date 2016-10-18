@@ -88,9 +88,7 @@ public class WordStage extends Stage {
         map.setColor(TABLE_COLOR);
         map.fill();
         table.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(map))));
-
-        Table descriptionTable = new Table();
-
+        
         Skin skin = new Skin();
         skin.addRegions(new TextureAtlas(Gdx.files.internal("skin/uiskin.atlas")));
         skin.load(Gdx.files.internal("skin/uiskin.json"));
@@ -98,7 +96,7 @@ public class WordStage extends Stage {
         Label titleLabel = new Label(word.getText().substring(0, 1).toUpperCase(Locale.getDefault()) +
                 word.getText().substring(1), new Label.LabelStyle(titleFont, FONT_COLOR));
 
-        descriptionTable = new Table();
+        Table descriptionTable = new Table();
 
         for(String s : descriptionList){
             int rowOffset;

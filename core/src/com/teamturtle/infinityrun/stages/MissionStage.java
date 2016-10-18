@@ -21,10 +21,9 @@ import static com.badlogic.gdx.utils.Timer.schedule;
 
 public class MissionStage extends Stage {
 
-    private static final int TABLE_WIDTH = 200,
-            TABLE_HEIGHT = 50,
-            TABLE_OFFSET_BOTTOM = 20,
-            TABLE_OFFSET_RIGHT = 10;
+    private static final int TABLE_WIDTH = 200;
+    private static final int TABLE_HEIGHT = 50;
+    private static final int TABLE_OFFSET_BOTTOM = 20;
     private static final String CATCH_PREFIX = "Plocka ";
 
     private static final float SCALE_BY = 1.2f;

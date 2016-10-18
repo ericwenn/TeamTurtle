@@ -88,10 +88,6 @@ public enum FxSound implements Disposable {
         fxMuted = !fxMuted;
     }
 
-    public static Sound getSound(FxSound fxSound) {
-        return assetManager.get(fxSound.url, Sound.class);
-    }
-
     @Override
     public void dispose() {
         for (FxSound sound : values()) {

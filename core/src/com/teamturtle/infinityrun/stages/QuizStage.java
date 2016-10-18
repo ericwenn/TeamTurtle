@@ -275,11 +275,6 @@ public class QuizStage extends Stage {
         }
     }
 
-    public void hide() {
-        buttonTable.remove();
-        parentTable.remove();
-    }
-
     @Override
     public void dispose() {
         skin.dispose();
