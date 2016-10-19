@@ -12,12 +12,10 @@ import com.teamturtle.infinityrun.screens.AbstractScreen;
 public class LoadingScreen extends AbstractScreen {
 
 
-    private final AssetManager assetManager;
     private LoadingStage loadingStage;
 
     public LoadingScreen(SpriteBatch spriteBatch, AssetManager assetManager) {
         super(spriteBatch);
-        this.assetManager = assetManager;
         loadingStage = new LoadingStage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT), spriteBatch, assetManager);
     }
 
@@ -31,5 +29,14 @@ public class LoadingScreen extends AbstractScreen {
         super.render(delta);
         loadingStage.draw();
 
+    }
+
+
+    /**
+     * Updated the rendered progressbar
+     * @param newProgress [0,1]
+     */
+    public void updateProgress(float newProgress) {
+        loadingStage.updateProgress(newProgress);
     }
 }

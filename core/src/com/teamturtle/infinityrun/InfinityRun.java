@@ -1,11 +1,12 @@
 package com.teamturtle.infinityrun;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.teamturtle.infinityrun.loading.LoadingStage;
 import com.teamturtle.infinityrun.models.level.Level;
 import com.teamturtle.infinityrun.models.level.LevelDataHandler;
@@ -20,6 +21,7 @@ import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
 import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
+import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sound.GameMusic;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
@@ -32,11 +34,15 @@ public class InfinityRun extends Game implements IScreenObserver {
     public static final int HEIGHT = 480;
     public static final float PPM = 75;
 
+
     private SpriteBatch mSpriteBatch;
     private PlayerData mPlayerData;
     private LevelDataHandler levelHandler;
     private AssetManager assetManager;
 
+    private com.teamturtle.infinityrun.loading.LoadingScreen mLoadScreen;
+
+    private boolean initialLoadingDone = false;
     @Override
     public void create() {
         setSpriteBatch(new SpriteBatch());
@@ -45,20 +51,55 @@ public class InfinityRun extends Game implements IScreenObserver {
         levelHandler = new LevelDataHandler();
 
 
+        /**
+         * Load all assets needed to render the loading screen.
+         */
         assetManager.load(LoadingStage.TURTLE_URL, Texture.class);
         assetManager.load(LoadingStage.BG_URL, Texture.class);
+        assetManager.load("skin/uiskin.json", Skin.class);
+
+        /**
+         * Block until they have finished loading so the loading screen can be shown ASAP.
+         */
         assetManager.finishLoading();
 
 
-        com.teamturtle.infinityrun.loading.LoadingScreen loadScreen = new com.teamturtle.infinityrun.loading.LoadingScreen( getSpriteBatch(), assetManager);
-        changeScreen(loadScreen);
+        mLoadScreen = new com.teamturtle.infinityrun.loading.LoadingScreen( getSpriteBatch(), assetManager);
+        changeScreen(mLoadScreen);
 
-        try {
-            //changeScreen(ScreenID.LOADING_SCREEN);
-            GameMusic.THEME_1.playMusicLooping();
-        } catch (Exception e) {
-            Gdx.app.error("InfinityRun", "Could not change screen", e);
+
+        /**
+         * Queue all feedback sounds in asset manager
+         */
+        for (FxSound s : FxSound.values()) {
+            assetManager.load( s.getUrl(), Sound.class);
         }
+
+
+        /*
+
+         */
+        GameMusic.THEME_1.playMusicLooping();
+    }
+
+
+    @Override
+    public void render() {
+        super.render();
+        if (!initialLoadingDone) {
+            if(!assetManager.update()) {
+                mLoadScreen.updateProgress( assetManager.getProgress());
+            } else {
+                mLoadScreen.updateProgress(1f);
+                initialLoadingDone = true;
+                try {
+                    changeScreen(ScreenID.MAIN_MENU);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
     private void setSpriteBatch(SpriteBatch sb) {

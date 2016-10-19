@@ -40,6 +40,11 @@ public enum FxSound implements Disposable {
         this.url = URL_PREFIX + url + URL_SUFFIX;
     }
 
+
+    public String getUrl() {
+        return url;
+    }
+
     public void play(float volume) {
         if (!fxMuted) {
             Sound sound = assetManager.get(url, Sound.class);
