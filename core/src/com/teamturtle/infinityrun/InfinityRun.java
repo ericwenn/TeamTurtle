@@ -76,10 +76,10 @@ public class InfinityRun extends Game implements IScreenObserver {
         }
 
 
-        /*
-
+        /**
+         * Play music
          */
-        GameMusic.THEME_1.playMusicLooping();
+        GameMusic.playMusicLooping(GameMusic.Theme.THEME_1);
     }
 
 

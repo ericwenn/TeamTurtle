@@ -6,30 +6,35 @@ import com.badlogic.gdx.audio.Music;
 /**
  * Created by Henrik on 2016-10-16.
  */
-public enum GameMusic {
-
-    THEME_1("TeamTurtleTheme1");
+public class GameMusic {
 
     private static final String URL_PREFIX = "audio/music/";
     private static final String URL_SUFFIX = ".mp3";
     private static boolean musicMuted = false;
-    private Music music;
 
-    GameMusic(String musicName) {
-        this.music = Gdx.audio.newMusic(Gdx.files.internal(URL_PREFIX + musicName + URL_SUFFIX));
-        this.music.setVolume(0.03f);
+
+    public enum Theme {
+        THEME_1("TeamTurtleTheme1");
+        private Music music;
+        Theme(String musicName) {
+            this.music = Gdx.audio.newMusic(Gdx.files.internal(URL_PREFIX + musicName + URL_SUFFIX));
+            this.music.setVolume(0.03f);
+        }
+
     }
 
-    public void playMusicLooping() {
+
+
+    public static void playMusicLooping(final Theme theme ) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (!musicMuted) {
-                    for (GameMusic gameMusic: values()) {
-                        gameMusic.music.stop();
+                    for (Theme theme: Theme.values()) {
+                        theme.music.stop();
                     }
-                    music.setLooping(true);
-                    music.play();
+                    theme.music.setLooping(true);
+                    theme.music.play();
                 }
             }
         });
@@ -39,12 +44,12 @@ public enum GameMusic {
     public static void shiftMusicMute() {
         musicMuted = !musicMuted;
         if (musicMuted) {
-            for(GameMusic gameMusic : values()) {
-                gameMusic.music.setVolume(0);
+            for(Theme theme : Theme.values()) {
+                theme.music.setVolume(0);
             }
         }else{
-            for (GameMusic gameMusic : values()) {
-                gameMusic.music.setVolume(0.03f);
+            for (Theme theme : Theme.values()) {
+                theme.music.setVolume(0.03f);
             }
         }
     }
