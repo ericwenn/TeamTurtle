@@ -22,6 +22,7 @@ import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.sprites.emoji.EmojiFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,16 +39,15 @@ import static com.badlogic.gdx.math.MathUtils.random;
  */
 
 public class QuizStage extends Stage {
-    private Skin skin;
-    private IQuizStageListener handler;
-    private Emoji emoji;
-    private int wordCategory;
-    private List<Word> guesses;
+    private final Skin skin;
+    private final IQuizStageListener handler;
+    private final Emoji emoji;
+    private final int wordCategory;
     private List<TextButton> guessButtons;
     private List<ImageButton> soundButtons;
     private List<Sound> soundList;
-    private WordLoader wordLoader;
-    private int score;
+    private final WordLoader wordLoader;
+    private final int score;
     private boolean isStarFilled = false;
     private boolean delayStarted = false;
     private boolean didGuessRight = false;
@@ -55,8 +55,10 @@ public class QuizStage extends Stage {
 
     //    Components
     private Table parentTable, buttonTable;
-    private Table starTable, animatedStarTable;
-    private Texture star, noStar;
+    private final Table starTable;
+    private final Table animatedStarTable;
+    private final Texture star;
+    private final Texture noStar;
 
     private static final float TEXT_BUTTON_PADDING = 5.0f;
     private static final float PARENT_TABLE_WIDTH = 600.0f, PARENT_TABLE_HEIGHT = 370.0f;
@@ -80,8 +82,8 @@ public class QuizStage extends Stage {
         starTable = getStarsTable();
         animatedStarTable = getAnimatedStarsTable();
 
-        guesses = getRandomGuesses(collectedWords);
-        emoji = new Emoji(guesses.get(0));
+        List<Word> guesses = getRandomGuesses(collectedWords);
+        emoji = EmojiFactory.getInstance().getEmoji(guesses.get(0));
         createButtons(guesses);
         createTableUi(starTable);
         addActor(parentTable);
@@ -198,8 +200,8 @@ public class QuizStage extends Stage {
         Image emojiImage = new Image(emoji.getTexture());
         emojiImage.setScaling(Scaling.fit);
         emojiTable.add(emojiImage).width(QUESTION_EMOJI_DIMENSION).height(QUESTION_EMOJI_DIMENSION);
-        Label questionLabel = new Label("?", skin);
-        questionLabel.setFontScale(1.7f);
+        Label questionLabel = new Label("?", skin, "text-large");
+        questionLabel.setFontScale(1.4f);
         emojiTable.add(questionLabel).width(25).padLeft(ROW_PADDING / 4);
 
         parentTable.add(emojiTable);
@@ -274,8 +276,12 @@ public class QuizStage extends Stage {
         }
     }
 
-    public void hide() {
-        buttonTable.remove();
-        parentTable.remove();
+    @Override
+    public void dispose() {
+        skin.dispose();
+        star.dispose();
+        noStar.dispose();
+        emoji.dispose();
+        super.dispose();
     }
 }

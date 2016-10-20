@@ -21,9 +21,11 @@ import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.screens.IScreenObserver;
 import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.sprites.emoji.EmojiFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Henrik on 2016-10-02.
@@ -57,11 +59,12 @@ public class WonLevelScreen extends EndLevelScreen{
     private static final int SHADOW_OFFSET = 2;
     private static final float SHADOW_SCALE = 1.05f;
 
-    private Skin skin;
+    private final Skin skin;
     private Table emojiTable;
-    private Level level;
-    private IScreenObserver observer;
-    private List<Word> oldWords, discoveredWords;
+    private final Level level;
+    private final IScreenObserver observer;
+    private final List<Word> oldWords;
+    private final List<Word> discoveredWords;
     //TODO should be replaced with assetmanager
     private List<Sound> emojiSounds;
     private Texture discoverdTopLayer;
@@ -107,13 +110,14 @@ public class WonLevelScreen extends EndLevelScreen{
         }
         emojiTable.row();
         emojiLbl = new Label("", skin);
+        emojiLbl.setColor(Color.BLACK.BLACK);
         emojiTable.add(emojiLbl).colspan(allWords.size());
     }
 
     private Stack createEmojiStack(Word word, int emojiIndex) {
         final Sound emojiSound = Gdx.audio.newSound(Gdx.files.internal(word.getSoundUrl()));
         emojiSounds.add(emojiSound);
-        final Emoji emoji = new Emoji(word);
+        final Emoji emoji = EmojiFactory.getInstance().getEmoji(word);
         final Image emojiImg = new Image(emoji.getTexture());
         final Image emojiShadow = new Image(emoji.getTexture());
         emojiShadows.add(emojiShadow);
@@ -132,7 +136,7 @@ public class WonLevelScreen extends EndLevelScreen{
             public void clicked(InputEvent event, float x, float y) {
                 emojiSound.play();
                 String emojiStr = emoji.getName();
-                emojiStr = emojiStr.substring(0, 1).toUpperCase() + emojiStr.substring(1);
+                emojiStr = emojiStr.substring(0, 1).toUpperCase(Locale.getDefault()) + emojiStr.substring(1);
                 emojiLbl.setText(emojiStr);
                 for (Image img : emojiShadows) {
                     img.setScale(0);

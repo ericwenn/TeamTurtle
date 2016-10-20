@@ -8,24 +8,18 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.teamturtle.infinityrun.InfinityRun;
 import com.teamturtle.infinityrun.models.words.Word;
-import com.teamturtle.infinityrun.models.words.WordImpl;
-import com.teamturtle.infinityrun.models.words.WordLoader;
 import com.teamturtle.infinityrun.sound.FxSound;
 import com.teamturtle.infinityrun.sprites.AbstractEntity;
-
-import java.util.Map;
 
 /**
  * Created by Henrik on 2016-09-21.
@@ -48,53 +42,24 @@ public class Emoji extends AbstractEntity {
     private boolean hasSound;
 
     private BitmapFont font;
-    private float textLength;
     private Stage fontStage;
     private int counter;
     private float distanceToTop;
 
-    @Deprecated
-    public Emoji(String emojiName, String soundURL, Texture texture) {
-        this.texture = texture;
-        setup();
-    }
+    private Skin skin;
 
-    public Emoji(String emojiName, String soundUrl, String iconUrl) {
-        WordImpl w = new WordImpl();
-        w.word = emojiName;
-        w.filename = iconUrl;
-        w.soundUrl = soundUrl;
-        WordLoader wl = new WordLoader();
-        Map<String, ? extends Word> words = wl.getWords();
-
-        for(Word word : words.values()){
-            if(word.getText().equals(w.getText()))
-                w.id = word.getId() + "";
-        }
-
-        wordModel = w;
-
-        setup();
-    }
-
-    public Emoji(Word word) {
+    public Emoji(Word word, BitmapFont font, Skin skin) {
         wordModel = word;
+        this.font = font;
+        this.skin = skin;
         setup();
     }
 
     private void setup() {
         texture = new Texture(wordModel.getIconUrl());
-        //Create font
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_URL));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter
-                = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = FONT_SIZE;
-        parameter.color = FONT_COLOR;
-        font = generator.generateFont(parameter);
-        generator.dispose();
 
         GlyphLayout layout = new GlyphLayout(font, wordModel.getText());
-        textLength = layout.width;
+        float textLength = layout.width;
 
         if (!wordModel.getSoundUrl().equals("404")) {
             emojiSound = Gdx.audio.newSound(Gdx.files.internal(wordModel.getSoundUrl()));
@@ -104,7 +69,7 @@ public class Emoji extends AbstractEntity {
         }
         fontStage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         counter = 0;
-        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+
         Label label = new Label(getName(), skin);
         label.setColor(FONT_COLOR);
         Image i = new Image(texture);
@@ -182,10 +147,11 @@ public class Emoji extends AbstractEntity {
     @Override
     public void dispose() {
         texture.dispose();
-        mBody.getWorld().destroyBody(mBody);
+        if (mBody != null)
+            mBody.getWorld().destroyBody(mBody);
         if (hasSound)
             emojiSound.dispose();
-        font.dispose();
+        //font.dispose();
         fontStage.dispose();
     }
 

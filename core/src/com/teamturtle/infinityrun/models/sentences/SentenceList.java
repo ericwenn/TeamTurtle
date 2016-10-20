@@ -6,7 +6,7 @@ import java.util.List;
  * Created by ericwenn on 10/5/16.
  */
 public class SentenceList {
-    public List<SentenceImpl> sentences;
+    private List<SentenceImpl> sentences;
 
     public SentenceList() {
     }

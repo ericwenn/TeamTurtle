@@ -34,13 +34,12 @@ public class LevelSelectScreen extends AbstractScreen{
     private Stage stage;
     private Skin skin;
     private Table rootTable;
-    private ImageButton backButton;
     private Texture bg;
 
 
-    private IScreenObserver observer;
+    private final IScreenObserver observer;
     private final List<Level> levels;
-    private PlayerData mPlayerData;
+    private final PlayerData mPlayerData;
 
     public LevelSelectScreen(SpriteBatch spriteBatch, IScreenObserver observer, List<Level> levels, PlayerData playerData) {
         super(spriteBatch);
@@ -83,12 +82,7 @@ public class LevelSelectScreen extends AbstractScreen{
                 levelButtonTable.add(button);
             } else {
                 ImageButton button = new ImageButton(skin, "lock_button");
-                button.addListener(new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent event, Actor actor) {
-                        FxSound.EJUPPLAST.play();
-                    }
-                });
+                button.addListener( new CantPlayButtonListener());
                 levelButtonTable.add(button);
             }
             levelButtonTable.row();
@@ -111,7 +105,7 @@ public class LevelSelectScreen extends AbstractScreen{
             progressedThisFar = progressedThisFar && playerScoreOnLevel > 0;
             i++;
         }
-        backButton = new ImageButton(skin, "home_button");
+        ImageButton backButton = new ImageButton(skin, "home_button");
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -143,9 +137,26 @@ public class LevelSelectScreen extends AbstractScreen{
 
     @Override
     public void dispose() {
-        stage.dispose();
-        skin.dispose();
-        bg.dispose();
+        super.dispose();
+        if (stage != null) {
+            stage.dispose();
+        }
+        if (skin != null) {
+            skin.dispose();
+        }
+
+        if (bg != null) {
+            bg.dispose();
+
+        }
+    }
+
+
+    private static class CantPlayButtonListener extends ChangeListener {
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            FxSound.EJUPPLAST.play();
+        }
     }
 
 }

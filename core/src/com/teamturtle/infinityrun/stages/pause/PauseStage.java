@@ -47,9 +47,9 @@ public class PauseStage extends Stage{
     private ImageButton homeBtn;
     private Label countDownLbl;
 
-    private IPauseStageHandler handler;
-    private IScreenObserver observer;
-    private Level level;
+    private final IPauseStageHandler handler;
+    private final IScreenObserver observer;
+    private final Level level;
 
     private TextureAtlas textureAtlas;
 

@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 public class WordLoader {
-    private HashMap<String, Word> wordMap;
+    private final HashMap<String, Word> wordMap;
 
     public WordLoader() {
         FileHandle file = Gdx.files.internal(PathConstants.WORD_JSON_PATH);

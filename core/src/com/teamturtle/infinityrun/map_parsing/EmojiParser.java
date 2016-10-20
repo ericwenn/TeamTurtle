@@ -1,6 +1,5 @@
 package com.teamturtle.infinityrun.map_parsing;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -18,6 +17,7 @@ import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.words.WordRandomizer;
 import com.teamturtle.infinityrun.sprites.Entity;
 import com.teamturtle.infinityrun.sprites.emoji.Emoji;
+import com.teamturtle.infinityrun.sprites.emoji.EmojiFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +28,11 @@ import java.util.List;
 public class EmojiParser implements MapParser {
     private final World world;
     private final TiledMap tiledMap;
-    private String emojiPlaceholderName;
-    private MissionHandler missionHandler;
-    private WordRandomizer wordRandomizer;
+    private final String emojiPlaceholderName;
+    private final MissionHandler missionHandler;
+    private final WordRandomizer wordRandomizer;
 
-    private List<Emoji> emojis = new ArrayList<Emoji>();
+    private final List<Emoji> emojis = new ArrayList<Emoji>();
 
 
     public EmojiParser(World world, TiledMap tiledMap, String emojiPlaceholderName, MissionHandler missionHandler, List<Word> possibleWords) {
@@ -73,7 +73,6 @@ public class EmojiParser implements MapParser {
             Mission mission = missionHandler.getMissionAtPosition( rect.getX() );
             List<Mission> missions = missionHandler.getMissions();
             Word word;
-            Gdx.app.log("EMojiParser", "missionIndex: "+missions.indexOf(mission));
             if (missions.indexOf(mission) == 0) {
                 do {
                     word = wordRandomizer.getNext();
@@ -91,7 +90,7 @@ public class EmojiParser implements MapParser {
 
 
 
-            Emoji emoji = new Emoji(word);
+            Emoji emoji = EmojiFactory.getInstance().getEmoji(word);
             emoji.setBody( body );
             fixture.setUserData(emoji);
             emojis.add(emoji);

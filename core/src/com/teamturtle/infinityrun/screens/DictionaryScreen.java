@@ -44,11 +44,12 @@ public class DictionaryScreen extends AbstractScreen {
     private static final int CATEGORY_ONE_OFFSET = -8;
     private static final int CATEGORY_ONE = 1;
 
-    private Stage stage;
+    private final Stage stage;
     private WordStage wordStage;
-    private IScreenObserver observer;
-    private Skin skin;
-    private Texture bg, line;
+    private final IScreenObserver observer;
+    private final Skin skin;
+    private final Texture bg;
+    private final Texture line;
     private ImageButton imageButton;
     private boolean isDictionaryScreen;
 
@@ -206,5 +207,17 @@ public class DictionaryScreen extends AbstractScreen {
             wordStage.act(dt);
             wordStage.draw();
         }
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (wordStage != null) {
+            wordStage.dispose();
+        }
+        stage.dispose();
+        skin.dispose();
+        bg.dispose();
+        line.dispose();
     }
 }

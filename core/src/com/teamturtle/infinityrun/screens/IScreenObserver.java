@@ -5,7 +5,6 @@ import com.teamturtle.infinityrun.models.words.Word;
 import com.teamturtle.infinityrun.models.level.Level;
 
 import java.util.List;
-import com.teamturtle.infinityrun.sprites.emoji.Emoji;
 
 /**
  * Created by ostmos on 2016-09-28.

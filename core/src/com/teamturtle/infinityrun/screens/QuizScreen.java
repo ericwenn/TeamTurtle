@@ -22,17 +22,18 @@ import java.util.List;
 
 public class QuizScreen extends AbstractScreen implements IQuizStageListener {
 
-    private Texture bg;
-    private QuizStage stage;
-    private IScreenObserver observer;
-    private Level level;
+    private final Texture bg;
+    private final QuizStage stage;
+    private final IScreenObserver observer;
+    private final Level level;
     private int score;
-    private List<Word> collectedWords, oldWords, discoveredWords;
+    private final List<Word> oldWords;
+    private final List<Word> discoveredWords;
 
     public QuizScreen(SpriteBatch spriteBatch, IScreenObserver observer, Level level, List<Word> oldWords, List<Word> discoveredWords, int score) {
         super(spriteBatch);
         this.bg = new Texture(PathConstants.BACKGROUND_PATH);
-        collectedWords = new ArrayList<Word>();
+        List<Word> collectedWords = new ArrayList<Word>();
         collectedWords.addAll(oldWords);
         collectedWords.addAll(discoveredWords);
         this.stage = new QuizStage(this, collectedWords, score);
@@ -67,5 +68,12 @@ public class QuizScreen extends AbstractScreen implements IQuizStageListener {
             FxSound.FELGISSAT.play();
             observer.levelWon(level, oldWords, discoveredWords, score);
         }
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+        bg.dispose();
+        super.dispose();
     }
 }

@@ -12,12 +12,12 @@ import com.teamturtle.infinityrun.screens.GameScreen;
  * Created by ericwenn on 10/7/16.
  */
 public class PlayerTail extends AbstractEntity {
-    private Player mPlayer;
+    private final Player mPlayer;
 
     private float[] vertices;
 
     private static final int TAIL_LENGTH = 40;
-    private ShapeRenderer shapeRenderer;
+    private final ShapeRenderer shapeRenderer;
 
 
 
@@ -68,6 +68,7 @@ public class PlayerTail extends AbstractEntity {
 
     @Override
     public void dispose() {
+        mPlayer.dispose();
         shapeRenderer.dispose();
     }
 

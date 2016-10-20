@@ -3,7 +3,6 @@ package com.teamturtle.infinityrun.models.level;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +12,10 @@ import java.util.List;
  */
 public class LevelDataHandler {
 
-    private Json json;
-    private ArrayList<Level> levels;
+    private final ArrayList<Level> levels;
 
     public LevelDataHandler() {
-        json = new Json();
+        Json json = new Json();
         FileHandle file = Gdx.files.internal("data/levels.json");
         levels = json.fromJson(ArrayList.class, LevelImpl.class, file.readString());
     }

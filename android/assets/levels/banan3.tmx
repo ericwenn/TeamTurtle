@@ -254,7 +254,6 @@
   <object id="617" x="3616" y="0" width="32" height="480"/>
   <object id="624" x="4672" y="0" width="32" height="480"/>
   <object id="630" x="5248" y="0" width="32" height="480"/>
-  <object id="664" x="6208" y="0" width="32" height="480"/>
   <object id="665" x="6298" y="688" width="63" height="2"/>
   <object id="705" x="5760" y="0" width="32" height="480"/>
  </objectgroup>

@@ -13,11 +13,12 @@ public enum GameMusic {
     private static final String URL_PREFIX = "audio/music/";
     private static final String URL_SUFFIX = ".mp3";
     private static boolean musicMuted = false;
+    private static final float VOLUME = 0.12f;
     private Music music;
 
     GameMusic(String musicName) {
         this.music = Gdx.audio.newMusic(Gdx.files.internal(URL_PREFIX + musicName + URL_SUFFIX));
-        this.music.setVolume(0.03f);
+        this.music.setVolume(VOLUME);
     }
 
     public void playMusicLooping() {
@@ -37,14 +38,14 @@ public enum GameMusic {
     }
 
     public static void shiftMusicMute() {
-        musicMuted = musicMuted ? false : true;
+        musicMuted = !musicMuted;
         if (musicMuted) {
             for(GameMusic gameMusic : values()) {
                 gameMusic.music.setVolume(0);
             }
         }else{
             for (GameMusic gameMusic : values()) {
-                gameMusic.music.setVolume(0.03f);
+                gameMusic.music.setVolume(VOLUME);
             }
         }
     }

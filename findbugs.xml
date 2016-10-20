@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="3.0.1" sequence="0" timestamp="1476804150000" analysisTimestamp="1476804384888" release="">
+  <Project projectName="Ordhoppet">
+    <Jar>/home/ericwenn/AndroidStudioProjects/TeamTurtle/core</Jar>
+  </Project>
+  <Errors errors="0" missingClasses="84">
+    <MissingClass>com.badlogic.gdx.Application</MissingClass>
+    <MissingClass>com.badlogic.gdx.Audio</MissingClass>
+    <MissingClass>com.badlogic.gdx.Files</MissingClass>
+    <MissingClass>com.badlogic.gdx.Game</MissingClass>
+    <MissingClass>com.badlogic.gdx.Gdx</MissingClass>
+    <MissingClass>com.badlogic.gdx.Graphics</MissingClass>
+    <MissingClass>com.badlogic.gdx.Input</MissingClass>
+    <MissingClass>com.badlogic.gdx.Screen</MissingClass>
+    <MissingClass>com.badlogic.gdx.assets.AssetManager</MissingClass>
+    <MissingClass>com.badlogic.gdx.audio.Music</MissingClass>
+    <MissingClass>com.badlogic.gdx.audio.Sound</MissingClass>
+    <MissingClass>com.badlogic.gdx.files.FileHandle</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.Camera</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.Color</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.GL20</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.OrthographicCamera</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.Pixmap</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.Pixmap$Format</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.Texture</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.g2d.Animation</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.g2d.Animation$PlayMode</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.g2d.Batch</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.g2d.BitmapFont</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.g2d.GlyphLayout</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.g2d.SpriteBatch</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.g2d.TextureAtlas</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.g2d.TextureRegion</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator$FreeTypeFontParameter</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.glutils.ShapeRenderer</MissingClass>
+    <MissingClass>com.badlogic.gdx.graphics.glutils.ShapeRenderer$ShapeType</MissingClass>
+    <MissingClass>com.badlogic.gdx.maps.MapLayer</MissingClass>
+    <MissingClass>com.badlogic.gdx.maps.MapLayers</MissingClass>
+    <MissingClass>com.badlogic.gdx.maps.MapObject</MissingClass>
+    <MissingClass>com.badlogic.gdx.maps.MapObjects</MissingClass>
+    <MissingClass>com.badlogic.gdx.maps.MapProperties</MissingClass>
+    <MissingClass>com.badlogic.gdx.maps.objects.PolygonMapObject</MissingClass>
+    <MissingClass>com.badlogic.gdx.maps.objects.RectangleMapObject</MissingClass>
+    <MissingClass>com.badlogic.gdx.maps.tiled.TiledMap</MissingClass>
+    <MissingClass>com.badlogic.gdx.maps.tiled.TmxMapLoader</MissingClass>
+    <MissingClass>com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer</MissingClass>
+    <MissingClass>com.badlogic.gdx.math.MathUtils</MissingClass>
+    <MissingClass>com.badlogic.gdx.math.Polygon</MissingClass>
+    <MissingClass>com.badlogic.gdx.math.Rectangle</MissingClass>
+    <MissingClass>com.badlogic.gdx.math.Vector2</MissingClass>
+    <MissingClass>com.badlogic.gdx.math.Vector3</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.Body</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.BodyDef</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.BodyDef$BodyType</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.Box2DDebugRenderer</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.CircleShape</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.Contact</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.ContactListener</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.Fixture</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.FixtureDef</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.PolygonShape</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.World</MissingClass>
+    <MissingClass>com.badlogic.gdx.physics.box2d.WorldManifold</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.Actor</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.Stage</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.Touchable</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.ui.Cell</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.ui.Image</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.ui.ImageButton</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.ui.Label</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.ui.ScrollPane</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.ui.Skin</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.ui.Stack</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.ui.Table</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.ui.TextButton</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.utils.ChangeListener</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.utils.ClickListener</MissingClass>
+    <MissingClass>com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable</MissingClass>
+    <MissingClass>com.badlogic.gdx.utils.Array</MissingClass>
+    <MissingClass>com.badlogic.gdx.utils.Disposable</MissingClass>
+    <MissingClass>com.badlogic.gdx.utils.Json</MissingClass>
+    <MissingClass>com.badlogic.gdx.utils.Scaling</MissingClass>
+    <MissingClass>com.badlogic.gdx.utils.Timer</MissingClass>
+    <MissingClass>com.badlogic.gdx.utils.Timer$Task</MissingClass>
+    <MissingClass>com.badlogic.gdx.utils.viewport.FillViewport</MissingClass>
+    <MissingClass>com.badlogic.gdx.utils.viewport.FitViewport</MissingClass>
+    <MissingClass>com.badlogic.gdx.utils.viewport.Viewport</MissingClass>
+    <MissingClass>com.teamturtle.infinityrun.sound.FeedbackSound</MissingClass>
+  </Errors>
+  <FindBugsSummary timestamp="Tue, 18 Oct 2016 17:22:30 +0200" total_classes="109" referenced_classes="163" total_bugs="0" total_size="3198" num_packages="16" java_version="1.8.0_91" vm_version="25.91-b14" cpu_seconds="15.29" clock_seconds="16.79" peak_mbytes="442.40" alloc_mbytes="860.50" gc_seconds="0.15">
+    <PackageStats package="com.teamturtle.infinityrun" total_bugs="0" total_types="4" total_size="101">
+      <ClassStats class="com.teamturtle.infinityrun.InfinityRun" sourceFile="InfinityRun.java" interface="false" size="76" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.InfinityRun$1" sourceFile="InfinityRun.java" interface="false" size="4" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.InfinityRun$ScreenID" sourceFile="InfinityRun.java" interface="false" size="13" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.PathConstants" sourceFile="PathConstants.java" interface="false" size="8" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.collisions" total_bugs="0" total_types="8" total_size="101">
+      <ClassStats class="com.teamturtle.infinityrun.collisions.EventHandler" sourceFile="EventHandler.java" interface="false" size="74" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.collisions.IEventHandler" sourceFile="IEventHandler.java" interface="true" size="6" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.collisions.IEventHandler$EmojiCollisionListener" sourceFile="IEventHandler.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.collisions.IEventHandler$GroundCollisionListener" sourceFile="IEventHandler.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.collisions.IEventHandler$HitDirection" sourceFile="IEventHandler.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.collisions.IEventHandler$LevelFinishedListener" sourceFile="IEventHandler.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.collisions.IEventHandler$ObstacleCollisionListener" sourceFile="IEventHandler.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.collisions.IEventHandler$QuestChangedListener" sourceFile="IEventHandler.java" interface="true" size="2" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.map_parsing" total_bugs="0" total_types="8" total_size="214">
+      <ClassStats class="com.teamturtle.infinityrun.map_parsing.EmojiParser" sourceFile="EmojiParser.java" interface="false" size="49" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.map_parsing.GroundParser" sourceFile="GroundParser.java" interface="false" size="64" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.map_parsing.MapParser" sourceFile="MapParser.java" interface="true" size="3" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.map_parsing.MissionParser" sourceFile="MissionParser.java" interface="false" size="28" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.map_parsing.MissionParser$1" sourceFile="MissionParser.java" interface="false" size="1" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.map_parsing.MissionParser$RectPositionComparator" sourceFile="MissionParser.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.map_parsing.SensorParser" sourceFile="SensorParser.java" interface="false" size="43" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.map_parsing.SensorParser$Type" sourceFile="SensorParser.java" interface="false" size="18" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.models" total_bugs="0" total_types="3" total_size="71">
+      <ClassStats class="com.teamturtle.infinityrun.models.Mission" sourceFile="Mission.java" interface="true" size="10" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.MissionHandler" sourceFile="MissionHandler.java" interface="false" size="22" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.MissionImpl" sourceFile="MissionImpl.java" interface="false" size="39" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.models.category" total_bugs="0" total_types="3" total_size="34">
+      <ClassStats class="com.teamturtle.infinityrun.models.category.Category" sourceFile="Category.java" interface="true" size="3" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.category.CategoryImpl" sourceFile="CategoryImpl.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.category.CategoryLoader" sourceFile="CategoryLoader.java" interface="false" size="15" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.models.level" total_bugs="0" total_types="3" total_size="49">
+      <ClassStats class="com.teamturtle.infinityrun.models.level.Level" sourceFile="Level.java" interface="true" size="4" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.level.LevelDataHandler" sourceFile="LevelDataHandler.java" interface="false" size="17" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.level.LevelImpl" sourceFile="LevelImpl.java" interface="false" size="28" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.models.sentences" total_bugs="0" total_types="4" total_size="34">
+      <ClassStats class="com.teamturtle.infinityrun.models.sentences.Sentence" sourceFile="Sentence.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.sentences.SentenceImpl" sourceFile="SentenceImpl.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.sentences.SentenceList" sourceFile="SentenceList.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.sentences.SentenceLoader" sourceFile="SentenceLoader.java" interface="false" size="14" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.models.words" total_bugs="0" total_types="6" total_size="95">
+      <ClassStats class="com.teamturtle.infinityrun.models.words.Word" sourceFile="Word.java" interface="true" size="7" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.words.WordImpl" sourceFile="WordImpl.java" interface="false" size="39" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.words.WordLoader" sourceFile="WordLoader.java" interface="false" size="27" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.words.WordLoader$1" sourceFile="WordLoader.java" interface="false" size="1" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.words.WordLoader$WordCategoryComparator" sourceFile="WordLoader.java" interface="false" size="10" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.models.words.WordRandomizer" sourceFile="WordRandomizer.java" interface="false" size="11" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.screens" total_bugs="0" total_types="27" total_size="915">
+      <ClassStats class="com.teamturtle.infinityrun.screens.AbstractScreen" sourceFile="AbstractScreen.java" interface="false" size="31" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.DictionaryScreen" sourceFile="DictionaryScreen.java" interface="false" size="120" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.DictionaryScreen$1" sourceFile="DictionaryScreen.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.DictionaryScreen$2" sourceFile="DictionaryScreen.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.GameScreen" sourceFile="GameScreen.java" interface="false" size="288" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.GameScreen$1" sourceFile="GameScreen.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.GameScreen$2" sourceFile="GameScreen.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.GameScreen$3" sourceFile="GameScreen.java" interface="false" size="31" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.GameScreen$3$1" sourceFile="GameScreen.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.GameScreen$4" sourceFile="GameScreen.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.GameScreen$5" sourceFile="GameScreen.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.GameScreen$6" sourceFile="GameScreen.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.GameScreen$7" sourceFile="GameScreen.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.GameScreen$8" sourceFile="GameScreen.java" interface="false" size="4" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.GameScreen$State" sourceFile="GameScreen.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.IScreenObserver" sourceFile="IScreenObserver.java" interface="true" size="7" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.LevelSelectScreen" sourceFile="LevelSelectScreen.java" interface="false" size="82" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.LevelSelectScreen$1" sourceFile="LevelSelectScreen.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.LevelSelectScreen$2" sourceFile="LevelSelectScreen.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.LevelSelectScreen$CantPlayButtonListener" sourceFile="LevelSelectScreen.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.LoadingScreen" sourceFile="LoadingScreen.java" interface="false" size="76" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.QuizScreen" sourceFile="QuizScreen.java" interface="false" size="40" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.StartScreen" sourceFile="StartScreen.java" interface="false" size="73" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.StartScreen$1" sourceFile="StartScreen.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.StartScreen$2" sourceFile="StartScreen.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.StartScreen$ShiftFxButtonListener" sourceFile="StartScreen.java" interface="false" size="6" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.StartScreen$ShiftMusicButtonListener" sourceFile="StartScreen.java" interface="false" size="6" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.screens.level_end_screens" total_bugs="0" total_types="8" total_size="254">
+      <ClassStats class="com.teamturtle.infinityrun.screens.level_end_screens.EndLevelScreen" sourceFile="EndLevelScreen.java" interface="false" size="99" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.level_end_screens.EndLevelScreen$1" sourceFile="EndLevelScreen.java" interface="false" size="12" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.level_end_screens.EndLevelScreen$2" sourceFile="EndLevelScreen.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen" sourceFile="LostLevelScreen.java" interface="false" size="5" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen" sourceFile="WonLevelScreen.java" interface="false" size="86" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen$1" sourceFile="WonLevelScreen.java" interface="false" size="20" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen$2" sourceFile="WonLevelScreen.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen$ImageClickListener" sourceFile="WonLevelScreen.java" interface="false" size="12" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.sound" total_bugs="0" total_types="3" total_size="189">
+      <ClassStats class="com.teamturtle.infinityrun.sound.FxSound" sourceFile="FxSound.java" interface="false" size="144" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.sound.GameMusic" sourceFile="GameMusic.java" interface="false" size="34" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.sound.GameMusic$1" sourceFile="GameMusic.java" interface="false" size="11" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.sprites" total_bugs="0" total_types="6" total_size="245">
+      <ClassStats class="com.teamturtle.infinityrun.sprites.AbstractEntity" sourceFile="AbstractEntity.java" interface="false" size="19" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.sprites.Entity" sourceFile="Entity.java" interface="true" size="4" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.sprites.JumpAnimations" sourceFile="JumpAnimations.java" interface="false" size="55" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.sprites.JumpAnimations$JumpAnimation" sourceFile="JumpAnimations.java" interface="false" size="16" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.sprites.Player" sourceFile="Player.java" interface="false" size="91" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.sprites.PlayerTail" sourceFile="PlayerTail.java" interface="false" size="60" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.sprites.emoji" total_bugs="0" total_types="2" total_size="145">
+      <ClassStats class="com.teamturtle.infinityrun.sprites.emoji.Emoji" sourceFile="Emoji.java" interface="false" size="137" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.sprites.emoji.Emoji$1" sourceFile="Emoji.java" interface="false" size="8" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.stages" total_bugs="0" total_types="14" total_size="524">
+      <ClassStats class="com.teamturtle.infinityrun.stages.IQuizStageListener" sourceFile="IQuizStageListener.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.MissionStage" sourceFile="MissionStage.java" interface="false" size="68" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.MissionStage$1" sourceFile="MissionStage.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.MissionStage$2" sourceFile="MissionStage.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.ProgressBarStage" sourceFile="ProgressBarStage.java" interface="false" size="30" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.ProgressBarStage$MissionStatus" sourceFile="ProgressBarStage.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.ProgressBarStage$ProgressBar" sourceFile="ProgressBarStage.java" interface="false" size="55" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.QuizStage" sourceFile="QuizStage.java" interface="false" size="188" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.QuizStage$1" sourceFile="QuizStage.java" interface="false" size="17" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.QuizStage$1$1" sourceFile="QuizStage.java" interface="false" size="7" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.QuizStage$2" sourceFile="QuizStage.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.WordStage" sourceFile="WordStage.java" interface="false" size="103" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.WordStage$1" sourceFile="WordStage.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.WordStage$2" sourceFile="WordStage.java" interface="false" size="11" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.stages.pause" total_bugs="0" total_types="9" total_size="174">
+      <ClassStats class="com.teamturtle.infinityrun.stages.pause.IPauseStageHandler" sourceFile="IPauseStageHandler.java" interface="true" size="2" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.pause.PauseButtonStage" sourceFile="PauseButtonStage.java" interface="false" size="21" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.pause.PauseStage" sourceFile="PauseStage.java" interface="false" size="82" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.pause.PauseStage$1" sourceFile="PauseStage.java" interface="false" size="9" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.pause.PauseStage$2" sourceFile="PauseStage.java" interface="false" size="8" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.pause.PauseStage$3" sourceFile="PauseStage.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.pause.PauseStage$4" sourceFile="PauseStage.java" interface="false" size="11" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.pause.PauseStage$5" sourceFile="PauseStage.java" interface="false" size="14" bugs="0"/>
+      <ClassStats class="com.teamturtle.infinityrun.stages.pause.PauseStage$State" sourceFile="PauseStage.java" interface="false" size="16" bugs="0"/>
+    </PackageStats>
+    <PackageStats package="com.teamturtle.infinityrun.storage" total_bugs="0" total_types="1" total_size="53">
+      <ClassStats class="com.teamturtle.infinityrun.storage.PlayerData" sourceFile="PlayerData.java" interface="false" size="53" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.NullDerefAndRedundantComparisonFinder" totalMilliseconds="597" invocations="453" avgMicrosecondsPerInvocation="1319" maxMicrosecondsPerInvocation="80842" standardDeviationMircosecondsPerInvocation="5450"/>
+      <ClassProfile name="edu.umd.cs.findbugs.FindBugs2" totalMilliseconds="543" invocations="2" avgMicrosecondsPerInvocation="271780" maxMicrosecondsPerInvocation="309755" standardDeviationMircosecondsPerInvocation="37975"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="526" invocations="750" avgMicrosecondsPerInvocation="701" maxMicrosecondsPerInvocation="10216" standardDeviationMircosecondsPerInvocation="1128"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ValueNumberDataflowFactory" totalMilliseconds="359" invocations="470" avgMicrosecondsPerInvocation="765" maxMicrosecondsPerInvocation="29515" standardDeviationMircosecondsPerInvocation="2165"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="345" invocations="455" avgMicrosecondsPerInvocation="759" maxMicrosecondsPerInvocation="28772" standardDeviationMircosecondsPerInvocation="2183"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.IsNullValueDataflowFactory" totalMilliseconds="340" invocations="455" avgMicrosecondsPerInvocation="749" maxMicrosecondsPerInvocation="20482" standardDeviationMircosecondsPerInvocation="1669"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="280" invocations="747" avgMicrosecondsPerInvocation="376" maxMicrosecondsPerInvocation="7778" standardDeviationMircosecondsPerInvocation="753"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.TypeDataflowFactory" totalMilliseconds="229" invocations="455" avgMicrosecondsPerInvocation="504" maxMicrosecondsPerInvocation="10591" standardDeviationMircosecondsPerInvocation="1084"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="196" invocations="163" avgMicrosecondsPerInvocation="1204" maxMicrosecondsPerInvocation="17118" standardDeviationMircosecondsPerInvocation="2559"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindRefComparison$SpecialTypeAnalysis" totalMilliseconds="186" invocations="325" avgMicrosecondsPerInvocation="573" maxMicrosecondsPerInvocation="10814" standardDeviationMircosecondsPerInvocation="1067"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="178" invocations="641" avgMicrosecondsPerInvocation="278" maxMicrosecondsPerInvocation="7656" standardDeviationMircosecondsPerInvocation="568"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.CFGFactory" totalMilliseconds="171" invocations="455" avgMicrosecondsPerInvocation="377" maxMicrosecondsPerInvocation="8160" standardDeviationMircosecondsPerInvocation="598"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="169" invocations="163" avgMicrosecondsPerInvocation="1042" maxMicrosecondsPerInvocation="12047" standardDeviationMircosecondsPerInvocation="1896"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.InfiniteLoop" totalMilliseconds="140" invocations="109" avgMicrosecondsPerInvocation="1285" maxMicrosecondsPerInvocation="96767" standardDeviationMircosecondsPerInvocation="9227"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.CalledMethods" totalMilliseconds="82" invocations="163" avgMicrosecondsPerInvocation="504" maxMicrosecondsPerInvocation="11746" standardDeviationMircosecondsPerInvocation="1186"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.LoadOfKnownNullValue" totalMilliseconds="81" invocations="109" avgMicrosecondsPerInvocation="746" maxMicrosecondsPerInvocation="9289" standardDeviationMircosecondsPerInvocation="1443"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNullDeref$CheckCallSitesAndReturnInstructions" totalMilliseconds="73" invocations="453" avgMicrosecondsPerInvocation="163" maxMicrosecondsPerInvocation="8656" standardDeviationMircosecondsPerInvocation="567"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.DumbMethods" totalMilliseconds="72" invocations="109" avgMicrosecondsPerInvocation="661" maxMicrosecondsPerInvocation="7551" standardDeviationMircosecondsPerInvocation="1158"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindInconsistentSync2" totalMilliseconds="71" invocations="109" avgMicrosecondsPerInvocation="659" maxMicrosecondsPerInvocation="9547" standardDeviationMircosecondsPerInvocation="1322"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.UnreadFields" totalMilliseconds="68" invocations="109" avgMicrosecondsPerInvocation="631" maxMicrosecondsPerInvocation="10121" standardDeviationMircosecondsPerInvocation="1179"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.ConstantDataflowFactory" totalMilliseconds="62" invocations="455" avgMicrosecondsPerInvocation="136" maxMicrosecondsPerInvocation="4254" standardDeviationMircosecondsPerInvocation="348"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.SynchronizingOnContentsOfFieldToProtectField" totalMilliseconds="61" invocations="109" avgMicrosecondsPerInvocation="567" maxMicrosecondsPerInvocation="26839" standardDeviationMircosecondsPerInvocation="2576"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.MethodReturnCheck" totalMilliseconds="55" invocations="109" avgMicrosecondsPerInvocation="508" maxMicrosecondsPerInvocation="7851" standardDeviationMircosecondsPerInvocation="1014"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.CrossSiteScripting" totalMilliseconds="55" invocations="109" avgMicrosecondsPerInvocation="505" maxMicrosecondsPerInvocation="13061" standardDeviationMircosecondsPerInvocation="1357"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.RuntimeExceptionCapture" totalMilliseconds="54" invocations="109" avgMicrosecondsPerInvocation="504" maxMicrosecondsPerInvocation="5531" standardDeviationMircosecondsPerInvocation="739"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindHEmismatch" totalMilliseconds="54" invocations="109" avgMicrosecondsPerInvocation="497" maxMicrosecondsPerInvocation="13458" standardDeviationMircosecondsPerInvocation="1363"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FormatStringChecker" totalMilliseconds="54" invocations="109" avgMicrosecondsPerInvocation="495" maxMicrosecondsPerInvocation="10246" standardDeviationMircosecondsPerInvocation="1271"/>
+      <ClassProfile name="edu.umd.cs.findbugs.util.TopologicalSort" totalMilliseconds="53" invocations="607" avgMicrosecondsPerInvocation="88" maxMicrosecondsPerInvocation="5532" standardDeviationMircosecondsPerInvocation="253"/>
+      <ClassProfile name="edu.umd.cs.findbugs.ba.npe.TypeQualifierNullnessAnnotationDatabase" totalMilliseconds="53" invocations="8157" avgMicrosecondsPerInvocation="6" maxMicrosecondsPerInvocation="2597" standardDeviationMircosecondsPerInvocation="35"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.RepeatedConditionals" totalMilliseconds="52" invocations="109" avgMicrosecondsPerInvocation="479" maxMicrosecondsPerInvocation="8313" standardDeviationMircosecondsPerInvocation="1040"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.SynchronizeOnClassLiteralNotGetClass" totalMilliseconds="51" invocations="109" avgMicrosecondsPerInvocation="474" maxMicrosecondsPerInvocation="17704" standardDeviationMircosecondsPerInvocation="1758"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="51" invocations="163" avgMicrosecondsPerInvocation="316" maxMicrosecondsPerInvocation="6273" standardDeviationMircosecondsPerInvocation="652"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindDoubleCheck" totalMilliseconds="50" invocations="109" avgMicrosecondsPerInvocation="466" maxMicrosecondsPerInvocation="12522" standardDeviationMircosecondsPerInvocation="1301"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>

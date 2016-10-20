@@ -33,7 +33,7 @@ public enum FxSound implements Disposable {
     private static final String URL_PREFIX = "audio/feedback/";
     private static final String URL_SUFFIX = ".mp3";
     private static boolean fxMuted = false;
-    private static AssetManager assetManager = new AssetManager();
+    private static final AssetManager assetManager = new AssetManager();
     private String url;
 
     FxSound(String url) {
@@ -85,11 +85,7 @@ public enum FxSound implements Disposable {
     }
 
     public static void shiftFxMute() {
-        fxMuted = fxMuted ? false : true;
-    }
-
-    public static Sound getSound(FxSound fxSound) {
-        return assetManager.get(fxSound.url, Sound.class);
+        fxMuted = !fxMuted;
     }
 
     @Override
@@ -97,6 +93,8 @@ public enum FxSound implements Disposable {
         for (FxSound sound : values()) {
             sound.dispose();
         }
+        lastPlayedSound.dispose();
+        assetManager.clear();
         assetManager.dispose();
     }
 
