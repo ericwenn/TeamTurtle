@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="502">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="225" height="15" tilewidth="32" tileheight="32" nextobjectid="505">
  <tileset firstgid="1" name="mini_tileset" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="mini_tileset.png" width="128" height="128"/>
  </tileset>
@@ -71,15 +71,6 @@
   <object id="431" x="3424" y="160" width="224" height="64"/>
   <object id="433" x="3264" y="160" width="96" height="64"/>
   <object id="434" x="3264" y="352" width="384" height="32"/>
-  <object id="435" x="3296" y="161">
-   <polygon points="0,0 14.6667,-32 32,0"/>
-  </object>
-  <object id="436" x="3616" y="162">
-   <polygon points="0,0 14.6667,-32 32,0"/>
-  </object>
-  <object id="437" x="3648" y="386">
-   <polygon points="0,0 14.6667,-32 32,0"/>
-  </object>
   <object id="441" x="1760" y="192">
    <polygon points="0,0 64,0 32,21"/>
   </object>
@@ -173,6 +164,15 @@
    <polygon points="0,0 14.6667,-32 32,0"/>
   </object>
   <object id="501" x="5248" y="388">
+   <polygon points="0,0 14.6667,-32 32,0"/>
+  </object>
+  <object id="502" x="3297" y="161">
+   <polygon points="0,0 14.6667,-32 32,0"/>
+  </object>
+  <object id="503" x="3616" y="161">
+   <polygon points="0,0 14.6667,-32 32,0"/>
+  </object>
+  <object id="504" x="3648" y="387">
    <polygon points="0,0 14.6667,-32 32,0"/>
   </object>
  </objectgroup>
