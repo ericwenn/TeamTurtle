@@ -169,6 +169,8 @@ public class WordStage extends Stage {
     public boolean shouldGoBack() {
         return goBack;
     }
+
+    @Override
     public void dispose(){
         super.dispose();
         sound.dispose();
