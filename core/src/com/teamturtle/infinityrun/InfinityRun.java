@@ -15,8 +15,8 @@ import com.teamturtle.infinityrun.screens.LevelSelectScreen;
 import com.teamturtle.infinityrun.screens.LoadingScreen;
 import com.teamturtle.infinityrun.screens.QuizScreen;
 import com.teamturtle.infinityrun.screens.StartScreen;
-import com.teamturtle.infinityrun.screens.level_end_screens.LostLevelScreen;
-import com.teamturtle.infinityrun.screens.level_end_screens.WonLevelScreen;
+import com.teamturtle.infinityrun.screens.endscreens.GameOverScreen;
+import com.teamturtle.infinityrun.screens.endscreens.GameWonScreen;
 import com.teamturtle.infinityrun.sound.GameMusic;
 import com.teamturtle.infinityrun.storage.PlayerData;
 
@@ -82,12 +82,12 @@ public class InfinityRun extends Game implements IScreenObserver {
         if (mPlayerData != null) {
             mPlayerData.setPlayerProgressOnLevel(level, score);
         }
-        changeScreen(new WonLevelScreen(getSpriteBatch(), this, level, collectedWords, newWords, score));
+        changeScreen(new GameWonScreen(getSpriteBatch(), this, level, collectedWords, newWords, score));
     }
 
     @Override
     public void levelFailed(Level level) {
-        changeScreen(new LostLevelScreen(getSpriteBatch(), this, level));
+        changeScreen(new GameOverScreen(getSpriteBatch(), this, level));
     }
 
     @Override
