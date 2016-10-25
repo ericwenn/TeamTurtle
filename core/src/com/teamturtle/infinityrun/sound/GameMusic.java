@@ -22,19 +22,14 @@ public enum GameMusic {
     }
 
     public void playMusicLooping() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (!musicMuted) {
-                    for (GameMusic gameMusic: values()) {
-                        gameMusic.music.stop();
-                    }
-                    music.setLooping(true);
-                    music.play();
-                }
+        if (!musicMuted) {
+            for (GameMusic gameMusic: values()) {
+                gameMusic.music.stop();
             }
-        });
-        thread.start();
+            music.setLooping(true);
+            music.play();
+        }
+
     }
 
     public static void shiftMusicMute() {

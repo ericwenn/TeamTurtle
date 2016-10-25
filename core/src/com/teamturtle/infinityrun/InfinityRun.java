@@ -150,6 +150,6 @@ public class InfinityRun extends Game implements IScreenObserver {
     }
 
     public enum ScreenID {
-        MAIN_MENU, GAME, LEVELS_MENU, DICTIONARY, LOADING_SCREEN
+        MAIN_MENU, LEVELS_MENU, DICTIONARY, LOADING_SCREEN
     }
 }
