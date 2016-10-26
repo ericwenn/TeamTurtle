@@ -2,10 +2,10 @@
   "1": {
     "sentences" : [
       {
-        "text":"En simmare"
+        "text":"En simmare."
       },
       {
-        "text":"Flera simmare"
+        "text":"Flera simmare."
       },
       {
         "text":"Simmare är i vatten."
@@ -15,10 +15,10 @@
   "2": {
     "sentences" : [
       {
-        "text":"En kran"
+        "text":"En kran."
       },
       {
-        "text":"Flera kranar"
+        "text":"Flera kranar."
       },
       {
         "text":"Mannen jobbar med att k\u00f6ra lyftkran."
@@ -28,23 +28,23 @@
   "3": {
     "sentences" : [
       {
-        "text":"Ett hus"
+        "text":"Ett hus."
       },
       {
-        "text":"Flera hus"
+        "text":"Flera hus."
       },
       {
-        "text":"Hus bor man i"
+        "text":"Hus bor man i."
       }
     ]
   },
   "4": {
     "sentences" : [
       {
-        "text":"Ett sjukhus"
+        "text":"Ett sjukhus."
       },
       {
-        "text":"Flera sjukhus"
+        "text":"Flera sjukhus."
       },
       {
         "text":"Jag m\u00e5dde illa s\u00e5 jag \u00e5kte till ett sjukhus."
@@ -54,10 +54,10 @@
   "5": {
     "sentences" : [
       {
-        "text":"En fabrik"
+        "text":"En fabrik."
       },
       {
-        "text":"Flera fabriker"
+        "text":"Flera fabriker."
       },
       {
         "text" : "Kvinnan jobbade p\u00e5 en fabrik."
@@ -67,10 +67,10 @@
   "6": {
     "sentences" : [
       {
-        "text":"En lampa"
+        "text":"En lampa."
       },
       {
-        "text":"Flera lampor"
+        "text":"Flera lampor."
       },
       {
         "text":"En lampa kan lysa v\u00e4ldigt starkt."
@@ -80,23 +80,23 @@
   "7": {
     "sentences" : [
       {
-        "text":"En bajs/bajskorv"
+        "text":"En avföringshög."
       },
       {
-        "text":"Flera bajskorvar"
+        "text":"Flera avföringshögar."
       },
       {
-        "text":"Bajs luktar äckligt"
+        "text":"Avföring luktar sällan gott."
       }
     ]
   },
   "8": {
     "sentences" : [
       {
-        "text":"En dator"
+        "text":"En dator."
       },
       {
-        "text":"Flera datorer"
+        "text":"Flera datorer."
       },
       {
         "text":"Jag skriver p\u00e5 datorn."
@@ -106,10 +106,10 @@
   "9": {
     "sentences" : [
       {
-        "text":"En bok"
+        "text":"En bok."
       },
       {
-        "text":"Flera böcker"
+        "text":"Flera böcker."
       },
       {
         "text":"Jag tycker om att l\u00e4sa b\u00f6cker."
@@ -119,10 +119,10 @@
   "10": {
     "sentences" : [
       {
-        "text":"En telefon"
+        "text":"En telefon."
       },
       {
-        "text":"Flera telefoner"
+        "text":"Flera telefoner."
       },
       {
         "text":"Min telefon ringer."
@@ -132,10 +132,10 @@
   "11": {
     "sentences" : [
       {
-        "text":"En kamera"
+        "text":"En kamera."
       },
       {
-        "text":"Flera kameror"
+        "text":"Flera kameror."
       },
       {
         "text":"Ta ett kort med min kamera."
@@ -145,10 +145,10 @@
   "12": {
     "sentences" : [
       {
-        "text":"En TV/TV-apparat"
+        "text":"En TV/TV-apparat."
       },
       {
-        "text":"Flera TV-apparater"
+        "text":"Flera TV-apparater."
       },
       {
         "text":"Nu ska jag se p\u00e5 TV."
@@ -158,10 +158,10 @@
   "13": {
     "sentences" : [
       {
-        "text":"En radio"
+        "text":"En radio."
       },
       {
-        "text":"Flera radior"
+        "text":"Flera radior."
       },
       {
         "text":"Jag lyssnar ofta p\u00e5 radio i bilen."
@@ -171,10 +171,10 @@
   "14": {
     "sentences" : [
       {
-        "text":"En datorskärm"
+        "text":"En datorskärm."
       },
       {
-        "text":"Flera datorskärmar"
+        "text":"Flera datorskärmar."
       },
       {
         "text":"Min datorskärm st\u00e5r p\u00e5 skrivbordet."
@@ -184,10 +184,10 @@
   "15": {
     "sentences" : [
       {
-        "text":"En skrivare"
+        "text":"En skrivare."
       },
       {
-        "text":"Flera skrivare"
+        "text":"Flera skrivare."
       },
       {
         "text":"Skriv ut dokumentet i skrivaren."
@@ -197,10 +197,10 @@
   "16": {
     "sentences" : [
       {
-        "text":"En datormus"
+        "text":"En datormus."
       },
       {
-        "text":"Flera datormöss"
+        "text":"Flera datormöss."
       },
       {
         "text":"F\u00f6r att styra datorn anv\u00e4nder man en datormus."
@@ -210,10 +210,10 @@
   "17": {
     "sentences" : [
       {
-        "text":"En dörr"
+        "text":"En dörr."
       },
       {
-        "text":"Flera dörrar"
+        "text":"Flera dörrar."
       },
       {
         "text":"St\u00e4ng d\u00f6rren."
@@ -223,10 +223,10 @@
   "18": {
     "sentences" : [
       {
-        "text":"En cykel"
+        "text":"En cykel."
       },
       {
-        "text":"Flera cyklar"
+        "text":"Flera cyklar."
       },
       {
         "text":"Anna fick en ny cykel."
@@ -236,10 +236,10 @@
   "19": {
     "sentences" : [
       {
-        "text":"En toalett"
+        "text":"En toalett."
       },
       {
-        "text":"Flera toaletter"
+        "text":"Flera toaletter."
       },
       {
         "text":"Gl\u00f6m inte att spola p\u00e5 toaletten."
@@ -249,10 +249,10 @@
   "20": {
     "sentences" : [
       {
-        "text":"Ett flygplan"
+        "text":"Ett flygplan."
       },
       {
-        "text":"Flera flygplan"
+        "text":"Flera flygplan."
       },
       {
         "text":"En pilot jobbar med att flyga flygplan."
@@ -262,10 +262,10 @@
   "21": {
     "sentences" : [
       {
-        "text":"En moped"
+        "text":"En moped."
       },
       {
-        "text":"Flera mopeder"
+        "text":"Flera mopeder."
       },
       {
         "text":"Han satt kvar p\u00e5 sin moped och \u00e5t korv."
@@ -275,10 +275,10 @@
   "22": {
     "sentences" : [
       {
-        "text":"En ost"
+        "text":"En ost."
       },
       {
-        "text":"Flera ostar"
+        "text":"Flera ostar."
       },
       {
         "text":"Henrik \u00e4lskar ost."
@@ -288,10 +288,10 @@
   "23": {
     "sentences" : [
       {
-        "text":"En vulkan"
+        "text":"En vulkan."
       },
       {
-        "text":"Flera vulkaner"
+        "text":"Flera vulkaner."
       },
       {
         "text":"Vulkanen sprutade massor av lava."
@@ -301,10 +301,10 @@
   "24": {
     "sentences" : [
       {
-        "text":"En blomma"
+        "text":"En blomma."
       },
       {
-        "text":"Flera blommor"
+        "text":"Flera blommor."
       },
       {
         "text":"Hon fick en blomma och blev genast glad igen."
@@ -314,10 +314,10 @@
   "25": {
     "sentences" : [
       {
-        "text":"En majskolv"
+        "text":"En majskolv."
       },
       {
-        "text":"Flera majskolvar"
+        "text":"Flera majskolvar."
       },
       {
         "text":"Att odla majs kan vara sv\u00e5rt."
@@ -327,10 +327,10 @@
   "26": {
     "sentences" : [
       {
-        "text":"En citron"
+        "text":"En citron."
       },
       {
-        "text":"Flera citroner"
+        "text":"Flera citroner."
       },
       {
         "text":"Citronen var v\u00e4ldigt sur."
@@ -340,10 +340,10 @@
   "27": {
     "sentences" : [
       {
-        "text":"En banan"
+        "text":"En banan."
       },
       {
-        "text":"Flera bananer"
+        "text":"Flera bananer."
       },
       {
         "text": "Daniel \u00e4lskar bananer."
@@ -353,10 +353,10 @@
   "28": {
     "sentences" : [
       {
-        "text":"En ananas"
+        "text":"En ananas."
       },
       {
-        "text":"Flera ananaser"
+        "text":"Flera ananaser."
       },
       {
         "text": "Han var inte n\u00f6jd med sin ananas."
@@ -366,10 +366,10 @@
   "29": {
     "sentences" : [
       {
-        "text":"Ett äpple"
+        "text":"Ett äpple."
       },
       {
-        "text":"Flera äpplen"
+        "text":"Flera äpplen."
       },
       {
         "text": "Att \u00e4ta \u00e4pple \u00e4r bra f\u00f6r magen."
@@ -379,10 +379,10 @@
   "30": {
     "sentences" : [
       {
-        "text":"Ett bröd"
+        "text":"Ett bröd."
       },
       {
-        "text":"Flera bröd"
+        "text":"Flera bröd."
       },
       {
         "text": "Min mammas br\u00f6d \u00e4r godast."
@@ -392,10 +392,10 @@
   "31": {
     "sentences" : [
       {
-        "text":"En kaka"
+        "text":"En kaka."
       },
       {
-        "text":"Flera kakor"
+        "text":"Flera kakor."
       },
       {
         "text": "Att baka kaka \u00e4r mysigt."
@@ -405,23 +405,23 @@
   "32": {
     "sentences" : [
       {
-        "text":"En choklad/chokladkaka"
+        "text":"En choklad/chokladkaka."
       },
       {
-        "text":"Flera chokladkakor"
+        "text":"Flera chokladkakor."
       },
       {
-        "text": "Choklad \u00e4r s\u00e5 gott!"
+        "text": "Choklad \u00e4r s\u00e5 gott!."
       }
     ]
   },
   "33": {
     "sentences" : [
       {
-        "text":"En klubba"
+        "text":"En klubba."
       },
       {
-        "text":"Flera klubbor"
+        "text":"Flera klubbor."
       },
       {
         "text": "Hon gick runt med en klubba i munnen."
@@ -431,10 +431,10 @@
   "34": {
     "sentences" : [
       {
-        "text":"Ett öl/glas öl"
+        "text":"Ett öl/glas öl."
       },
       {
-        "text":"Flera öl"
+        "text":"Flera öl."
       },
       {
         "text": "Han drack s\u00e5 mycket \u00f6l att han inte kunde g\u00e5 hem."
@@ -444,10 +444,10 @@
   "35": {
     "sentences" : [
       {
-        "text":"Ett popcorn"
+        "text":"Ett popcorn."
       },
       {
-        "text":"Flera popcorn"
+        "text":"Flera popcorn."
       },
       {
         "text": "[Popcorn] \u00e4r b\u00e4st p\u00e5 bio."
@@ -457,10 +457,10 @@
   "36": {
     "sentences" : [
       {
-        "text":"En krokodil"
+        "text":"En krokodil."
       },
       {
-        "text":"Flera krokodiler"
+        "text":"Flera krokodiler."
       },
       {
         "text": "Om du \u00e5ker till Indien kanske du kan tr\u00e4ffa p\u00e5 en krokodil."
@@ -470,1061 +470,1074 @@
   "37": {
     "sentences" : [
       {
-        "text": "En val"
+        "text": "En val."
       },
       {
-        "text": "Flera valar"
+        "text": "Flera valar."
       },
       {
-        "text": "Valar lever i havet"
+        "text": "Valar lever i havet."
       }
     ]
   },
   "38": {
     "sentences" : [
       {
-        "text": "En Orm"
+        "text": "En Orm."
       },
       {
-        "text": "Flera ormar"
+        "text": "Flera ormar."
       },
       {
-        "text": "Ormar finns i Sverige"
+        "text": "Ormar finns i Sverige."
       }
     ]
   },
   "39": {
     "sentences" : [
       {
-        "text": "En häst"
+        "text": "En häst."
       },
       {
-        "text": "Flera hästar"
+        "text": "Flera hästar."
       },
       {
-        "text": "Hästar kan man rida på"
+        "text": "Hästar kan man rida på."
       }
     ]
   },
   "40": {
     "sentences" : [
       {
-        "text": "En myra"
+        "text": "En myra."
       },
       {
-        "text": "Flera myror"
+        "text": "Flera myror."
       },
       {
-        "text": "Myror bor i en stack"
+        "text": "Myror bor i en stack."
       }
     ]
   },
   "41": {
     "sentences" : [
       {
-        "text": "Ett bi"
+        "text": "Ett bi."
       },
       {
-        "text": "Flera bin"
+        "text": "Flera bin."
       },
       {
-        "text": "Bin gör honung"
+        "text": "Bin gör honung."
       }
     ]
   },
   "42": {
     "sentences" : [
       {
-        "text": "En nyckelpiga"
+        "text": "En nyckelpiga."
       },
       {
-        "text": "Flera nyckelpigor"
+        "text": "Flera nyckelpigor."
       },
       {
-        "text": "Nyckelpiggor har prickar på ryggen"
+        "text": "Nyckelpiggor har prickar på ryggen."
       }
     ]
   },
   "43": {
     "sentences" : [
       {
-        "text": "En fisk"
+        "text": "En fisk."
       },
       {
-        "text": "Flera fiskar"
+        "text": "Flera fiskar."
       },
       {
-        "text": "Fisk gör en smart"
+        "text": "Fisk gör en smart."
       }
     ]
   },
   "44": {
     "sentences" : [
       {
-        "text": "En kamel"
+        "text": "En kamel."
       },
       {
-        "text": "Flera kameler"
+        "text": "Flera kameler."
       },
       {
-        "text": "Kameler bor i öknen"
+        "text": "Kameler bor i öknen."
       }
     ]
   },
   "45": {
     "sentences" : [
       {
-        "text": "En ekorre"
+        "text": "En ekorre."
       },
       {
-        "text": "Flera ekorrar"
+        "text": "Flera ekorrar."
       },
       {
-        "text": "Ekorrar äter ekollon, eftersom de tycker att det är gott"
+        "text": "Ekorrar äter ekollon, eftersom de tycker att det är gott."
       }
     ]
   },
   "46": {
     "sentences" : [
       {
-        "text": "Att vinka"
+        "text": "Att vinka."
       },
       {
-        "text": "Man kan vinka hejdå"
+        "text": "Man kan vinka hejdå."
       }
     ]
   },
   "47": {
     "sentences" : [
       {
-        "text": "En handväska"
+        "text": "En handväska."
       },
       {
-        "text": "Flera handväskor"
+        "text": "Flera handväskor."
       },
       {
-        "text": "Man kan ha saker i handväskor"
+        "text": "Man kan ha saker i handväskor."
       }
     ]
   },
   "48": {
     "sentences" : [
       {
-        "text": "En sko"
+        "text": "En sko."
       },
       {
-        "text": "Flera skor"
+        "text": "Flera skor."
       },
       {
-        "text": "Man har skor på fötterna"
+        "text": "Man har skor på fötterna."
       }
     ]
   },
   "49": {
     "sentences" : [
       {
-        "text": "En kniv"
+        "text": "En kniv."
       },
       {
-        "text": "Flera knivar"
+        "text": "Flera knivar."
       },
       {
-        "text": "Knivar är vassa"
+        "text": "Knivar är vassa."
       }
     ]
   },
   "50": {
     "sentences" : [
       {
-        "text": "En penna"
+        "text": "En penna."
       },
       {
-        "text": "Flera pennor"
+        "text": "Flera pennor."
       },
       {
-        "text": "Pennor används för att skriva med"
+        "text": "Pennor används för att skriva med."
       }
     ]
   },
   "51": {
     "sentences" : [
       {
-        "text": "En pensel"
+        "text": "En pensel."
       },
       {
-        "text": "Flera penslar"
+        "text": "Flera penslar."
       },
       {
-        "text": "Penslar används för att måla"
+        "text": "Penslar används för att måla."
       }
     ]
   },
   "52": {
     "sentences" : [
       {
-        "text": "En lastbil"
+        "text": "En lastbil."
       },
       {
-        "text": "Flera lastbilar"
+        "text": "Flera lastbilar."
       },
       {
-        "text": "Lastbilar är stora"
+        "text": "Lastbilar är stora."
       }
     ]
   },
   "53": {
     "sentences" : [
       {
-        "text": "En traktor"
+        "text": "En traktor."
       },
       {
-        "text": "Flera traktorer"
+        "text": "Flera traktorer."
       },
       {
-        "text": "Trakorer åker sakta"
+        "text": "Trakorer åker sakta."
       }
     ]
   },
   "54": {
     "sentences" : [
       {
-        "text": "Ett ägg"
+        "text": "Ett ägg."
       },
       {
-        "text": "Flera ägg"
+        "text": "Flera ägg."
       },
       {
-        "text": "Ägg kommer från hönan"
+        "text": "Ägg kommer från hönan."
       }
     ]
   },
   "55": {
     "sentences" : [
       {
-        "text": "Ett glas mjölk"
+        "text": "Ett glas mjölk."
       },
       {
-        "text": "Mjölk kommer från kon"
+        "text": "Mjölk kommer från kon."
       }
     ]
   },
   "56": {
     "sentences" : [
       {
-        "text": "En räv"
+        "text": "En räv."
       },
       {
-        "text": "Flera rävar"
+        "text": "Flera rävar."
       },
       {
-        "text": "Rävar bor i skogen"
+        "text": "Rävar bor i skogen."
       }
     ]
   },
   "57": {
     "sentences" : [
       {
-        "text": "En fjäril"
+        "text": "En fjäril."
       },
       {
-        "text": "Flera fjärilar"
+        "text": "Flera fjärilar."
       },
       {
-        "text": "Fjärilar kommer från larver"
+        "text": "Fjärilar kommer från larver."
       }
     ]
   },
   "58": {
     "sentences" : [
       {
-        "text": "En gorilla"
+        "text": "En gorilla."
       },
       {
-        "text": "Flera gorillor"
+        "text": "Flera gorillor."
       },
       {
-        "text": "Gorillor finns inte i Sverige"
+        "text": "Gorillor finns inte i Sverige."
       }
     ]
   },
   "59": {
     "sentences" : [
       {
-        "text": "En noshörning"
+        "text": "En noshörning."
       },
       {
-        "text": "Flera noshörningar"
+        "text": "Flera noshörningar."
       },
       {
-        "text": "Noshörningar finns i Afrika"
+        "text": "Noshörningar finns i Afrika."
       }
     ]
   },
   "60": {
     "sentences" : [
       {
-        "text": "Det regnar"
+        "text": "Det regnar."
       },
       {
-        "text": "På hösten regnar det mycket"
+        "text": "På hösten regnar det mycket."
       }
     ]
   },
   "61": {
     "sentences" : [
       {
-        "text": "Det snöar"
+        "text": "Det snöar."
       },
       {
-        "text": "Det brukar snöa på vintern"
+        "text": "Det brukar snöa på vintern."
       }
     ]
   },
   "62": {
     "sentences" : [
       {
-        "text": "Ett träd"
+        "text": "Ett träd."
       },
       {
-        "text": "Flera träd"
+        "text": "Flera träd."
       },
       {
-        "text": "I skogen finns det mycket träd"
+        "text": "I skogen finns det mycket träd."
       }
     ]
   },
   "63": {
     "sentences" : [
       {
-        "text": "En vattenmelon"
+        "text": "En vattenmelon."
       },
       {
-        "text": "Flera vattenmeloner"
+        "text": "Flera vattenmeloner."
       },
       {
-        "text": "Vattenmelon är gott"
+        "text": "Vattenmelon är gott."
       }
     ]
   },
   "64": {
     "sentences" : [
       {
-        "text": "En jordgubbe"
+        "text": "En jordgubbe."
       },
       {
-        "text": "Flera jordgubbar"
+        "text": "Flera jordgubbar."
       },
       {
-        "text": "Det finns mycket jordgubbar i Sverige"
+        "text": "Det finns mycket jordgubbar i Sverige."
       }
     ]
   },
   "65": {
     "sentences" : [
       {
-        "text": "En hamburgare"
+        "text": "En hamburgare."
       },
       {
-        "text": "Flera hamburgare"
+        "text": "Flera hamburgare."
       },
       {
-        "text": "Hamburgare säljs på Max och McDonald´s"
+        "text": "Hamburgare säljs på Max och McDonald´s."
       }
     ]
   },
   "66": {
     "sentences" : [
       {
-        "text": "En pizza"
+        "text": "En pizza."
       },
       {
-        "text": "Flera pizzor"
+        "text": "Flera pizzor."
       },
       {
-        "text": "Pizzor är runda"
+        "text": "Pizzor är runda."
       }
     ]
   },
   "67": {
     "sentences" : [
       {
-        "text": "En ballong"
+        "text": "En ballong."
       },
       {
-        "text": "Flera ballongar"
+        "text": "Flera ballongar."
       },
       {
-        "text": "Ballonger kan man blåsa upp"
+        "text": "Ballonger kan man blåsa upp."
       }
     ]
   },
   "68": {
     "sentences" : [
       {
-        "text": "En ryggsäck"
+        "text": "En ryggsäck."
       },
       {
-        "text": "Flera ryggsäckar"
+        "text": "Flera ryggsäckar."
       },
       {
-        "text": "Ryggsäck brukar man ha med sig till skolan"
+        "text": "Ryggsäck brukar man ha med sig till skolan."
       }
     ]
   },
   "69": {
     "sentences" : [
       {
-        "text": "En mus"
+        "text": "En mus."
       },
       {
-        "text": "Flera möss"
+        "text": "Flera möss."
       },
       {
-        "text": "Möss gillar ost"
+        "text": "Möss gillar ost."
       }
     ]
   },
   "70": {
     "sentences" : [
       {
-        "text": "En ko"
+        "text": "En ko."
       },
       {
-        "text": "Flera kor"
+        "text": "Flera kor."
       },
       {
-        "text": "Kor ger mjölk"
+        "text": "Kor ger mjölk."
       }
     ]
   },
   "71": {
     "sentences" : [
       {
-        "text": "En tiger"
+        "text": "En tiger."
       },
       {
-        "text": "Flera tigrar"
+        "text": "Flera tigrar."
       },
       {
-        "text": "Tigrar finns i Asien"
+        "text": "Tigrar finns i Asien."
       }
     ]
   },
   "72": {
     "sentences" : [
       {
-        "text": "En kanin"
+        "text": "En kanin."
       },
       {
-        "text": "Flera kaniner"
+        "text": "Flera kaniner."
       },
       {
-        "text": "Kaniner är vanliga husdjur i Sverige"
+        "text": "Kaniner är vanliga husdjur i Sverige."
       }
     ]
   },
   "73": {
     "sentences" : [
       {
-        "text": "En katt"
+        "text": "En katt."
       },
       {
-        "text": "Flera katter"
+        "text": "Flera katter."
       },
       {
-        "text": "Katter är vanliga husdjur"
+        "text": "Katter är vanliga husdjur."
       }
     ]
   },
   "74": {
     "sentences" : [
       {
-        "text": "Ett får"
+        "text": "Ett får."
       },
       {
-        "text": "Flera får"
+        "text": "Flera får."
       },
       {
-        "text": "Får är vita och fluffiga"
+        "text": "Får är vita och fluffiga."
       }
     ]
   },
   "75": {
     "sentences" : [
       {
-        "text": "En apa"
+        "text": "En apa."
       },
       {
-        "text": "Flera apor"
+        "text": "Flera apor."
       },
       {
-        "text": "Apor bor i djungeln"
+        "text": "Apor bor i djungeln."
       }
     ]
   },
   "76": {
     "sentences" : [
       {
-        "text": "En tupp"
+        "text": "En tupp."
       },
       {
-        "text": "Flera tuppar"
+        "text": "Flera tuppar."
       },
       {
-        "text": "Tupp är en hane bland hönfåglar"
+        "text": "Tupp är en hane bland hönfåglar."
       }
     ]
   },
   "77": {
     "sentences" : [
       {
-        "text": "En höna"
+        "text": "En höna."
       },
       {
-        "text": "Flera höns"
+        "text": "Flera höns."
       },
       {
-        "text": "Höna är en hona bland hönfåglar"
+        "text": "Höna är en hona bland hönfåglar."
       }
     ]
   },
   "78": {
     "sentences" : [
       {
-        "text": "En hund"
+        "text": "En hund."
       },
       {
-        "text": "Flera hundar"
+        "text": "Flera hundar."
       },
       {
-        "text": "Hunden sägs vara människans bästa vän"
+        "text": "Hunden sägs vara människans bästa vän."
       }
     ]
   },
   "79": {
     "sentences" : [
       {
-        "text": "En gris"
+        "text": "En gris."
       },
       {
-        "text": "Flera grisar"
+        "text": "Flera grisar."
       },
       {
-        "text": "Bacon kommer från grisar"
+        "text": "Bacon kommer från grisar."
       }
     ]
   },
   "80": {
     "sentences" : [
       {
-        "text": "En elefant"
+        "text": "En elefant."
       },
       {
-        "text": "Flera elefanter"
+        "text": "Flera elefanter."
       },
       {
-        "text": "Elefanten har en lång snabel"
+        "text": "Elefanten har en lång snabel."
       }
     ]
   },
   "81": {
     "sentences" : [
       {
-        "text": "En bläckfisk"
+        "text": "En bläckfisk."
       },
       {
-        "text": "Flera bläckfiskar"
+        "text": "Flera bläckfiskar."
       },
       {
-        "text": "Bläckfiskar har 8 eller 10 armar"
+        "text": "Bläckfiskar har 8 eller 10 armar."
       }
     ]
   },
   "82": {
     "sentences" : [
       {
-        "text": "En clownfisk"
+        "text": "En clownfisk."
       },
       {
-        "text": "Flera clownfiskar"
+        "text": "Flera clownfiskar."
       },
       {
-        "text": "Nemo är en clownfisk"
+        "text": "Nemo är en clownfisk."
       }
     ]
   },
   "83": {
     "sentences" : [
       {
-        "text": "En sköldpadda"
+        "text": "En sköldpadda."
       },
       {
-        "text": "Flera sköldpaddor"
+        "text": "Flera sköldpaddor."
       },
       {
-        "text": "Sköldpaddor har ett skal"
+        "text": "Sköldpaddor har ett skal."
       }
     ]
   },
   "84": {
     "sentences" : [
       {
-        "text": "En kyckling"
+        "text": "En kyckling."
       },
       {
-        "text": "Flera kycklingar"
+        "text": "Flera kycklingar."
       },
       {
-        "text": "Kycklingar lägger ägg"
+        "text": "Kycklingar lägger ägg."
       }
     ]
   },
   "85": {
     "sentences" : [
       {
-        "text": "En fågel"
+        "text": "En fågel."
       },
       {
-        "text": "Flera fåglar"
+        "text": "Flera fåglar."
       },
       {
-        "text": "Fåglar kan flyga"
+        "text": "Fåglar kan flyga."
       }
     ]
   },
   "86": {
     "sentences" : [
       {
-        "text": "En pingvin"
+        "text": "En pingvin."
       },
       {
-        "text": "Flera pingviner"
+        "text": "Flera pingviner."
       },
       {
-        "text": "Pingviner bor vid sydpolen"
+        "text": "Pingviner bor vid sydpolen."
       }
     ]
   },
   "87": {
     "sentences" : [
       {
-        "text": "En groda"
+        "text": "En groda."
       },
       {
-        "text": "Flera grodor"
+        "text": "Flera grodor."
       },
       {
-        "text": "Groddor kan hoppa långt"
+        "text": "Groddor kan hoppa långt."
       }
     ]
   },
   "88": {
     "sentences" : [
       {
-        "text": "Ett par glasögon"
+        "text": "Ett par glasögon."
       },
       {
-        "text": "Glasögon gör så man ser bättre"
+        "text": "Glasögon gör så man ser bättre."
       }
     ]
   },
   "89": {
     "sentences" : [
       {
-        "text": "En t-shirt"
+        "text": "En t-shirt."
       },
       {
-        "text": "Flera t-shirts"
+        "text": "Flera t-shirts."
       },
       {
-        "text": "T-shirts kan man ha på sig"
+        "text": "T-shirts kan man ha på sig."
       }
     ]
   },
   "90": {
     "sentences" : [
       {
-        "text": "En byxa"
+        "text": "En byxa."
       },
       {
-        "text": "Flera byxor"
+        "text": "Flera byxor."
       },
       {
-        "text": "Byxor har man på benen"
+        "text": "Byxor har man på benen."
       }
     ]
   },
   "91": {
     "sentences" : [
       {
-        "text": "En nyckel"
+        "text": "En nyckel."
       },
       {
-        "text": "Flera nycklar"
+        "text": "Flera nycklar."
       },
       {
-        "text": "Nycklar kan man låsa upp dörrar med"
+        "text": "Nycklar kan man låsa upp dörrar med."
       }
     ]
   },
   "92": {
     "sentences" : [
       {
-        "text": "Ett hänglås"
+        "text": "Ett hänglås."
       },
       {
-        "text": "Flera hänglås"
+        "text": "Flera hänglås."
       },
       {
-        "text": "Hänglös kan låsa upp med nycklar"
+        "text": "Hänglös kan låsa upp med nycklar."
       }
     ]
   },
   "93": {
     "sentences" : [
       {
-        "text": "En lastbil"
+        "text": "En lastbil."
       },
       {
-        "text": "Flera lastbilar"
+        "text": "Flera lastbilar."
       },
       {
-        "text": "Lastbilar är stora"
+        "text": "Lastbilar är stora."
       }
     ]
   },
   "94": {
     "sentences" : [
       {
-        "text": "En ficklampa"
+        "text": "En ficklampa."
       },
       {
-        "text": "Flera ficklampor"
+        "text": "Flera ficklampor."
       },
       {
-        "text": "Ficklampor lyser upp mörker"
+        "text": "Ficklampor lyser upp mörker."
       }
     ]
   },
   "95": {
     "sentences" : [
       {
-        "text": "En hammare"
+        "text": "En hammare."
       },
       {
-        "text": "Flera hammare"
+        "text": "Flera hammare."
       },
       {
-        "text": "Hammare används för att bygga"
+        "text": "Hammare används för att bygga."
       }
     ]
   },
   "96": {
     "sentences" : [
       {
-        "text": "En spindel"
+        "text": "En spindel."
       },
       {
-        "text": "Flera spindlar"
+        "text": "Flera spindlar."
       },
       {
-        "text": "Spindlar kan vara giftiga"
+        "text": "Spindlar kan vara giftiga."
       }
     ]
   },
   "97": {
     "sentences" : [
       {
-        "text": "En rymdraket"
+        "text": "En rymdraket."
       },
       {
-        "text": "Flera rymdraketer"
+        "text": "Flera rymdraketer."
       },
       {
-        "text": "NASA har skickat upp rymdraketer till rymded"
+        "text": "NASA har skickat upp rymdraketer till rymded."
       }
     ]
   },
   "98": {
     "sentences" : [
       {
-        "text": "En helikopter"
+        "text": "En helikopter."
       },
       {
-        "text": "Flera helikoptrar"
+        "text": "Flera helikoptrar."
       },
       {
-        "text": "Helikoptrar flyger"
+        "text": "Helikoptrar flyger."
       }
     ]
   },
   "99": {
     "sentences" : [
       {
-        "text": "Ett lok"
+        "text": "Ett lok."
       },
       {
-        "text": "Flera lok"
+        "text": "Flera lok."
       },
       {
-        "text": "Lok åker på räls"
+        "text": "Lok åker på räls."
       }
     ]
   },
   "100": {
     "sentences" : [
       {
-        "text": "En ambulans"
+        "text": "En ambulans."
       },
       {
-        "text": "Flera ambulanser"
+        "text": "Flera ambulanser."
       },
       {
-        "text": "Ambulanser skickar skadade mässikor till sjukhuset"
+        "text": "Ambulanser skickar skadade mässikor till sjukhuset."
       }
     ]
   },
   "101": {
     "sentences" : [
       {
-        "text": "En brandbil"
+        "text": "En brandbil."
       },
       {
-        "text": "Flera brandbilar"
+        "text": "Flera brandbilar."
       },
       {
-        "text": "Brandbilar släcker bränder"
+        "text": "Brandbilar släcker bränder."
       }
     ]
   },
   "102": {
     "sentences" : [
       {
-        "text": "En polisbil"
+        "text": "En polisbil."
       },
       {
-        "text": "Flera polisbilar"
+        "text": "Flera polisbilar."
       },
       {
-        "text": "Poliser kör polisbilar"
+        "text": "Poliser kör polisbilar."
       }
     ]
   },
   "103": {
     "sentences" : [
       {
-        "text": "En taxi"
+        "text": "En taxi."
       },
       {
-        "text": "Flera taxis"
+        "text": "Flera taxis."
       },
       {
-        "text": "Taxis skjutsar människor"
+        "text": "Taxis skjutsar människor."
       }
     ]
   },
   "104": {
     "sentences" : [
       {
-        "text": "En bil"
+        "text": "En bil."
       },
       {
-        "text": "Flera bilar"
+        "text": "Flera bilar."
       },
       {
-        "text": "Bilar åker på vägar"
+        "text": "Bilar åker på vägar."
       }
     ]
   },
   "105": {
     "sentences" : [
       {
-        "text": "En clown"
+        "text": "En clown."
       },
       {
-        "text": "Flera clowner"
+        "text": "Flera clowner."
       },
       {
-        "text": "Många människor tycker clowner är läskiga"
+        "text": "Många människor tycker clowner är läskiga."
       }
     ]
   },
   "106": {
     "sentences" : [
       {
-        "text": "En trumma"
+        "text": "En trumma."
       },
       {
-        "text": "Flera trummor"
+        "text": "Flera trummor."
       },
       {
-        "text": "Trumma är ett instrument"
+        "text": "Trumma är ett instrument."
       }
     ]
   },
   "107": {
     "sentences" : [
       {
-        "text": "En morot"
+        "text": "En morot."
       },
       {
-        "text": "Flera morötter"
+        "text": "Flera morötter."
       },
       {
-        "text": "Morötter växer i marken"
+        "text": "Morötter växer i marken."
       }
     ]
   },
   "108": {
     "sentences" : [
       {
-        "text": "En krabba"
+        "text": "En krabba."
       },
       {
-        "text": "Flera krabbor"
+        "text": "Flera krabbor."
       },
       {
-        "text": "Krabbor har klor"
+        "text": "Krabbor har klor."
       }
     ]
   },
   "109": {
     "sentences" : [
       {
-        "text": "En skorpion"
+        "text": "En skorpion."
       },
       {
-        "text": "Flera skorpioner"
+        "text": "Flera skorpioner."
       },
       {
-        "text": "Skorpioner kan vara farliga"
+        "text": "Skorpioner kan vara farliga."
       }
     ]
   },
   "110": {
     "sentences" : [
       {
-        "text": "En enhörning"
+        "text": "En enhörning."
       },
       {
-        "text": "Flera enhörningar"
+        "text": "Flera enhörningar."
       },
       {
-        "text": "Enhörningar har horn"
+        "text": "Enhörningar har horn."
       }
     ]
   },
   "111": {
     "sentences" : [
       {
-        "text": "En örn"
+        "text": "En örn."
       },
       {
-        "text": "Flera örnar"
+        "text": "Flera örnar."
       },
       {
-        "text": "Örnar flyger"
+        "text": "Örnar flyger."
       }
     ]
   },
   "112": {
     "sentences" : [
       {
-        "text": "En anka"
+        "text": "En anka."
       },
       {
-        "text": "Flera änder"
+        "text": "Flera änder."
       },
       {
-        "text": "Änder har oranga näbbar"
+        "text": "Änder har oranga näbbar."
       }
     ]
   },
   "113": {
     "sentences" : [
       {
-        "text": "En fladdermus"
+        "text": "En fladdermus."
       },
       {
-        "text": "Flera fladdermöss"
+        "text": "Flera fladdermöss."
       },
       {
-        "text": "Fladdermöss är vakna på natten"
+        "text": "Fladdermöss är vakna på natten."
       }
     ]
   },
   "114": {
     "sentences" : [
       {
-        "text": "En snögubbe"
+        "text": "En snögubbe."
       },
       {
-        "text": "Flera snögubbar"
+        "text": "Flera snögubbar."
       },
       {
-        "text": "Snögubbar byggs av snö på vintern"
+        "text": "Snögubbar byggs av snö på vintern."
       }
     ]
   },
   "115": {
     "sentences" : [
       {
-        "text": "En skridsko"
+        "text": "En skridsko."
       },
       {
-        "text": "Flera skridskor"
+        "text": "Flera skridskor."
       },
       {
-        "text": "Skridskor används för att åka på is"
+        "text": "Skridskor används för att åka på is."
       }
     ]
   },
   "116": {
     "sentences" : [
       {
-        "text": "En sol"
+        "text": "En sol."
       },
       {
-        "text": "Flera solar"
+        "text": "Flera solar."
       },
       {
-        "text": "Solen syns på dagen"
+        "text": "Solen syns på dagen."
       }
     ]
   },
   "117": {
     "sentences" : [
       {
-        "text": "Ett moln"
+        "text": "Ett moln."
       },
       {
-        "text": "Flera moln"
+        "text": "Flera moln."
       },
       {
-        "text": "Moln finns i himlen"
+        "text": "Moln finns i himlen."
       }
     ]
   },
   "118": {
     "sentences" : [
       {
-        "text": "Ett paraply"
+        "text": "Ett paraply."
       },
       {
-        "text": "Flera paraplyn"
+        "text": "Flera paraplyn."
       },
       {
-        "text": "Paraplyn används när det regnar"
+        "text": "Paraplyn används när det regnar."
       }
     ]
   },
   "119": {
     "sentences" : [
       {
-        "text": "En kopp kaffe"
+        "text": "En kopp kaffe."
       },
       {
-        "text": "Man blir pigg av kaffe"
+        "text": "Man blir pigg av kaffe."
+      }
+    ]
+  },
+  "120": {
+    "sentences" : [
+      {
+        "text": "En sax."
+      },
+      {
+        "text": "Flera saxar."
+      },
+      {
+        "text": "Med en sax kan du klippa ditt hår."
       }
     ]
   }

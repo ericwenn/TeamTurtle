@@ -212,9 +212,6 @@ public class DictionaryScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
-        if (wordStage != null) {
-            wordStage.dispose();
-        }
         stage.dispose();
         skin.dispose();
         bg.dispose();

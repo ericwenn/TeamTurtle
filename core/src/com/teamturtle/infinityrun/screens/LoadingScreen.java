@@ -20,17 +20,17 @@ public class LoadingScreen extends AbstractScreen {
 
     private static final int FRAME_ROWS = 1;
     private static final int FRAME_COLS = 20;
-    private static final int TURTLE_PAD = 18;
+    private static final int LOGO_PAD = 18;
     private static final int LOADING_SIZE = 90;
     private static final float ANIMATION_SPEED = 0.040f;
     private static final String LOADING_SHEET_URL = "ui/loading_sheet.png";
     private static final String BG_URL = "new_background.png";
-    private static final String TURTLE_URL = "emoji/good/1f422.png";
+    private static final String LOGO_URL = "logo.png";
 
     private Image bgImg;
-    private Image turtleImg;
+    private Image logoImg;
     private Texture bgTexture;
-    private Texture turtleTexture;
+    private Texture logoTexture;
 
     private Animation loadingAnimation;
     private Texture loadingSheet;
@@ -52,11 +52,11 @@ public class LoadingScreen extends AbstractScreen {
         stage = new Stage(new FillViewport(InfinityRun.WIDTH, InfinityRun.HEIGHT));
         bgTexture = new Texture(BG_URL);
         bgImg = new Image(bgTexture);
-        turtleTexture = new Texture(TURTLE_URL);
-        turtleImg = new Image(turtleTexture);
+        logoTexture = new Texture(LOGO_URL);
+        logoImg = new Image(logoTexture);
         Table table = new Table();
         table.setFillParent(true);
-        table.add(turtleImg).padRight(TURTLE_PAD).padBottom(100);
+        table.add(logoImg).padRight(LOGO_PAD).padBottom(70);
         table.background(bgImg.getDrawable());
         setUpLoadingAnimation();
         stage.addActor(table);
@@ -105,7 +105,7 @@ public class LoadingScreen extends AbstractScreen {
     public void dispose() {
         super.dispose();
         bgTexture.dispose();
-        turtleTexture.dispose();
+        logoTexture.dispose();
         loadingSheet.dispose();
         for (TextureRegion region : loadingFrames) {
             region.getTexture().dispose();
