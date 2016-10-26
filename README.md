@@ -16,7 +16,7 @@ https://trello.com/b/HYvo81A2/scrum-infinity-rum
 * [Social Contract](https://github.com/ericwenn/TeamTurtle/blob/master/SOCIALCONTRACT.md)
 * [Sprint Retrospectives](https://github.com/ericwenn/TeamTurtle/blob/master/REFLECTIONS.md)
 * [Halftime Review](https://github.com/ericwenn/TeamTurtle/blob/master/HALFTIMEREVIEW.md)
-* Structural Overview
+* [Structural Overview](https://github.com/ericwenn/TeamTurtle/blob/master/package_structure.png)
 * [FindBugs Report](https://github.com/ericwenn/TeamTurtle/blob/master/findbugs.xml)
 * GitInspector Report
 * Reflection Report
