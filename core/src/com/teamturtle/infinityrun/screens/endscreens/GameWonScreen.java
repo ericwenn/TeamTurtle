@@ -1,4 +1,4 @@
-package com.teamturtle.infinityrun.screens.level_end_screens;
+package com.teamturtle.infinityrun.screens.endscreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -30,7 +30,7 @@ import java.util.Locale;
 /**
  * Created by Henrik on 2016-10-02.
  */
-public class WonLevelScreen extends EndLevelScreen{
+public class GameWonScreen extends AbstractEndScreen {
 
     private static class ImageClickListener extends ChangeListener {
 
@@ -71,7 +71,7 @@ public class WonLevelScreen extends EndLevelScreen{
     private Label emojiLbl;
     private List<Image> emojiShadows;
 
-    public WonLevelScreen(SpriteBatch sb, IScreenObserver observer, Level level
+    public GameWonScreen(SpriteBatch sb, IScreenObserver observer, Level level
             , List<Word> oldWords, List<Word> discoveredWords, int score) {
         super(sb, observer, LB_LEVEL_LOST, level, score);
         this.level = level;
