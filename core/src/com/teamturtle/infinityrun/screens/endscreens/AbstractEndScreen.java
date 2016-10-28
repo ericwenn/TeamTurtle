@@ -1,4 +1,4 @@
-package com.teamturtle.infinityrun.screens.level_end_screens;
+package com.teamturtle.infinityrun.screens.endscreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -25,7 +25,7 @@ import com.teamturtle.infinityrun.sound.FxSound;
 /**
  * Created by Henrik on 2016-10-02.
  */
-public abstract class EndLevelScreen extends AbstractScreen {
+public abstract class AbstractEndScreen extends AbstractScreen {
 
     private static final int ROOT_TABLE_WIDTH = 600, ROOT_TABLE_HEIGHT = 460;
     private static final int ROOT_TABLE_POS_X = 100, ROOT_TABLE_POS_Y = 20;
@@ -53,7 +53,7 @@ public abstract class EndLevelScreen extends AbstractScreen {
     private Level level;
     private int score;
 
-    public EndLevelScreen(SpriteBatch sb, IScreenObserver observer, String topLabelStr, Level level
+    public AbstractEndScreen(SpriteBatch sb, IScreenObserver observer, String topLabelStr, Level level
             , int score) {
         super(sb);
         this.observer = observer;
