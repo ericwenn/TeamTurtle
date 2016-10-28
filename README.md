@@ -19,4 +19,4 @@ https://trello.com/b/HYvo81A2/scrum-infinity-rum
 * [Structural Overview](https://github.com/ericwenn/TeamTurtle/blob/master/package_structure.png)
 * [FindBugs Report](https://github.com/ericwenn/TeamTurtle/blob/master/findbugs.xml)
 * [GitInspector Report](http://htmlpreview.github.io/?https://github.com/ericwenn/TeamTurtle/blob/master/gitinspector.html)
-* Reflection Report
+* [Reflection Report](https://github.com/ericwenn/TeamTurtle/blob/master/Rapport.pdf)
